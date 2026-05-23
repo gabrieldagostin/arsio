@@ -1,0 +1,5 @@
+CREATE TABLE categories (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name VARCHAR(100) UNIQUE NOT NULL CHECK (trim(name) <> ''),
+    active BOOLEAN NOT NULL DEFAULT TRUE
+);

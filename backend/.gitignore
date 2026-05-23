@@ -1,0 +1,117 @@
+HELP.md
+target/
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# =========================
+# STS
+# =========================
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+# =========================
+# IntelliJ IDEA
+# =========================
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# =========================
+# NetBeans
+# =========================
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# =========================
+# VS Code
+# =========================
+.vscode/
+
+# =========================
+# Java / Spring Boot
+# =========================
+target/
+build/
+.gradle/
+HELP.md
+
+*.class
+*.jar
+*.war
+
+# =========================
+# Logs
+# =========================
+logs/
+*.logs
+
+# =========================
+# Environment variables
+# =========================
+.env
+.env.*
+
+# Application secrets
+src/main/resources/application-local.yml
+src/main/resources/application-prod.yml
+
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Maven wrapper (ignore only binaries if desired)
+# =========================
+.mvn/wrapper/maven-wrapper.jar
+
+# Usually keep these:
+#!mvnw
+#!mvnw.cmd
+
+# =========================
+# PostgreSQL / local database dumps
+# =========================
+*.dump
+*.backup
+database-backup/
+
+# =========================
+# Docker
+# =========================
+docker-data/
+postgres-data/
+redis-data/
+rabbitmq-data/
+minio-data/
+
+# Docker override/local files
+docker-compose.override.yml
+
+# =========================
+# Temporary files
+# =========================
+tmp/
+temp/
+*.tmp
+
+# =========================
+# Coverage / tests
+# =========================
+coverage/
+jacoco.exec

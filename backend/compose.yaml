@@ -1,0 +1,50 @@
+services:
+
+# GRAFANA
+  grafana:
+    image: grafana/otel-lgtm:0.27.1
+    ports:
+      - "3000:3000"
+      - "4317:4317"
+      - "4318:4318"
+    restart: unless-stopped
+
+# POSTGRESQL
+  postgres:
+    image: postgres:18
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql
+    restart: unless-stopped
+
+# RABBITMQ
+  rabbitmq:
+    image: rabbitmq:4.3.0-management
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    restart: unless-stopped
+
+# REDIS
+  redis:
+    image: redis:8.6.3
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    restart: unless-stopped
+
+volumes:
+  postgres-data:
+  rabbitmq-data:
+  redis-data:

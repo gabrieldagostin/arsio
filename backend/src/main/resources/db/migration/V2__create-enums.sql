@@ -1,0 +1,8 @@
+-- =========================
+-- ENUMS
+-- =========================
+CREATE TYPE user_role AS ENUM ('ADMIN', 'DEV', 'USER');
+CREATE TYPE game_status AS ENUM ('PUBLISHED', 'DRAFT', 'ARCHIVED' );
+CREATE TYPE order_status AS ENUM ('PENDING', 'COMPLETED', 'CANCELLED', 'FAILED');
+CREATE TYPE friend_status AS ENUM ('PENDING', 'ACCEPTED');
+CREATE TYPE media_type AS ENUM ('IMAGE', 'VIDEO');
