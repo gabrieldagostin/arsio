@@ -1,6 +1,9 @@
 CREATE TABLE messages (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+
+    id UUID PRIMARY KEY,
+
     sender_id UUID NOT NULL,
+
     receiver_id UUID NOT NULL,
 
     user_min UUID GENERATED ALWAYS AS (
@@ -17,9 +20,18 @@ CREATE TABLE messages (
             END
         ) STORED,
 
-    content TEXT NOT NULL CHECK (trim(content) <> ''),
-    created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    content TEXT NOT NULL,
 
-    FOREIGN KEY (sender_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (receiver_id) REFERENCES users(id) ON DELETE CASCADE
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+
+    CONSTRAINT messages_content_not_blank_check
+        CHECK (char_length(trim(content)) > 0),
+
+    CONSTRAINT messages_sender_id_fk
+        FOREIGN KEY (sender_id)
+            REFERENCES users(id),
+
+    CONSTRAINT messages_receiver_id_fk
+        FOREIGN KEY (receiver_id)
+            REFERENCES users(id)
 );

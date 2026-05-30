@@ -1,7 +1,11 @@
 CREATE TABLE friends (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+
+    id UUID PRIMARY KEY,
+
     user_id UUID NOT NULL,
+
     friend_id UUID NOT NULL,
+
     status friend_status NOT NULL,
 
     user_min UUID GENERATED ALWAYS AS (
@@ -18,10 +22,17 @@ CREATE TABLE friends (
             END
         ) STORED,
 
-    CHECK (user_id <> friend_id),
+    CONSTRAINT friends_friendship_unique
+        UNIQUE (user_min, user_max),
 
-    CONSTRAINT unique_friendship UNIQUE (user_min, user_max),
+    CONSTRAINT friendships_user_not_self_check
+        CHECK (user_id <> friend_id),
 
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (friend_id) REFERENCES users(id) ON DELETE CASCADE
+    CONSTRAINT friends_user_id_fk
+        FOREIGN KEY (user_id)
+            REFERENCES users(id),
+
+    CONSTRAINT friends_friend_id_fk
+        FOREIGN KEY (friend_id)
+            REFERENCES users(id)
 );
