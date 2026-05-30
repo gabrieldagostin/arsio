@@ -1,6 +1,6 @@
 package com.arsio.auth.internal.infra.security;
 
-import com.arsio.auth.internal.domain.repository.UserRepository;
+import com.arsio.auth.internal.application.port.output.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

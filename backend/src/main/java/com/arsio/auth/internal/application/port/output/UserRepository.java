@@ -1,9 +1,8 @@
-package com.arsio.auth.internal.domain.repository;
+package com.arsio.auth.internal.application.port.output;
 
 import com.arsio.auth.internal.domain.model.User;
 import com.arsio.auth.internal.domain.valueobject.Email;
 import com.arsio.auth.internal.domain.valueobject.Username;
-import com.arsio.auth.internal.infra.persistance.entity.UserEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public interface UserRepository {

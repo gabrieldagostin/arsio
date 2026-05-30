@@ -1,4 +1,4 @@
-package com.arsio.auth.internal.domain.exception;
+package com.arsio.auth.internal.application.exception;
 
 public class EmailAlreadyExistsException extends RuntimeException {
 

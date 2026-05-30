@@ -1,6 +1,6 @@
 package com.arsio.config.security;
 
-import com.arsio.auth.internal.domain.repository.UserRepository;
+import com.arsio.auth.internal.application.port.output.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

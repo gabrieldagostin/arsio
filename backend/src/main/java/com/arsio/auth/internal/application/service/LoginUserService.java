@@ -1,11 +1,11 @@
-package com.arsio.auth.internal.application.usecases;
+package com.arsio.auth.internal.application.service;
 
 import com.arsio.auth.internal.application.port.input.LoginUserUseCase;
 import com.arsio.auth.internal.domain.model.User;
-import com.arsio.auth.internal.domain.repository.UserRepository;
+import com.arsio.auth.internal.application.port.output.UserRepository;
 import com.arsio.auth.internal.infra.controller.dto.AuthenticatedUserResponse;
 import com.arsio.auth.internal.infra.controller.dto.AuthenticationResponse;
-import com.arsio.auth.internal.infra.controller.dto.LoginUserComand;
+import com.arsio.auth.internal.application.dto.LoginUserComand;
 import com.arsio.config.security.TokenService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

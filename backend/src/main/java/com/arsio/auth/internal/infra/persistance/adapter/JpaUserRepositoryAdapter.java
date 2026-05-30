@@ -1,7 +1,7 @@
 package com.arsio.auth.internal.infra.persistance.adapter;
 
 import com.arsio.auth.internal.domain.model.User;
-import com.arsio.auth.internal.domain.repository.UserRepository;
+import com.arsio.auth.internal.application.port.output.UserRepository;
 import com.arsio.auth.internal.domain.valueobject.Email;
 import com.arsio.auth.internal.domain.valueobject.Username;
 import com.arsio.auth.internal.infra.persistance.entity.UserEntity;
