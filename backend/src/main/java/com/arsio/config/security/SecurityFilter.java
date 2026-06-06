@@ -1,6 +1,8 @@
 package com.arsio.config.security;
 
+import com.arsio.auth.api.facade.AuthFacade;
 import com.arsio.auth.internal.application.port.output.UserRepository;
+import com.arsio.auth.internal.infra.security.JwtTokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,7 +20,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class SecurityFilter extends OncePerRequestFilter {
 
-    private final TokenService tokenService;
+    private final AuthFacade authFacade;
     private final UserRepository userRepository;
 
     @Override
@@ -27,7 +29,7 @@ public class SecurityFilter extends OncePerRequestFilter {
         var token = this.recoverToken(request);
 
         if (token != null) {
-            var subject = tokenService.validateToken(token);
+            var subject = authFacade.extractSubject(token);
             UserDetails userDetails = userRepository.findUserDetailsByUsernameNormalized(subject);
 
             var authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
@@ -45,7 +47,8 @@ public class SecurityFilter extends OncePerRequestFilter {
                 || path.startsWith("/swagger-resources")
                 || path.startsWith("/webjars")
                 || path.startsWith("/auth/login")
-                || path.startsWith("/auth/register");
+                || path.startsWith("/auth/register")
+                || path.startsWith("/auth/refresh-token");
     }
 
     private String recoverToken(HttpServletRequest request) {

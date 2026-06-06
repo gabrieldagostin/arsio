@@ -2,8 +2,10 @@ package com.arsio.auth.internal.infra.controller;
 
 import com.arsio.auth.internal.application.dto.CreateUserCommand;
 import com.arsio.auth.internal.application.dto.LoginUserComand;
+import com.arsio.auth.internal.application.dto.RefreshTokenCommand;
 import com.arsio.auth.internal.application.service.CreateUserService;
 import com.arsio.auth.internal.application.service.LoginUserService;
+import com.arsio.auth.internal.application.service.RefreshTokenService;
 import com.arsio.auth.internal.infra.controller.dto.*;
 import com.arsio.auth.internal.infra.controller.mapper.AuthControllerMapper;
 import com.arsio.config.security.SecurityConfigurations;
@@ -25,18 +27,20 @@ public class AuthController {
     private final AuthControllerMapper mapper;
     private final CreateUserService createUserService;
     private final LoginUserService loginUserService;
+    private final RefreshTokenService refreshTokenService;
+
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody @Valid RegisterUserRequest request, UriComponentsBuilder builder) {
 
         CreateUserCommand command = mapper.toCreateUserCommand(request);
 
-        AuthenticationResponse result = createUserService.execute(command);
+        AuthenticationResponse response = createUserService.execute(command);
 
         URI uri = builder.path("/users/{id}")
-                .buildAndExpand(result).toUri();
+                .buildAndExpand(response).toUri();
 
-        return ResponseEntity.created(uri).body(result);
+        return ResponseEntity.created(uri).body(response);
     }
 
     @PostMapping("/login")
@@ -44,10 +48,19 @@ public class AuthController {
 
         LoginUserComand command = mapper.toLoginUserCommand(request);
 
-        AuthenticationResponse result = loginUserService.execute(command);
+        AuthenticationResponse response = loginUserService.execute(command);
 
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/refresh-token")
+    public ResponseEntity<RefreshTokenResponse> refreshToken(@RequestBody @Valid RefreshTokenRequest request) {
+
+        RefreshTokenCommand command = mapper.toRefreshTokenCommand(request);
+
+        RefreshTokenResponse response = refreshTokenService.execute(command);
+
+        return ResponseEntity.ok(response);
+    }
 
 }

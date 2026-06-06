@@ -8,7 +8,4 @@ public record UserId(UUID value) {
         return new UserId(UUID.randomUUID());
     }
 
-    public String getValue() {
-        return value.toString();
-    }
 }

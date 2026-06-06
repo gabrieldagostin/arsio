@@ -1,7 +1,6 @@
 package com.arsio.auth.internal.infra.persistance.mapper;
 
 import com.arsio.auth.internal.domain.model.User;
-import com.arsio.auth.internal.domain.model.UserRole;
 import com.arsio.auth.internal.domain.valueobject.Email;
 import com.arsio.auth.internal.domain.valueobject.Password;
 import com.arsio.auth.internal.domain.valueobject.UserId;
@@ -9,7 +8,6 @@ import com.arsio.auth.internal.domain.valueobject.Username;
 import com.arsio.auth.internal.infra.persistance.entity.UserEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Named;
 
 import java.util.UUID;
 
@@ -47,7 +45,7 @@ public interface UserEntityMapper {
     }
 
     default String userPasswordToString(Password password) {
-        return password.getHashedValue();
+        return password.hashedValue();
     }
 
     default Password stringToUserPassword(String value) {

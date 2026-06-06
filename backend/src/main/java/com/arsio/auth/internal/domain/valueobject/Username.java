@@ -21,10 +21,6 @@ public record Username(String value) {
         return value.trim();
     }
 
-    public String getUsername() {
-        return value;
-    }
-
     public String getNormalized() {
         return value.toLowerCase();
     }

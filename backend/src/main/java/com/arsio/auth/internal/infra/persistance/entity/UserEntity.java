@@ -51,7 +51,7 @@ public class UserEntity implements UserDetails {
     @Column(name = "profile_image_key")
     private String profileImageKey;
 
-    @Column(nullable = false)
+    @Column(columnDefinition = "TRUE", nullable = false)
     private boolean active;
 
     @Column(name = "last_login_at", nullable = false)

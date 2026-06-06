@@ -1,6 +1,5 @@
 package com.arsio.auth.internal.infra.persistance.repository;
 
-import com.arsio.auth.internal.domain.model.User;
 import com.arsio.auth.internal.infra.persistance.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.userdetails.UserDetails;

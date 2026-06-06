@@ -29,7 +29,7 @@ public class JpaUserRepositoryAdapter implements UserRepository {
     @Override
     public boolean existsByEmail(Email email) {
         return repository.existsByEmail(
-                email.getValue()
+                email.value()
         );
     }
 
@@ -49,7 +49,8 @@ public class JpaUserRepositoryAdapter implements UserRepository {
 
     @Override
     public User findUserByUsernameNormalized(String username) {
-        UserEntity entity = repository.findUserByUsernameNormalized(username);
+        UserEntity entity = repository.findUserByUsernameNormalized(
+                new Username(username).getNormalized());
         return mapper.toDomain(entity);
     }
 
