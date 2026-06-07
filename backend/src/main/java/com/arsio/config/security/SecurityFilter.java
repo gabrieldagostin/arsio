@@ -2,6 +2,7 @@ package com.arsio.config.security;
 
 import com.arsio.auth.api.facade.AuthFacade;
 import com.arsio.user.internal.application.port.output.UserRepository;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,7 +21,7 @@ import java.io.IOException;
 public class SecurityFilter extends OncePerRequestFilter {
 
     private final AuthFacade authFacade;
-    private final UserRepository userRepository;
+    private final UserRepository users;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -28,12 +29,20 @@ public class SecurityFilter extends OncePerRequestFilter {
         var token = this.recoverToken(request);
 
         if (token != null) {
-            var subject = authFacade.extractSubject(token);
-            UserDetails userDetails = userRepository.findUserDetailsByUsernameNormalized(subject);
+            try {
+                var subject = authFacade.extractSubject(token);
 
-            var authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+                UserDetails userDetails = users.findUserDetailsByUsernameNormalized(subject);
+
+                var authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            } catch (TokenExpiredException exception) {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                return;
+            }
         }
+
         filterChain.doFilter(request, response);
     }
 

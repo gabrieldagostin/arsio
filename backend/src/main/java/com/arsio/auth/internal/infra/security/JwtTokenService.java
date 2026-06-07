@@ -2,6 +2,7 @@ package com.arsio.auth.internal.infra.security;
 
 import com.arsio.auth.api.facade.AuthFacade;
 import com.arsio.auth.internal.application.port.output.TokenProvider;
+import com.arsio.auth.internal.domain.exception.InvalidTokenException;
 import com.arsio.auth.internal.domain.model.UserAuth;
 import com.arsio.auth.internal.domain.valueobject.AccessToken;
 import com.arsio.auth.internal.domain.valueobject.RefreshToken;
@@ -10,6 +11,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.UnknownNullability;
 import org.springframework.stereotype.Service;
@@ -59,12 +61,15 @@ public class JwtTokenService implements TokenProvider, AuthFacade {
     public String extractSubject(String token) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(tokenProperties.getSecret());
-            return JWT.require(algorithm)
+            String subject = JWT.require(algorithm)
+                    .withIssuer("arsio")
                     .build()
                     .verify(token)
                     .getSubject();
-        } catch (JWTDecodeException exception) {
-            throw new RuntimeException("Error wihile extracting subject", exception);
+
+            return subject;
+        } catch (JWTVerificationException exception) {
+            throw new InvalidTokenException("Error while extracting subject ", exception);
         }
     }
 
@@ -73,17 +78,17 @@ public class JwtTokenService implements TokenProvider, AuthFacade {
         try {
             Algorithm algorithm = Algorithm.HMAC256(tokenProperties.getSecret());
             UUID value = UUID.fromString(JWT.require(algorithm)
-                    .build()
-                    .verify(token)
-                    .getClaim("session_id").asString());
+                            .withIssuer("arsio")
+                            .build()
+                            .verify(token)
+                            .getClaim("session_id").asString());
             return new SessionId(value);
-        } catch (JWTDecodeException exception) {
-            throw new RuntimeException("Error while extracting session_id", exception);
+        } catch (JWTVerificationException exception) {
+            throw new InvalidTokenException("Error while extracting session_id ", exception);
         }
     }
 
     private Instant genExpirationDate(Duration expiration) {
-        Long expiresAt = expiration.toHours();
-        return LocalDateTime.now().plusHours(expiresAt).toInstant(ZoneOffset.of("-03:00"));
+        return Instant.now().plus(expiration);
     }
 }

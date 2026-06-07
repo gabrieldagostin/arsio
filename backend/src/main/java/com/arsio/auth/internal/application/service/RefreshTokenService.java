@@ -40,7 +40,7 @@ public class RefreshTokenService {
 
     public RefreshTokenResponse execute(RefreshTokenCommand command) {
         SessionId sessionId = tokenProvider.extractSessionId(command.refreshToken());
-        UserSession userSession = sessions.findBySessionId(sessionId.value());
+        UserSession userSession = sessions.findBySessionId(sessionId);
 
         if (userSession == null) throw new SessionNotFoundException("Sessão não encontrada");
 

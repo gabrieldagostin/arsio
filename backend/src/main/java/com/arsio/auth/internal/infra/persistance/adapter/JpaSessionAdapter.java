@@ -2,6 +2,8 @@ package com.arsio.auth.internal.infra.persistance.adapter;
 
 import com.arsio.auth.internal.application.port.output.SessionRepository;
 import com.arsio.auth.internal.domain.model.UserSession;
+import com.arsio.auth.internal.domain.valueobject.RefreshToken;
+import com.arsio.auth.internal.domain.valueobject.SessionId;
 import com.arsio.auth.internal.infra.persistance.entity.UserSessionEntity;
 import com.arsio.auth.internal.infra.persistance.mapper.UserSessionEntityMapper;
 import com.arsio.auth.internal.infra.persistance.repository.SpringDataUserSessionRepository;
@@ -26,8 +28,8 @@ public class JpaSessionAdapter implements SessionRepository {
     }
 
     @Override
-    public UserSession findBySessionId(UUID sessionId) {
-        UserSessionEntity userSessionEntity = sessions.findBySessionId(sessionId);
+    public UserSession findBySessionId(SessionId sessionId) {
+        UserSessionEntity userSessionEntity = sessions.findBySessionIdAndRevokedFalse(sessionId.value());
         return sessionMapper.toDomain(userSessionEntity);
     }
 

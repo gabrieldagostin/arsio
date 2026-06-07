@@ -53,4 +53,8 @@ public class UserSession {
     public void updateRefreshTokenHash(String newHash) {
         this.refreshTokenHash = new RefreshToken(newHash);
     }
+
+    public void logout() {
+        this.revoked = true;
+    }
 }

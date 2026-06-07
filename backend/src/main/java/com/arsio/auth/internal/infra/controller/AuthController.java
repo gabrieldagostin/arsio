@@ -2,9 +2,11 @@ package com.arsio.auth.internal.infra.controller;
 
 import com.arsio.auth.internal.application.dto.CreateUserCommand;
 import com.arsio.auth.internal.application.dto.LoginUserComand;
+import com.arsio.auth.internal.application.dto.LogoutCommand;
 import com.arsio.auth.internal.application.dto.RefreshTokenCommand;
 import com.arsio.auth.internal.application.service.CreateSessionService;
 import com.arsio.auth.internal.application.service.LoginUserService;
+import com.arsio.auth.internal.application.service.LogoutUserService;
 import com.arsio.auth.internal.application.service.RefreshTokenService;
 import com.arsio.auth.internal.infra.controller.dto.*;
 import com.arsio.auth.internal.infra.controller.mapper.AuthControllerMapper;
@@ -28,7 +30,7 @@ public class AuthController {
     private final CreateSessionService createSessionService;
     private final LoginUserService loginUserService;
     private final RefreshTokenService refreshTokenService;
-
+    private final LogoutUserService logoutUserService;
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody @Valid RegisterUserRequest request, UriComponentsBuilder builder) {
@@ -61,5 +63,15 @@ public class AuthController {
         RefreshTokenResponse response = refreshTokenService.execute(command);
 
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(@RequestBody @Valid LogoutRequest request) {
+
+        LogoutCommand command = authControllerMapper.toLogoutCommand(request);
+
+        logoutUserService.execute(command);
+
+        return ResponseEntity.noContent().build();
     }
 }

@@ -2,6 +2,7 @@ package com.arsio.auth.internal.infra.persistance.adapter;
 
 import com.arsio.auth.internal.application.port.output.UserAuthRepository;
 import com.arsio.auth.internal.domain.model.UserAuth;
+import com.arsio.auth.internal.domain.valueobject.RefreshToken;
 import com.arsio.auth.internal.infra.persistance.entity.UserAuthEntity;
 import com.arsio.auth.internal.infra.persistance.mapper.UserAuthEntityMapper;
 import com.arsio.auth.internal.infra.persistance.repository.SpringDataUserAuthRepository;
@@ -25,4 +26,5 @@ public class JpaUserAuthAdapter implements UserAuthRepository {
         Optional<UserAuthEntity> userAuthEntity = users.findById(id);
         return userAuthEntity.map(authMapper::toDomain);
     }
+
 }
