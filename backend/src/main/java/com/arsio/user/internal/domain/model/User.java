@@ -14,9 +14,10 @@ public class User {
     private Password password;
     private UserRole role;
     private String profileImageKey;
+    private boolean active;
 
 
-    public User(UserId id, Username username, String usernameNormalized, Email email, Password password, UserRole role, String profileImageKey) {
+    public User(UserId id, Username username, String usernameNormalized, Email email, Password password, UserRole role, String profileImageKey, boolean active) {
         this.id = id;
         this.username = username;
         this.usernameNormalized = usernameNormalized;
@@ -24,6 +25,7 @@ public class User {
         this.password = password;
         this.role = role;
         this.profileImageKey = profileImageKey;
+        this.active = active;
     }
 
     public static User createUser(
@@ -46,7 +48,8 @@ public class User {
                 emailVo,
                 passwordVo,
                 role,
-                null
+                null,
+                true
         );
     }
 

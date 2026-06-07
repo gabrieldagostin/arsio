@@ -18,7 +18,6 @@ public interface UserEntityMapper {
 
     @Mapping(target = "passwordHash", source = "password")
     @Mapping(target = "mpAccessToken", ignore = true)
-    @Mapping(target = "active", ignore = true)
     @Mapping(target = "lastLoginAt", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     UserEntity toEntity(User user);

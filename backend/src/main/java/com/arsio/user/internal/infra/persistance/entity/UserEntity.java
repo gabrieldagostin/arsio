@@ -51,8 +51,8 @@ public class UserEntity implements UserDetails {
     @Column(name = "profile_image_key")
     private String profileImageKey;
 
-    @Column(columnDefinition = "TRUE", nullable = false)
-    private boolean active;
+    @Column(columnDefinition = "BOOLEAN DEFAULT TRUE", nullable = false)
+    private boolean active = true;
 
     @Column(name = "last_login_at", nullable = false)
     private OffsetDateTime lastLoginAt;
