@@ -24,29 +24,29 @@ import java.util.UUID;
 @Service
 public class RefreshTokenService {
 
-    private final UserAuthRepository userAuthRepository;
+    private final UserAuthRepository users;
     private final TokenProvider tokenProvider;
-    private final SessionRepository sessionRepository;
+    private final SessionRepository sessions;
     private final Sha256TokenHasher tokenHasher;
     private final UserFacade userFacade;
 
-    public RefreshTokenService(UserAuthRepository userAuthRepository, TokenProvider tokenProvider, SessionRepository sessionRepository, Sha256TokenHasher tokenHasher, UserFacade userFacade) {
-        this.userAuthRepository = userAuthRepository;
+    public RefreshTokenService(UserAuthRepository users, TokenProvider tokenProvider, SessionRepository sessions, Sha256TokenHasher tokenHasher, UserFacade userFacade) {
+        this.users = users;
         this.tokenProvider = tokenProvider;
-        this.sessionRepository = sessionRepository;
+        this.sessions = sessions;
         this.tokenHasher = tokenHasher;
         this.userFacade = userFacade;
     }
 
     public RefreshTokenResponse execute(RefreshTokenCommand command) {
         SessionId sessionId = tokenProvider.extractSessionId(command.refreshToken());
-        UserSession userSession = sessionRepository.findBySessionId(sessionId.value());
+        UserSession userSession = sessions.findBySessionId(sessionId.value());
 
         if (userSession == null) throw new SessionNotFoundException("Sessão não encontrada");
 
         String subject = tokenProvider.extractSubject(command.refreshToken());
         UUID userId = userFacade.findUserByUsernameNormalized(subject);
-        Optional<UserAuth> userAuth = userAuthRepository.findUserById(userId);
+        Optional<UserAuth> userAuth = users.findUserById(userId);
 
         if (userAuth == null) throw new UserNotFoundException("Usuário não encontrado");
 
@@ -63,7 +63,7 @@ public class RefreshTokenService {
 
         userSession.updateRefreshTokenHash(newHash);
 
-        sessionRepository.save(userSession);
+        sessions.save(userSession);
 
         return new RefreshTokenResponse(
                 newAccessToken.value(),

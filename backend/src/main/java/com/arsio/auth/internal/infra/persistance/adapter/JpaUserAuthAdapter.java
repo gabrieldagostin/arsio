@@ -17,12 +17,12 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class JpaUserAuthAdapter implements UserAuthRepository {
 
-    private final SpringDataUserAuthRepository userAuthRepository;
-    private final UserAuthEntityMapper userAuthEntityMapper;
+    private final SpringDataUserAuthRepository users;
+    private final UserAuthEntityMapper authMapper;
 
     @Override
     public Optional<UserAuth> findUserById(UUID id) {
-        Optional<UserAuthEntity> userAuthEntity = userAuthRepository.findById(id);
-        return userAuthEntity.map(userAuthEntityMapper::toDomain);
+        Optional<UserAuthEntity> userAuthEntity = users.findById(id);
+        return userAuthEntity.map(authMapper::toDomain);
     }
 }

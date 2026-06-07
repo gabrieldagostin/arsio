@@ -14,12 +14,12 @@ import java.util.UUID;
 @Service
 public class SessionService {
 
-    private final SessionRepository sessionRepository;
+    private final SessionRepository sessions;
     private final TokenProperties tokenProperties;
     private final Sha256TokenHasher tokenHasher;
 
-    public SessionService(SessionRepository sessionRepository, TokenProperties tokenProperties, Sha256TokenHasher tokenHasher) {
-        this.sessionRepository = sessionRepository;
+    public SessionService(SessionRepository sessions, TokenProperties tokenProperties, Sha256TokenHasher tokenHasher) {
+        this.sessions = sessions;
         this.tokenProperties = tokenProperties;
         this.tokenHasher = tokenHasher;
     }
@@ -35,7 +35,7 @@ public class SessionService {
                 false
         );
 
-        sessionRepository.save(userSession);
+        sessions.save(userSession);
     }
 
 }

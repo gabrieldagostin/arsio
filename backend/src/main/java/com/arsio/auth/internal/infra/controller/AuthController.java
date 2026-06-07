@@ -24,7 +24,7 @@ import java.net.URI;
 @RequestMapping("/auth")
 public class AuthController {
 
-    private final AuthControllerMapper mapper;
+    private final AuthControllerMapper authControllerMapper;
     private final CreateSessionService createSessionService;
     private final LoginUserService loginUserService;
     private final RefreshTokenService refreshTokenService;
@@ -33,7 +33,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody @Valid RegisterUserRequest request, UriComponentsBuilder builder) {
 
-        CreateUserCommand command = mapper.toCreateUserCommand(request);
+        CreateUserCommand command = authControllerMapper.toCreateUserCommand(request);
 
         AuthenticationResponse response = createSessionService.execute(command);
 
@@ -46,7 +46,7 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(@RequestBody @Valid LoginUserRequest request, UriComponentsBuilder builder) {
 
-        LoginUserComand command = mapper.toLoginUserCommand(request);
+        LoginUserComand command = authControllerMapper.toLoginUserCommand(request);
 
         AuthenticationResponse response = loginUserService.execute(command);
 
@@ -56,11 +56,10 @@ public class AuthController {
     @PostMapping("/refresh")
     public ResponseEntity<RefreshTokenResponse> refreshToken(@RequestBody @Valid RefreshTokenRequest request) {
 
-        RefreshTokenCommand command = mapper.toRefreshTokenCommand(request);
+        RefreshTokenCommand command = authControllerMapper.toRefreshTokenCommand(request);
 
         RefreshTokenResponse response = refreshTokenService.execute(command);
 
         return ResponseEntity.ok(response);
     }
-
 }

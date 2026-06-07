@@ -16,19 +16,19 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class JpaSessionAdapter implements SessionRepository {
 
-    private final SpringDataUserSessionRepository userSessionRepository;
-    private final UserSessionEntityMapper mapper;
+    private final SpringDataUserSessionRepository sessions;
+    private final UserSessionEntityMapper sessionMapper;
 
     @Override
     public void save(UserSession userSession) {
-        UserSessionEntity userSessionEntity = mapper.toEntity(userSession);
-        userSessionRepository.save(userSessionEntity);
+        UserSessionEntity userSessionEntity = sessionMapper.toEntity(userSession);
+        sessions.save(userSessionEntity);
     }
 
     @Override
     public UserSession findBySessionId(UUID sessionId) {
-        UserSessionEntity userSessionEntity = userSessionRepository.findBySessionId(sessionId);
-        return mapper.toDomain(userSessionEntity);
+        UserSessionEntity userSessionEntity = sessions.findBySessionId(sessionId);
+        return sessionMapper.toDomain(userSessionEntity);
     }
 
 }

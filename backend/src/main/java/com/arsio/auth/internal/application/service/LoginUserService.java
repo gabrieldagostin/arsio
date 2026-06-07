@@ -21,14 +21,14 @@ import java.util.UUID;
 public class LoginUserService {
 
     private final AuthenticationManager authenticationManager;
-    private final UserAuthRepository userAuthRepository;
+    private final UserAuthRepository users;
     private final TokenProvider tokenProvider;
     private final SessionService sessionService;
     private final UserFacade userFacade;
 
-    public LoginUserService(AuthenticationManager authenticationManager, UserAuthRepository userAuthRepository, TokenProvider tokenProvider, SessionService sessionService, UserFacade userFacade) {
+    public LoginUserService(AuthenticationManager authenticationManager, UserAuthRepository users, TokenProvider tokenProvider, SessionService sessionService, UserFacade userFacade) {
         this.authenticationManager = authenticationManager;
-        this.userAuthRepository = userAuthRepository;
+        this.users = users;
         this.tokenProvider = tokenProvider;
         this.sessionService = sessionService;
         this.userFacade = userFacade;
@@ -41,7 +41,7 @@ public class LoginUserService {
 
         UUID userId = userFacade.findUserByUsernameNormalized(command.username());
 
-        Optional<UserAuth> userAuth = userAuthRepository.findUserById(userId);
+        Optional<UserAuth> userAuth = users.findUserById(userId);
 
         SessionId sessionId = SessionId.generate();
 

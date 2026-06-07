@@ -2,12 +2,8 @@ package com.arsio.auth.internal.infra.controller.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
-public record LoginUserRequest(
-
+public record LogoutRequest(
         @NotBlank
-        String username,
-
-        @NotBlank
-        String password
+        String refreshToken
 ) {
 }

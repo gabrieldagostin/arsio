@@ -13,23 +13,23 @@ import org.springframework.stereotype.Service;
 @Service
 public class CreateUserService {
 
-    private final UserRepository userRepository;
+    private final UserRepository users;
     private final PasswordEncoder passwordEncoder;
 
-    public CreateUserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
+    public CreateUserService(UserRepository users, PasswordEncoder passwordEncoder) {
+        this.users = users;
         this.passwordEncoder = passwordEncoder;
     }
 
     public User execute(CreateUserCommand command) {
 
-        boolean emailAlreadyExists = userRepository.existsByEmail(
+        boolean emailAlreadyExists = users.existsByEmail(
                 new Email(command.email())
         );
 
         if (emailAlreadyExists) throw new EmailAlreadyExistsException();
 
-        boolean usernameAlreadyExists = userRepository.existsByUsernameNormalized(
+        boolean usernameAlreadyExists = users.existsByUsernameNormalized(
                 new Username(command.username())
         );
 
@@ -43,7 +43,7 @@ public class CreateUserService {
                 passwordHash
         );
 
-        userRepository.save(user);
+        users.save(user);
 
         return user;
     }

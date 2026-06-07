@@ -17,41 +17,41 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class JpaUserRepositoryAdapter implements UserRepository {
 
-    private final SpringDataUserRepository repository;
-    private final UserEntityMapper mapper;
+    private final SpringDataUserRepository users;
+    private final UserEntityMapper userMapper;
 
     @Override
     public void save(User user) {
-        UserEntity entity = mapper.toEntity(user);
-        repository.save(entity);
+        UserEntity entity = userMapper.toEntity(user);
+        users.save(entity);
     }
 
     @Override
     public boolean existsByEmail(Email email) {
-        return repository.existsByEmail(
+        return users.existsByEmail(
                 email.value()
         );
     }
 
     @Override
     public boolean existsByUsernameNormalized(Username username) {
-        return repository.existsByUsernameNormalized(
+        return users.existsByUsernameNormalized(
                 username.getNormalized()
         );
     }
 
     @Override
     public UserDetails findUserDetailsByUsernameNormalized(String username) {
-        return repository.findUserDetailsByUsernameNormalized(
+        return users.findUserDetailsByUsernameNormalized(
                 new Username(username).getNormalized()
         );
     }
 
     @Override
     public User findUserByUsernameNormalized(String username) {
-        UserEntity entity = repository.findUserByUsernameNormalized(
+        UserEntity entity = users.findUserByUsernameNormalized(
                 new Username(username).getNormalized());
-        return mapper.toDomain(entity);
+        return userMapper.toDomain(entity);
     }
 
 

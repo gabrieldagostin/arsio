@@ -10,7 +10,10 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface AuthControllerMapper {
+
      CreateUserCommand toCreateUserCommand(RegisterUserRequest request);
+
      LoginUserComand toLoginUserCommand(LoginUserRequest request);
+
      RefreshTokenCommand toRefreshTokenCommand(RefreshTokenRequest request);
 }

@@ -14,11 +14,11 @@ import java.util.UUID;
 @Service
 public class UserFacadeImpl implements UserFacade {
 
-    private final UserRepository userRepository;
+    private final UserRepository users;
     private final CreateUserService createUserService;
 
-    public UserFacadeImpl(UserRepository userRepository, CreateUserService createUserService) {
-        this.userRepository = userRepository;
+    public UserFacadeImpl(UserRepository users, CreateUserService createUserService) {
+        this.users = users;
         this.createUserService = createUserService;
     }
 
@@ -40,12 +40,12 @@ public class UserFacadeImpl implements UserFacade {
 
     @Override
     public UUID findUserByUsernameNormalized(String username) {
-        User user = userRepository.findUserByUsernameNormalized(username);
+        User user = users.findUserByUsernameNormalized(username);
         return user.getId().value();
     }
 
     @Override
     public UserDetails findUserDetailsByUsernameNormalized(String username) {
-        return userRepository.findUserDetailsByUsernameNormalized(username);
+        return users.findUserDetailsByUsernameNormalized(username);
     }
 }

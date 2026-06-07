@@ -8,6 +8,8 @@ import org.mapstruct.ReportingPolicy;
 @Mapper(componentModel = "spring",
 typeConversionPolicy = ReportingPolicy.ERROR)
 public interface UserAuthMapper {
+
     UserAuth toDomain(UserCreatedResponse userCreatedResponse);
+
     UserCreatedResponse toResponse(UserAuth userAuth);
 }
