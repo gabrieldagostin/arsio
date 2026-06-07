@@ -1,11 +1,10 @@
 @ApplicationModule(
-        displayName = "Authentication Module",
+        displayName = "User Module",
         allowedDependencies = {
-                "user::api",
                 "config",
                 "shared"
         }
 )
-package com.arsio.auth;
+package com.arsio.user;
 
 import org.springframework.modulith.ApplicationModule;

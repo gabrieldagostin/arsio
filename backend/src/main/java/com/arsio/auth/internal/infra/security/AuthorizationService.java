@@ -1,6 +1,6 @@
 package com.arsio.auth.internal.infra.security;
 
-import com.arsio.auth.internal.application.port.output.UserRepository;
+import com.arsio.user.api.facade.UserFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,10 +11,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthorizationService implements UserDetailsService {
 
-    private final UserRepository repository;
+    private final UserFacade userFacade;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return repository.findUserDetailsByUsernameNormalized(username);
+        return userFacade.findUserDetailsByUsernameNormalized(username);
     }
 }

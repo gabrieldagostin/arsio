@@ -3,7 +3,7 @@ package com.arsio.auth.internal.infra.controller;
 import com.arsio.auth.internal.application.dto.CreateUserCommand;
 import com.arsio.auth.internal.application.dto.LoginUserComand;
 import com.arsio.auth.internal.application.dto.RefreshTokenCommand;
-import com.arsio.auth.internal.application.service.CreateUserService;
+import com.arsio.auth.internal.application.service.CreateSessionService;
 import com.arsio.auth.internal.application.service.LoginUserService;
 import com.arsio.auth.internal.application.service.RefreshTokenService;
 import com.arsio.auth.internal.infra.controller.dto.*;
@@ -25,7 +25,7 @@ import java.net.URI;
 public class AuthController {
 
     private final AuthControllerMapper mapper;
-    private final CreateUserService createUserService;
+    private final CreateSessionService createSessionService;
     private final LoginUserService loginUserService;
     private final RefreshTokenService refreshTokenService;
 
@@ -35,7 +35,7 @@ public class AuthController {
 
         CreateUserCommand command = mapper.toCreateUserCommand(request);
 
-        AuthenticationResponse response = createUserService.execute(command);
+        AuthenticationResponse response = createSessionService.execute(command);
 
         URI uri = builder.path("/users/{id}")
                 .buildAndExpand(response).toUri();
@@ -53,7 +53,7 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/refresh-token")
+    @PostMapping("/refresh")
     public ResponseEntity<RefreshTokenResponse> refreshToken(@RequestBody @Valid RefreshTokenRequest request) {
 
         RefreshTokenCommand command = mapper.toRefreshTokenCommand(request);

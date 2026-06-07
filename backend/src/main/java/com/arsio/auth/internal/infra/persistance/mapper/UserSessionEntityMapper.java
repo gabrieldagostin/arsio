@@ -3,15 +3,18 @@ package com.arsio.auth.internal.infra.persistance.mapper;
 import com.arsio.auth.internal.domain.model.UserSession;
 import com.arsio.auth.internal.domain.valueobject.RefreshToken;
 import com.arsio.auth.internal.domain.valueobject.SessionId;
-import com.arsio.auth.internal.domain.valueobject.UserId;
 import com.arsio.auth.internal.infra.persistance.entity.UserSessionEntity;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.ReportingPolicy;
 
 import java.util.UUID;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring",
+typeConversionPolicy = ReportingPolicy.ERROR)
 public interface UserSessionEntityMapper {
 
+    @Mapping(target = "createdAt", ignore = true)
     UserSessionEntity toEntity(UserSession userSession);
 
     UserSession toDomain(UserSessionEntity userSessionEntity);
@@ -22,14 +25,6 @@ public interface UserSessionEntityMapper {
 
     default SessionId uuidToSessionId(UUID value) {
         return new SessionId(value);
-    }
-
-    default UUID userIdToUuid(UserId userId) {
-        return userId.value();
-    }
-
-    default UserId uuidToUserId(UUID value) {
-        return new UserId(value);
     }
 
     default String refreshTokenToString(RefreshToken refreshToken) {

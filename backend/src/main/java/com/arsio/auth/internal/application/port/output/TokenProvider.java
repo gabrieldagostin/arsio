@@ -1,16 +1,18 @@
 package com.arsio.auth.internal.application.port.output;
 
-import com.arsio.auth.internal.domain.model.User;
+import com.arsio.auth.internal.domain.model.UserAuth;
 import com.arsio.auth.internal.domain.valueobject.AccessToken;
 import com.arsio.auth.internal.domain.valueobject.RefreshToken;
 import com.arsio.auth.internal.domain.valueobject.SessionId;
 
+import java.util.Optional;
+
 
 public interface TokenProvider {
 
-    AccessToken generateAccessToken(User user);
+    AccessToken generateAccessToken(Optional<UserAuth> user);
 
-    RefreshToken generateRefreshToken(User user, SessionId sessionId);
+    RefreshToken generateRefreshToken(Optional<UserAuth> user, SessionId sessionId);
 
     String extractSubject(String token);
 

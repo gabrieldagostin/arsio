@@ -1,8 +1,7 @@
 package com.arsio.config.security;
 
 import com.arsio.auth.api.facade.AuthFacade;
-import com.arsio.auth.internal.application.port.output.UserRepository;
-import com.arsio.auth.internal.infra.security.JwtTokenService;
+import com.arsio.user.internal.application.port.output.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -48,7 +47,7 @@ public class SecurityFilter extends OncePerRequestFilter {
                 || path.startsWith("/webjars")
                 || path.startsWith("/auth/login")
                 || path.startsWith("/auth/register")
-                || path.startsWith("/auth/refresh-token");
+                || path.startsWith("/auth/refresh");
     }
 
     private String recoverToken(HttpServletRequest request) {

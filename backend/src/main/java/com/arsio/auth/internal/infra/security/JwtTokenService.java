@@ -2,7 +2,7 @@ package com.arsio.auth.internal.infra.security;
 
 import com.arsio.auth.api.facade.AuthFacade;
 import com.arsio.auth.internal.application.port.output.TokenProvider;
-import com.arsio.auth.internal.domain.model.User;
+import com.arsio.auth.internal.domain.model.UserAuth;
 import com.arsio.auth.internal.domain.valueobject.AccessToken;
 import com.arsio.auth.internal.domain.valueobject.RefreshToken;
 import com.arsio.auth.internal.domain.valueobject.SessionId;
@@ -11,9 +11,11 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.UnknownNullability;
 import org.springframework.stereotype.Service;
 
 import java.time.*;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -23,12 +25,12 @@ public class JwtTokenService implements TokenProvider, AuthFacade {
     private final TokenProperties tokenProperties;
 
     @Override
-    public AccessToken generateAccessToken(User user) {
+    public AccessToken generateAccessToken(@UnknownNullability Optional<UserAuth> user) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(tokenProperties.getSecret());
             String token = JWT.create()
                     .withIssuer("arsio")
-                    .withSubject(user.getUsername().value())
+                    .withSubject(user.get().getUsername())
                     .withExpiresAt(genExpirationDate(tokenProperties.getAccessTokenExpiration()))
                     .sign(algorithm);
             return new AccessToken(token);
@@ -38,12 +40,12 @@ public class JwtTokenService implements TokenProvider, AuthFacade {
     }
 
     @Override
-    public RefreshToken generateRefreshToken(User user, SessionId sessionId) {
+    public RefreshToken generateRefreshToken(@UnknownNullability Optional<UserAuth> user, SessionId sessionId) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(tokenProperties.getSecret());
             String token = JWT.create()
                     .withIssuer("arsio")
-                    .withSubject(user.getUsername().value())
+                    .withSubject(user.get().getUsername())
                     .withClaim("session_id", sessionId.value().toString())
                     .withExpiresAt(genExpirationDate(tokenProperties.getRefreshTokenExpiration()))
                     .sign(algorithm);
