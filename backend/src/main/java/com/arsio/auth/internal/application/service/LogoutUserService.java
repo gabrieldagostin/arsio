@@ -1,13 +1,15 @@
 package com.arsio.auth.internal.application.service;
 
 import com.arsio.auth.internal.application.dto.LogoutCommand;
-import com.arsio.auth.internal.application.port.output.SessionRepository;
+import com.arsio.auth.internal.domain.repository.SessionRepository;
 import com.arsio.auth.internal.application.port.output.TokenProvider;
 import com.arsio.auth.internal.domain.model.UserSession;
 import com.arsio.auth.internal.domain.valueobject.SessionId;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class LogoutUserService {
 
     private final SessionRepository sessions;

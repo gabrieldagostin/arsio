@@ -1,7 +1,7 @@
 package com.arsio.user.internal.infra.persistance.adapter;
 
 import com.arsio.user.internal.domain.model.User;
-import com.arsio.user.internal.application.port.output.UserRepository;
+import com.arsio.user.internal.domain.repository.UserRepository;
 import com.arsio.user.internal.domain.valueobject.Email;
 import com.arsio.user.internal.domain.valueobject.Username;
 import com.arsio.user.internal.infra.persistance.entity.UserEntity;
@@ -12,8 +12,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
+import java.util.UUID;
+
 @Repository
-@Transactional
 @RequiredArgsConstructor
 public class JpaUserRepositoryAdapter implements UserRepository {
 
@@ -51,6 +52,12 @@ public class JpaUserRepositoryAdapter implements UserRepository {
     public User findUserByUsernameNormalized(String username) {
         UserEntity entity = users.findUserByUsernameNormalized(
                 new Username(username).getNormalized());
+        return userMapper.toDomain(entity);
+    }
+
+    @Override
+    public User findById(UUID id) {
+        UserEntity entity = users.findById(id).orElseThrow();
         return userMapper.toDomain(entity);
     }
 

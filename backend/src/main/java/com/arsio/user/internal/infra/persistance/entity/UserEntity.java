@@ -10,6 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.util.Collection;
 import java.util.List;
@@ -55,10 +56,10 @@ public class UserEntity implements UserDetails {
     private boolean active = true;
 
     @Column(name = "last_login_at", nullable = false)
-    private OffsetDateTime lastLoginAt;
+    private Instant lastLoginAt;
 
     @Column(name = "created_at", updatable = false, insertable = false, nullable = false)
-    private OffsetDateTime createdAt;
+    private Instant createdAt;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

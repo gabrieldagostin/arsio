@@ -2,7 +2,7 @@ package com.arsio.auth.internal.infra.controller.dto;
 
 public record AuthenticationResponse(
         String accessToken,
-        String refresh_token,
+        String refreshToken,
         AuthenticatedUserResponse userResponse
 ) {
 }

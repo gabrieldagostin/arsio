@@ -3,10 +3,10 @@ package com.arsio.auth.internal.application.service;
 import com.arsio.auth.internal.application.dto.RefreshTokenCommand;
 import com.arsio.auth.internal.application.exception.InvalidSessionException;
 import com.arsio.auth.internal.application.exception.SessionNotFoundException;
-import com.arsio.auth.internal.application.port.output.UserAuthRepository;
+import com.arsio.auth.internal.domain.repository.UserAuthRepository;
 import com.arsio.auth.internal.domain.model.UserAuth;
 import com.arsio.shared.exception.UserNotFoundException;
-import com.arsio.auth.internal.application.port.output.SessionRepository;
+import com.arsio.auth.internal.domain.repository.SessionRepository;
 import com.arsio.auth.internal.application.port.output.TokenProvider;
 import com.arsio.user.api.facade.UserFacade;
 import com.arsio.auth.internal.domain.exception.InvalidTokenException;
@@ -17,11 +17,13 @@ import com.arsio.auth.internal.domain.valueobject.SessionId;
 import com.arsio.auth.internal.infra.controller.dto.RefreshTokenResponse;
 import com.arsio.auth.internal.infra.security.Sha256TokenHasher;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@Transactional
 public class RefreshTokenService {
 
     private final UserAuthRepository users;
@@ -46,7 +48,7 @@ public class RefreshTokenService {
 
         String subject = tokenProvider.extractSubject(command.refreshToken());
         UUID userId = userFacade.findUserByUsernameNormalized(subject);
-        Optional<UserAuth> userAuth = users.findUserById(userId);
+        UserAuth userAuth = users.findUserById(userId);
 
         if (userAuth == null) throw new UserNotFoundException("Usuário não encontrado");
 

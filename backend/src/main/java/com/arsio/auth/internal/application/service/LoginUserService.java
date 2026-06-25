@@ -1,7 +1,7 @@
 package com.arsio.auth.internal.application.service;
 
 import com.arsio.auth.internal.application.port.output.TokenProvider;
-import com.arsio.auth.internal.application.port.output.UserAuthRepository;
+import com.arsio.auth.internal.domain.repository.UserAuthRepository;
 import com.arsio.auth.internal.domain.model.UserAuth;
 import com.arsio.user.api.facade.UserFacade;
 import com.arsio.auth.internal.domain.valueobject.AccessToken;
@@ -13,11 +13,13 @@ import com.arsio.auth.internal.application.dto.LoginUserComand;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@Transactional
 public class LoginUserService {
 
     private final AuthenticationManager authenticationManager;
@@ -41,23 +43,23 @@ public class LoginUserService {
 
         UUID userId = userFacade.findUserByUsernameNormalized(command.username());
 
-        Optional<UserAuth> userAuth = users.findUserById(userId);
+        UserAuth userAuth = users.findUserById(userId);
 
         SessionId sessionId = SessionId.generate();
 
         AccessToken accesstoken = tokenProvider.generateAccessToken(userAuth);
         RefreshToken refreshToken = tokenProvider.generateRefreshToken(userAuth, sessionId);
 
-        sessionService.save(userAuth.get().getId(), sessionId, refreshToken);
+        sessionService.save(userAuth.getId(), sessionId, refreshToken);
 
         return new AuthenticationResponse(
                 accesstoken.value(),
                 refreshToken.value(),
                 new AuthenticatedUserResponse(
-                        userAuth.get().getId(),
-                        userAuth.get().getUserRole(),
-                        userAuth.get().getUsername(),
-                        userAuth.get().getProfileImageKey())
+                        userAuth.getId().value(),
+                        userAuth.getRole(),
+                        userAuth.getUsername(),
+                        userAuth.getProfileImageKey())
         );
     }
 }

@@ -1,7 +1,7 @@
 package com.arsio.config.security;
 
 import com.arsio.auth.api.facade.AuthFacade;
-import com.arsio.user.internal.application.port.output.UserRepository;
+import com.arsio.user.internal.domain.repository.UserRepository;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

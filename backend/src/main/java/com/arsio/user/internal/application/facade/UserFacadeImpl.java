@@ -1,9 +1,11 @@
 package com.arsio.user.internal.application.facade;
 
 import com.arsio.user.api.dto.CreateUserCommand;
+import com.arsio.user.api.dto.UpdateUserPasswordHashCommand;
 import com.arsio.user.api.dto.UserCreatedResponse;
 import com.arsio.user.api.facade.UserFacade;
-import com.arsio.user.internal.application.port.output.UserRepository;
+import com.arsio.user.internal.application.service.UpdateUserPasswordHashService;
+import com.arsio.user.internal.domain.repository.UserRepository;
 import com.arsio.user.internal.application.service.CreateUserService;
 import com.arsio.user.internal.domain.model.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,10 +18,12 @@ public class UserFacadeImpl implements UserFacade {
 
     private final UserRepository users;
     private final CreateUserService createUserService;
+    private final UpdateUserPasswordHashService updateUserPasswordService;
 
-    public UserFacadeImpl(UserRepository users, CreateUserService createUserService) {
+    public UserFacadeImpl(UserRepository users, CreateUserService createUserService, UpdateUserPasswordHashService updateUserPasswordService) {
         this.users = users;
         this.createUserService = createUserService;
+        this.updateUserPasswordService = updateUserPasswordService;
     }
 
     @Override
@@ -47,5 +51,16 @@ public class UserFacadeImpl implements UserFacade {
     @Override
     public UserDetails findUserDetailsByUsernameNormalized(String username) {
         return users.findUserDetailsByUsernameNormalized(username);
+    }
+
+    @Override
+    public void updateUserPasswordHash(UUID id, String passwordHash) {
+
+        updateUserPasswordService.execute(
+                new UpdateUserPasswordHashCommand(
+                        id,
+                        passwordHash
+                )
+        );
     }
 }

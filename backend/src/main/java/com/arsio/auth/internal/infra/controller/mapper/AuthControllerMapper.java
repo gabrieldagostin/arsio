@@ -1,13 +1,7 @@
 package com.arsio.auth.internal.infra.controller.mapper;
 
-import com.arsio.auth.internal.application.dto.CreateUserCommand;
-import com.arsio.auth.internal.application.dto.LoginUserComand;
-import com.arsio.auth.internal.application.dto.LogoutCommand;
-import com.arsio.auth.internal.application.dto.RefreshTokenCommand;
-import com.arsio.auth.internal.infra.controller.dto.LoginUserRequest;
-import com.arsio.auth.internal.infra.controller.dto.LogoutRequest;
-import com.arsio.auth.internal.infra.controller.dto.RefreshTokenRequest;
-import com.arsio.auth.internal.infra.controller.dto.RegisterUserRequest;
+import com.arsio.auth.internal.application.dto.*;
+import com.arsio.auth.internal.infra.controller.dto.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
@@ -22,4 +16,8 @@ public interface AuthControllerMapper {
      RefreshTokenCommand toRefreshTokenCommand(RefreshTokenRequest request);
 
      LogoutCommand toLogoutCommand(LogoutRequest request);
+
+     ForgotPasswordCommand toForgotPasswordCommand(ForgotPasswordRequest request);
+
+     ResetPasswordCommand toResetPasswordCommand(ResetPasswordRequest request);
 }

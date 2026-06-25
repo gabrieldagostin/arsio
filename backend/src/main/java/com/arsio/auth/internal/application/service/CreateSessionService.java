@@ -10,10 +10,12 @@ import com.arsio.auth.internal.infra.controller.dto.AuthenticatedUserResponse;
 import com.arsio.auth.internal.infra.controller.dto.AuthenticationResponse;
 import com.arsio.auth.internal.application.dto.CreateUserCommand;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
+@Transactional
 public class CreateSessionService {
 
     private final TokenProvider tokenProvider;
@@ -40,8 +42,8 @@ public class CreateSessionService {
 
         SessionId sessionId = SessionId.generate();
 
-        AccessToken accesstoken = tokenProvider.generateAccessToken(Optional.ofNullable(userAuth));
-        RefreshToken refreshToken = tokenProvider.generateRefreshToken(Optional.ofNullable(userAuth), sessionId);
+        AccessToken accesstoken = tokenProvider.generateAccessToken(userAuth);
+        RefreshToken refreshToken = tokenProvider.generateRefreshToken(userAuth, sessionId);
 
         sessionService.save(userAuth.getId(), sessionId, refreshToken);
 
@@ -49,8 +51,8 @@ public class CreateSessionService {
                 accesstoken.value(),
                 refreshToken.value(),
                 new AuthenticatedUserResponse(
-                        userAuth.getId(),
-                        userAuth.getUserRole(),
+                        userAuth.getId().value(),
+                        userAuth.getRole(),
                         userAuth.getUsername(),
                         null
                 )

@@ -2,7 +2,7 @@ package com.arsio.user.internal.domain.model;
 
 import com.arsio.user.internal.domain.valueobject.Email;
 import com.arsio.user.internal.domain.valueobject.Password;
-import com.arsio.user.internal.domain.valueobject.UserId;
+import com.arsio.shared.valueobject.UserId;
 import com.arsio.user.internal.domain.valueobject.Username;
 
 public class User {
@@ -79,5 +79,13 @@ public class User {
 
     public String getProfileImageKey() {
         return profileImageKey;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void updatePassword(Password newPassword) {
+        this.password = newPassword;
     }
 }

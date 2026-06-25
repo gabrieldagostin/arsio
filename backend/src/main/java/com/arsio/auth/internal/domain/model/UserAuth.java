@@ -1,17 +1,19 @@
 package com.arsio.auth.internal.domain.model;
 
+import com.arsio.shared.valueobject.UserId;
+
 import java.util.UUID;
 
 public class UserAuth {
 
-    private final UUID id;
+    private final UserId id;
     private String username;
     private String email;
     private String passwordHash;
     private String role;
     private String profileImageKey;
 
-    public UserAuth(UUID id, String username, String email, String passwordHash, String role, String profileImageKey) {
+    public UserAuth(UserId id, String username, String email, String passwordHash, String role, String profileImageKey) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -20,7 +22,7 @@ public class UserAuth {
         this.profileImageKey = profileImageKey;
     }
 
-    public UUID getId() {
+    public UserId getId() {
         return id;
     }
 
@@ -36,7 +38,11 @@ public class UserAuth {
         return passwordHash;
     }
 
-    public String getUserRole() {
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
+    }
+
+    public String getRole() {
         return role;
     }
 

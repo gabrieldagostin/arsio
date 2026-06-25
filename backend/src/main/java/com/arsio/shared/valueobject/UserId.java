@@ -1,4 +1,4 @@
-package com.arsio.user.internal.domain.valueobject;
+package com.arsio.shared.valueobject;
 
 import java.util.UUID;
 

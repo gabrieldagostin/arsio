@@ -1,6 +1,6 @@
 CREATE TABLE user_sessions(
 
-    session_id UUID PRIMARY KEY NOT NULL,
+    session_id UUID PRIMARY KEY,
 
     user_id UUID NOT NULL,
 

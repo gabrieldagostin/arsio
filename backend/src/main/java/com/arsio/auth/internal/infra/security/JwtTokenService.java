@@ -27,12 +27,12 @@ public class JwtTokenService implements TokenProvider, AuthFacade {
     private final TokenProperties tokenProperties;
 
     @Override
-    public AccessToken generateAccessToken(@UnknownNullability Optional<UserAuth> user) {
+    public AccessToken generateAccessToken(UserAuth user) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(tokenProperties.getSecret());
             String token = JWT.create()
                     .withIssuer("arsio")
-                    .withSubject(user.get().getUsername())
+                    .withSubject(user.getUsername())
                     .withExpiresAt(genExpirationDate(tokenProperties.getAccessTokenExpiration()))
                     .sign(algorithm);
             return new AccessToken(token);
@@ -42,12 +42,12 @@ public class JwtTokenService implements TokenProvider, AuthFacade {
     }
 
     @Override
-    public RefreshToken generateRefreshToken(@UnknownNullability Optional<UserAuth> user, SessionId sessionId) {
+    public RefreshToken generateRefreshToken(UserAuth user, SessionId sessionId) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(tokenProperties.getSecret());
             String token = JWT.create()
                     .withIssuer("arsio")
-                    .withSubject(user.get().getUsername())
+                    .withSubject(user.getUsername())
                     .withClaim("session_id", sessionId.value().toString())
                     .withExpiresAt(genExpirationDate(tokenProperties.getRefreshTokenExpiration()))
                     .sign(algorithm);

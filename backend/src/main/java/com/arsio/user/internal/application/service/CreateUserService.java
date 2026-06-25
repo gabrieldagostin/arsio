@@ -3,14 +3,16 @@ package com.arsio.user.internal.application.service;
 import com.arsio.user.api.dto.CreateUserCommand;
 import com.arsio.user.internal.application.exception.EmailAlreadyExistsException;
 import com.arsio.user.internal.application.exception.UsernameUnavailableException;
-import com.arsio.user.internal.application.port.output.UserRepository;
+import com.arsio.user.internal.domain.repository.UserRepository;
 import com.arsio.user.internal.domain.model.User;
 import com.arsio.user.internal.domain.valueobject.Email;
 import com.arsio.user.internal.domain.valueobject.Username;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class CreateUserService {
 
     private final UserRepository users;

@@ -7,5 +7,5 @@ import java.util.UUID;
 
 public interface SpringDataUserSessionRepository extends JpaRepository<UserSessionEntity, UUID> {
 
-    UserSessionEntity findBySessionIdAndRevokedFalse(UUID sessionId);
+    UserSessionEntity findByIdAndRevokedFalse(UUID id);
 }

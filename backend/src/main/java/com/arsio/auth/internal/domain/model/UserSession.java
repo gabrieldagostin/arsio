@@ -2,20 +2,20 @@ package com.arsio.auth.internal.domain.model;
 
 import com.arsio.auth.internal.domain.valueobject.RefreshToken;
 import com.arsio.auth.internal.domain.valueobject.SessionId;
+import com.arsio.shared.valueobject.UserId;
 
 import java.time.Instant;
-import java.util.UUID;
 
 public class UserSession {
 
-    private final SessionId sessionId;
-    private final UUID userId;
+    private final SessionId id;
+    private final UserId userId;
     private RefreshToken refreshTokenHash;
     private Instant expiresAt;
     private boolean revoked;
 
-    public UserSession(SessionId sessionId, UUID userId, RefreshToken refreshTokenHash, Instant expiresAt, boolean revoked) {
-        this.sessionId = sessionId;
+    public UserSession(SessionId id, UserId userId, RefreshToken refreshTokenHash, Instant expiresAt, boolean revoked) {
+        this.id = id;
         this.userId = userId;
         this.refreshTokenHash = refreshTokenHash;
         this.expiresAt = expiresAt;
@@ -23,10 +23,10 @@ public class UserSession {
     }
 
     public SessionId getSessionId() {
-        return sessionId;
+        return id;
     }
 
-    public UUID getUserId() {
+    public UserId getUserId() {
         return userId;
     }
 

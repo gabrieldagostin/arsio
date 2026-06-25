@@ -12,4 +12,6 @@ public interface UserFacade {
     UUID findUserByUsernameNormalized(String username);
 
     UserDetails findUserDetailsByUsernameNormalized(String username);
+
+    void updateUserPasswordHash(UUID id, String passwordHash);
 }

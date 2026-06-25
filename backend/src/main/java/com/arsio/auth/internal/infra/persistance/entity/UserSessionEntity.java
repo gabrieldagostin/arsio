@@ -16,12 +16,12 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(of = "sessionId")
+@EqualsAndHashCode(of = "id")
 public class UserSessionEntity {
 
     @Id
-    @Column(name = "session_id", nullable = false)
-    private UUID sessionId;
+    @Column(nullable = false)
+    private UUID id;
 
     @Column(name = "user_id", nullable = false)
     private UUID userId;
@@ -36,6 +36,6 @@ public class UserSessionEntity {
     private Boolean revoked;
 
     @Column(name = "created_at", updatable = false, insertable = false, nullable = false)
-    private OffsetDateTime createdAt;
+    private Instant createdAt;
 
 }

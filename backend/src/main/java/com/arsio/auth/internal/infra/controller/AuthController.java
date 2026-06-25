@@ -1,13 +1,7 @@
 package com.arsio.auth.internal.infra.controller;
 
-import com.arsio.auth.internal.application.dto.CreateUserCommand;
-import com.arsio.auth.internal.application.dto.LoginUserComand;
-import com.arsio.auth.internal.application.dto.LogoutCommand;
-import com.arsio.auth.internal.application.dto.RefreshTokenCommand;
-import com.arsio.auth.internal.application.service.CreateSessionService;
-import com.arsio.auth.internal.application.service.LoginUserService;
-import com.arsio.auth.internal.application.service.LogoutUserService;
-import com.arsio.auth.internal.application.service.RefreshTokenService;
+import com.arsio.auth.internal.application.dto.*;
+import com.arsio.auth.internal.application.service.*;
 import com.arsio.auth.internal.infra.controller.dto.*;
 import com.arsio.auth.internal.infra.controller.mapper.AuthControllerMapper;
 import com.arsio.config.security.SecurityConfigurations;
@@ -26,16 +20,18 @@ import java.net.URI;
 @RequestMapping("/auth")
 public class AuthController {
 
-    private final AuthControllerMapper authControllerMapper;
+    private final AuthControllerMapper mapper;
     private final CreateSessionService createSessionService;
     private final LoginUserService loginUserService;
     private final RefreshTokenService refreshTokenService;
     private final LogoutUserService logoutUserService;
+    private final ForgotPasswordService forgotPasswordService;
+    private final ResetPasswordService resetPasswordService;
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody @Valid RegisterUserRequest request, UriComponentsBuilder builder) {
 
-        CreateUserCommand command = authControllerMapper.toCreateUserCommand(request);
+        CreateUserCommand command = mapper.toCreateUserCommand(request);
 
         AuthenticationResponse response = createSessionService.execute(command);
 
@@ -48,7 +44,7 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(@RequestBody @Valid LoginUserRequest request, UriComponentsBuilder builder) {
 
-        LoginUserComand command = authControllerMapper.toLoginUserCommand(request);
+        LoginUserComand command = mapper.toLoginUserCommand(request);
 
         AuthenticationResponse response = loginUserService.execute(command);
 
@@ -58,7 +54,7 @@ public class AuthController {
     @PostMapping("/refresh")
     public ResponseEntity<RefreshTokenResponse> refreshToken(@RequestBody @Valid RefreshTokenRequest request) {
 
-        RefreshTokenCommand command = authControllerMapper.toRefreshTokenCommand(request);
+        RefreshTokenCommand command = mapper.toRefreshTokenCommand(request);
 
         RefreshTokenResponse response = refreshTokenService.execute(command);
 
@@ -68,9 +64,29 @@ public class AuthController {
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(@RequestBody @Valid LogoutRequest request) {
 
-        LogoutCommand command = authControllerMapper.toLogoutCommand(request);
+        LogoutCommand command = mapper.toLogoutCommand(request);
 
         logoutUserService.execute(command);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<Void> forgotPassword(@RequestBody @Valid ForgotPasswordRequest request) {
+
+        ForgotPasswordCommand command = mapper.toForgotPasswordCommand(request);
+
+        forgotPasswordService.execute(command);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<Void> resetPassword(@RequestBody @Valid ResetPasswordRequest request) {
+
+        ResetPasswordCommand command = mapper.toResetPasswordCommand(request);
+
+        resetPasswordService.execute(command);
 
         return ResponseEntity.noContent().build();
     }

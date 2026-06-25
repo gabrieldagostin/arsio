@@ -10,9 +10,9 @@ import java.util.Optional;
 
 public interface TokenProvider {
 
-    AccessToken generateAccessToken(Optional<UserAuth> user);
+    AccessToken generateAccessToken(UserAuth user);
 
-    RefreshToken generateRefreshToken(Optional<UserAuth> user, SessionId sessionId);
+    RefreshToken generateRefreshToken(UserAuth user, SessionId sessionId);
 
     String extractSubject(String token);
 
