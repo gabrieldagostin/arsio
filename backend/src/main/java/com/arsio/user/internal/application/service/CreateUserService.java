@@ -31,7 +31,7 @@ public class CreateUserService {
 
         if (emailAlreadyExists) throw new EmailAlreadyExistsException();
 
-        boolean usernameAlreadyExists = users.existsByUsernameNormalized(
+        boolean usernameAlreadyExists = users.existsByUsername(
                 new Username(command.username())
         );
 

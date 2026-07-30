@@ -39,5 +39,4 @@ public class SessionService {
 
         sessions.save(userSession);
     }
-
 }

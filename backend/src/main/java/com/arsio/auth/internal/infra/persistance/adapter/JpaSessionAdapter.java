@@ -9,23 +9,25 @@ import com.arsio.auth.internal.infra.persistance.repository.SpringDataUserSessio
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 @RequiredArgsConstructor
 public class JpaSessionAdapter implements SessionRepository {
 
     private final SpringDataUserSessionRepository sessions;
-    private final UserSessionEntityMapper sessionMapper;
+    private final UserSessionEntityMapper mapper;
 
     @Override
     public void save(UserSession userSession) {
-        UserSessionEntity userSessionEntity = sessionMapper.toEntity(userSession);
+        UserSessionEntity userSessionEntity = mapper.toEntity(userSession);
         sessions.save(userSessionEntity);
     }
 
     @Override
-    public UserSession findBySessionId(SessionId sessionId) {
-        UserSessionEntity userSessionEntity = sessions.findByIdAndRevokedFalse(sessionId.value());
-        return sessionMapper.toDomain(userSessionEntity);
+    public Optional<UserSession> findBySessionId(SessionId sessionId) {
+        return sessions.findByIdAndRevokedFalse(sessionId.value())
+                .map(mapper::toDomain);
     }
 
 }

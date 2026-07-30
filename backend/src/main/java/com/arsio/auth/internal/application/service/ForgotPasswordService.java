@@ -8,6 +8,7 @@ import com.arsio.auth.internal.domain.model.PasswordResetToken;
 import com.arsio.auth.internal.domain.model.UserAuth;
 import com.arsio.auth.internal.domain.valueobject.PasswordToken;
 import com.arsio.shared.config.FrontendProperties;
+import com.arsio.shared.exception.UserNotFoundException;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,7 +33,8 @@ public class ForgotPasswordService {
 
     public void execute(ForgotPasswordCommand command) {
 
-        UserAuth userAuth = users.findUserByEmail(command.email());
+        UserAuth userAuth = users.findUserByEmail(command.email())
+                .orElseThrow(UserNotFoundException::new);
 
         PasswordToken passwordToken = new PasswordToken(UUID.randomUUID().toString());
 
@@ -50,6 +52,5 @@ public class ForgotPasswordService {
                         resetLink
                 )
         );
-
     }
 }

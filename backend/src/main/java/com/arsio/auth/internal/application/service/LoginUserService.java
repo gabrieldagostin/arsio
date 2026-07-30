@@ -3,7 +3,7 @@ package com.arsio.auth.internal.application.service;
 import com.arsio.auth.internal.application.port.output.TokenProvider;
 import com.arsio.auth.internal.domain.repository.UserAuthRepository;
 import com.arsio.auth.internal.domain.model.UserAuth;
-import com.arsio.user.api.facade.UserFacade;
+import com.arsio.shared.exception.UserNotFoundException;
 import com.arsio.auth.internal.domain.valueobject.AccessToken;
 import com.arsio.auth.internal.domain.valueobject.RefreshToken;
 import com.arsio.auth.internal.domain.valueobject.SessionId;
@@ -15,9 +15,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-import java.util.UUID;
-
 @Service
 @Transactional
 public class LoginUserService {
@@ -26,14 +23,12 @@ public class LoginUserService {
     private final UserAuthRepository users;
     private final TokenProvider tokenProvider;
     private final SessionService sessionService;
-    private final UserFacade userFacade;
 
-    public LoginUserService(AuthenticationManager authenticationManager, UserAuthRepository users, TokenProvider tokenProvider, SessionService sessionService, UserFacade userFacade) {
+    public LoginUserService(AuthenticationManager authenticationManager, UserAuthRepository users, TokenProvider tokenProvider, SessionService sessionService) {
         this.authenticationManager = authenticationManager;
         this.users = users;
         this.tokenProvider = tokenProvider;
         this.sessionService = sessionService;
-        this.userFacade = userFacade;
     }
 
     public AuthenticationResponse execute(LoginUserComand command) {
@@ -41,9 +36,8 @@ public class LoginUserService {
         var usernamePassword = new UsernamePasswordAuthenticationToken(command.username(), command.password());
         authenticationManager.authenticate(usernamePassword);
 
-        UUID userId = userFacade.findUserByUsernameNormalized(command.username());
-
-        UserAuth userAuth = users.findUserById(userId);
+        UserAuth userAuth = users.findAuthenticationDataByUsername(command.username())
+                .orElseThrow(UserNotFoundException::new);
 
         SessionId sessionId = SessionId.generate();
 

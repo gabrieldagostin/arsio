@@ -11,7 +11,7 @@ public class UserSession {
     private final SessionId id;
     private final UserId userId;
     private RefreshToken refreshTokenHash;
-    private Instant expiresAt;
+    private final Instant expiresAt;
     private boolean revoked;
 
     public UserSession(SessionId id, UserId userId, RefreshToken refreshTokenHash, Instant expiresAt, boolean revoked) {

@@ -1,14 +1,13 @@
 package com.arsio.auth.internal.application.service;
 
 import com.arsio.auth.internal.application.dto.RefreshTokenCommand;
-import com.arsio.auth.internal.application.exception.InvalidSessionException;
+import com.arsio.auth.internal.domain.exception.SessionNotActiveException;
 import com.arsio.auth.internal.application.exception.SessionNotFoundException;
 import com.arsio.auth.internal.domain.repository.UserAuthRepository;
 import com.arsio.auth.internal.domain.model.UserAuth;
 import com.arsio.shared.exception.UserNotFoundException;
 import com.arsio.auth.internal.domain.repository.SessionRepository;
 import com.arsio.auth.internal.application.port.output.TokenProvider;
-import com.arsio.user.api.facade.UserFacade;
 import com.arsio.auth.internal.domain.exception.InvalidTokenException;
 import com.arsio.auth.internal.domain.model.UserSession;
 import com.arsio.auth.internal.domain.valueobject.AccessToken;
@@ -19,9 +18,6 @@ import com.arsio.auth.internal.infra.security.Sha256TokenHasher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-import java.util.UUID;
-
 @Service
 @Transactional
 public class RefreshTokenService {
@@ -30,33 +26,28 @@ public class RefreshTokenService {
     private final TokenProvider tokenProvider;
     private final SessionRepository sessions;
     private final Sha256TokenHasher tokenHasher;
-    private final UserFacade userFacade;
 
-    public RefreshTokenService(UserAuthRepository users, TokenProvider tokenProvider, SessionRepository sessions, Sha256TokenHasher tokenHasher, UserFacade userFacade) {
+    public RefreshTokenService(UserAuthRepository users, TokenProvider tokenProvider, SessionRepository sessions, Sha256TokenHasher tokenHasher) {
         this.users = users;
         this.tokenProvider = tokenProvider;
         this.sessions = sessions;
         this.tokenHasher = tokenHasher;
-        this.userFacade = userFacade;
     }
 
     public RefreshTokenResponse execute(RefreshTokenCommand command) {
         SessionId sessionId = tokenProvider.extractSessionId(command.refreshToken());
-        UserSession userSession = sessions.findBySessionId(sessionId);
-
-        if (userSession == null) throw new SessionNotFoundException("Sessão não encontrada");
+        UserSession userSession = sessions.findBySessionId(sessionId)
+                .orElseThrow(SessionNotFoundException::new);
 
         String subject = tokenProvider.extractSubject(command.refreshToken());
-        UUID userId = userFacade.findUserByUsernameNormalized(subject);
-        UserAuth userAuth = users.findUserById(userId);
-
-        if (userAuth == null) throw new UserNotFoundException("Usuário não encontrado");
+        UserAuth userAuth = users.findAuthenticationDataByUsername(subject)
+                .orElseThrow(UserNotFoundException::new);
 
         String receivedHash = tokenHasher.hash(command.refreshToken());
         if (!receivedHash.equals(userSession.getRefreshTokenHash().value()))
-        throw new InvalidTokenException("Invalid Refresh Token");
+            throw new InvalidTokenException();
 
-        if (!userSession.isActive()) throw new InvalidSessionException("Sessão inválida");
+        if (!userSession.isActive()) throw new SessionNotActiveException("Session is revoked or expired.");
 
         AccessToken newAccessToken = tokenProvider.generateAccessToken(userAuth);
         RefreshToken newRefreshToken = tokenProvider.generateRefreshToken(userAuth, sessionId);

@@ -12,18 +12,16 @@ import com.arsio.auth.internal.application.dto.CreateUserCommand;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Service
 @Transactional
-public class CreateSessionService {
+public class RegisterUserService {
 
     private final TokenProvider tokenProvider;
     private final SessionService sessionService;
     private final UserFacade userFacade;
     private final UserAuthMapper userAuthMapper;
 
-    public CreateSessionService(TokenProvider tokenProvider, SessionService sessionService, UserFacade userFacade, UserAuthMapper userAuthMapper) {
+    public RegisterUserService(TokenProvider tokenProvider, SessionService sessionService, UserFacade userFacade, UserAuthMapper userAuthMapper) {
         this.tokenProvider = tokenProvider;
         this.sessionService = sessionService;
         this.userFacade = userFacade;

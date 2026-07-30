@@ -2,8 +2,6 @@ package com.arsio.auth.internal.domain.model;
 
 import com.arsio.shared.valueobject.UserId;
 
-import java.util.UUID;
-
 public class UserAuth {
 
     private final UserId id;

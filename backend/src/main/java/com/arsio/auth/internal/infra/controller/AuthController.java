@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -21,7 +22,7 @@ import java.net.URI;
 public class AuthController {
 
     private final AuthControllerMapper mapper;
-    private final CreateSessionService createSessionService;
+    private final RegisterUserService registerUserService;
     private final LoginUserService loginUserService;
     private final RefreshTokenService refreshTokenService;
     private final LogoutUserService logoutUserService;
@@ -33,7 +34,7 @@ public class AuthController {
 
         CreateUserCommand command = mapper.toCreateUserCommand(request);
 
-        AuthenticationResponse response = createSessionService.execute(command);
+        AuthenticationResponse response = registerUserService.execute(command);
 
         URI uri = builder.path("/users/{id}")
                 .buildAndExpand(response).toUri();
@@ -61,6 +62,7 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(@RequestBody @Valid LogoutRequest request) {
 

@@ -44,5 +44,4 @@ public interface UserSessionEntityMapper {
     default RefreshToken stringToRefreshToken(String value) {
         return new RefreshToken(value);
     }
-
 }

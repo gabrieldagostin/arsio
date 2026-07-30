@@ -1,5 +1,6 @@
 package com.arsio.auth.internal.infra.security;
 
+import com.arsio.shared.exception.UserNotFoundException;
 import com.arsio.user.api.facade.UserFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,6 +16,7 @@ public class AuthorizationService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userFacade.findUserDetailsByUsernameNormalized(username);
+        return userFacade.findUserDetailsByUsername(username)
+                .orElseThrow(UserNotFoundException::new);
     }
 }

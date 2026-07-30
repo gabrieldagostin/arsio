@@ -1,11 +1,12 @@
 package com.arsio.user.internal.domain.repository;
 
+import com.arsio.shared.valueobject.UserId;
 import com.arsio.user.internal.domain.model.User;
 import com.arsio.user.internal.domain.valueobject.Email;
 import com.arsio.user.internal.domain.valueobject.Username;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.UUID;
+import java.util.Optional;
 
 public interface UserRepository {
 
@@ -13,11 +14,11 @@ public interface UserRepository {
 
     boolean existsByEmail(Email email);
 
-    boolean existsByUsernameNormalized(Username username);
+    boolean existsByUsername(Username username);
 
-    UserDetails findUserDetailsByUsernameNormalized(String username);
+    Optional<UserDetails> findUserDetailsByUsername(String username);
 
-    User findUserByUsernameNormalized(String username);
+    Optional<User> findUserByUsername(Username username);
 
-    User findById(UUID id);
+    Optional<User> findById(UserId id);
 }

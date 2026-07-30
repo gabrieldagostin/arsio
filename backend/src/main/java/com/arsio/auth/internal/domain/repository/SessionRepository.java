@@ -3,10 +3,11 @@ package com.arsio.auth.internal.domain.repository;
 import com.arsio.auth.internal.domain.model.UserSession;
 import com.arsio.auth.internal.domain.valueobject.SessionId;
 
+import java.util.Optional;
+
 public interface SessionRepository {
 
     void save(UserSession userSession);
 
-    UserSession findBySessionId(SessionId sessionId);
-
+    Optional<UserSession> findBySessionId(SessionId sessionId);
 }

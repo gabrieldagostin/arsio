@@ -8,8 +8,8 @@ public enum UserRole {
     USER(1, "User"),
     DEV(2, "Dev");
 
-    private Integer cod;
-    private String description;
+    private final Integer cod;
+    private final String description;
 
     UserRole(Integer cod, String description) {
         this.cod = cod;

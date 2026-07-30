@@ -1,8 +1,9 @@
 package com.arsio.auth.internal.infra.security;
 
 import com.arsio.auth.api.facade.AuthFacade;
+import com.arsio.auth.internal.application.exception.JwtGenarationException;
+import com.arsio.auth.internal.application.exception.JwtParsingException;
 import com.arsio.auth.internal.application.port.output.TokenProvider;
-import com.arsio.auth.internal.domain.exception.InvalidTokenException;
 import com.arsio.auth.internal.domain.model.UserAuth;
 import com.arsio.auth.internal.domain.valueobject.AccessToken;
 import com.arsio.auth.internal.domain.valueobject.RefreshToken;
@@ -10,14 +11,11 @@ import com.arsio.auth.internal.domain.valueobject.SessionId;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
-import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import lombok.RequiredArgsConstructor;
-import org.jetbrains.annotations.UnknownNullability;
 import org.springframework.stereotype.Service;
 
 import java.time.*;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -37,7 +35,7 @@ public class JwtTokenService implements TokenProvider, AuthFacade {
                     .sign(algorithm);
             return new AccessToken(token);
         } catch (JWTCreationException exception) {
-            throw new RuntimeException("Error while generating token", exception);
+            throw new JwtGenarationException("Error while generating token.");
         }
     }
 
@@ -53,7 +51,7 @@ public class JwtTokenService implements TokenProvider, AuthFacade {
                     .sign(algorithm);
             return new RefreshToken(token);
         } catch (JWTCreationException exception) {
-            throw new RuntimeException("Error while generating refresh token", exception);
+            throw new JwtGenarationException("Error while generating refresh token.");
         }
     }
 
@@ -69,7 +67,7 @@ public class JwtTokenService implements TokenProvider, AuthFacade {
 
             return subject;
         } catch (JWTVerificationException exception) {
-            throw new InvalidTokenException("Error while extracting subject ", exception);
+            throw new JwtParsingException("Error while extracting subject.");
         }
     }
 
@@ -84,7 +82,7 @@ public class JwtTokenService implements TokenProvider, AuthFacade {
                             .getClaim("session_id").asString());
             return new SessionId(value);
         } catch (JWTVerificationException exception) {
-            throw new InvalidTokenException("Error while extracting session_id ", exception);
+            throw new JwtParsingException("Error while extracting session_id.");
         }
     }
 

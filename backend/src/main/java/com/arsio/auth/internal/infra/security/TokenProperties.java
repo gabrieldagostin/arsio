@@ -16,5 +16,4 @@ public class TokenProperties {
     private String secret;
     private Duration accessTokenExpiration;
     private Duration refreshTokenExpiration;
-
 }
