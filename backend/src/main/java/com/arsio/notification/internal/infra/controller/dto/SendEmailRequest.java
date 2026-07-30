@@ -4,13 +4,13 @@ import jakarta.validation.constraints.NotBlank;
 
 public record SendEmailRequest(
 
-        @NotBlank
+        @NotBlank(message = "{to.required}")
         String to,
 
-        @NotBlank
+        @NotBlank(message = "{subject.required}")
         String subject,
 
-        @NotBlank
+        @NotBlank(message = "{body.required}")
         String body
 ) {
 }

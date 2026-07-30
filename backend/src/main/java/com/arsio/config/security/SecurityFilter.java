@@ -1,7 +1,9 @@
 package com.arsio.config.security;
 
 import com.arsio.auth.api.facade.AuthFacade;
+import com.arsio.shared.exception.UserNotFoundException;
 import com.arsio.user.internal.domain.repository.UserRepository;
+import com.arsio.user.internal.domain.valueobject.Username;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -32,7 +34,8 @@ public class SecurityFilter extends OncePerRequestFilter {
             try {
                 var subject = authFacade.extractSubject(token);
 
-                UserDetails userDetails = users.findUserDetailsByUsernameNormalized(subject);
+                UserDetails userDetails = users.findUserDetailsByUsername(subject)
+                        .orElseThrow(UserNotFoundException::new);
 
                 var authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);

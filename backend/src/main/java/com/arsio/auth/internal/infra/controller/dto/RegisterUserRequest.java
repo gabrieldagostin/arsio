@@ -4,17 +4,22 @@ import jakarta.validation.constraints.*;
 
 public record RegisterUserRequest(
 
-        @Size(min = 6, max = 50)
-        @NotBlank
+        @NotBlank(message = "{username.required}")
+        @Size(min = 6,
+                max = 50,
+                message = "{username.size}")
         String username,
 
-        @Email
-        @Size(max = 320)
-        @NotBlank
+        @NotBlank(message = "{email.require}")
+        @Email(message = "{email.format}")
+        @Size(max = 320,
+                message = "{email.size}")
         String email,
 
-        @Size(min = 8, max = 72)
-        @NotBlank
+        @NotBlank(message = "{password.require}")
+        @Size(min = 8,
+                max = 72,
+                message = "{password.size}")
         String password
 ) {
 }

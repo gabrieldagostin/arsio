@@ -7,7 +7,6 @@ import jakarta.persistence.Table;
 import lombok.*;
 
 import java.time.Instant;
-import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Table(name = "notifications")
@@ -23,7 +22,8 @@ public class NotificationEntity {
     @Column(nullable = false)
     private UUID id;
 
-    @Column(name = "user_id", nullable = false)
+    @Column(name = "user_id",
+            nullable = false)
     private UUID userId;
 
     @Column(nullable = false)
@@ -35,6 +35,9 @@ public class NotificationEntity {
     @Column(nullable = false)
     private boolean read;
 
-    @Column(name = "created_at", nullable = false, updatable = false)
+    @Column(name = "created_at",
+            nullable = false,
+            insertable = false,
+            updatable = false)
     private Instant createdAt;
 }

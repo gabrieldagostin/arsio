@@ -4,10 +4,10 @@ import jakarta.validation.constraints.NotBlank;
 
 public record LoginUserRequest(
 
-        @NotBlank
+        @NotBlank(message = "{username.require}")
         String username,
 
-        @NotBlank
+        @NotBlank(message = "{password.require}")
         String password
 ) {
 }

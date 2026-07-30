@@ -8,6 +8,7 @@ public record AuthenticatedUserResponse(
         String username,
         String avatarUrl
 ) {
+
     public AuthenticatedUserResponse(UUID id, String role, String username, String avatarUrl) {
         this.id = id;
         this.role = role;

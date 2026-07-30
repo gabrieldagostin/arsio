@@ -4,10 +4,10 @@ import jakarta.validation.constraints.NotBlank;
 
 public record ResetPasswordRequest(
 
-        @NotBlank
+        @NotBlank(message = "{resetToken.require}")
         String token,
 
-        @NotBlank
+        @NotBlank(message = "{password.require}")
         String newPassword
 ) {
 }

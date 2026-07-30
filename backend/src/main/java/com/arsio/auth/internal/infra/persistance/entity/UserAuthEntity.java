@@ -1,10 +1,7 @@
 package com.arsio.auth.internal.infra.persistance.entity;
 
-import com.arsio.user.internal.domain.model.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
 
 import java.util.UUID;
 
@@ -24,10 +21,13 @@ public class UserAuthEntity {
     @Column(nullable = false)
     private String username;
 
-    @Column(columnDefinition = "citext", nullable = false)
+    @Column(columnDefinition = "citext",
+            nullable = false,
+            unique = true)
     private String email;
 
-    @Column(name = "password_hash", nullable = false)
+    @Column(name = "password_hash",
+            nullable = false)
     private String passwordHash;
 
     @Column(nullable = false)
@@ -35,5 +35,4 @@ public class UserAuthEntity {
 
     @Column(name = "profile_image_key")
     private String profileImageKey;
-
 }
