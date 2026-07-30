@@ -8,11 +8,13 @@ public record AccessToken(String value) {
         validate(value);
     }
 
-    private static String validate(String value) {
-        if (value == null || value.isBlank()){
-            throw new InvalidTokenException("Valor do token não valido");
-        }
-        return value;
+    private static void validate(String value) {
+        if (value == null || value.isBlank())
+            throw new InvalidTokenException();
     }
 
+    @Override
+    public String toString() {
+        return "AccessToken[PROTECTED]";
+    }
 }

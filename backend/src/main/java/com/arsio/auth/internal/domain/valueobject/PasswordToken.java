@@ -8,11 +8,13 @@ public record PasswordToken(String value) {
         validate(value);
     }
 
-    private String validate(String value) {
+    private static void validate(String value) {
+        if (value == null || value.isBlank())
+            throw new InvalidTokenException();
+    }
 
-        if (value.isBlank() || value == null)
-            throw new InvalidTokenException("Password Token inválido");
-
-        return value;
+    @Override
+    public String toString() {
+        return "PasswordToken[PROTECTED]";
     }
 }

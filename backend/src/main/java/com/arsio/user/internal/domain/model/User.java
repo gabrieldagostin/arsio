@@ -1,7 +1,7 @@
 package com.arsio.user.internal.domain.model;
 
 import com.arsio.user.internal.domain.valueobject.Email;
-import com.arsio.user.internal.domain.valueobject.Password;
+import com.arsio.user.internal.domain.valueobject.PasswordHash;
 import com.arsio.shared.valueobject.UserId;
 import com.arsio.user.internal.domain.valueobject.Username;
 
@@ -11,18 +11,18 @@ public class User {
     private Username username;
     private String usernameNormalized;
     private Email email;
-    private Password password;
+    private PasswordHash passwordHash;
     private UserRole role;
     private String profileImageKey;
     private boolean active;
 
 
-    public User(UserId id, Username username, String usernameNormalized, Email email, Password password, UserRole role, String profileImageKey, boolean active) {
+    public User(UserId id, Username username, String usernameNormalized, Email email, PasswordHash passwordHash, UserRole role, String profileImageKey, boolean active) {
         this.id = id;
         this.username = username;
         this.usernameNormalized = usernameNormalized;
         this.email = email;
-        this.password = password;
+        this.passwordHash = passwordHash;
         this.role = role;
         this.profileImageKey = profileImageKey;
         this.active = active;
@@ -38,7 +38,7 @@ public class User {
         Username usernameVo = new Username(username);
         String usernameNormalizedVo = new Username(username).getNormalized();
         Email emailVo = new Email(email);
-        Password passwordVo = new Password(passwordHash);
+        PasswordHash passwordHashVo = new PasswordHash(passwordHash);
         UserRole role = UserRole.USER;
 
         return new User(
@@ -46,7 +46,7 @@ public class User {
                 usernameVo,
                 usernameNormalizedVo,
                 emailVo,
-                passwordVo,
+                passwordHashVo,
                 role,
                 null,
                 true
@@ -69,8 +69,8 @@ public class User {
         return email;
     }
 
-    public Password getPassword() {
-        return password;
+    public PasswordHash getPassword() {
+        return passwordHash;
     }
 
     public UserRole getRole() {
@@ -85,7 +85,7 @@ public class User {
         return active;
     }
 
-    public void updatePassword(Password newPassword) {
-        this.password = newPassword;
+    public void updatePassword(PasswordHash newPasswordHash) {
+        this.passwordHash = newPasswordHash;
     }
 }

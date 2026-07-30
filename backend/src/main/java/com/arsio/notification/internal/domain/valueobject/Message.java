@@ -5,12 +5,17 @@ import com.arsio.notification.internal.domain.exception.InvalidMessageException;
 public record Message(String value) {
 
     public Message {
+        value = value == null ? null : value.trim();
         validate(value);
     }
 
-    private String validate(String value) {
-        if (value.isBlank() || value == null) throw new InvalidMessageException("Mensagem da Notificação Inválida");
+    private static void validate(String value) {
+        if (value == null || value.isBlank())
+            throw new InvalidMessageException();
+    }
 
-        return value;
+    @Override
+    public String toString() {
+        return "Message[PROTECTED]";
     }
 }

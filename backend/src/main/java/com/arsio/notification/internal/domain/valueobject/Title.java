@@ -5,12 +5,17 @@ import com.arsio.notification.internal.domain.exception.InvalidTitleException;
 public record Title(String value) {
 
     public Title {
+        value = value == null ? null : value.trim();
         validate(value);
     }
 
-    private String validate(String value) {
-        if (value.isBlank() || value == null) throw new InvalidTitleException("Titulo de Notificação Inválido");
+    private static void validate(String value) {
+        if (value == null || value.isBlank())
+            throw new InvalidTitleException();
+    }
 
-        return value;
+    @Override
+    public String toString() {
+        return "Title[PROTECTED]";
     }
 }
