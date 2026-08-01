@@ -2,13 +2,13 @@ package com.arsio.auth.internal.application.service;
 
 import com.arsio.auth.internal.application.dto.ForgotPasswordCommand;
 import com.arsio.auth.internal.application.event.PasswordResetEvent;
+import com.arsio.auth.internal.domain.exception.InvalidCredentialException;
 import com.arsio.auth.internal.domain.repository.PasswordResetTokenRepository;
 import com.arsio.auth.internal.domain.repository.UserAuthRepository;
 import com.arsio.auth.internal.domain.model.PasswordResetToken;
 import com.arsio.auth.internal.domain.model.UserAuth;
 import com.arsio.auth.internal.domain.valueobject.PasswordToken;
 import com.arsio.shared.config.FrontendProperties;
-import com.arsio.shared.exception.UserNotFoundException;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +34,7 @@ public class ForgotPasswordService {
     public void execute(ForgotPasswordCommand command) {
 
         UserAuth userAuth = users.findUserByEmail(command.email())
-                .orElseThrow(UserNotFoundException::new);
+                .orElseThrow(() -> new InvalidCredentialException("If an account with this email exists, a password reset link has been sent."));
 
         PasswordToken passwordToken = new PasswordToken(UUID.randomUUID().toString());
 

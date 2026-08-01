@@ -1,6 +1,6 @@
 package com.arsio.user.internal.domain.model;
 
-import com.arsio.shared.exception.InvalidUserRoleException;
+import com.arsio.user.internal.domain.exception.InvalidUserRoleException;
 
 public enum UserRole {
 

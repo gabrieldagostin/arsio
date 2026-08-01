@@ -1,7 +1,7 @@
 package com.arsio.auth.internal.application.service;
 
 import com.arsio.auth.internal.application.dto.ResetPasswordCommand;
-import com.arsio.auth.internal.application.exception.PasswordResetTokenNotFoundException;
+import com.arsio.auth.internal.domain.exception.PasswordResetTokenNotFoundException;
 import com.arsio.auth.internal.domain.exception.SessionNotActiveException;
 import com.arsio.auth.internal.domain.model.PasswordResetToken;
 import com.arsio.auth.internal.domain.repository.PasswordResetTokenRepository;

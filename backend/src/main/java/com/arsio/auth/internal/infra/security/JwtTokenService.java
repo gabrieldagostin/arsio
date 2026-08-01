@@ -1,8 +1,8 @@
 package com.arsio.auth.internal.infra.security;
 
 import com.arsio.auth.api.facade.AuthFacade;
-import com.arsio.auth.internal.application.exception.JwtGenarationException;
-import com.arsio.auth.internal.application.exception.JwtParsingException;
+import com.arsio.auth.internal.infra.security.exception.JwtGenerationException;
+import com.arsio.auth.internal.infra.security.exception.JwtParsingException;
 import com.arsio.auth.internal.application.port.output.TokenProvider;
 import com.arsio.auth.internal.domain.model.UserAuth;
 import com.arsio.auth.internal.domain.valueobject.AccessToken;
@@ -35,7 +35,7 @@ public class JwtTokenService implements TokenProvider, AuthFacade {
                     .sign(algorithm);
             return new AccessToken(token);
         } catch (JWTCreationException exception) {
-            throw new JwtGenarationException("Error while generating token.");
+            throw new JwtGenerationException("Error while generating access token.");
         }
     }
 
@@ -51,7 +51,7 @@ public class JwtTokenService implements TokenProvider, AuthFacade {
                     .sign(algorithm);
             return new RefreshToken(token);
         } catch (JWTCreationException exception) {
-            throw new JwtGenarationException("Error while generating refresh token.");
+            throw new JwtGenerationException("Error while generating refresh token.");
         }
     }
 

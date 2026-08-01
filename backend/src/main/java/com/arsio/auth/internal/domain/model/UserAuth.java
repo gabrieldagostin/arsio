@@ -6,12 +6,13 @@ public class UserAuth {
 
     private final UserId id;
     private String username;
+    private String usernameNormalized;
     private String email;
     private String passwordHash;
     private String role;
     private String profileImageKey;
 
-    public UserAuth(UserId id, String username, String email, String passwordHash, String role, String profileImageKey) {
+    public UserAuth(UserId id, String username, String usernameNormalized, String email, String passwordHash, String role, String profileImageKey) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -26,6 +27,10 @@ public class UserAuth {
 
     public String getUsername() {
         return username;
+    }
+
+    public String getUsernameNormalized() {
+        return usernameNormalized;
     }
 
     public String getEmail() {

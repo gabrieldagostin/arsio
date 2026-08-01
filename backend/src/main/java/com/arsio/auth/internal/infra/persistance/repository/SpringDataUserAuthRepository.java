@@ -10,5 +10,5 @@ public interface SpringDataUserAuthRepository extends JpaRepository<UserAuthEnti
 
     Optional<UserAuthEntity> findByEmail(String email);
 
-    Optional<UserAuthEntity> findAuthenticationDataByUsernameNormalized(String username);
+    Optional<UserAuthEntity> findByUsernameNormalized(String username);
 }

@@ -10,7 +10,7 @@ public record PasswordToken(String value) {
 
     private static void validate(String value) {
         if (value == null || value.isBlank())
-            throw new InvalidTokenException();
+            throw new InvalidTokenException("Invalid password token.");
     }
 
     @Override

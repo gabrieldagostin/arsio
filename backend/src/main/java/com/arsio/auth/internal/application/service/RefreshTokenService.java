@@ -2,10 +2,9 @@ package com.arsio.auth.internal.application.service;
 
 import com.arsio.auth.internal.application.dto.RefreshTokenCommand;
 import com.arsio.auth.internal.domain.exception.SessionNotActiveException;
-import com.arsio.auth.internal.application.exception.SessionNotFoundException;
+import com.arsio.auth.internal.domain.exception.SessionNotFoundException;
 import com.arsio.auth.internal.domain.repository.UserAuthRepository;
 import com.arsio.auth.internal.domain.model.UserAuth;
-import com.arsio.shared.exception.UserNotFoundException;
 import com.arsio.auth.internal.domain.repository.SessionRepository;
 import com.arsio.auth.internal.application.port.output.TokenProvider;
 import com.arsio.auth.internal.domain.exception.InvalidTokenException;
@@ -41,13 +40,13 @@ public class RefreshTokenService {
 
         String subject = tokenProvider.extractSubject(command.refreshToken());
         UserAuth userAuth = users.findAuthenticationDataByUsername(subject)
-                .orElseThrow(UserNotFoundException::new);
+                .orElseThrow(InvalidTokenException::new);
 
         String receivedHash = tokenHasher.hash(command.refreshToken());
         if (!receivedHash.equals(userSession.getRefreshTokenHash().value()))
             throw new InvalidTokenException();
 
-        if (!userSession.isActive()) throw new SessionNotActiveException("Session is revoked or expired.");
+        if (!userSession.isActive()) throw new SessionNotActiveException();
 
         AccessToken newAccessToken = tokenProvider.generateAccessToken(userAuth);
         RefreshToken newRefreshToken = tokenProvider.generateRefreshToken(userAuth, sessionId);

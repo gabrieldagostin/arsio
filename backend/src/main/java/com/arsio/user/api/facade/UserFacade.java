@@ -10,7 +10,7 @@ public interface UserFacade {
 
     UserCreatedResponse createUser(String username, String email, String password);
 
-    Optional<UserDetails> findUserDetailsByUsername(String username);
+    UserDetails findUserDetailsByUsername(String username);
 
     void updateUserPasswordHash(UUID id, String passwordHash);
 }

@@ -1,9 +1,9 @@
 package com.arsio.auth.internal.application.service;
 
 import com.arsio.auth.internal.application.port.output.TokenProvider;
+import com.arsio.auth.internal.domain.exception.InvalidCredentialException;
 import com.arsio.auth.internal.domain.repository.UserAuthRepository;
 import com.arsio.auth.internal.domain.model.UserAuth;
-import com.arsio.shared.exception.UserNotFoundException;
 import com.arsio.auth.internal.domain.valueobject.AccessToken;
 import com.arsio.auth.internal.domain.valueobject.RefreshToken;
 import com.arsio.auth.internal.domain.valueobject.SessionId;
@@ -14,6 +14,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Locale;
 
 @Service
 @Transactional
@@ -36,8 +38,8 @@ public class LoginUserService {
         var usernamePassword = new UsernamePasswordAuthenticationToken(command.username(), command.password());
         authenticationManager.authenticate(usernamePassword);
 
-        UserAuth userAuth = users.findAuthenticationDataByUsername(command.username())
-                .orElseThrow(UserNotFoundException::new);
+        UserAuth userAuth = users.findAuthenticationDataByUsername(command.username().toLowerCase(Locale.ROOT))
+                .orElseThrow(InvalidCredentialException::new);
 
         SessionId sessionId = SessionId.generate();
 

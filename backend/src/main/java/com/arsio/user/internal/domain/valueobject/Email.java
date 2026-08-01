@@ -1,7 +1,6 @@
 package com.arsio.user.internal.domain.valueobject;
 
-import com.arsio.user.internal.domain.exception.InvalidEmailFormatException;
-import com.arsio.user.internal.domain.exception.InvalidEmailLengthException;
+import com.arsio.user.internal.domain.exception.InvalidEmailException;
 
 import java.util.Locale;
 
@@ -14,13 +13,13 @@ public record Email(String value) {
 
     private static void validate(String value) {
         if (value == null)
-            throw new InvalidEmailFormatException("Email cannot be null.");
-
-        if (value.length() > 320)
-            throw new InvalidEmailLengthException();
+            throw new InvalidEmailException();
 
         if (value.isBlank() || !value.contains("@"))
-            throw new InvalidEmailFormatException("Email must contain @.");
+            throw new InvalidEmailException();
+
+        if (value.length() > 320)
+            throw new InvalidEmailException("Email must be less than 320 characters");
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.arsio.user.internal.domain.valueobject;
 
-import com.arsio.user.internal.domain.exception.InvalidPasswordLengthException;
+import com.arsio.user.internal.domain.exception.InvalidPasswordException;
 
 public record PasswordHash(String hashedValue) {
 
@@ -10,7 +10,7 @@ public record PasswordHash(String hashedValue) {
 
     private static void validate(String hashedValue) {
         if (hashedValue == null || hashedValue.isBlank())
-            throw new InvalidPasswordLengthException();
+            throw new InvalidPasswordException();
     }
 
     @Override

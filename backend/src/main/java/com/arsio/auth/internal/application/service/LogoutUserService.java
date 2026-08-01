@@ -1,7 +1,7 @@
 package com.arsio.auth.internal.application.service;
 
 import com.arsio.auth.internal.application.dto.LogoutCommand;
-import com.arsio.auth.internal.application.exception.SessionNotFoundException;
+import com.arsio.auth.internal.domain.exception.SessionNotFoundException;
 import com.arsio.auth.internal.domain.repository.SessionRepository;
 import com.arsio.auth.internal.application.port.output.TokenProvider;
 import com.arsio.auth.internal.domain.model.UserSession;

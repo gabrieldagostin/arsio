@@ -1,7 +1,6 @@
 package com.arsio.user.internal.domain.valueobject;
 
-import com.arsio.user.internal.domain.exception.InvalidUsernameFormatException;
-import com.arsio.user.internal.domain.exception.InvalidUsernameLengthException;
+import com.arsio.user.internal.domain.exception.InvalidUsernameException;
 
 import java.util.Locale;
 
@@ -14,10 +13,10 @@ public record Username(String value) {
 
     private static void validate(String value) {
         if (value == null || value.isBlank())
-            throw new InvalidUsernameFormatException();
+            throw new InvalidUsernameException();
 
         if (value.length() < 6 || value.length() > 50)
-            throw new InvalidUsernameLengthException();
+            throw new InvalidUsernameException("Username must be between 6 and 20 characters long.");
     }
 
     public String getNormalized() {

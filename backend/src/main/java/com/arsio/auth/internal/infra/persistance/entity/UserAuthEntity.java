@@ -21,6 +21,11 @@ public class UserAuthEntity {
     @Column(nullable = false)
     private String username;
 
+    @Column(name = "username_normalized",
+            nullable = false,
+            unique = true)
+    private String usernameNormalized;
+
     @Column(columnDefinition = "citext",
             nullable = false,
             unique = true)

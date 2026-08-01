@@ -1,6 +1,6 @@
 package com.arsio.user.internal.application.facade;
 
-import com.arsio.shared.exception.UserNotFoundException;
+import com.arsio.user.internal.domain.exception.UserNotFoundException;
 import com.arsio.user.api.dto.CreateUserCommand;
 import com.arsio.user.api.dto.UpdateUserPasswordHashCommand;
 import com.arsio.user.api.dto.UserCreatedResponse;
@@ -45,9 +45,9 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
-    public Optional<UserDetails> findUserDetailsByUsername(String username) {
-        return Optional.of(users.findUserDetailsByUsername(username)
-                .orElseThrow(UserNotFoundException::new));
+    public UserDetails findUserDetailsByUsername(String username) {
+        return users.findUserDetailsByUsername(username)
+                .orElseThrow(UserNotFoundException::new);
     }
 
     @Override

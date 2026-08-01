@@ -1,6 +1,6 @@
 package com.arsio.user.internal.application.service;
 
-import com.arsio.shared.exception.UserNotFoundException;
+import com.arsio.user.internal.domain.exception.UserNotFoundException;
 import com.arsio.shared.valueobject.UserId;
 import com.arsio.user.api.dto.UpdateUserPasswordHashCommand;
 import com.arsio.user.internal.domain.model.User;
@@ -22,7 +22,7 @@ public class UpdateUserPasswordHashService {
         UserId userId = new UserId(command.id());
 
         User user = users.findById(userId)
-                .orElseThrow(UserNotFoundException::new);
+                .orElseThrow(() -> new UserNotFoundException(userId.value()));
 
         user.updatePassword(new PasswordHash(command.passwordHash()));
 

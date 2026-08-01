@@ -1,8 +1,8 @@
 package com.arsio.user.internal.application.service;
 
 import com.arsio.user.api.dto.CreateUserCommand;
-import com.arsio.user.internal.application.exception.EmailAlreadyExistsException;
-import com.arsio.user.internal.application.exception.UsernameUnavailableException;
+import com.arsio.user.internal.domain.exception.EmailAlreadyExistsException;
+import com.arsio.user.internal.domain.exception.UsernameUnavailableException;
 import com.arsio.user.internal.domain.repository.UserRepository;
 import com.arsio.user.internal.domain.model.User;
 import com.arsio.user.internal.domain.valueobject.Email;
@@ -35,7 +35,7 @@ public class CreateUserService {
                 new Username(command.username())
         );
 
-        if (usernameAlreadyExists) throw new UsernameUnavailableException();
+        if (usernameAlreadyExists) throw new UsernameUnavailableException(command.username());
 
         String passwordHash = passwordEncoder.encode(command.password());
 

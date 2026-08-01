@@ -31,7 +31,7 @@ public class JpaUserAuthAdapter implements UserAuthRepository {
 
     @Override
     public Optional<UserAuth> findAuthenticationDataByUsername(String username) {
-        return users.findAuthenticationDataByUsernameNormalized(username)
+        return users.findByUsernameNormalized(username)
                 .map(mapper::toDomain);
     }
 }
