@@ -34,6 +34,9 @@ public class UserSessionEntity {
             nullable = false)
     private Instant expiresAt;
 
+    @Column(name = "revoked_at")
+    private Instant revokedAt;
+
     @Column(nullable = false)
     private Boolean revoked;
 

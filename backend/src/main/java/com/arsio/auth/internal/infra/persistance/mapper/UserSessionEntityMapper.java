@@ -15,8 +15,8 @@ import java.util.UUID;
 typeConversionPolicy = ReportingPolicy.ERROR)
 public interface UserSessionEntityMapper {
 
+    @Mapping(target = "revokedAt", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "id", source = "userId")
     UserSessionEntity toEntity(UserSession userSession);
 
     UserSession toDomain(UserSessionEntity userSessionEntity);

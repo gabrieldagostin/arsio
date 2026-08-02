@@ -5,6 +5,7 @@ import com.arsio.auth.internal.application.service.*;
 import com.arsio.auth.internal.infra.controller.dto.*;
 import com.arsio.auth.internal.infra.controller.mapper.AuthControllerMapper;
 import com.arsio.config.security.SecurityConfigurations;
+import com.arsio.config.security.SecurityUtils;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,7 @@ public class AuthController {
     private final LogoutUserService logoutUserService;
     private final ForgotPasswordService forgotPasswordService;
     private final ResetPasswordService resetPasswordService;
+    private final RevokeAllSessionsService revokeAllSessionsService;
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody @Valid RegisterUserRequest request, UriComponentsBuilder builder) {
@@ -62,8 +64,8 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
-    @PreAuthorize("hasRole('USER')")
     @PostMapping("/logout")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Void> logout(@RequestBody @Valid LogoutRequest request) {
 
         LogoutCommand command = mapper.toLogoutCommand(request);
@@ -89,6 +91,15 @@ public class AuthController {
         ResetPasswordCommand command = mapper.toResetPasswordCommand(request);
 
         resetPasswordService.execute(command);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/sessions")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<Void> revokeAllSessions() {
+
+        revokeAllSessionsService.execute(SecurityUtils.getCurrentUserId());
 
         return ResponseEntity.noContent().build();
     }

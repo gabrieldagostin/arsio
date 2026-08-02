@@ -6,6 +6,7 @@ import com.arsio.auth.internal.domain.valueobject.SessionId;
 import com.arsio.auth.internal.infra.persistance.entity.UserSessionEntity;
 import com.arsio.auth.internal.infra.persistance.mapper.UserSessionEntityMapper;
 import com.arsio.auth.internal.infra.persistance.repository.SpringDataUserSessionRepository;
+import com.arsio.shared.valueobject.UserId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -13,7 +14,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class JpaSessionAdapter implements SessionRepository {
+public class JpaUserSessionAdapter implements SessionRepository {
 
     private final SpringDataUserSessionRepository sessions;
     private final UserSessionEntityMapper mapper;
@@ -30,4 +31,8 @@ public class JpaSessionAdapter implements SessionRepository {
                 .map(mapper::toDomain);
     }
 
+    @Override
+    public void revokeAllSessionsByUserId(UserId userId) {
+        sessions.revokeAllSessionsByUserId(userId.value());
+    }
 }
