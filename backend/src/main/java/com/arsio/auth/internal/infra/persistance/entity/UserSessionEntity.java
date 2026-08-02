@@ -1,9 +1,6 @@
 package com.arsio.auth.internal.infra.persistance.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.Instant;
@@ -22,16 +19,14 @@ public class UserSessionEntity {
     @Column(nullable = false)
     private UUID id;
 
-    @Column(name = "user_id",
-            nullable = false)
-    private UUID userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserAuthEntity user;
 
-    @Column(name = "refresh_token_hash",
-            nullable = false)
+    @Column(name = "refresh_token_hash", nullable = false)
     private String refreshTokenHash;
 
-    @Column(name = "expires_at",
-            nullable = false)
+    @Column(name = "expires_at", nullable = false)
     private Instant expiresAt;
 
     @Column(name = "revoked_at")
@@ -40,9 +35,6 @@ public class UserSessionEntity {
     @Column(nullable = false)
     private Boolean revoked;
 
-    @Column(name = "created_at",
-            updatable = false,
-            insertable = false,
-            nullable = false)
+    @Column(name = "created_at", updatable = false, insertable = false, nullable = false)
     private Instant createdAt;
 }

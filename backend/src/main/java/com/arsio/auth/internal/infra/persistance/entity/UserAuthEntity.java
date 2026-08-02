@@ -21,18 +21,13 @@ public class UserAuthEntity {
     @Column(nullable = false)
     private String username;
 
-    @Column(name = "username_normalized",
-            nullable = false,
-            unique = true)
+    @Column(name = "username_normalized", nullable = false, unique = true)
     private String usernameNormalized;
 
-    @Column(columnDefinition = "citext",
-            nullable = false,
-            unique = true)
+    @Column(columnDefinition = "citext", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "password_hash",
-            nullable = false)
+    @Column(name = "password_hash", nullable = false)
     private String passwordHash;
 
     @Column(nullable = false)
