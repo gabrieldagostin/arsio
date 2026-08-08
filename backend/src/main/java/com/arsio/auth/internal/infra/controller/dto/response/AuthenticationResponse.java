@@ -1,4 +1,4 @@
-package com.arsio.auth.internal.infra.controller.dto;
+package com.arsio.auth.internal.infra.controller.dto.response;
 
 public record AuthenticationResponse(
         String accessToken,

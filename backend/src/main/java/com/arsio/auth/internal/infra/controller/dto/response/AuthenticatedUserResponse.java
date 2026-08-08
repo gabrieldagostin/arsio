@@ -1,4 +1,4 @@
-package com.arsio.auth.internal.infra.controller.dto;
+package com.arsio.auth.internal.infra.controller.dto.response;
 
 import java.util.UUID;
 

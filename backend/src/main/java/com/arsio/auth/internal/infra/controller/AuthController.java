@@ -2,11 +2,11 @@ package com.arsio.auth.internal.infra.controller;
 
 import com.arsio.auth.internal.application.dto.*;
 import com.arsio.auth.internal.application.service.*;
-import com.arsio.auth.internal.infra.controller.dto.*;
+import com.arsio.auth.internal.infra.controller.dto.request.*;
+import com.arsio.auth.internal.infra.controller.dto.response.AuthenticationResponse;
+import com.arsio.auth.internal.infra.controller.dto.response.RefreshTokenResponse;
 import com.arsio.auth.internal.infra.controller.mapper.AuthControllerMapper;
-import com.arsio.config.security.SecurityConfigurations;
 import com.arsio.config.security.SecurityUtils;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +18,6 @@ import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
-@SecurityRequirement(name = SecurityConfigurations.SECURITY)
 @RequestMapping("/auth")
 public class AuthController {
 

@@ -1,8 +1,8 @@
-package com.arsio.auth.internal.infra.controller.dto;
+package com.arsio.auth.internal.infra.controller.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 
-public record RefreshTokenRequest(
+public record LogoutRequest(
         @NotBlank(message = "{refreshToken.require}")
         String refreshToken
 ) {

@@ -1,4 +1,4 @@
-package com.arsio.auth.internal.infra.controller.dto;
+package com.arsio.auth.internal.infra.controller.dto.request;
 
 import jakarta.validation.constraints.*;
 

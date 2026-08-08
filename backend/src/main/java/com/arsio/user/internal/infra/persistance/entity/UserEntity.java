@@ -31,18 +31,13 @@ public class UserEntity implements UserDetails {
     @Column(nullable = false)
     private String username;
 
-    @Column(name = "username_normalized",
-            nullable = false,
-            unique = true)
+    @Column(name = "username_normalized", nullable = false, unique = true)
     private String usernameNormalized;
 
-    @Column(columnDefinition = "citext",
-            nullable = false,
-            unique = true)
+    @Column(columnDefinition = "citext", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "password_hash",
-            nullable = false)
+    @Column(name = "password_hash", nullable = false)
     private String passwordHash;
 
     @Enumerated(EnumType.STRING)
@@ -56,18 +51,13 @@ public class UserEntity implements UserDetails {
     @Column(name = "profile_image_key")
     private String profileImageKey;
 
-    @Column(columnDefinition = "BOOLEAN DEFAULT TRUE",
-            nullable = false)
+    @Column(columnDefinition = "BOOLEAN DEFAULT TRUE", nullable = false)
     private boolean active = true;
 
-    @Column(name = "last_login_at",
-            nullable = false)
+    @Column(name = "last_login_at", nullable = false)
     private Instant lastLoginAt;
 
-    @Column(name = "created_at",
-            updatable = false,
-            insertable = false,
-            nullable = false)
+    @Column(name = "created_at", updatable = false, insertable = false, nullable = false)
     private Instant createdAt;
 
     @Override

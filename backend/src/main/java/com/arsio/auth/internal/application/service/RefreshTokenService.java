@@ -12,7 +12,7 @@ import com.arsio.auth.internal.domain.model.UserSession;
 import com.arsio.auth.internal.domain.valueobject.AccessToken;
 import com.arsio.auth.internal.domain.valueobject.RefreshToken;
 import com.arsio.auth.internal.domain.valueobject.SessionId;
-import com.arsio.auth.internal.infra.controller.dto.RefreshTokenResponse;
+import com.arsio.auth.internal.infra.controller.dto.response.RefreshTokenResponse;
 import com.arsio.auth.internal.infra.security.Sha256TokenHasher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
