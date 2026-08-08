@@ -52,7 +52,7 @@ public class LoginUserService {
                 accesstoken.value(),
                 refreshToken.value(),
                 new AuthenticatedUserResponse(
-                        userAuth.getId().value(),
+                        userAuth.getId(),
                         userAuth.getRole(),
                         userAuth.getUsername(),
                         userAuth.getProfileImageKey())

@@ -2,7 +2,7 @@ package com.arsio.user.internal.domain.model;
 
 import com.arsio.user.internal.domain.valueobject.Email;
 import com.arsio.user.internal.domain.valueobject.PasswordHash;
-import com.arsio.shared.valueobject.UserId;
+import com.arsio.user.internal.domain.valueobject.UserId;
 import com.arsio.user.internal.domain.valueobject.Username;
 
 public class User {

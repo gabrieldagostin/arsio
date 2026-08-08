@@ -4,11 +4,11 @@ import com.arsio.auth.internal.domain.repository.UserAuthRepository;
 import com.arsio.auth.internal.domain.model.UserAuth;
 import com.arsio.auth.internal.infra.persistance.mapper.UserAuthEntityMapper;
 import com.arsio.auth.internal.infra.persistance.repository.SpringDataUserAuthRepository;
-import com.arsio.shared.valueobject.UserId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 @RequiredArgsConstructor
@@ -18,8 +18,8 @@ public class JpaUserAuthAdapter implements UserAuthRepository {
     private final UserAuthEntityMapper mapper;
 
     @Override
-    public Optional<UserAuth> findUserById(UserId id) {
-        return users.findById(id.value())
+    public Optional<UserAuth> findUserById(UUID id) {
+        return users.findById(id)
                 .map(mapper::toDomain);
     }
 

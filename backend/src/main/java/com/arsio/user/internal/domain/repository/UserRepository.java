@@ -1,6 +1,6 @@
 package com.arsio.user.internal.domain.repository;
 
-import com.arsio.shared.valueobject.UserId;
+import com.arsio.user.internal.domain.valueobject.UserId;
 import com.arsio.user.internal.domain.model.User;
 import com.arsio.user.internal.domain.valueobject.Email;
 import com.arsio.user.internal.domain.valueobject.Username;

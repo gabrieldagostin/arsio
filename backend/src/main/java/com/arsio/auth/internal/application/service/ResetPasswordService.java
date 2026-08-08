@@ -41,7 +41,7 @@ public class ResetPasswordService {
 
         String passwordHash = passwordEncoder.encode(command.newPassword());
 
-        userFacade.updateUserPasswordHash(passwordResetToken.getUserId().value(), passwordHash);
+        userFacade.updateUserPasswordHash(passwordResetToken.getUserId(), passwordHash);
 
         passwordResetToken.setUsed(true);
 

@@ -4,7 +4,6 @@ import com.arsio.auth.internal.domain.model.PasswordResetToken;
 import com.arsio.auth.internal.domain.valueobject.PasswordResetTokenId;
 import com.arsio.auth.internal.domain.valueobject.PasswordToken;
 import com.arsio.auth.internal.infra.persistance.entity.PasswordResetTokenEntity;
-import com.arsio.shared.valueobject.UserId;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
@@ -26,14 +25,6 @@ public interface PasswordResetTokenEntityMapper {
 
     default PasswordResetTokenId uuidToPasswordResetTokenId(UUID value) {
         return new PasswordResetTokenId(value);
-    }
-
-    default UUID userIdToUuid(UserId userId) {
-        return userId.value();
-    }
-
-    default UserId uuidToUserId(UUID value) {
-        return new UserId(value);
     }
 
     default String passwordTokenToString(PasswordToken passwordToken) {

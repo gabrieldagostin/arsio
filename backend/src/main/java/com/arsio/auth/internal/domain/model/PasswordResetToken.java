@@ -2,7 +2,6 @@ package com.arsio.auth.internal.domain.model;
 
 import com.arsio.auth.internal.domain.valueobject.PasswordResetTokenId;
 import com.arsio.auth.internal.domain.valueobject.PasswordToken;
-import com.arsio.shared.valueobject.UserId;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -11,12 +10,12 @@ import java.util.UUID;
 public class PasswordResetToken {
 
     private final PasswordResetTokenId id;
-    private final UserId userId;
+    private final UUID userId;
     private final PasswordToken passwordToken;
     private boolean used;
     private final Instant expiresAt;
 
-    public PasswordResetToken(PasswordResetTokenId id, UserId userId, PasswordToken passwordToken, boolean used, Instant expiresAt) {
+    public PasswordResetToken(PasswordResetTokenId id, UUID userId, PasswordToken passwordToken, boolean used, Instant expiresAt) {
         this.id = id;
         this.userId = userId;
         this.passwordToken = passwordToken;
@@ -24,7 +23,7 @@ public class PasswordResetToken {
         this.expiresAt = expiresAt;
     }
 
-    public static PasswordResetToken create(UserId userId, PasswordToken passwordToken) {
+    public static PasswordResetToken create(UUID userId, PasswordToken passwordToken) {
         return new PasswordResetToken(
                 new PasswordResetTokenId(UUID.randomUUID()),
                 userId,
@@ -38,7 +37,7 @@ public class PasswordResetToken {
         return id;
     }
 
-    public UserId getUserId() {
+    public UUID getUserId() {
         return userId;
     }
 

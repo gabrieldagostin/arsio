@@ -5,7 +5,6 @@ import com.arsio.notification.internal.domain.valueobject.Message;
 import com.arsio.notification.internal.domain.valueobject.NotificationId;
 import com.arsio.notification.internal.domain.valueobject.Title;
 import com.arsio.notification.internal.infra.persistance.entity.NotificationEntity;
-import com.arsio.shared.valueobject.UserId;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
@@ -27,14 +26,6 @@ public interface NotificationEntityMapper {
 
     default NotificationId uuidToNotificationId(UUID value) {
         return new NotificationId(value);
-    }
-
-    default UUID userIdToUuid(UserId userId) {
-        return userId.value();
-    }
-
-    default UserId uuidToUserId(UUID value) {
-        return new UserId(value);
     }
 
     default String titleToString(Title title) {

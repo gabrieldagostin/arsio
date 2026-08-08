@@ -2,7 +2,6 @@ package com.arsio.auth.internal.infra.persistance.mapper;
 
 import com.arsio.auth.internal.domain.model.UserAuth;
 import com.arsio.auth.internal.infra.persistance.entity.UserAuthEntity;
-import com.arsio.shared.valueobject.UserId;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
@@ -17,12 +16,4 @@ public interface UserAuthEntityMapper {
     UserAuthEntity toEntity(UserAuth userAuth);
 
     UserAuth toDomain(UserAuthEntity userAuthEntity);
-
-    default UUID uuidToUserId(UserId userId) {
-        return userId.value();
-    }
-
-    default UserId userIdToUuid(UUID value) {
-        return new UserId(value);
-    }
 }

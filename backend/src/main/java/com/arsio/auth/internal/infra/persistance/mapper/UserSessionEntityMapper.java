@@ -4,7 +4,6 @@ import com.arsio.auth.internal.domain.model.UserSession;
 import com.arsio.auth.internal.domain.valueobject.RefreshToken;
 import com.arsio.auth.internal.domain.valueobject.SessionId;
 import com.arsio.auth.internal.infra.persistance.entity.UserSessionEntity;
-import com.arsio.shared.valueobject.UserId;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
@@ -27,14 +26,6 @@ public interface UserSessionEntityMapper {
 
     default SessionId uuidToSessionId(UUID value) {
         return new SessionId(value);
-    }
-
-    default UUID userIdToUuid(UserId userId) {
-        return userId.value();
-    }
-
-    default UserId uuidToUserId(UUID value) {
-        return new UserId(value);
     }
 
     default String refreshTokenToString(RefreshToken refreshToken) {

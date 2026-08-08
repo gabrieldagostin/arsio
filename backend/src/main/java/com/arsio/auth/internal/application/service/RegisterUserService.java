@@ -49,7 +49,7 @@ public class RegisterUserService {
                 accesstoken.value(),
                 refreshToken.value(),
                 new AuthenticatedUserResponse(
-                        userAuth.getId().value(),
+                        userAuth.getId(),
                         userAuth.getRole(),
                         userAuth.getUsername(),
                         null

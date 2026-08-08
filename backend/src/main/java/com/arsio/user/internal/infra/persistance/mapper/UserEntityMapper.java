@@ -4,7 +4,7 @@ import com.arsio.user.internal.domain.model.User;
 import com.arsio.user.internal.domain.model.UserRole;
 import com.arsio.user.internal.domain.valueobject.Email;
 import com.arsio.user.internal.domain.valueobject.PasswordHash;
-import com.arsio.shared.valueobject.UserId;
+import com.arsio.user.internal.domain.valueobject.UserId;
 import com.arsio.user.internal.domain.valueobject.Username;
 import com.arsio.user.internal.infra.persistance.entity.UserEntity;
 import org.mapstruct.Mapper;

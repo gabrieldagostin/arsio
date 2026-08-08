@@ -3,17 +3,18 @@ package com.arsio.notification.internal.domain.model;
 import com.arsio.notification.internal.domain.valueobject.Message;
 import com.arsio.notification.internal.domain.valueobject.NotificationId;
 import com.arsio.notification.internal.domain.valueobject.Title;
-import com.arsio.shared.valueobject.UserId;
+
+import java.util.UUID;
 
 public class Notification {
 
     private final NotificationId id;
-    private final UserId userId;
+    private final UUID userId;
     private Title title;
     private Message message;
     private boolean read;
 
-    public Notification(NotificationId id, UserId userId, Title title, Message message, boolean read) {
+    public Notification(NotificationId id, UUID userId, Title title, Message message, boolean read) {
         this.id = id;
         this.userId = userId;
         this.title = title;
@@ -25,7 +26,7 @@ public class Notification {
         return id;
     }
 
-    public UserId getUserId() {
+    public UUID getUserId() {
         return userId;
     }
 

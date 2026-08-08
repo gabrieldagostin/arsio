@@ -1,9 +1,10 @@
 package com.arsio.auth.internal.application.service;
 
 import com.arsio.auth.internal.domain.repository.SessionRepository;
-import com.arsio.shared.valueobject.UserId;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -15,7 +16,7 @@ public class RevokeAllSessionsService {
         this.sessions = sessions;
     }
 
-    public void execute(UserId userId) {
+    public void execute(UUID userId) {
         sessions.revokeAllSessionsByUserId(userId);
     }
 }

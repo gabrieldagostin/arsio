@@ -1,19 +1,19 @@
 package com.arsio.config.security;
 
-import com.arsio.shared.valueobject.UserId;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.UUID;
 
 public class CurrentUser implements UserDetails {
 
-    private final UserId userId;
+    private final UUID userId;
     private final String email;
     private final Collection<? extends GrantedAuthority> authorities;
 
     public CurrentUser(
-            UserId userId,
+            UUID userId,
             String email,
             Collection<? extends GrantedAuthority> authorities) {
 
@@ -22,7 +22,7 @@ public class CurrentUser implements UserDetails {
         this.authorities = authorities;
     }
 
-    public UserId getUserId() {
+    public UUID getUserId() {
         return userId;
     }
 
