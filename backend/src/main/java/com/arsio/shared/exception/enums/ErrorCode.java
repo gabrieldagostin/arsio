@@ -25,6 +25,7 @@ public enum ErrorCode {
     USER_INVALID_BIO("Invalid bio"),
     USER_INVALID_PROFILE_IMAGE_KEY("Invalid profile image key"),
     USER_NOT_FOUND("User not found"),
+    USER_PROFILE_NOT_FOUND("User profile not found"),
     USER_EMAIL_MALFORMED("Email malformed"),
     USER_USERNAME_UNAVAILABLE("Username unavailable"),
     USER_EMAIL_ALREADY_EXISTS("Email already exists"),

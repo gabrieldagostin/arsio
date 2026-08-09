@@ -30,6 +30,7 @@ public final class ErrorTypes {
     public static final String USER_INVALID_BIO = BASE + "invalid-bio";
     public static final String USER_INVALID_PROFILE_IMAGE_KEY = BASE + "invalid-profile-image-key";
     public static final String USER_NOT_FOUND = BASE + "user-not-found";
+    public static final String USER_PROFILE_NOT_FOUND = BASE + "user-profile-not-found";
     public static final String USER_EMAIL_MALFORMED = BASE + "email-malformed";
     public static final String USER_USERNAME_UNAVAILABLE = BASE + "username-unavailable";
     public static final String USER_EMAIL_ALREADY_EXISTS = BASE + "email-already-exists";
