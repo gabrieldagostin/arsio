@@ -5,10 +5,14 @@ import com.arsio.user.internal.domain.model.User;
 import com.arsio.user.internal.domain.repository.UserRepository;
 import com.arsio.user.internal.domain.valueobject.UserId;
 import com.arsio.user.internal.infra.controller.dto.response.GetUserResponse;
+import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.UUID;
 
+@Service
+@Transactional
 public class GetUserByIdService {
 
     private final UserRepository users;

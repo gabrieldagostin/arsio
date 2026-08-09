@@ -27,6 +27,8 @@ public final class ErrorTypes {
     public static final String USER_INVALID_USER_ROLE = BASE + "invalid-user-role";
     public static final String USER_INVALID_PASSWORD = BASE + "invalid-password";
     public static final String USER_INVALID_USERNAME = BASE + "invalid-username";
+    public static final String USER_INVALID_BIO = BASE + "invalid-bio";
+    public static final String USER_INVALID_PROFILE_IMAGE_KEY = BASE + "invalid-profile-image-key";
     public static final String USER_NOT_FOUND = BASE + "user-not-found";
     public static final String USER_EMAIL_MALFORMED = BASE + "email-malformed";
     public static final String USER_USERNAME_UNAVAILABLE = BASE + "username-unavailable";

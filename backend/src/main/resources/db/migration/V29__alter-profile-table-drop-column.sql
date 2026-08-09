@@ -1,0 +1,5 @@
+ALTER TABLE profile
+DROP COLUMN country;
+
+ALTER TABLE profile
+ADD COLUMN country VARCHAR(2);

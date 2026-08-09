@@ -16,29 +16,22 @@ import java.util.UUID;
 public class PasswordResetTokenEntity {
 
     @Id
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private UserAuthEntity user;
 
-    @Column(name = "token",
-            nullable = false)
+    @Column(name = "token", nullable = false)
     private String passwordToken;
 
-    @Column(columnDefinition = "BOOLEAN DEFAULT FALSE",
-            nullable = false)
+    @Column(columnDefinition = "BOOLEAN DEFAULT FALSE", nullable = false)
     private boolean used;
 
-    @Column(name = "expires_at",
-            updatable = false,
-            nullable = false)
+    @Column(name = "expires_at", updatable = false, nullable = false)
     private Instant expiresAt;
 
-    @Column(name = "created_at",
-            updatable = false,
-            insertable = false,
-            nullable = false)
+    @Column(name = "created_at", updatable = false, insertable = false, nullable = false)
     private Instant createdAt;
 }

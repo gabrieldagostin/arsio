@@ -22,6 +22,8 @@ public enum ErrorCode {
     USER_INVALID_USER_ROLE("Invalid user role"),
     USER_INVALID_PASSWORD("Invalid password"),
     USER_INVALID_USERNAME("Invalid Username"),
+    USER_INVALID_BIO("Invalid bio"),
+    USER_INVALID_PROFILE_IMAGE_KEY("Invalid profile image key"),
     USER_NOT_FOUND("User not found"),
     USER_EMAIL_MALFORMED("Email malformed"),
     USER_USERNAME_UNAVAILABLE("Username unavailable"),

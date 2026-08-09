@@ -25,10 +25,10 @@ import java.util.UUID;
 public class UserEntity implements UserDetails {
 
     @Id
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private UUID id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
 
     @Column(columnDefinition = "CITEXT", nullable = false, unique = true)

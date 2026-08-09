@@ -19,7 +19,7 @@ import java.util.UUID;
 public class NotificationEntity {
 
     @Id
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private UUID id;
 
     @Column(name = "user_id",
@@ -35,9 +35,6 @@ public class NotificationEntity {
     @Column(nullable = false)
     private boolean read;
 
-    @Column(name = "created_at",
-            nullable = false,
-            insertable = false,
-            updatable = false)
+    @Column(name = "created_at", nullable = false, insertable = false, updatable = false)
     private Instant createdAt;
 }
