@@ -30,8 +30,7 @@ public class GetCurrentUserService {
                 user.getId().value(),
                 user.getUsername().value(),
                 user.getEmail().value(),
-                user.getRole().name(),
-                user.getProfileImageKey()
+                user.getRole().name()
         );
     }
 }

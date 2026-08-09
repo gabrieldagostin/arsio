@@ -13,8 +13,6 @@ import java.util.UUID;
 typeConversionPolicy = ReportingPolicy.ERROR)
 public interface UserAuthMapper {
 
-    @Mapping(target = "profileImageKey", ignore = true)
-    @Mapping(target = "role", source = "role")
     UserAuth toDomain(UserCreatedResponse userCreatedResponse);
 
     UserCreatedResponse toResponse(UserAuth userAuth);

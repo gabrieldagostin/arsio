@@ -1,6 +1,6 @@
 CREATE TABLE discounts (
 
-    id UUID PRIMARY KEY,
+    id UUID NOT NULL,
 
     game_id UUID NOT NULL,
 
@@ -9,14 +9,17 @@ CREATE TABLE discounts (
     start_date DATE NOT NULL,
 
     end_date DATE NOT NULL,
+    
+    CONSTRAINT pk_discounts 
+        PRIMARY KEY (id),
 
-    CONSTRAINT discounts_percentage_in_interval_check
+    CONSTRAINT ck_discounts_percentage_in_interval
         CHECK (percentage > 0 AND percentage <= 100),
 
-    CONSTRAINT discounts_start_date_minor_end_date_check
+    CONSTRAINT ck_discounts_start_date_minor_end_date
         CHECK (end_date >= start_date),
 
-    CONSTRAINT discounts_game_id_fk
+    CONSTRAINT fk_discounts_game_id_games
         FOREIGN KEY (game_id)
             REFERENCES games(id)
 );

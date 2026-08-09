@@ -31,10 +31,7 @@ public class UserEntity implements UserDetails {
     @Column(nullable = false)
     private String username;
 
-    @Column(name = "username_normalized", nullable = false, unique = true)
-    private String usernameNormalized;
-
-    @Column(columnDefinition = "citext", nullable = false, unique = true)
+    @Column(columnDefinition = "CITEXT", nullable = false, unique = true)
     private String email;
 
     @Column(name = "password_hash", nullable = false)
@@ -47,9 +44,6 @@ public class UserEntity implements UserDetails {
 
     @Column(name = "mp_access_token")
     private String mpAccessToken;
-
-    @Column(name = "profile_image_key")
-    private String profileImageKey;
 
     @Column(columnDefinition = "BOOLEAN DEFAULT TRUE", nullable = false)
     private boolean active = true;

@@ -1,6 +1,3 @@
--- =========================
--- INDEXES
--- =========================
 CREATE INDEX idx_games_title_trgm ON games USING gin (title gin_trgm_ops);
 CREATE INDEX idx_orders_user ON orders(user_id);
 CREATE INDEX idx_order_items_order ON order_items(order_id);

@@ -1,12 +1,12 @@
 CREATE TABLE friends (
 
-    id UUID PRIMARY KEY,
+    id UUID NOT NULL,
 
     user_id UUID NOT NULL,
 
     friend_id UUID NOT NULL,
 
-    status friend_status NOT NULL,
+    status VARCHAR(30) NOT NULL,
 
     user_min UUID GENERATED ALWAYS AS (
         CASE
@@ -22,17 +22,28 @@ CREATE TABLE friends (
             END
         ) STORED,
 
-    CONSTRAINT friends_friendship_unique
+    CONSTRAINT pk_friends
+        PRIMARY KEY (id),
+
+    CONSTRAINT uk_friends_friendship
         UNIQUE (user_min, user_max),
 
-    CONSTRAINT friendships_user_not_self_check
+    CONSTRAINT ck_friendships_user_not_self
         CHECK (user_id <> friend_id),
 
-    CONSTRAINT friends_user_id_fk
+    CONSTRAINT ck_friends_status
+        CHECK (
+            status IN (
+                'PENDING', 
+                'ACCEPTED'
+            )
+        ),
+
+    CONSTRAINT fk_friends_user_id_users
         FOREIGN KEY (user_id)
             REFERENCES users(id),
 
-    CONSTRAINT friends_friend_id_fk
+    CONSTRAINT fk_friends_friend_id_users
         FOREIGN KEY (friend_id)
             REFERENCES users(id)
 );

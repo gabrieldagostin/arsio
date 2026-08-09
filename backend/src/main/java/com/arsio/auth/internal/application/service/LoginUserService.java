@@ -54,8 +54,7 @@ public class LoginUserService {
                 new AuthenticatedUserResponse(
                         userAuth.getId(),
                         userAuth.getRole(),
-                        userAuth.getUsername(),
-                        userAuth.getProfileImageKey())
+                        userAuth.getUsername())
         );
     }
 }

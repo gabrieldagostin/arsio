@@ -36,19 +36,19 @@ public class JpaUserRepositoryAdapter implements UserRepository {
 
     @Override
     public boolean existsByUsername(Username username) {
-        return users.existsByUsernameNormalized(
+        return users.existsByUsername(
                 username.getNormalized()
         );
     }
 
     @Override
     public Optional<UserDetails> findUserDetailsByUsername(String username) {
-        return users.findUserDetailsByUsernameNormalized(username);
+        return users.findUserDetailsByUsername(username);
     }
 
     @Override
     public Optional<User> findUserByUsername(Username username) {
-        return users.findUserByUsernameNormalized(username.getNormalized())
+        return users.findUserByUsername(username.getNormalized())
                 .map(mapper::toDomain);
     }
 

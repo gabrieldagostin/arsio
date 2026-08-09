@@ -1,6 +1,6 @@
 CREATE TABLE reviews (
 
-    id UUID PRIMARY KEY,
+    id UUID NOT NULL,
 
     user_id UUID NOT NULL,
 
@@ -11,18 +11,21 @@ CREATE TABLE reviews (
     comment TEXT,
 
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    
+    CONSTRAINT pk_reviews
+        PRIMARY KEY (id),
 
-    CONSTRAINT reviews_rating_length_check
-        CHECK (rating BETWEEN 1 AND 5),
-
-    CONSTRAINT reviews_user_id_game_id_unique
+    CONSTRAINT uk_reviews_user_id_game_id
         UNIQUE (user_id, game_id),
 
-    CONSTRAINT reviews_user_id_fk
+    CONSTRAINT ck_reviews_rating_length
+        CHECK (rating BETWEEN 1 AND 5),
+
+    CONSTRAINT fk_reviews_user_id_users
         FOREIGN KEY (user_id)
             REFERENCES users(id),
 
-    CONSTRAINT reviews_game_id_fk
+    CONSTRAINT fk_reviews_game_id_games
         FOREIGN KEY (game_id)
             REFERENCES games(id)
 );

@@ -5,14 +5,12 @@ import java.util.UUID;
 public record AuthenticatedUserResponse(
         UUID id,
         String role,
-        String username,
-        String avatarUrl
+        String username
 ) {
 
-    public AuthenticatedUserResponse(UUID id, String role, String username, String avatarUrl) {
+    public AuthenticatedUserResponse(UUID id, String role, String username) {
         this.id = id;
         this.role = role;
         this.username = username;
-        this.avatarUrl = avatarUrl;
     }
 }

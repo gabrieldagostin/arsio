@@ -51,8 +51,7 @@ public class RegisterUserService {
                 new AuthenticatedUserResponse(
                         userAuth.getId(),
                         userAuth.getRole(),
-                        userAuth.getUsername(),
-                        null
+                        userAuth.getUsername()
                 )
         );
     }
