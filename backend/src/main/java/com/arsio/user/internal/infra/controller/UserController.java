@@ -4,7 +4,9 @@ import com.arsio.config.security.SecurityUtils;
 import com.arsio.user.internal.application.service.GetCurrentUserService;
 import com.arsio.user.internal.application.service.GetUserAvatarService;
 import com.arsio.user.internal.application.service.GetUserByIdService;
+import com.arsio.user.internal.application.service.GetUserProfileService;
 import com.arsio.user.internal.infra.controller.dto.response.GetAvatarResponse;
+import com.arsio.user.internal.infra.controller.dto.response.GetProfileResponse;
 import com.arsio.user.internal.infra.controller.dto.response.GetUserResponse;
 import com.arsio.user.internal.infra.controller.mapper.UserControllerMapper;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +28,7 @@ public class UserController {
     private final GetCurrentUserService getCurrentUserService;
     private final GetUserByIdService getUserByIdService;
     private final GetUserAvatarService getUserAvatarService;
+    private final GetUserProfileService getUserProfileService;
 
     @GetMapping("/me")
     @PreAuthorize("HasRole('USER')")
@@ -54,5 +57,15 @@ public class UserController {
                 getUserAvatarService.execute(SecurityUtils.getCurrentUserId());
 
         return ResponseEntity.ok(avatarResponse);
+    }
+
+    @GetMapping("/me/profile")
+    @PreAuthorize("HasRole('USER')")
+    public ResponseEntity<GetProfileResponse> getUserProfile() {
+
+        GetProfileResponse profileResponse =
+                getUserProfileService.execute(SecurityUtils.getCurrentUserId());
+
+        return ResponseEntity.ok(profileResponse);
     }
 }
