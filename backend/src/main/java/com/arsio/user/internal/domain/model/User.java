@@ -74,4 +74,8 @@ public class User {
     public void updatePassword(PasswordHash newPasswordHash) {
         this.passwordHash = newPasswordHash;
     }
+
+    public void updateUsername(Username newUsername) {
+        this.username = newUsername;
+    }
 }
