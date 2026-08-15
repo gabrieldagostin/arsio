@@ -1,8 +1,10 @@
 package com.arsio.user.internal.infra.controller;
 
 import com.arsio.config.security.SecurityUtils;
+import com.arsio.user.internal.application.dto.UpdatePasswordCommand;
 import com.arsio.user.internal.application.dto.UpdateUsernameCommand;
 import com.arsio.user.internal.application.service.*;
+import com.arsio.user.internal.infra.controller.dto.request.UpdatePasswordRequest;
 import com.arsio.user.internal.infra.controller.dto.request.UpdateUsernameRequest;
 import com.arsio.user.internal.infra.controller.dto.response.GetAvatarResponse;
 import com.arsio.user.internal.infra.controller.dto.response.GetProfileResponse;
@@ -28,6 +30,7 @@ public class UserController {
     private final GetUserAvatarService getUserAvatarService;
     private final GetUserProfileService getUserProfileService;
     private final UpdateUsernameService  updateUsernameService;
+    private final UpdateUserPasswordHashService updatePasswordService;
 
     @GetMapping("/me")
     @PreAuthorize("HasRole('USER')")
@@ -78,5 +81,16 @@ public class UserController {
                 updateUsernameService.execute(SecurityUtils.getCurrentUserId(), command);
 
         return ResponseEntity.ok(response);
+    }
+
+    @PatchMapping("/me/password")
+    @PreAuthorize("HasRole('USER')")
+    public ResponseEntity<Void> updatePassword(@RequestBody @Valid UpdatePasswordRequest request) {
+
+        UpdatePasswordCommand command = mapper.toUpdatePasswordCommand(request);
+
+        updatePasswordService.execute(SecurityUtils.getCurrentUserId(), command);
+
+        return ResponseEntity.noContent().build();
     }
 }
