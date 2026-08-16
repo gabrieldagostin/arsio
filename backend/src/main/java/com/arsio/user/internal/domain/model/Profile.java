@@ -8,17 +8,17 @@ public class Profile {
     private final UserId userId;
     private Username displayName;
     private Bio bio;
-    private ProfileImageKey profileImageKey;
-    private ProfileImageKey profileBannerKey;
+    private ObjectKey avatarObjectKey;
+    private ObjectKey bannerObjectKey;
     private Country country;
 
-    public Profile(ProfileId id, UserId userId, Username displayName, Bio bio, ProfileImageKey profileImageKey, ProfileImageKey profileBannerKey, Country country) {
+    public Profile(ProfileId id, UserId userId, Username displayName, Bio bio, ObjectKey avatarObjectKey, ObjectKey bannerObjectKey, Country country) {
         this.id = id;
         this.userId = userId;
         this.displayName = displayName;
         this.bio = bio;
-        this.profileImageKey = profileImageKey;
-        this.profileBannerKey = profileBannerKey;
+        this.avatarObjectKey = avatarObjectKey;
+        this.bannerObjectKey = bannerObjectKey;
         this.country = country;
     }
 
@@ -38,15 +38,19 @@ public class Profile {
         return bio;
     }
 
-    public ProfileImageKey getProfileImageKey() {
-        return profileImageKey;
+    public ObjectKey getAvatarObjectKey() {
+        return avatarObjectKey;
     }
 
-    public ProfileImageKey getProfileBannerKey() {
-        return profileBannerKey;
+    public ObjectKey getBannerObjectKey() {
+        return bannerObjectKey;
     }
 
     public Country getCountry() {
         return country;
+    }
+
+    public void updateAvatarObjectKey(ObjectKey objectKey) {
+        this.avatarObjectKey = objectKey;
     }
 }

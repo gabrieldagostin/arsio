@@ -1,0 +1,59 @@
+package com.arsio.user.internal.infra.storage;
+
+import com.arsio.shared.properties.MinioProperties;
+import com.arsio.user.internal.application.port.output.FileStorage;
+import com.arsio.user.internal.domain.model.ObjectMetadata;
+import io.minio.*;
+import io.minio.errors.MinioException;
+import lombok.RequiredArgsConstructor;
+
+import java.util.concurrent.TimeUnit;
+
+@RequiredArgsConstructor
+public class MinioFileStorage implements FileStorage {
+
+    private final MinioClient minioClient;
+    private final MinioProperties minioProperties;
+
+    @Override
+    public String generatePresignedUrl(String objectKey) {
+
+        try {
+            String uploadUrl = minioClient.getPresignedObjectUrl(
+                    GetPresignedObjectUrlArgs.builder()
+                            .method(Http.Method.PUT)
+                            .bucket(minioProperties.getUserFilesBucket())
+                            .object(objectKey)
+                            .expiry(15, TimeUnit.MINUTES)
+                            .build()
+            );
+
+            return uploadUrl;
+
+        } catch (MinioException e) {
+            throw new RuntimeException("Failed to generate presigned URL", e);
+        }
+    }
+
+    @Override
+    public ObjectMetadata getObjectMetadata(String objectKey) {
+
+        try {
+
+            StatObjectResponse stat = minioClient.statObject(
+                    StatObjectArgs.builder()
+                            .bucket(minioProperties.getUserFilesBucket())
+                            .object(objectKey)
+                            .build()
+            );
+
+            return new ObjectMetadata(
+                    stat.size(),
+                    stat.contentType()
+            );
+
+        }catch (MinioException e) {
+            throw new RuntimeException("Failed to retrieve object metadata", e);
+        }
+    }
+}

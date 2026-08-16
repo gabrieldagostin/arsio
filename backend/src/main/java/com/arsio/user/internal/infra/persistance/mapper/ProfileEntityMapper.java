@@ -50,12 +50,12 @@ public interface ProfileEntityMapper {
         return new Bio(value);
     }
 
-    default String profileImageKeyToString(ProfileImageKey profileImageKey) {
-        return profileImageKey.value();
+    default String profileImageKeyToString(ObjectKey objectKey) {
+        return objectKey.value();
     }
 
-    default ProfileImageKey stringToProfileImageKey(String value) {
-        return new ProfileImageKey(value);
+    default ObjectKey stringToProfileImageKey(String value) {
+        return new ObjectKey(value);
     }
 
     default String countryToString(Country country) {

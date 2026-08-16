@@ -22,4 +22,9 @@ public class JpaProfileRepositoryAdapter implements ProfileRepository {
         return profiles.findByUserId(userId)
                 .map(mapper::toDomain);
     }
+
+    @Override
+    public void save(Profile profile) {
+        profiles.save(mapper.toEntity(profile));
+    }
 }

@@ -1,5 +1,6 @@
 package com.arsio.user.internal.application.service;
 
+import com.arsio.user.internal.application.port.output.FileStorage;
 import com.arsio.user.internal.domain.exception.ProfileNotFoundException;
 import com.arsio.user.internal.domain.model.Profile;
 import com.arsio.user.internal.domain.repository.ProfileRepository;
@@ -15,9 +16,11 @@ import java.util.UUID;
 public class GetUserAvatarService {
 
     private final ProfileRepository profiles;
+    private final FileStorage fileStorage;
 
-    public GetUserAvatarService(ProfileRepository profiles) {
+    public GetUserAvatarService(ProfileRepository profiles, FileStorage fileStorage) {
         this.profiles = profiles;
+        this.fileStorage = fileStorage;
     }
 
     public GetAvatarResponse execute(UUID value) {
@@ -26,6 +29,10 @@ public class GetUserAvatarService {
         Profile profile = profiles.findByUserId(userId)
                 .orElseThrow(ProfileNotFoundException::new);
 
-        return new GetAvatarResponse(profile.getProfileImageKey().value());
+        String avatarUrl = fileStorage.generatePresignedUrl(profile.getAvatarObjectKey().value());
+
+        return new GetAvatarResponse(
+                avatarUrl
+        );
     }
 }

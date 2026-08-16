@@ -2,9 +2,9 @@ package com.arsio.user.internal.domain.valueobject;
 
 import com.arsio.user.internal.domain.exception.InvalidProfileImageKeyException;
 
-public record ProfileImageKey(String value) {
+public record ObjectKey(String value) {
 
-    public ProfileImageKey {
+    public ObjectKey {
         value = value == null ? "" : value.trim();
         validate(value);
     }
