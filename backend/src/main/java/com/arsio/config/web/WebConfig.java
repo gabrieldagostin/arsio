@@ -1,4 +1,4 @@
-package com.arsio.shared.config;
+package com.arsio.config.web;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RestController;

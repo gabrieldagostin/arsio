@@ -8,7 +8,7 @@ import com.arsio.auth.internal.domain.repository.UserAuthRepository;
 import com.arsio.auth.internal.domain.model.PasswordResetToken;
 import com.arsio.auth.internal.domain.model.UserAuth;
 import com.arsio.auth.internal.domain.valueobject.PasswordToken;
-import com.arsio.shared.config.FrontendProperties;
+import com.arsio.shared.properties.FrontendProperties;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
