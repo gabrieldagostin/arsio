@@ -1,13 +1,13 @@
 package com.arsio.user.internal.infra.controller;
 
 import com.arsio.config.security.SecurityUtils;
-import com.arsio.user.internal.application.dto.ConfirmAvatarUploadCommand;
+import com.arsio.user.internal.application.dto.ConfirmFileUploadCommand;
 import com.arsio.user.internal.application.dto.UpdatePasswordCommand;
 import com.arsio.user.internal.application.dto.UpdateUsernameCommand;
-import com.arsio.user.internal.application.dto.UploadAvatarUrlCommand;
+import com.arsio.user.internal.application.dto.UploadFileUrlCommand;
 import com.arsio.user.internal.application.service.*;
-import com.arsio.user.internal.infra.controller.dto.request.ConfirmAvatarUploadRequest;
-import com.arsio.user.internal.infra.controller.dto.request.UploadAvatarUrlRequest;
+import com.arsio.user.internal.infra.controller.dto.request.ConfirmFileUploadRequest;
+import com.arsio.user.internal.infra.controller.dto.request.UploadFileUrlRequest;
 import com.arsio.user.internal.infra.controller.dto.request.UpdatePasswordRequest;
 import com.arsio.user.internal.infra.controller.dto.request.UpdateUsernameRequest;
 import com.arsio.user.internal.infra.controller.dto.response.*;
@@ -34,6 +34,7 @@ public class UserController {
     private final UpdateUserPasswordHashService updatePasswordService;
     private final FileUploadPreparationService fileUploadPreparationService;
     private final ConfirmAvatarUploadService confirmAvatarUploadService;
+    private final ConfirmBannerUploadService confirmBannerUploadService;
 
     @GetMapping("/me")
     @PreAuthorize("HasRole('USER')")
@@ -99,11 +100,11 @@ public class UserController {
 
     @PostMapping("/me/avatar/upload-url")
     @PreAuthorize("HasRole('USER')")
-    public ResponseEntity<UploadAvatarUrlResponse> generateUploadUrl(@RequestBody @Valid UploadAvatarUrlRequest request) {
+    public ResponseEntity<UploadFileUrlResponse> generateAvatarUploadUrl(@RequestBody @Valid UploadFileUrlRequest request) {
 
-        UploadAvatarUrlCommand command = mapper.toUploadAvatarUrlCommand(request);
+        UploadFileUrlCommand command = mapper.toUploadFileUrlCommand(request);
 
-        UploadAvatarUrlResponse response =
+        UploadFileUrlResponse response =
                 fileUploadPreparationService.execute(SecurityUtils.getCurrentUserId(), command);
 
         return ResponseEntity.ok(response);
@@ -111,12 +112,36 @@ public class UserController {
 
     @PostMapping("/me/avatar/confirm")
     @PreAuthorize("HasRole('USER')")
-    public ResponseEntity<GetAvatarResponse> confirmAvatarUpload(@RequestBody @Valid ConfirmAvatarUploadRequest request) {
+    public ResponseEntity<GetAvatarResponse> confirmAvatarUpload(@RequestBody @Valid ConfirmFileUploadRequest request) {
 
-        ConfirmAvatarUploadCommand command = mapper.toConfirmAvatarUploadCommand(request);
+        ConfirmFileUploadCommand command = mapper.toConfirmFileUploadCommand(request);
 
         GetAvatarResponse response =
                 confirmAvatarUploadService.execute(SecurityUtils.getCurrentUserId(), command);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/me/banner/upload-url")
+    @PreAuthorize("HasRole('USER')")
+    public ResponseEntity<UploadFileUrlResponse> generateBannerUploadUrl(@RequestBody @Valid UploadFileUrlRequest request) {
+
+        UploadFileUrlCommand command = mapper.toUploadFileUrlCommand(request);
+
+        UploadFileUrlResponse response =
+                fileUploadPreparationService.execute(SecurityUtils.getCurrentUserId(), command);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/me/banner/confirm")
+    @PreAuthorize("HasRole('USER')")
+    public ResponseEntity<GetBannerResponse> confirmBannerUpload(@RequestBody @Valid ConfirmFileUploadRequest request) {
+
+        ConfirmFileUploadCommand command = mapper.toConfirmFileUploadCommand(request);
+
+        GetBannerResponse response =
+                confirmBannerUploadService.execute(SecurityUtils.getCurrentUserId(), command);
 
         return ResponseEntity.ok(response);
     }

@@ -2,7 +2,7 @@ package com.arsio.user.internal.infra.controller.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 
-public record UploadAvatarUrlRequest(
+public record UploadFileUrlRequest(
 
         @NotBlank(message = "${contentType.require}")
         String contentType,

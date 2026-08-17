@@ -1,7 +1,8 @@
 package com.arsio.user.internal.application.dto;
 
-public record UploadAvatarUrlCommand(
+public record UploadFileUrlCommand(
         String contentType,
-        long size
+        long size,
+        String imageType
 ) {
 }

@@ -8,7 +8,7 @@ import com.arsio.user.internal.domain.model.Profile;
 import com.arsio.user.internal.domain.repository.ProfileRepository;
 import com.arsio.user.internal.domain.valueobject.ObjectKey;
 import com.arsio.user.internal.domain.valueobject.UserId;
-import com.arsio.user.internal.infra.controller.dto.response.GetAvatarResponse;
+import com.arsio.user.internal.infra.controller.dto.response.GetBannerResponse;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +17,9 @@ import java.util.UUID;
 
 @Service
 @Transactional
-public class ConfirmAvatarUploadService {
+public class ConfirmBannerUploadService {
 
-    private static final long MAX_AVATAR_SIZE = 5 * 1024 * 1024;
+    private static final long MAX_BANNER_SIZE = 10 * 1024 * 1024;
 
     private static final Set<String> ALLOWED_TYPES = Set.of(
             "image/png",
@@ -30,35 +30,35 @@ public class ConfirmAvatarUploadService {
     private final FileStorage fileStorage;
     private final ProfileRepository profiles;
 
-    public ConfirmAvatarUploadService(FileStorage fileStorage, ProfileRepository profiles) {
+    public ConfirmBannerUploadService(FileStorage fileStorage, ProfileRepository profiles) {
         this.fileStorage = fileStorage;
         this.profiles = profiles;
     }
 
-    public GetAvatarResponse execute(UUID userId, ConfirmFileUploadCommand command) {
+    public GetBannerResponse execute(UUID userId, ConfirmFileUploadCommand command) {
 
         ObjectMetadata metadata = fileStorage.getObjectMetadata(command.objectKey());
 
-        if (metadata.size() > MAX_AVATAR_SIZE) {
+        if (metadata.size() > MAX_BANNER_SIZE) {
             throw new IllegalArgumentException(
-                    "Avatar cannot exceed 5 MB"
+                    "Banner cannot exceed 10 MB"
             );
         }
 
         if (!ALLOWED_TYPES.contains(metadata.contentType())) {
             throw new IllegalArgumentException(
-                    "Unsupported avatar format"
+                    "Unsupported banner format"
             );
         }
 
         Profile profile = profiles.findByUserId(new UserId(userId))
                 .orElseThrow(ProfileNotFoundException::new);
 
-        profile.updateAvatarObjectKey(new ObjectKey(command.objectKey()));
+        profile.updateBannerObjectKey(new ObjectKey(command.objectKey()));
         profiles.save(profile);
 
-        return new GetAvatarResponse(
-                profile.getAvatarObjectKey().value()
+        return new GetBannerResponse(
+                profile.getBannerObjectKey().value()
         );
     }
 }

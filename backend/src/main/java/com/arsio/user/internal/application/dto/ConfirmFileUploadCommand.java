@@ -1,6 +1,6 @@
 package com.arsio.user.internal.application.dto;
 
-public record ConfirmAvatarUploadCommand(
+public record ConfirmFileUploadCommand(
         String objectKey
 ) {
 }

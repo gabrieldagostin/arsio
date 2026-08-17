@@ -53,4 +53,8 @@ public class Profile {
     public void updateAvatarObjectKey(ObjectKey objectKey) {
         this.avatarObjectKey = objectKey;
     }
+
+    public void updateBannerObjectKey(ObjectKey objectKey) {
+        this.bannerObjectKey = objectKey;
+    }
 }
