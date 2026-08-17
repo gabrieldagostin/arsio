@@ -2,6 +2,7 @@ package com.arsio.user.internal.infra.persistance.mapper;
 
 import com.arsio.user.internal.domain.model.User;
 import com.arsio.user.internal.domain.model.UserRole;
+import com.arsio.user.internal.domain.model.UserStatus;
 import com.arsio.user.internal.domain.valueobject.Email;
 import com.arsio.user.internal.domain.valueobject.PasswordHash;
 import com.arsio.user.internal.domain.valueobject.UserId;
@@ -63,5 +64,13 @@ public interface UserEntityMapper {
 
     default UserRole stringToUserRole(String value) {
         return UserRole.valueOf(value);
+    }
+
+    default String userStatusToString(UserStatus userStatus) {
+        return userStatus.name();
+    }
+
+    default UserStatus stringToUserStatus(String value) {
+        return UserStatus.valueOf(value);
     }
 }

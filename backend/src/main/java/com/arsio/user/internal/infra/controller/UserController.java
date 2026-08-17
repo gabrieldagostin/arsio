@@ -35,6 +35,7 @@ public class UserController {
     private final FileUploadPreparationService fileUploadPreparationService;
     private final ConfirmAvatarUploadService confirmAvatarUploadService;
     private final ConfirmBannerUploadService confirmBannerUploadService;
+    private final DeactivateUserService deactivateUserService;
 
     @GetMapping("/me")
     @PreAuthorize("HasRole('USER')")
@@ -144,5 +145,14 @@ public class UserController {
                 confirmBannerUploadService.execute(SecurityUtils.getCurrentUserId(), command);
 
         return ResponseEntity.ok(response);
+    }
+
+    @PatchMapping("/me/status")
+    @PreAuthorize("HasRole('USER')")
+    public ResponseEntity<Void> deactivateUser() {
+
+        deactivateUserService.execute(SecurityUtils.getCurrentUserId());
+
+        return ResponseEntity.noContent().build();
     }
 }

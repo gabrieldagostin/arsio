@@ -1,6 +1,7 @@
 package com.arsio.user.internal.infra.persistance.entity;
 
 import com.arsio.user.internal.domain.model.UserRole;
+import com.arsio.user.internal.domain.model.UserStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
@@ -45,8 +46,10 @@ public class UserEntity implements UserDetails {
     @Column(name = "mp_access_token")
     private String mpAccessToken;
 
-    @Column(columnDefinition = "BOOLEAN DEFAULT TRUE", nullable = false)
-    private boolean active = true;
+    @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
+    @Column(nullable = false)
+    private UserStatus status;
 
     @Column(name = "last_login_at", nullable = false)
     private Instant lastLoginAt;

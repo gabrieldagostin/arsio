@@ -12,16 +12,16 @@ public class User {
     private Email email;
     private PasswordHash passwordHash;
     private UserRole role;
-    private boolean active;
+    private UserStatus status;
 
 
-    public User(UserId id, Username username, Email email, PasswordHash passwordHash, UserRole role, boolean active) {
+    public User(UserId id, Username username, Email email, PasswordHash passwordHash, UserRole role, UserStatus status) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.passwordHash = passwordHash;
         this.role = role;
-        this.active = active;
+        this.status = status;
     }
 
     public static User createUser(
@@ -36,6 +36,7 @@ public class User {
         Email emailVo = new Email(email);
         PasswordHash passwordHashVo = new PasswordHash(passwordHash);
         UserRole role = UserRole.USER;
+        UserStatus status = UserStatus.ACTIVE;
 
         return new User(
                 idVo,
@@ -43,7 +44,7 @@ public class User {
                 emailVo,
                 passwordHashVo,
                 role,
-                true
+                status
         );
     }
 
@@ -67,8 +68,8 @@ public class User {
         return role;
     }
 
-    public boolean isActive() {
-        return active;
+    public UserStatus getUserStatus() {
+        return status;
     }
 
     public void updatePassword(PasswordHash newPasswordHash) {
@@ -77,5 +78,9 @@ public class User {
 
     public void updateUsername(Username newUsername) {
         this.username = newUsername;
+    }
+
+    public void deactivate() {
+        this.status = UserStatus.INACTIVE;
     }
 }
