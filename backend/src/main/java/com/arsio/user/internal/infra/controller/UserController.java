@@ -36,9 +36,6 @@ public class UserController {
     private final ConfirmAvatarUploadService confirmAvatarUploadService;
     private final ConfirmBannerUploadService confirmBannerUploadService;
     private final DeactivateUserService deactivateUserService;
-    private final SendFriendRequestService sendFriendRequestService;
-    private final AcceptFriendRequestService acceptFriendRequestService;
-    private final DeclineFriendRequestService declineFriendRequestService;
 
     @GetMapping("/me")
     @PreAuthorize("HasRole('USER')")
@@ -155,33 +152,6 @@ public class UserController {
     public ResponseEntity<Void> deactivateUser() {
 
         deactivateUserService.execute(SecurityUtils.getCurrentUserId());
-
-        return ResponseEntity.noContent().build();
-    }
-
-    @PostMapping("/friendships/requests/{id}")
-    @PreAuthorize("HasRole('USER')")
-    public ResponseEntity<Void> sendFriendRequest(@PathVariable("id") UUID id) {
-
-        sendFriendRequestService.execute(SecurityUtils.getCurrentUserId(), id);
-
-        return ResponseEntity.noContent().build();
-    }
-
-    @PostMapping("/friendships/requests/{friendshipId}/accept")
-    @PreAuthorize("HasRole('USER')")
-    public ResponseEntity<Void> acceptFriendRequest(@PathVariable("friendshipId") UUID friendshipId) {
-
-        acceptFriendRequestService.execute(friendshipId);
-
-        return ResponseEntity.noContent().build();
-    }
-
-    @PostMapping("/friendships/requests/{friendshipId}/decline")
-    @PreAuthorize("HasRole('USER')")
-    public ResponseEntity<Void> declineFriendRequest(@PathVariable("friendshipId") UUID friendshipId) {
-
-        declineFriendRequestService.execute(friendshipId);
 
         return ResponseEntity.noContent().build();
     }
