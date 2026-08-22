@@ -12,4 +12,6 @@ public class ConflictException extends BusinessException {
                 errorCode
         );
     }
+
+    public ConflictException() {}
 }

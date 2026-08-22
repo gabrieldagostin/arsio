@@ -1,8 +1,8 @@
 package com.arsio.user.internal.infra.persistance.mapper;
 
 import com.arsio.user.internal.domain.model.User;
-import com.arsio.user.internal.domain.model.UserRole;
-import com.arsio.user.internal.domain.model.UserStatus;
+import com.arsio.user.internal.domain.model.enums.UserRole;
+import com.arsio.user.internal.domain.model.enums.UserStatus;
 import com.arsio.user.internal.domain.valueobject.Email;
 import com.arsio.user.internal.domain.valueobject.PasswordHash;
 import com.arsio.user.internal.domain.valueobject.UserId;

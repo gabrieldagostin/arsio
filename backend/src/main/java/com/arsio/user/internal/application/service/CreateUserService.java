@@ -39,7 +39,7 @@ public class CreateUserService {
 
         String passwordHash = passwordEncoder.encode(command.password());
 
-        User user = User.createUser(
+        User user = User.create(
                 command.username(),
                 command.email(),
                 passwordHash

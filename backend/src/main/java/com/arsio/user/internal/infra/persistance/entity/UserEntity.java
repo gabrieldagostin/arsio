@@ -1,7 +1,7 @@
 package com.arsio.user.internal.infra.persistance.entity;
 
-import com.arsio.user.internal.domain.model.UserRole;
-import com.arsio.user.internal.domain.model.UserStatus;
+import com.arsio.user.internal.domain.model.enums.UserRole;
+import com.arsio.user.internal.domain.model.enums.UserStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;

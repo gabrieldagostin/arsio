@@ -36,6 +36,7 @@ public class UserController {
     private final ConfirmAvatarUploadService confirmAvatarUploadService;
     private final ConfirmBannerUploadService confirmBannerUploadService;
     private final DeactivateUserService deactivateUserService;
+    private final SendFriendRequestService sendFriendRequestService;
 
     @GetMapping("/me")
     @PreAuthorize("HasRole('USER')")
@@ -152,6 +153,15 @@ public class UserController {
     public ResponseEntity<Void> deactivateUser() {
 
         deactivateUserService.execute(SecurityUtils.getCurrentUserId());
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/friendships/requests/{id}")
+    @PreAuthorize("HasRole('USER')")
+    public ResponseEntity<Void> sendFriendRequest(@PathVariable("id") UUID id) {
+
+        sendFriendRequestService.execute(SecurityUtils.getCurrentUserId(), id);
 
         return ResponseEntity.noContent().build();
     }

@@ -1,5 +1,7 @@
 package com.arsio.user.internal.domain.model;
 
+import com.arsio.user.internal.domain.model.enums.UserRole;
+import com.arsio.user.internal.domain.model.enums.UserStatus;
 import com.arsio.user.internal.domain.valueobject.Email;
 import com.arsio.user.internal.domain.valueobject.PasswordHash;
 import com.arsio.user.internal.domain.valueobject.UserId;
@@ -24,7 +26,7 @@ public class User {
         this.status = status;
     }
 
-    public static User createUser(
+    public static User create(
             String username,
             String email,
             String passwordHash
@@ -32,7 +34,6 @@ public class User {
 
         UserId idVo = UserId.generate();
         Username usernameVo = new Username(username);
-        String usernameNormalizedVo = new Username(username).getNormalized();
         Email emailVo = new Email(email);
         PasswordHash passwordHashVo = new PasswordHash(passwordHash);
         UserRole role = UserRole.USER;

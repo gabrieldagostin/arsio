@@ -12,4 +12,8 @@ public class ValidationException extends BusinessException {
                 errorCode
         );
     }
+
+    public ValidationException() {
+
+    }
 }

@@ -1,4 +1,4 @@
-package com.arsio.user.internal.domain.model;
+package com.arsio.user.internal.domain.model.enums;
 
 import com.arsio.user.internal.domain.exception.InvalidUserRoleException;
 
