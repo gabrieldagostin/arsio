@@ -38,6 +38,7 @@ public class UserController {
     private final DeactivateUserService deactivateUserService;
     private final SendFriendRequestService sendFriendRequestService;
     private final AcceptFriendRequestService acceptFriendRequestService;
+    private final DeclineFriendRequestService declineFriendRequestService;
 
     @GetMapping("/me")
     @PreAuthorize("HasRole('USER')")
@@ -172,6 +173,15 @@ public class UserController {
     public ResponseEntity<Void> acceptFriendRequest(@PathVariable("friendshipId") UUID friendshipId) {
 
         acceptFriendRequestService.execute(friendshipId);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/friendships/requests/{friendshipId}/decline")
+    @PreAuthorize("HasRole('USER')")
+    public ResponseEntity<Void> declineFriendRequest(@PathVariable("friendshipId") UUID friendshipId) {
+
+        declineFriendRequestService.execute(friendshipId);
 
         return ResponseEntity.noContent().build();
     }
