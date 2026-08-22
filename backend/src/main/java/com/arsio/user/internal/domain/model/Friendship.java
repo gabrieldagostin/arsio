@@ -9,28 +9,28 @@ import java.util.UUID;
 public class Friendship {
 
     private final FriendshipId id;
-    private UserId userId;
-    private UserId friendId;
+    private UserId requesterId;
+    private UserId addresseId;
     private FriendshipStatus status;
 
-    public Friendship(FriendshipId id, UserId userId, UserId friendId, FriendshipStatus status) {
+    public Friendship(FriendshipId id, UserId requesterId, UserId addresseId, FriendshipStatus status) {
         this.id = id;
-        this.userId = userId;
-        this.friendId = friendId;
+        this.requesterId = requesterId;
+        this.addresseId = addresseId;
         this.status = status;
     }
 
     public static Friendship create(UUID uId, UUID fId) {
 
         FriendshipId id = FriendshipId.generate();
-        UserId userId = new UserId(uId);
-        UserId friendId = new UserId(fId);
+        UserId requesterId = new UserId(uId);
+        UserId addresseId = new UserId(fId);
         FriendshipStatus status = FriendshipStatus.PENDING;
 
         return new Friendship(
                 id,
-                userId,
-                friendId,
+                requesterId,
+                addresseId,
                 status
         );
     }
@@ -39,15 +39,19 @@ public class Friendship {
         return id;
     }
 
-    public UserId getUserId() {
-        return userId;
+    public UserId getRequesterId() {
+        return requesterId;
     }
 
-    public UserId getFriendId() {
-        return friendId;
+    public UserId getAddresseId() {
+        return addresseId;
     }
 
     public FriendshipStatus getStatus() {
         return status;
+    }
+
+    public void acceptRequest() {
+        status = FriendshipStatus.ACCEPTED;
     }
 }

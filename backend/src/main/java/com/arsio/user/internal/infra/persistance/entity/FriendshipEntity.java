@@ -21,13 +21,11 @@ public class FriendshipEntity {
     @Column(nullable = false, unique = true)
     private UUID id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
-    private UserEntity userId;
+    @Column(name = "requester_id", nullable = false)
+    private UUID requesterId;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "friend_id", nullable = false)
-    private UserEntity friendId;
+    @Column(name = "addressee_id", nullable = false)
+    private UUID addresseeId;
 
     @Enumerated
     @JdbcTypeCode(SqlTypes.NAMED_ENUM)

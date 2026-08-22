@@ -1,8 +1,8 @@
 package com.arsio.user.internal.application.service;
 
+import com.arsio.user.internal.domain.exception.FriendshipNotFoundException;
 import com.arsio.user.internal.domain.model.Friendship;
 import com.arsio.user.internal.domain.repository.FriendRepository;
-import com.arsio.user.internal.domain.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -10,18 +10,20 @@ import java.util.UUID;
 
 @Service
 @Transactional
-public class SendFriendRequestService {
+public class AcceptFriendRequestService {
 
     private final FriendRepository friends;
-    private final UserRepository users;
 
-    public SendFriendRequestService(FriendRepository friends, UserRepository users) {
+    public AcceptFriendRequestService(FriendRepository friends) {
         this.friends = friends;
-        this.users = users;
     }
-    public void execute(UUID requesterId, UUID addresseeId) {
 
-        Friendship friendship = Friendship.create(requesterId, addresseeId);
+    public void execute(UUID friendshipId) {
+
+        Friendship friendship = friends.findById(friendshipId)
+                .orElseThrow(FriendshipNotFoundException::new);
+
+        friendship.acceptRequest();
 
         friends.save(friendship);
     }
