@@ -38,4 +38,20 @@ public class JpaFriendshipRepositoryAdapter implements FriendshipRepository {
                 .map(mapper::toDomain)
                 .toList();
     }
+
+    @Override
+    public List<Friendship> findPendingReceivedByUserId(UserId userId) {
+        return friendships.findPendingReceivedByUserId(userId.value(), FriendshipStatus.PENDING)
+                .stream()
+                .map(mapper::toDomain)
+                .toList();
+    }
+
+    @Override
+    public List<Friendship> findPendingSendByUserId(UserId userId) {
+        return friendships.findPendingSendByUserId(userId.value(), FriendshipStatus.PENDING)
+                .stream()
+                .map(mapper::toDomain)
+                .toList();
+    }
 }

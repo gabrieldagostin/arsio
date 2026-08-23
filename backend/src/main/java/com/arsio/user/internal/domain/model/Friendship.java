@@ -44,7 +44,7 @@ public class Friendship {
         return requesterId;
     }
 
-    public UserId getAddresseId() {
+    public UserId getAddresseeId() {
         return addresseId;
     }
 

@@ -16,12 +16,12 @@ import java.util.UUID;
 
 @Service
 @Transactional
-public class GetMyFriendshipsService {
+public class GetMyFriendshipsRequestsService {
 
-    private final FriendshipRepository friendships;
-    private final ProfileRepository profiles;
+    public final FriendshipRepository friendships;
+    public final ProfileRepository profiles;
 
-    public GetMyFriendshipsService(FriendshipRepository friendships, ProfileRepository profiles) {
+    public GetMyFriendshipsRequestsService(FriendshipRepository friendships, ProfileRepository profiles) {
         this.friendships = friendships;
         this.profiles = profiles;
     }
@@ -30,12 +30,12 @@ public class GetMyFriendshipsService {
 
         UserId userId = new UserId(id);
 
-        List<Friendship> friendshipList = friendships.findAcceptedByUserId(userId);
+        List<Friendship> friendshipList = friendships.findPendingReceivedByUserId(userId);
 
         return friendshipList.stream()
                 .map(friendship -> {
 
-                    UserId friendId = friendship.getOtherUser(userId);
+                    UserId friendId = friendship.getRequesterId();
 
                     Profile friendProfile = profiles.findByUserId(friendId)
                             .orElseThrow(UserNotFoundException::new);

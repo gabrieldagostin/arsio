@@ -15,4 +15,8 @@ public interface FriendshipRepository {
     Optional<Friendship> findById(FriendshipId friendshipId);
 
     List<Friendship> findAcceptedByUserId(UserId userId);
+
+    List<Friendship> findPendingReceivedByUserId(UserId userId);
+
+    List<Friendship> findPendingSendByUserId(UserId userId);
 }
