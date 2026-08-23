@@ -1,5 +1,6 @@
 package com.arsio.user.internal.domain.model;
 
+import com.arsio.user.internal.domain.exception.InvalidFriendshipException;
 import com.arsio.user.internal.domain.model.enums.FriendshipStatus;
 import com.arsio.user.internal.domain.valueobject.FriendshipId;
 import com.arsio.user.internal.domain.valueobject.UserId;
@@ -57,5 +58,14 @@ public class Friendship {
 
     public void declineRequest() {
         status = FriendshipStatus.REJECTED;
+    }
+
+    public UserId getOtherUser(UserId userId) {
+
+        if (requesterId.equals(userId)) return addresseId;
+
+        if (addresseId.equals(userId)) return requesterId;
+
+        throw new InvalidFriendshipException();
     }
 }
