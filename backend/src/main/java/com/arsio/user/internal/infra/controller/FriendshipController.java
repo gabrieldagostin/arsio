@@ -18,6 +18,7 @@ public class FriendshipController {
 
     private final GetMyFriendshipsService getMyFriendshipsService;
     private final GetMyFriendshipsRequestsService getMyFriendshipsRequestsService;
+    private final GetMyFriendshipsSendsService getMyFriendshipsSendsService;
     private final SendFriendRequestService sendFriendRequestService;
     private final AcceptFriendRequestService acceptFriendRequestService;
     private final DeclineFriendRequestService declineFriendRequestService;
@@ -26,7 +27,8 @@ public class FriendshipController {
     @PreAuthorize("HasRole('USER')")
     public ResponseEntity<List<GetMyFriendshipsResponse>> getMyFriendships() {
 
-        List<GetMyFriendshipsResponse> responses = getMyFriendshipsService.execute(SecurityUtils.getCurrentUserId());
+        List<GetMyFriendshipsResponse> responses =
+                getMyFriendshipsService.execute(SecurityUtils.getCurrentUserId());
 
         return ResponseEntity.ok(responses);
     }
@@ -37,6 +39,16 @@ public class FriendshipController {
 
         List<GetMyFriendshipsResponse> responses =
                 getMyFriendshipsRequestsService.execute(SecurityUtils.getCurrentUserId());
+
+        return ResponseEntity.ok(responses);
+    }
+
+    @GetMapping("/requests/send")
+    @PreAuthorize("HasRole('USER')")
+    public ResponseEntity<List<GetMyFriendshipsResponse>> getMyFriendshipsSends() {
+
+        List<GetMyFriendshipsResponse> responses =
+                getMyFriendshipsSendsService.execute(SecurityUtils.getCurrentUserId());
 
         return ResponseEntity.ok(responses);
     }
