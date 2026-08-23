@@ -1,15 +1,21 @@
 package com.arsio.user.internal.application.service;
 
 import com.arsio.user.api.dto.CreateUserCommand;
+import com.arsio.user.internal.application.event.CreatedUserEvent;
 import com.arsio.user.internal.domain.exception.EmailAlreadyExistsException;
 import com.arsio.user.internal.domain.exception.UsernameUnavailableException;
+import com.arsio.user.internal.domain.model.Profile;
+import com.arsio.user.internal.domain.repository.ProfileRepository;
 import com.arsio.user.internal.domain.repository.UserRepository;
 import com.arsio.user.internal.domain.model.User;
 import com.arsio.user.internal.domain.valueobject.Email;
 import com.arsio.user.internal.domain.valueobject.Username;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Locale;
 
 @Service
 @Transactional
@@ -17,10 +23,14 @@ public class CreateUserService {
 
     private final UserRepository users;
     private final PasswordEncoder passwordEncoder;
+    private final ApplicationEventPublisher eventPublisher;
+    private final ProfileRepository profiles;
 
-    public CreateUserService(UserRepository users, PasswordEncoder passwordEncoder) {
+    public CreateUserService(UserRepository users, PasswordEncoder passwordEncoder, ApplicationEventPublisher eventPublisher, ProfileRepository profiles) {
         this.users = users;
         this.passwordEncoder = passwordEncoder;
+        this.eventPublisher = eventPublisher;
+        this.profiles = profiles;
     }
 
     public User execute(CreateUserCommand command) {
@@ -40,12 +50,23 @@ public class CreateUserService {
         String passwordHash = passwordEncoder.encode(command.password());
 
         User user = User.create(
-                command.username(),
+                command.username().toLowerCase(Locale.ROOT),
                 command.email(),
                 passwordHash
         );
-
         users.save(user);
+
+        Profile profile = Profile.create(
+                user.getId().value(),
+                command.username()
+        );
+        profiles.save(profile);
+
+        eventPublisher.publishEvent(
+                new CreatedUserEvent(
+                        user.getId().value()
+                )
+        );
 
         return user;
     }

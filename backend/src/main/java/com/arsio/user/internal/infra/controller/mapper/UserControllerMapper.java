@@ -1,13 +1,9 @@
 package com.arsio.user.internal.infra.controller.mapper;
 
-import com.arsio.user.internal.application.dto.ConfirmFileUploadCommand;
 import com.arsio.user.internal.application.dto.UpdatePasswordCommand;
 import com.arsio.user.internal.application.dto.UpdateUsernameCommand;
-import com.arsio.user.internal.application.dto.UploadFileUrlCommand;
-import com.arsio.user.internal.infra.controller.dto.request.ConfirmFileUploadRequest;
 import com.arsio.user.internal.infra.controller.dto.request.UpdatePasswordRequest;
 import com.arsio.user.internal.infra.controller.dto.request.UpdateUsernameRequest;
-import com.arsio.user.internal.infra.controller.dto.request.UploadFileUrlRequest;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
@@ -18,8 +14,4 @@ public interface UserControllerMapper {
     UpdateUsernameCommand toUpdateUsernameCommand(UpdateUsernameRequest request);
 
     UpdatePasswordCommand toUpdatePasswordCommand(UpdatePasswordRequest request);
-
-    UploadFileUrlCommand toUploadFileUrlCommand(UploadFileUrlRequest request);
-
-    ConfirmFileUploadCommand toConfirmFileUploadCommand(ConfirmFileUploadRequest request);
 }

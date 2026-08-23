@@ -2,6 +2,8 @@ package com.arsio.user.internal.domain.model;
 
 import com.arsio.user.internal.domain.valueobject.*;
 
+import java.util.UUID;
+
 public class Profile {
 
     private final ProfileId id;
@@ -20,6 +22,18 @@ public class Profile {
         this.avatarObjectKey = avatarObjectKey;
         this.bannerObjectKey = bannerObjectKey;
         this.country = country;
+    }
+
+    public static Profile create(UUID userId, String displayName) {
+        return new Profile(
+                ProfileId.generate(),
+                new UserId(userId),
+                new Username(displayName),
+                null,
+                null,
+                null,
+                null
+        );
     }
 
     public ProfileId getId() {
