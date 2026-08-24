@@ -1,5 +1,9 @@
 package com.arsio.user.internal.domain.valueobject;
 
+import com.arsio.user.internal.domain.exception.InvalidCountryException;
+
+import java.util.Arrays;
+
 public enum Country {
 
     AF("AF", "Afghanistan", "🇦🇫"),
@@ -68,5 +72,12 @@ public enum Country {
 
     public String getFlag() {
         return flag;
+    }
+
+    public static Country fromCode(String code) {
+        return Arrays.stream(values())
+                .filter(country -> country.code.equalsIgnoreCase(code))
+                .findFirst()
+                .orElseThrow(InvalidCountryException::new);
     }
 }

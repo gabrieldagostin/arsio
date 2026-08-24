@@ -75,4 +75,8 @@ public class Profile {
     public void updateBio(Bio bio) {
         this.bio = bio;
     }
+
+    public void updateCountry(Country country) {
+        this.country = country;
+    }
 }

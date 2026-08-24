@@ -2,9 +2,11 @@ package com.arsio.user.internal.infra.controller.mapper;
 
 import com.arsio.user.internal.application.dto.ConfirmFileUploadCommand;
 import com.arsio.user.internal.application.dto.UpdateProfileBioCommand;
+import com.arsio.user.internal.application.dto.UpdateProfileCountryCommand;
 import com.arsio.user.internal.application.dto.UploadFileUrlCommand;
 import com.arsio.user.internal.infra.controller.dto.request.ConfirmFileUploadRequest;
 import com.arsio.user.internal.infra.controller.dto.request.UpdateProfileBioRequest;
+import com.arsio.user.internal.infra.controller.dto.request.UpdateProfileCountryRequest;
 import com.arsio.user.internal.infra.controller.dto.request.UploadFileUrlRequest;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -18,4 +20,6 @@ public interface ProfileControllerMapper {
     ConfirmFileUploadCommand toConfirmFileUploadCommand(ConfirmFileUploadRequest request);
 
     UpdateProfileBioCommand toUpdateProfileBioCommand(UpdateProfileBioRequest request);
+
+    UpdateProfileCountryCommand toUpdateProfileCountryCommand(UpdateProfileCountryRequest request);
 }
