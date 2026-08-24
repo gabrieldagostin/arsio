@@ -71,4 +71,8 @@ public class Profile {
     public void updateBannerObjectKey(ObjectKey objectKey) {
         this.bannerObjectKey = objectKey;
     }
+
+    public void updateBio(Bio bio) {
+        this.bio = bio;
+    }
 }

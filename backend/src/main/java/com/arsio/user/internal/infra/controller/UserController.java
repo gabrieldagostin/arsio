@@ -24,7 +24,7 @@ public class UserController {
     private final UserControllerMapper mapper;
     private final GetCurrentUserService getCurrentUserService;
     private final GetUserByIdService getUserByIdService;
-    private final UpdateUsernameService  updateUsernameService;
+    private final UpdateUsernameService updateUsernameService;
     private final UpdateUserPasswordHashService updatePasswordService;
     private final DeactivateUserService deactivateUserService;
 

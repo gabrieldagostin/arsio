@@ -2,14 +2,13 @@ package com.arsio.user.internal.infra.controller;
 
 import com.arsio.config.security.SecurityUtils;
 import com.arsio.user.internal.application.dto.ConfirmFileUploadCommand;
+import com.arsio.user.internal.application.dto.UpdateProfileBioCommand;
 import com.arsio.user.internal.application.dto.UploadFileUrlCommand;
 import com.arsio.user.internal.application.service.*;
 import com.arsio.user.internal.infra.controller.dto.request.ConfirmFileUploadRequest;
+import com.arsio.user.internal.infra.controller.dto.request.UpdateProfileBioRequest;
 import com.arsio.user.internal.infra.controller.dto.request.UploadFileUrlRequest;
-import com.arsio.user.internal.infra.controller.dto.response.GetAvatarResponse;
-import com.arsio.user.internal.infra.controller.dto.response.GetBannerResponse;
-import com.arsio.user.internal.infra.controller.dto.response.GetProfileResponse;
-import com.arsio.user.internal.infra.controller.dto.response.UploadFileUrlResponse;
+import com.arsio.user.internal.infra.controller.dto.response.*;
 import com.arsio.user.internal.infra.controller.mapper.ProfileControllerMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +24,7 @@ public class ProfileController {
     private final ProfileControllerMapper mapper;
     private final GetUserAvatarService getUserAvatarService;
     private final GetUserProfileService getUserProfileService;
+    private final UpdateProfileBioService updateProfileBioService;
     private final FileUploadPreparationService fileUploadPreparationService;
     private final ConfirmAvatarUploadService confirmAvatarUploadService;
     private final ConfirmBannerUploadService confirmBannerUploadService;
@@ -45,6 +45,18 @@ public class ProfileController {
 
         GetProfileResponse response =
                 getUserProfileService.execute(SecurityUtils.getCurrentUserId());
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PatchMapping("/me/bio")
+    @PreAuthorize("HasRole('USER')")
+    public ResponseEntity<UpdateProfileBioResponse> updateProfileBio(@RequestBody @Valid UpdateProfileBioRequest request) {
+
+        UpdateProfileBioCommand command = mapper.toUpdateProfileBioCommand(request);
+
+        UpdateProfileBioResponse response =
+                updateProfileBioService.execute(SecurityUtils.getCurrentUserId(), command);
 
         return ResponseEntity.ok(response);
     }
