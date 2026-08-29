@@ -3,6 +3,7 @@ package com.arsio.notification.internal.application.listener;
 import com.arsio.auth.internal.application.event.PasswordResetEvent;
 import com.arsio.notification.internal.application.port.output.EmailSender;
 import com.arsio.notification.internal.domain.model.EmailMessage;
+import com.arsio.notification.internal.infra.controller.mapper.EmailControllerMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.modulith.events.ApplicationModuleListener;
 import org.springframework.scheduling.annotation.Async;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Component;
 public class PasswordResetNotificationListener {
 
     private final EmailSender emailSender;
+    private final EmailControllerMapper mapper;
 
     @Async
     @ApplicationModuleListener

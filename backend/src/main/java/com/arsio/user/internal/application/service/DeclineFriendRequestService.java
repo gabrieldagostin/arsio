@@ -3,6 +3,7 @@ package com.arsio.user.internal.application.service;
 import com.arsio.user.internal.domain.exception.FriendshipNotFoundException;
 import com.arsio.user.internal.domain.model.Friendship;
 import com.arsio.user.internal.domain.repository.FriendshipRepository;
+import com.arsio.user.internal.domain.valueobject.FriendshipId;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,9 @@ public class DeclineFriendRequestService {
         this.friendships = friendships;
     }
 
-    public void execute(UUID friendshipId) {
+    public void execute(UUID id) {
+
+        FriendshipId friendshipId = new FriendshipId(id);
 
         Friendship friendship = friendships.findById(friendshipId)
                 .orElseThrow(FriendshipNotFoundException::new);

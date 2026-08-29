@@ -15,6 +15,8 @@ logging:
 
 # Swagger / OpenAPI Documentation Configuration
 springdoc:
+  api-docs:
+    enabled: true
   swagger-ui:
     enabled: true
 

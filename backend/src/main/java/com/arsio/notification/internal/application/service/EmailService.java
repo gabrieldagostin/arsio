@@ -18,7 +18,7 @@ public class EmailService {
 
     public void sendEmail(SendEmailCommand command) {
 
-        EmailMessage emailMessage = new EmailMessage(command.to(), command.subject(), command.body());
+        EmailMessage emailMessage = new EmailMessage(command.to(), command.subject().value(), command.body().value());
 
         emailSender.sendEmail(emailMessage);
     }

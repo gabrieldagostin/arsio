@@ -6,9 +6,11 @@ import com.arsio.user.internal.domain.model.ObjectMetadata;
 import io.minio.*;
 import io.minio.errors.MinioException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.concurrent.TimeUnit;
 
+@Service
 @RequiredArgsConstructor
 public class MinioFileStorage implements FileStorage {
 

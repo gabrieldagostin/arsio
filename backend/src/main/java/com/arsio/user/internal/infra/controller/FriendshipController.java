@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/friendships")
+@RequestMapping("/api/v1/friendships")
 public class FriendshipController {
 
     private final GetMyFriendshipsService getMyFriendshipsService;

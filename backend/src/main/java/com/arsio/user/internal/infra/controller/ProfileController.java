@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/profiles")
+@RequestMapping("/api/v1/profiles")
 public class ProfileController {
 
     private final ProfileControllerMapper mapper;
