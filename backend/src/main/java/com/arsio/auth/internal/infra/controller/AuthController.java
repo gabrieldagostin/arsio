@@ -1,6 +1,6 @@
 package com.arsio.auth.internal.infra.controller;
 
-import com.arsio.auth.internal.application.dto.*;
+import com.arsio.auth.internal.application.command.*;
 import com.arsio.auth.internal.application.service.*;
 import com.arsio.auth.internal.infra.controller.dto.request.*;
 import com.arsio.auth.internal.infra.controller.dto.response.AuthenticationResponse;

@@ -1,6 +1,6 @@
 package com.arsio.auth.internal.application.service;
 
-import com.arsio.auth.internal.application.dto.LogoutCommand;
+import com.arsio.auth.internal.application.command.LogoutCommand;
 import com.arsio.auth.internal.domain.exception.SessionNotFoundException;
 import com.arsio.auth.internal.domain.repository.SessionRepository;
 import com.arsio.auth.internal.application.port.output.TokenProvider;
@@ -23,7 +23,7 @@ public class LogoutUserService {
 
     public void execute(LogoutCommand command) {
 
-        SessionId sessionId = tokenProvider.extractSessionId(command.refreshToken());
+        SessionId sessionId = tokenProvider.extractSessionId(command.refreshToken().value());
 
         UserSession userSession = sessions.findBySessionId(sessionId)
                 .orElseThrow(SessionNotFoundException::new);

@@ -1,6 +1,6 @@
 package com.arsio.user.internal.application.service;
 
-import com.arsio.user.internal.application.dto.ConfirmFileUploadCommand;
+import com.arsio.user.internal.application.command.ConfirmFileUploadCommand;
 import com.arsio.user.internal.application.port.output.FileStorage;
 import com.arsio.user.internal.domain.exception.ProfileNotFoundException;
 import com.arsio.user.internal.domain.model.ObjectMetadata;
@@ -37,7 +37,7 @@ public class ConfirmBannerUploadService {
 
     public GetBannerResponse execute(UUID userId, ConfirmFileUploadCommand command) {
 
-        ObjectMetadata metadata = fileStorage.getObjectMetadata(command.objectKey());
+        ObjectMetadata metadata = fileStorage.getObjectMetadata(command.objectKey().value());
 
         if (metadata.size() > MAX_BANNER_SIZE) {
             throw new IllegalArgumentException(
@@ -54,7 +54,7 @@ public class ConfirmBannerUploadService {
         Profile profile = profiles.findByUserId(new UserId(userId))
                 .orElseThrow(ProfileNotFoundException::new);
 
-        profile.updateBannerObjectKey(new ObjectKey(command.objectKey()));
+        profile.updateBannerObjectKey(command.objectKey());
         profiles.save(profile);
 
         return new GetBannerResponse(

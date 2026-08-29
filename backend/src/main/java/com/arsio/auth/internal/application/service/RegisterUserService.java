@@ -8,7 +8,7 @@ import com.arsio.auth.internal.application.port.output.TokenProvider;
 import com.arsio.auth.internal.domain.valueobject.*;
 import com.arsio.auth.internal.infra.controller.dto.response.AuthenticatedUserResponse;
 import com.arsio.auth.internal.infra.controller.dto.response.AuthenticationResponse;
-import com.arsio.auth.internal.application.dto.CreateUserCommand;
+import com.arsio.auth.internal.application.command.CreateUserCommand;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

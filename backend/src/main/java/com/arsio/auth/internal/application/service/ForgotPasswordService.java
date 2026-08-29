@@ -1,6 +1,6 @@
 package com.arsio.auth.internal.application.service;
 
-import com.arsio.auth.internal.application.dto.ForgotPasswordCommand;
+import com.arsio.auth.internal.application.command.ForgotPasswordCommand;
 import com.arsio.auth.internal.application.event.PasswordResetEvent;
 import com.arsio.auth.internal.domain.exception.InvalidCredentialException;
 import com.arsio.auth.internal.domain.repository.PasswordResetTokenRepository;

@@ -20,8 +20,8 @@ public class JavaMailEmailSender implements EmailSender {
 
         message.setFrom("noreply@gmail.com");
         message.setTo(emailMessage.to());
-        message.setSubject(emailMessage.subject());
-        message.setText(emailMessage.body());
+        message.setSubject(emailMessage.subject().value());
+        message.setText(emailMessage.body().value());
 
         mailSender.send(message);
     }

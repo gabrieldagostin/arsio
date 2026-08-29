@@ -1,6 +1,6 @@
 package com.arsio.user.internal.application.service;
 
-import com.arsio.user.internal.application.dto.UploadFileUrlCommand;
+import com.arsio.user.internal.application.command.UploadFileUrlCommand;
 import com.arsio.user.internal.application.port.output.FileStorage;
 import com.arsio.user.internal.infra.controller.dto.response.UploadFileUrlResponse;
 import jakarta.transaction.Transactional;

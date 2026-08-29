@@ -1,6 +1,6 @@
 package com.arsio.auth.internal.application.service;
 
-import com.arsio.auth.internal.application.dto.RefreshTokenCommand;
+import com.arsio.auth.internal.application.command.RefreshTokenCommand;
 import com.arsio.auth.internal.domain.exception.SessionNotActiveException;
 import com.arsio.auth.internal.domain.exception.SessionNotFoundException;
 import com.arsio.auth.internal.domain.repository.UserAuthRepository;
@@ -34,15 +34,15 @@ public class RefreshTokenService {
     }
 
     public RefreshTokenResponse execute(RefreshTokenCommand command) {
-        SessionId sessionId = tokenProvider.extractSessionId(command.refreshToken());
+        SessionId sessionId = tokenProvider.extractSessionId(command.refreshToken().value());
         UserSession userSession = sessions.findBySessionId(sessionId)
                 .orElseThrow(SessionNotFoundException::new);
 
-        String subject = tokenProvider.extractSubject(command.refreshToken());
+        String subject = tokenProvider.extractSubject(command.refreshToken().value());
         UserAuth userAuth = users.findAuthenticationDataByUsername(subject)
                 .orElseThrow(InvalidTokenException::new);
 
-        String receivedHash = tokenHasher.hash(command.refreshToken());
+        String receivedHash = tokenHasher.hash(command.refreshToken().value());
         if (!receivedHash.equals(userSession.getRefreshTokenHash().value()))
             throw new InvalidTokenException();
 

@@ -1,4 +1,4 @@
-package com.arsio.user.internal.application.dto;
+package com.arsio.user.internal.application.command;
 
 public record UploadFileUrlCommand(
         String contentType,

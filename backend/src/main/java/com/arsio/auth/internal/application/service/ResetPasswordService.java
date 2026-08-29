@@ -1,6 +1,6 @@
 package com.arsio.auth.internal.application.service;
 
-import com.arsio.auth.internal.application.dto.ResetPasswordCommand;
+import com.arsio.auth.internal.application.command.ResetPasswordCommand;
 import com.arsio.auth.internal.domain.exception.PasswordResetTokenNotFoundException;
 import com.arsio.auth.internal.domain.exception.SessionNotActiveException;
 import com.arsio.auth.internal.domain.model.PasswordResetToken;
@@ -28,9 +28,7 @@ public class ResetPasswordService {
 
     public void execute(ResetPasswordCommand command) {
 
-        PasswordToken token = new PasswordToken(command.token());
-
-        PasswordResetToken passwordResetToken = passwordResetTokens.findByToken(token)
+        PasswordResetToken passwordResetToken = passwordResetTokens.findByToken(command.passwordToken())
                 .orElseThrow(PasswordResetTokenNotFoundException::new);
 
         if (passwordResetToken.isExpired())

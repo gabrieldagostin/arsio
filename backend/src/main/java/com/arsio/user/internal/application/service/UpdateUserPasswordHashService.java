@@ -1,6 +1,6 @@
 package com.arsio.user.internal.application.service;
 
-import com.arsio.user.internal.application.dto.UpdatePasswordCommand;
+import com.arsio.user.internal.application.command.UpdatePasswordCommand;
 import com.arsio.user.internal.domain.exception.UserNotFoundException;
 import com.arsio.user.internal.domain.valueobject.UserId;
 import com.arsio.user.api.dto.UpdateUserPasswordHashCommand;
@@ -42,7 +42,7 @@ public class UpdateUserPasswordHashService {
         User user = users.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId.value()));
 
-        String newPassword =  passwordEncoder.encode(command.newPassword());
+        String newPassword =  passwordEncoder.encode(command.newPassword().hashedValue());
         PasswordHash passwordHash = new PasswordHash(newPassword);
         user.updatePassword(passwordHash);
 

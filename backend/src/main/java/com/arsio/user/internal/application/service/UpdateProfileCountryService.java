@@ -1,6 +1,6 @@
 package com.arsio.user.internal.application.service;
 
-import com.arsio.user.internal.application.dto.UpdateProfileCountryCommand;
+import com.arsio.user.internal.application.command.UpdateProfileCountryCommand;
 import com.arsio.user.internal.domain.exception.UserNotFoundException;
 import com.arsio.user.internal.domain.model.Profile;
 import com.arsio.user.internal.domain.repository.ProfileRepository;
@@ -29,8 +29,7 @@ public class UpdateProfileCountryService {
         Profile profile = profiles.findByUserId(userId)
                 .orElseThrow(UserNotFoundException::new);
 
-        Country newCountry = Country.fromCode(command.newCountry());
-        profile.updateCountry(newCountry);
+        profile.updateCountry(command.newCountry());
 
         profiles.save(profile);
 

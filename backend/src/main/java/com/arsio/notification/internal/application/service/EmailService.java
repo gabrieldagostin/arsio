@@ -1,6 +1,6 @@
 package com.arsio.notification.internal.application.service;
 
-import com.arsio.notification.internal.application.dto.SendEmailCommand;
+import com.arsio.notification.internal.application.command.SendEmailCommand;
 import com.arsio.notification.internal.application.port.output.EmailSender;
 import com.arsio.notification.internal.domain.model.EmailMessage;
 import org.springframework.stereotype.Service;

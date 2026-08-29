@@ -1,4 +1,4 @@
-package com.arsio.auth.internal.application.dto;
+package com.arsio.auth.internal.application.command;
 
 public record ForgotPasswordCommand(
         String email
