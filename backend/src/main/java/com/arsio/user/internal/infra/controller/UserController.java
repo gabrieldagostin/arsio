@@ -1,8 +1,8 @@
 package com.arsio.user.internal.infra.controller;
 
 import com.arsio.config.security.SecurityUtils;
-import com.arsio.user.internal.application.dto.UpdatePasswordCommand;
-import com.arsio.user.internal.application.dto.UpdateUsernameCommand;
+import com.arsio.user.internal.application.command.UpdatePasswordCommand;
+import com.arsio.user.internal.application.command.UpdateUsernameCommand;
 import com.arsio.user.internal.application.service.*;
 import com.arsio.user.internal.infra.controller.dto.request.UpdatePasswordRequest;
 import com.arsio.user.internal.infra.controller.dto.request.UpdateUsernameRequest;

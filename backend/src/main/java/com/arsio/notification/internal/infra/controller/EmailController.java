@@ -1,6 +1,6 @@
 package com.arsio.notification.internal.infra.controller;
 
-import com.arsio.notification.internal.application.dto.SendEmailCommand;
+import com.arsio.notification.internal.application.command.SendEmailCommand;
 import com.arsio.notification.internal.application.service.EmailService;
 import com.arsio.notification.internal.infra.controller.dto.request.SendEmailRequest;
 import com.arsio.notification.internal.infra.controller.mapper.EmailControllerMapper;

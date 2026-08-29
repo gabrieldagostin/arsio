@@ -1,10 +1,10 @@
 package com.arsio.user.internal.infra.controller;
 
 import com.arsio.config.security.SecurityUtils;
-import com.arsio.user.internal.application.dto.ConfirmFileUploadCommand;
-import com.arsio.user.internal.application.dto.UpdateProfileBioCommand;
-import com.arsio.user.internal.application.dto.UpdateProfileCountryCommand;
-import com.arsio.user.internal.application.dto.UploadFileUrlCommand;
+import com.arsio.user.internal.application.command.ConfirmFileUploadCommand;
+import com.arsio.user.internal.application.command.UpdateProfileBioCommand;
+import com.arsio.user.internal.application.command.UpdateProfileCountryCommand;
+import com.arsio.user.internal.application.command.UploadFileUrlCommand;
 import com.arsio.user.internal.application.service.*;
 import com.arsio.user.internal.infra.controller.dto.request.ConfirmFileUploadRequest;
 import com.arsio.user.internal.infra.controller.dto.request.UpdateProfileBioRequest;

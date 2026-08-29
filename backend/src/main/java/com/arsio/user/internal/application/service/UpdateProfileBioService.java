@@ -1,6 +1,6 @@
 package com.arsio.user.internal.application.service;
 
-import com.arsio.user.internal.application.dto.UpdateProfileBioCommand;
+import com.arsio.user.internal.application.command.UpdateProfileBioCommand;
 import com.arsio.user.internal.domain.exception.UserNotFoundException;
 import com.arsio.user.internal.domain.model.Profile;
 import com.arsio.user.internal.domain.repository.ProfileRepository;
@@ -29,8 +29,7 @@ public class UpdateProfileBioService {
         Profile profile = profiles.findByUserId(userId)
                 .orElseThrow(UserNotFoundException::new);
 
-        Bio newBio = new Bio(command.newBio());
-        profile.updateBio(newBio);
+        profile.updateBio(command.newBio());
 
         profiles.save(profile);
 

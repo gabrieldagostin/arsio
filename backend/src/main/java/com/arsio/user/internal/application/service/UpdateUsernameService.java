@@ -1,6 +1,6 @@
 package com.arsio.user.internal.application.service;
 
-import com.arsio.user.internal.application.dto.UpdateUsernameCommand;
+import com.arsio.user.internal.application.command.UpdateUsernameCommand;
 import com.arsio.user.internal.domain.exception.UserNotFoundException;
 import com.arsio.user.internal.domain.model.User;
 import com.arsio.user.internal.domain.repository.UserRepository;
@@ -28,8 +28,7 @@ public class UpdateUsernameService {
         User user = users.findById(userId)
                 .orElseThrow(UserNotFoundException::new);
 
-        Username newUsername = new Username(command.newUsername());
-        user.updateUsername(newUsername);
+        user.updateUsername(command.newUsername());
 
         users.save(user);
 
