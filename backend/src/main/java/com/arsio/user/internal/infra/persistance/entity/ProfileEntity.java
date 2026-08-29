@@ -9,7 +9,7 @@ import org.hibernate.type.SqlTypes;
 import java.time.Instant;
 import java.util.UUID;
 
-@Table(name = "profile")
+@Table(name = "profiles")
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,9 +22,9 @@ public class ProfileEntity {
     @Column(nullable = false, unique = true)
     private UUID id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false, unique = true)
-    private UserEntity userId;
+    private UserEntity user;
 
     @Column(name = "display_name", nullable = false)
     private String displayName;
@@ -32,11 +32,11 @@ public class ProfileEntity {
     @Column
     private String bio;
 
-    @Column(name = "profile_image_key")
-    private String profileImageKey;
+    @Column(name = "avatar_object_key")
+    private String avatarObjectKey;
 
-    @Column(name = "profile_banner_key")
-    private String profileBannerKey;
+    @Column(name = "banner_object_key")
+    private String bannerObjectKey;
 
     @Enumerated(EnumType.STRING)
     @JdbcTypeCode(SqlTypes.NAMED_ENUM)

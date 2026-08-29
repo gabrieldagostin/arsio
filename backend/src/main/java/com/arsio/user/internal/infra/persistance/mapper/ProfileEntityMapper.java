@@ -3,6 +3,7 @@ package com.arsio.user.internal.infra.persistance.mapper;
 import com.arsio.user.internal.domain.model.Profile;
 import com.arsio.user.internal.domain.valueobject.*;
 import com.arsio.user.internal.infra.persistance.entity.ProfileEntity;
+import com.arsio.user.internal.infra.persistance.entity.UserEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
@@ -13,10 +14,14 @@ import java.util.UUID;
 typeConversionPolicy = ReportingPolicy.ERROR)
 public interface ProfileEntityMapper {
 
+    @Mapping(target = "id", source = "profileEntity.id")
+    @Mapping(target = "userId", source = "profileEntity.user.id")
     Profile toDomain(ProfileEntity profileEntity);
 
+    @Mapping(target = "id", source = "profile.id")
+    @Mapping(target = "user", source = "userEntity")
     @Mapping(target = "createdAt", ignore = true)
-    ProfileEntity toEntity(Profile profile);
+    ProfileEntity toEntity(Profile profile, UserEntity userEntity);
 
     default UUID profileIdToUuid(ProfileId profileId) {
         return profileId.value();
@@ -43,6 +48,7 @@ public interface ProfileEntityMapper {
     }
 
     default String bioToString(Bio bio) {
+        if (bio == null) return null;
         return bio.value();
     }
 
@@ -51,6 +57,7 @@ public interface ProfileEntityMapper {
     }
 
     default String profileImageKeyToString(ObjectKey objectKey) {
+        if (objectKey == null) return null;
         return objectKey.value();
     }
 
@@ -59,6 +66,7 @@ public interface ProfileEntityMapper {
     }
 
     default String countryToString(Country country) {
+        if (country == null) return null;
         return country.getCode();
     }
 

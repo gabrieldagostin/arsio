@@ -23,7 +23,7 @@ public class UserSession {
         this.revoked = revoked;
     }
 
-    public SessionId getSessionId() {
+    public SessionId getId() {
         return id;
     }
 

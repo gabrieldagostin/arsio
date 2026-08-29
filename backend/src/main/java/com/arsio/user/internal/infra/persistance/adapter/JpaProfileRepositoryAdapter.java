@@ -3,8 +3,11 @@ package com.arsio.user.internal.infra.persistance.adapter;
 import com.arsio.user.internal.domain.model.Profile;
 import com.arsio.user.internal.domain.repository.ProfileRepository;
 import com.arsio.user.internal.domain.valueobject.UserId;
+import com.arsio.user.internal.infra.persistance.entity.ProfileEntity;
+import com.arsio.user.internal.infra.persistance.entity.UserEntity;
 import com.arsio.user.internal.infra.persistance.mapper.ProfileEntityMapper;
 import com.arsio.user.internal.infra.persistance.repository.SpringDataProfileRepository;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +19,7 @@ public class JpaProfileRepositoryAdapter implements ProfileRepository {
 
     private final SpringDataProfileRepository profiles;
     private final ProfileEntityMapper mapper;
+    private final EntityManager entityManager;
 
     @Override
     public Optional<Profile> findByUserId(UserId userId) {
@@ -25,6 +29,14 @@ public class JpaProfileRepositoryAdapter implements ProfileRepository {
 
     @Override
     public void save(Profile profile) {
-        profiles.save(mapper.toEntity(profile));
+
+        UserEntity userEntity = entityManager.find(
+                UserEntity.class,
+                profile.getUserId()
+        );
+
+        ProfileEntity profileEntity = mapper.toEntity(profile, userEntity);
+
+        profiles.save(profileEntity);
     }
 }

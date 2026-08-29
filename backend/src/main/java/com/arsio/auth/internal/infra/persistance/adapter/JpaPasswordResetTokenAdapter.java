@@ -4,8 +4,10 @@ import com.arsio.auth.internal.domain.repository.PasswordResetTokenRepository;
 import com.arsio.auth.internal.domain.model.PasswordResetToken;
 import com.arsio.auth.internal.domain.valueobject.PasswordToken;
 import com.arsio.auth.internal.infra.persistance.entity.PasswordResetTokenEntity;
+import com.arsio.auth.internal.infra.persistance.entity.UserAuthEntity;
 import com.arsio.auth.internal.infra.persistance.mapper.PasswordResetTokenEntityMapper;
 import com.arsio.auth.internal.infra.persistance.repository.SpringDataPasswordResetTokenRepository;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -17,10 +19,18 @@ public class JpaPasswordResetTokenAdapter implements PasswordResetTokenRepositor
 
     private final PasswordResetTokenEntityMapper mapper;
     private final SpringDataPasswordResetTokenRepository passwordResetTokens;
+    private final EntityManager entityManager;
 
     @Override
     public void save(PasswordResetToken passwordResetToken) {
-        PasswordResetTokenEntity entity = mapper.toEntity(passwordResetToken);
+
+        UserAuthEntity userAuthEntity = entityManager.find(
+                UserAuthEntity.class,
+                passwordResetToken.getUserId()
+        );
+
+        PasswordResetTokenEntity entity = mapper.toEntity(passwordResetToken,  userAuthEntity);
+
         passwordResetTokens.save(entity);
     }
 

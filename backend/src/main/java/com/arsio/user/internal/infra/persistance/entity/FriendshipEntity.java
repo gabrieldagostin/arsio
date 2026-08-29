@@ -8,7 +8,7 @@ import org.hibernate.type.SqlTypes;
 
 import java.util.UUID;
 
-@Table(name = "friends")
+@Table(name = "friendships")
 @Entity
 @Getter
 @Setter

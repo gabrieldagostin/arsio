@@ -3,10 +3,12 @@ package com.arsio.auth.internal.infra.persistance.adapter;
 import com.arsio.auth.internal.domain.repository.SessionRepository;
 import com.arsio.auth.internal.domain.model.UserSession;
 import com.arsio.auth.internal.domain.valueobject.SessionId;
+import com.arsio.auth.internal.infra.persistance.entity.UserAuthEntity;
 import com.arsio.auth.internal.infra.persistance.entity.UserSessionEntity;
 import com.arsio.auth.internal.infra.persistance.mapper.UserSessionEntityMapper;
 import com.arsio.auth.internal.infra.persistance.repository.SpringDataUserSessionRepository;
 import com.arsio.user.internal.domain.valueobject.UserId;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -19,10 +21,18 @@ public class JpaUserSessionAdapter implements SessionRepository {
 
     private final SpringDataUserSessionRepository sessions;
     private final UserSessionEntityMapper mapper;
+    private final EntityManager entityManager;
 
     @Override
     public void save(UserSession userSession) {
-        UserSessionEntity userSessionEntity = mapper.toEntity(userSession);
+
+        UserAuthEntity userAuthEntity = entityManager.find(
+                UserAuthEntity.class,
+                userSession.getUserId()
+        );
+
+        UserSessionEntity userSessionEntity = mapper.toEntity(userSession,  userAuthEntity);
+
         sessions.save(userSessionEntity);
     }
 

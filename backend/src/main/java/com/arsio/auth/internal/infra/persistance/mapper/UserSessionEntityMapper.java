@@ -3,6 +3,7 @@ package com.arsio.auth.internal.infra.persistance.mapper;
 import com.arsio.auth.internal.domain.model.UserSession;
 import com.arsio.auth.internal.domain.valueobject.RefreshToken;
 import com.arsio.auth.internal.domain.valueobject.SessionId;
+import com.arsio.auth.internal.infra.persistance.entity.UserAuthEntity;
 import com.arsio.auth.internal.infra.persistance.entity.UserSessionEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -14,10 +15,14 @@ import java.util.UUID;
 typeConversionPolicy = ReportingPolicy.ERROR)
 public interface UserSessionEntityMapper {
 
+    @Mapping(target = "id", source = "userSession.id")
+    @Mapping(target = "user", source = "userAuthEntity")
     @Mapping(target = "revokedAt", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
-    UserSessionEntity toEntity(UserSession userSession);
+    UserSessionEntity toEntity(UserSession userSession, UserAuthEntity userAuthEntity);
 
+    @Mapping(target = "id", source = "userSessionEntity.id")
+    @Mapping(target = "userId", source = "userSessionEntity.user.id")
     UserSession toDomain(UserSessionEntity userSessionEntity);
 
     default UUID sessionIdToUuid(SessionId sessionId) {
