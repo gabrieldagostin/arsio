@@ -46,7 +46,7 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(@RequestBody @Valid LoginUserRequest request, UriComponentsBuilder builder) {
 
-        LoginUserComand command = mapper.toLoginUserCommand(request);
+        LoginUserCommand command = mapper.toLoginUserCommand(request);
 
         AuthenticationResponse response = loginUserService.execute(command);
 

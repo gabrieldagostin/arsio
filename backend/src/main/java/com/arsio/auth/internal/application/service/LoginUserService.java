@@ -9,7 +9,7 @@ import com.arsio.auth.internal.domain.valueobject.RefreshToken;
 import com.arsio.auth.internal.domain.valueobject.SessionId;
 import com.arsio.auth.internal.infra.controller.dto.response.AuthenticatedUserResponse;
 import com.arsio.auth.internal.infra.controller.dto.response.AuthenticationResponse;
-import com.arsio.auth.internal.application.command.LoginUserComand;
+import com.arsio.auth.internal.application.command.LoginUserCommand;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
@@ -33,7 +33,7 @@ public class LoginUserService {
         this.sessionService = sessionService;
     }
 
-    public AuthenticationResponse execute(LoginUserComand command) {
+    public AuthenticationResponse execute(LoginUserCommand command) {
 
         var usernamePassword = new UsernamePasswordAuthenticationToken(command.username(), command.password());
         authenticationManager.authenticate(usernamePassword);

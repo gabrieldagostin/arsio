@@ -4,8 +4,6 @@ import com.arsio.auth.internal.application.command.*;
 import com.arsio.auth.internal.domain.valueobject.PasswordToken;
 import com.arsio.auth.internal.domain.valueobject.RefreshToken;
 import com.arsio.auth.internal.infra.controller.dto.request.*;
-import com.arsio.user.internal.domain.valueobject.Email;
-import com.arsio.user.internal.domain.valueobject.Username;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
@@ -15,7 +13,7 @@ public interface AuthControllerMapper {
 
      CreateUserCommand toCreateUserCommand(RegisterUserRequest request);
 
-     LoginUserComand toLoginUserCommand(LoginUserRequest request);
+     LoginUserCommand toLoginUserCommand(LoginUserRequest request);
 
      RefreshTokenCommand toRefreshTokenCommand(RefreshTokenRequest request);
 
