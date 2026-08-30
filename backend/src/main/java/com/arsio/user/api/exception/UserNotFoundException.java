@@ -1,4 +1,4 @@
-package com.arsio.user.internal.domain.exception;
+package com.arsio.user.api.exception;
 
 import com.arsio.shared.exception.enums.ErrorCode;
 import com.arsio.shared.exception.NotFoundException;

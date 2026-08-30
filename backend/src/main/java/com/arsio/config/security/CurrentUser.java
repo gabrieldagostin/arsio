@@ -9,16 +9,22 @@ import java.util.UUID;
 public class CurrentUser implements UserDetails {
 
     private final UUID userId;
+    private final String username;
     private final String email;
+    private final String passwordHash;
     private final Collection<? extends GrantedAuthority> authorities;
 
     public CurrentUser(
             UUID userId,
+            String username,
             String email,
+            String passwordHash,
             Collection<? extends GrantedAuthority> authorities) {
 
         this.userId = userId;
+        this.username = username;
         this.email = email;
+        this.passwordHash = passwordHash;
         this.authorities = authorities;
     }
 
@@ -28,7 +34,7 @@ public class CurrentUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return username;
     }
 
     @Override
@@ -38,7 +44,7 @@ public class CurrentUser implements UserDetails {
 
     @Override
     public String getPassword() {
-        return null;
+        return passwordHash;
     }
 
     @Override public boolean isAccountNonExpired() { return true; }

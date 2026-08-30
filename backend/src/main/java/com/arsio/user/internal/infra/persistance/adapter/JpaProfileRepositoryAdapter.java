@@ -30,9 +30,9 @@ public class JpaProfileRepositoryAdapter implements ProfileRepository {
     @Override
     public void save(Profile profile) {
 
-        UserEntity userEntity = entityManager.find(
+        UserEntity userEntity = entityManager.getReference(
                 UserEntity.class,
-                profile.getUserId()
+                profile.getUserId().value()
         );
 
         ProfileEntity profileEntity = mapper.toEntity(profile, userEntity);

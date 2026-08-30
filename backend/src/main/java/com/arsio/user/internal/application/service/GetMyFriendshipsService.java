@@ -1,6 +1,6 @@
 package com.arsio.user.internal.application.service;
 
-import com.arsio.user.internal.domain.exception.UserNotFoundException;
+import com.arsio.user.api.exception.UserNotFoundException;
 import com.arsio.user.internal.domain.model.Friendship;
 import com.arsio.user.internal.domain.model.Profile;
 import com.arsio.user.internal.domain.repository.FriendshipRepository;

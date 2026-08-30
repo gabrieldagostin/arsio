@@ -1,5 +1,6 @@
 package com.arsio.user.internal.domain.repository;
 
+import com.arsio.user.api.dto.UserAuthenticationData;
 import com.arsio.user.internal.domain.valueobject.UserId;
 import com.arsio.user.internal.domain.model.User;
 import com.arsio.user.internal.domain.valueobject.Email;
@@ -16,9 +17,7 @@ public interface UserRepository {
 
     boolean existsByUsername(Username username);
 
-    Optional<UserDetails> findUserDetailsByUsername(String username);
-
-    Optional<User> findUserByUsername(Username username);
+    Optional<UserAuthenticationData> findUserAuthenticationDataByUsername(String username);
 
     Optional<User> findById(UserId id);
 }

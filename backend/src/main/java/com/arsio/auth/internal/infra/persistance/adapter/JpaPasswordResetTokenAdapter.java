@@ -24,7 +24,7 @@ public class JpaPasswordResetTokenAdapter implements PasswordResetTokenRepositor
     @Override
     public void save(PasswordResetToken passwordResetToken) {
 
-        UserAuthEntity userAuthEntity = entityManager.find(
+        UserAuthEntity userAuthEntity = entityManager.getReference(
                 UserAuthEntity.class,
                 passwordResetToken.getUserId()
         );

@@ -1,10 +1,9 @@
 package com.arsio.user.internal.application.service;
 
 import com.arsio.user.internal.application.command.UpdateProfileCountryCommand;
-import com.arsio.user.internal.domain.exception.UserNotFoundException;
+import com.arsio.user.api.exception.UserNotFoundException;
 import com.arsio.user.internal.domain.model.Profile;
 import com.arsio.user.internal.domain.repository.ProfileRepository;
-import com.arsio.user.internal.domain.valueobject.Country;
 import com.arsio.user.internal.domain.valueobject.UserId;
 import com.arsio.user.internal.infra.controller.dto.response.UpdateProfileCountryResponse;
 import jakarta.transaction.Transactional;

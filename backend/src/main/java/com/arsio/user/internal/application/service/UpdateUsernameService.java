@@ -1,11 +1,10 @@
 package com.arsio.user.internal.application.service;
 
 import com.arsio.user.internal.application.command.UpdateUsernameCommand;
-import com.arsio.user.internal.domain.exception.UserNotFoundException;
+import com.arsio.user.api.exception.UserNotFoundException;
 import com.arsio.user.internal.domain.model.User;
 import com.arsio.user.internal.domain.repository.UserRepository;
 import com.arsio.user.internal.domain.valueobject.UserId;
-import com.arsio.user.internal.domain.valueobject.Username;
 import com.arsio.user.internal.infra.controller.dto.response.UpdateUsernameResponse;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;

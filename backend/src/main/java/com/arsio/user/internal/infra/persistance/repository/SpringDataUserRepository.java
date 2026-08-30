@@ -1,5 +1,6 @@
 package com.arsio.user.internal.infra.persistance.repository;
 
+import com.arsio.user.api.dto.UserAuthenticationData;
 import com.arsio.user.internal.infra.persistance.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,7 +14,5 @@ public interface SpringDataUserRepository extends JpaRepository<UserEntity, UUID
 
     boolean existsByUsername(String username);
 
-    Optional<UserDetails> findUserDetailsByUsername(String Username);
-
-    Optional<UserEntity> findUserByUsername(String username);
+    Optional<UserAuthenticationData> findUserAuthenticationDataByUsername(String username);
 }

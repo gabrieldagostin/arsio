@@ -1,8 +1,9 @@
 package com.arsio.config.security;
 
 import com.arsio.auth.api.facade.AuthFacade;
-import com.arsio.user.internal.domain.exception.UserNotFoundException;
-import com.arsio.user.internal.domain.repository.UserRepository;
+import com.arsio.user.api.dto.UserAuthenticationData;
+import com.arsio.user.api.exception.UserNotFoundException;
+import com.arsio.user.api.facade.UserFacade;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -11,7 +12,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -22,7 +22,8 @@ import java.io.IOException;
 public class SecurityFilter extends OncePerRequestFilter {
 
     private final AuthFacade authFacade;
-    private final UserRepository users;
+    private final UserFacade userFacade;
+    private final CurrentUserMapper mapper;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -33,10 +34,12 @@ public class SecurityFilter extends OncePerRequestFilter {
             try {
                 var subject = authFacade.extractSubject(token);
 
-                UserDetails userDetails = users.findUserDetailsByUsername(subject)
+                UserAuthenticationData userAuthenticationData = userFacade.findUserAuthenticationDataByUsername(subject)
                         .orElseThrow(() -> new UserNotFoundException(subject));
 
-                var authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                CurrentUser currentUser = mapper.toCurrentUser(userAuthenticationData);
+
+                var authentication = new UsernamePasswordAuthenticationToken(currentUser, null, currentUser.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
 
             } catch (TokenExpiredException exception) {

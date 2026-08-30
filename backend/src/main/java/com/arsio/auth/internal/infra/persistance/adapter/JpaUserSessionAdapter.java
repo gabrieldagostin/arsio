@@ -26,7 +26,7 @@ public class JpaUserSessionAdapter implements SessionRepository {
     @Override
     public void save(UserSession userSession) {
 
-        UserAuthEntity userAuthEntity = entityManager.find(
+        UserAuthEntity userAuthEntity = entityManager.getReference(
                 UserAuthEntity.class,
                 userSession.getUserId()
         );

@@ -19,5 +19,5 @@ public interface SpringDataUserSessionRepository extends JpaRepository<UserSessi
                 s.revokedAt = CURRENT_TIMESTAMP
         WHERE s.user.id = :userId
     """)
-    int revokeAllSessionsByUserId(UUID value);
+    int revokeAllSessionsByUserId(UUID userId);
 }

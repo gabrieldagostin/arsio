@@ -1,6 +1,6 @@
 package com.arsio.user.internal.application.facade;
 
-import com.arsio.user.internal.domain.exception.UserNotFoundException;
+import com.arsio.user.api.dto.UserAuthenticationData;
 import com.arsio.user.api.dto.CreateUserCommand;
 import com.arsio.user.api.dto.UpdateUserPasswordHashCommand;
 import com.arsio.user.api.dto.UserCreatedResponse;
@@ -9,7 +9,6 @@ import com.arsio.user.internal.application.service.UpdateUserPasswordHashService
 import com.arsio.user.internal.domain.repository.UserRepository;
 import com.arsio.user.internal.application.service.CreateUserService;
 import com.arsio.user.internal.domain.model.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -39,15 +38,14 @@ public class UserFacadeImpl implements UserFacade {
                 user.getId().value(),
                 user.getUsername().value(),
                 user.getEmail().value(),
-                user.getPassword().hashedValue(),
+                user.getPasswordHash().hashedValue(),
                 user.getRole().name()
         );
     }
 
     @Override
-    public UserDetails findUserDetailsByUsername(String username) {
-        return users.findUserDetailsByUsername(username)
-                .orElseThrow(UserNotFoundException::new);
+    public Optional<UserAuthenticationData> findUserAuthenticationDataByUsername(String username) {
+        return users.findUserAuthenticationDataByUsername(username);
     }
 
     @Override

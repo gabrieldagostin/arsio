@@ -23,7 +23,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "id")
-public class UserEntity implements UserDetails {
+public class UserEntity {
 
     @Id
     @Column(nullable = false, unique = true)
@@ -56,36 +56,4 @@ public class UserEntity implements UserDetails {
 
     @Column(name = "created_at", updatable = false, insertable = false, nullable = false)
     private Instant createdAt;
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        if (this.role == UserRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
-        if (this.role == UserRole.DEV) return List.of(new SimpleGrantedAuthority("ROLE_DEV"), new SimpleGrantedAuthority("ROLE_USER"));
-        else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
-    }
-
-    @Override
-    public @Nullable String getPassword() {
-        return passwordHash;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return UserDetails.super.isAccountNonExpired();
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return UserDetails.super.isAccountNonLocked();
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return UserDetails.super.isCredentialsNonExpired();
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return UserDetails.super.isEnabled();
-    }
 }

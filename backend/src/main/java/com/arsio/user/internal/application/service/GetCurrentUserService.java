@@ -1,6 +1,6 @@
 package com.arsio.user.internal.application.service;
 
-import com.arsio.user.internal.domain.exception.UserNotFoundException;
+import com.arsio.user.api.exception.UserNotFoundException;
 import com.arsio.user.internal.domain.model.User;
 import com.arsio.user.internal.domain.repository.UserRepository;
 import com.arsio.user.internal.domain.valueobject.UserId;

@@ -21,7 +21,6 @@ public interface UserEntityMapper {
     @Mapping(target = "mpAccessToken", ignore = true)
     @Mapping(target = "lastLoginAt", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "authorities", ignore = true)
     UserEntity toEntity(User user);
 
     User toDomain(UserEntity userEntity);

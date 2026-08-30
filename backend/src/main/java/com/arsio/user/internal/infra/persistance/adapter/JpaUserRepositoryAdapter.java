@@ -1,5 +1,6 @@
 package com.arsio.user.internal.infra.persistance.adapter;
 
+import com.arsio.user.api.dto.UserAuthenticationData;
 import com.arsio.user.internal.domain.valueobject.UserId;
 import com.arsio.user.internal.domain.model.User;
 import com.arsio.user.internal.domain.repository.UserRepository;
@@ -9,7 +10,6 @@ import com.arsio.user.internal.infra.persistance.entity.UserEntity;
 import com.arsio.user.internal.infra.persistance.mapper.UserEntityMapper;
 import com.arsio.user.internal.infra.persistance.repository.SpringDataUserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -42,14 +42,15 @@ public class JpaUserRepositoryAdapter implements UserRepository {
     }
 
     @Override
-    public Optional<UserDetails> findUserDetailsByUsername(String username) {
-        return users.findUserDetailsByUsername(username);
-    }
-
-    @Override
-    public Optional<User> findUserByUsername(Username username) {
-        return users.findUserByUsername(username.getNormalized())
-                .map(mapper::toDomain);
+    public Optional<UserAuthenticationData> findUserAuthenticationDataByUsername(String username) {
+        return users.findUserAuthenticationDataByUsername(username)
+                .map(user -> new UserAuthenticationData(
+                        user.id(),
+                        user.username(),
+                        user.email(),
+                        user.passwordHash(),
+                        user.role()
+                ));
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.arsio.user.internal.application.service;
 
 import com.arsio.user.internal.application.command.UpdatePasswordCommand;
-import com.arsio.user.internal.domain.exception.UserNotFoundException;
+import com.arsio.user.api.exception.UserNotFoundException;
 import com.arsio.user.internal.domain.valueobject.UserId;
 import com.arsio.user.api.dto.UpdateUserPasswordHashCommand;
 import com.arsio.user.internal.domain.model.User;

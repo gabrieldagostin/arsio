@@ -61,7 +61,7 @@ public class User {
         return email;
     }
 
-    public PasswordHash getPassword() {
+    public PasswordHash getPasswordHash() {
         return passwordHash;
     }
 
@@ -69,7 +69,7 @@ public class User {
         return role;
     }
 
-    public UserStatus getUserStatus() {
+    public UserStatus getStatus() {
         return status;
     }
 
