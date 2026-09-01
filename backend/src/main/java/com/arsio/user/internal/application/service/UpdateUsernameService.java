@@ -2,7 +2,9 @@ package com.arsio.user.internal.application.service;
 
 import com.arsio.user.internal.application.command.UpdateUsernameCommand;
 import com.arsio.user.api.exception.UserNotFoundException;
+import com.arsio.user.internal.domain.model.Profile;
 import com.arsio.user.internal.domain.model.User;
+import com.arsio.user.internal.domain.repository.ProfileRepository;
 import com.arsio.user.internal.domain.repository.UserRepository;
 import com.arsio.user.internal.domain.valueobject.UserId;
 import com.arsio.user.internal.infra.controller.dto.response.UpdateUsernameResponse;
@@ -16,9 +18,11 @@ import java.util.UUID;
 public class UpdateUsernameService {
 
     private final UserRepository users;
+    private final ProfileRepository profiles;
 
-    public UpdateUsernameService(UserRepository users) {
+    public UpdateUsernameService(UserRepository users, ProfileRepository profiles) {
         this.users = users;
+        this.profiles = profiles;
     }
 
     public UpdateUsernameResponse execute(UUID id, UpdateUsernameCommand command) {
@@ -28,11 +32,16 @@ public class UpdateUsernameService {
                 .orElseThrow(UserNotFoundException::new);
 
         user.updateUsername(command.newUsername());
-
         users.save(user);
 
+        Profile profile = profiles.findByUserId(user.getId())
+                .orElseThrow(UserNotFoundException::new);
+
+        profile.updateDisplayName(command.newUsername());
+        profiles.save(profile);
+
         return new UpdateUsernameResponse(
-                user.getUsername().value()
+                profile.getDisplayName().value()
         );
     }
 }

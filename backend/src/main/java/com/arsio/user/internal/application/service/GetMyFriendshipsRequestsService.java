@@ -1,6 +1,7 @@
 package com.arsio.user.internal.application.service;
 
 import com.arsio.user.api.exception.UserNotFoundException;
+import com.arsio.user.internal.application.port.output.FileStorage;
 import com.arsio.user.internal.domain.model.Friendship;
 import com.arsio.user.internal.domain.model.Profile;
 import com.arsio.user.internal.domain.repository.FriendshipRepository;
@@ -20,10 +21,12 @@ public class GetMyFriendshipsRequestsService {
 
     public final FriendshipRepository friendships;
     public final ProfileRepository profiles;
+    public final FileStorage fileStorage;
 
-    public GetMyFriendshipsRequestsService(FriendshipRepository friendships, ProfileRepository profiles) {
+    public GetMyFriendshipsRequestsService(FriendshipRepository friendships, ProfileRepository profiles, FileStorage fileStorage) {
         this.friendships = friendships;
         this.profiles = profiles;
+        this.fileStorage = fileStorage;
     }
 
     public List<GetMyFriendshipsResponse> execute(UUID id) {
@@ -40,10 +43,16 @@ public class GetMyFriendshipsRequestsService {
                     Profile friendProfile = profiles.findByUserId(requesterId)
                             .orElseThrow(UserNotFoundException::new);
 
+                    String avatarUrl = friendProfile.getAvatarObjectKey() != null
+                            ? fileStorage.generatePresignedDownloadUrl(
+                            friendProfile.getAvatarObjectKey().value()
+                    )
+                            : null;
+
                     FriendResponse response = new FriendResponse(
                             friendProfile.getUserId().value(),
                             friendProfile.getDisplayName().value(),
-                            friendProfile.getAvatarObjectKey().value()
+                            avatarUrl
                     );
 
                     return new GetMyFriendshipsResponse(

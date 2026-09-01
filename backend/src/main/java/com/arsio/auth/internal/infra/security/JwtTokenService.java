@@ -30,7 +30,7 @@ public class JwtTokenService implements TokenProvider, AuthFacade {
             Algorithm algorithm = Algorithm.HMAC256(tokenProperties.getSecret());
             String token = JWT.create()
                     .withIssuer("arsio")
-                    .withSubject(user.getUsername())
+                    .withSubject(user.getId().toString())
                     .withExpiresAt(genExpirationDate(tokenProperties.getAccessTokenExpiration()))
                     .sign(algorithm);
             return new AccessToken(token);
@@ -45,7 +45,7 @@ public class JwtTokenService implements TokenProvider, AuthFacade {
             Algorithm algorithm = Algorithm.HMAC256(tokenProperties.getSecret());
             String token = JWT.create()
                     .withIssuer("arsio")
-                    .withSubject(user.getUsername())
+                    .withSubject(user.getId().toString())
                     .withClaim("session_id", sessionId.value().toString())
                     .withExpiresAt(genExpirationDate(tokenProperties.getRefreshTokenExpiration()))
                     .sign(algorithm);
@@ -56,7 +56,7 @@ public class JwtTokenService implements TokenProvider, AuthFacade {
     }
 
     @Override
-    public String extractSubject(String token) {
+    public UUID extractSubject(String token) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(tokenProperties.getSecret());
             String subject = JWT.require(algorithm)
@@ -65,8 +65,8 @@ public class JwtTokenService implements TokenProvider, AuthFacade {
                     .verify(token)
                     .getSubject();
 
-            return subject;
-        } catch (JWTVerificationException exception) {
+            return UUID.fromString(subject);
+        } catch (JWTVerificationException | IllegalArgumentException exception) {
             throw new JwtParsingException("Error while extracting subject.");
         }
     }

@@ -10,9 +10,7 @@ public record Bio(String value) {
     }
 
     public void validate() {
-        if (value == null || value.isBlank())
-            throw new InvalidBioException();
-        if (value.length() > 300)
+        if (!(value == null) && value.length() > 300)
             throw new InvalidBioException();
     }
 }

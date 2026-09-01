@@ -17,6 +17,8 @@ import com.arsio.auth.internal.infra.security.Sha256TokenHasher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.UUID;
+
 @Service
 @Transactional
 public class RefreshTokenService {
@@ -38,8 +40,8 @@ public class RefreshTokenService {
         UserSession userSession = sessions.findBySessionId(sessionId)
                 .orElseThrow(SessionNotFoundException::new);
 
-        String subject = tokenProvider.extractSubject(command.refreshToken().value());
-        UserAuth userAuth = users.findAuthenticationDataByUsername(subject)
+        UUID subject = tokenProvider.extractSubject(command.refreshToken().value());
+        UserAuth userAuth = users.findUserById(subject)
                 .orElseThrow(InvalidTokenException::new);
 
         String receivedHash = tokenHasher.hash(command.refreshToken().value());

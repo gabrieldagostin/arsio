@@ -7,6 +7,8 @@ import com.arsio.user.internal.domain.valueobject.PasswordHash;
 import com.arsio.user.internal.domain.valueobject.UserId;
 import com.arsio.user.internal.domain.valueobject.Username;
 
+import java.util.Locale;
+
 public class User {
 
     private final UserId id;
@@ -78,7 +80,7 @@ public class User {
     }
 
     public void updateUsername(Username newUsername) {
-        this.username = newUsername;
+        this.username = new Username(newUsername.value().toLowerCase(Locale.ROOT));
     }
 
     public void deactivate() {

@@ -23,7 +23,7 @@ public class FileUploadPreparationService {
 
         String extension = getExtension(command.contentType());
 
-        if (command.imageType().equals("AVATAR")) {
+        if ("AVATAR".equals(command.imageType())) {
             objectKey = String.format(
                     "avatars/%s/%s%s",
                     userId,
@@ -32,7 +32,7 @@ public class FileUploadPreparationService {
             );
         }
 
-        if (command.imageType().equals("BANNER")) {
+        if ("BANNER".equals(command.imageType())) {
             objectKey = String.format(
                     "banners/%s/%s%s",
                     userId,
@@ -41,7 +41,7 @@ public class FileUploadPreparationService {
             );
         }
 
-        String uploadUrl = fileStorage.generatePresignedUrl(objectKey);
+        String uploadUrl = fileStorage.generatePresignedUploadUrl(objectKey);
 
         return new UploadFileUrlResponse(
                 uploadUrl,

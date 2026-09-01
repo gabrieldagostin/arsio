@@ -44,6 +44,11 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
+    public Optional<UserAuthenticationData> findUserAuthenticationDataById(UUID id) {
+        return users.findUserAuthenticationDataById(id);
+    }
+
+    @Override
     public Optional<UserAuthenticationData> findUserAuthenticationDataByUsername(String username) {
         return users.findUserAuthenticationDataByUsername(username);
     }

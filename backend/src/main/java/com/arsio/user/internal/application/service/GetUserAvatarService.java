@@ -29,7 +29,11 @@ public class GetUserAvatarService {
         Profile profile = profiles.findByUserId(userId)
                 .orElseThrow(ProfileNotFoundException::new);
 
-        String avatarUrl = fileStorage.generatePresignedUrl(profile.getAvatarObjectKey().value());
+        String avatarUrl = profile.getAvatarObjectKey() != null
+                ? fileStorage.generatePresignedDownloadUrl(
+                profile.getAvatarObjectKey().value()
+        )
+                : null;
 
         return new GetAvatarResponse(
                 avatarUrl

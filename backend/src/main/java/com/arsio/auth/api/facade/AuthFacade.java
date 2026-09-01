@@ -1,6 +1,8 @@
 package com.arsio.auth.api.facade;
 
+import java.util.UUID;
+
 public interface AuthFacade {
 
-    String extractSubject(String token);
+    UUID extractSubject(String token);
 }

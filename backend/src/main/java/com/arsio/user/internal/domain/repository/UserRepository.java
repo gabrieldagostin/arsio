@@ -8,6 +8,7 @@ import com.arsio.user.internal.domain.valueobject.Username;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Optional;
+import java.util.UUID;
 
 public interface UserRepository {
 
@@ -17,7 +18,9 @@ public interface UserRepository {
 
     boolean existsByUsername(Username username);
 
-    Optional<UserAuthenticationData> findUserAuthenticationDataByUsername(String username);
+    Optional<UserAuthenticationData> findUserAuthenticationDataById(UUID id);
 
     Optional<User> findById(UserId id);
+
+    Optional<UserAuthenticationData> findUserAuthenticationDataByUsername(String username);
 }

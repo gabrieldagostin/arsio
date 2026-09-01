@@ -79,4 +79,8 @@ public class Profile {
     public void updateCountry(Country country) {
         this.country = country;
     }
+
+    public void updateDisplayName(Username username) {
+        this.displayName = username;
+    }
 }

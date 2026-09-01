@@ -4,8 +4,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public record UpdateProfileCountryRequest(
-        @NotBlank(message = "${profileCountry.required}")
-        @Size(min = 2, max = 2, message = "${profileCountry.required}")
+
+        @NotBlank(message = "{profileCountry.required}")
+        @Size(min = 2, max = 2, message = "{profileCountry.required}")
         String newCountry
 ) {
 }

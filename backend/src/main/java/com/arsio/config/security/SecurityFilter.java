@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -32,9 +33,9 @@ public class SecurityFilter extends OncePerRequestFilter {
 
         if (token != null) {
             try {
-                var subject = authFacade.extractSubject(token);
+                UUID subject = authFacade.extractSubject(token);
 
-                UserAuthenticationData userAuthenticationData = userFacade.findUserAuthenticationDataByUsername(subject)
+                UserAuthenticationData userAuthenticationData = userFacade.findUserAuthenticationDataById(subject)
                         .orElseThrow(() -> new UserNotFoundException(subject));
 
                 CurrentUser currentUser = mapper.toCurrentUser(userAuthenticationData);

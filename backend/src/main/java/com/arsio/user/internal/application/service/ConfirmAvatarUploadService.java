@@ -6,7 +6,6 @@ import com.arsio.user.internal.domain.exception.ProfileNotFoundException;
 import com.arsio.user.internal.domain.model.ObjectMetadata;
 import com.arsio.user.internal.domain.model.Profile;
 import com.arsio.user.internal.domain.repository.ProfileRepository;
-import com.arsio.user.internal.domain.valueobject.ObjectKey;
 import com.arsio.user.internal.domain.valueobject.UserId;
 import com.arsio.user.internal.infra.controller.dto.response.GetAvatarResponse;
 import jakarta.transaction.Transactional;
@@ -57,8 +56,8 @@ public class ConfirmAvatarUploadService {
         profile.updateAvatarObjectKey(command.objectKey());
         profiles.save(profile);
 
-        return new GetAvatarResponse(
-                profile.getAvatarObjectKey().value()
-        );
+        String avatarUrl = fileStorage.generatePresignedDownloadUrl(profile.getAvatarObjectKey().value());
+
+        return new GetAvatarResponse(avatarUrl);
     }
 }

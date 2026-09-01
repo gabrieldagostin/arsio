@@ -9,5 +9,5 @@ import java.util.UUID;
 
 public interface SpringDataProfileRepository extends JpaRepository<ProfileEntity, UUID> {
 
-    Optional<ProfileEntity> findByUserId(UserId userId);
+    Optional<ProfileEntity> findByUser_Id(UUID userId);
 }

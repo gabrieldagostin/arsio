@@ -29,10 +29,21 @@ public class GetUserProfileService {
         Profile profile = profiles.findByUserId(userId)
                 .orElseThrow(ProfileNotFoundException::new);
 
-        String country = profile.getCountry().getFlag() + " " + profile.getCountry().getName();
+        String country = profile.getCountry() != null
+                ? profile.getCountry().getFlag() + " " + profile.getCountry().getName()
+                : null;
 
-        String avatarUrl = fileStorage.generatePresignedUrl(profile.getAvatarObjectKey().value());
-        String bannerUrl = fileStorage.generatePresignedUrl(profile.getBannerObjectKey().value());
+        String avatarUrl = profile.getAvatarObjectKey() != null
+                ? fileStorage.generatePresignedDownloadUrl(
+                profile.getAvatarObjectKey().value()
+        )
+                : null;
+
+        String bannerUrl = profile.getBannerObjectKey() != null
+                ? fileStorage.generatePresignedDownloadUrl(
+                profile.getBannerObjectKey().value()
+        )
+                : null;
 
         return new GetProfileResponse(
                 profile.getDisplayName().value(),

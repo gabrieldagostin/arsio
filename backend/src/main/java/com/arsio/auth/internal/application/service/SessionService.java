@@ -34,7 +34,8 @@ public class SessionService {
                 userId,
                 new RefreshToken(refreshTokenHash),
                 expiresAt,
-                false
+                false,
+                null
         );
 
         sessions.save(userSession);

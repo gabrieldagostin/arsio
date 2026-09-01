@@ -18,12 +18,32 @@ public class MinioFileStorage implements FileStorage {
     private final MinioProperties minioProperties;
 
     @Override
-    public String generatePresignedUrl(String objectKey) {
+    public String generatePresignedUploadUrl(String objectKey) {
 
         try {
             String uploadUrl = minioClient.getPresignedObjectUrl(
                     GetPresignedObjectUrlArgs.builder()
                             .method(Http.Method.PUT)
+                            .bucket(minioProperties.getUserFilesBucket())
+                            .object(objectKey)
+                            .expiry(15, TimeUnit.MINUTES)
+                            .build()
+            );
+
+            return uploadUrl;
+
+        } catch (MinioException e) {
+            throw new RuntimeException("Failed to generate presigned URL", e);
+        }
+    }
+
+    @Override
+    public String generatePresignedDownloadUrl(String objectKey) {
+
+        try {
+            String uploadUrl = minioClient.getPresignedObjectUrl(
+                    GetPresignedObjectUrlArgs.builder()
+                            .method(Http.Method.GET)
                             .bucket(minioProperties.getUserFilesBucket())
                             .object(objectKey)
                             .expiry(15, TimeUnit.MINUTES)

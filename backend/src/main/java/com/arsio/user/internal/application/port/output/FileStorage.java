@@ -4,7 +4,9 @@ import com.arsio.user.internal.domain.model.ObjectMetadata;
 
 public interface FileStorage {
 
-    String generatePresignedUrl(String objectKey);
+    String generatePresignedUploadUrl(String objectKey);
+
+    String generatePresignedDownloadUrl(String objectKey);
 
     ObjectMetadata getObjectMetadata(String objectKey);
 }

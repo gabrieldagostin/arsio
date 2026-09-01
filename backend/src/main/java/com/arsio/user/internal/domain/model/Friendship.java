@@ -10,14 +10,14 @@ import java.util.UUID;
 public class Friendship {
 
     private final FriendshipId id;
-    private UserId requesterId;
-    private UserId addresseId;
+    private final UserId requesterId;
+    private final UserId addresseeId;
     private FriendshipStatus status;
 
-    public Friendship(FriendshipId id, UserId requesterId, UserId addresseId, FriendshipStatus status) {
+    public Friendship(FriendshipId id, UserId requesterId, UserId addresseeId, FriendshipStatus status) {
         this.id = id;
         this.requesterId = requesterId;
-        this.addresseId = addresseId;
+        this.addresseeId = addresseeId;
         this.status = status;
     }
 
@@ -25,13 +25,13 @@ public class Friendship {
 
         FriendshipId id = FriendshipId.generate();
         UserId requesterId = new UserId(uId);
-        UserId addresseId = new UserId(fId);
+        UserId addresseeId = new UserId(fId);
         FriendshipStatus status = FriendshipStatus.PENDING;
 
         return new Friendship(
                 id,
                 requesterId,
-                addresseId,
+                addresseeId,
                 status
         );
     }
@@ -45,7 +45,7 @@ public class Friendship {
     }
 
     public UserId getAddresseeId() {
-        return addresseId;
+        return addresseeId;
     }
 
     public FriendshipStatus getStatus() {
@@ -62,9 +62,9 @@ public class Friendship {
 
     public UserId getOtherUser(UserId userId) {
 
-        if (requesterId.equals(userId)) return addresseId;
+        if (requesterId.equals(userId)) return addresseeId;
 
-        if (addresseId.equals(userId)) return requesterId;
+        if (addresseeId.equals(userId)) return requesterId;
 
         throw new InvalidFriendshipException();
     }

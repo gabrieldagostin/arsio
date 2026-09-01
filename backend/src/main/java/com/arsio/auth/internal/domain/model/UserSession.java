@@ -14,13 +14,15 @@ public class UserSession {
     private RefreshToken refreshTokenHash;
     private final Instant expiresAt;
     private boolean revoked;
+    private Instant revokedAt;
 
-    public UserSession(SessionId id, UUID userId, RefreshToken refreshTokenHash, Instant expiresAt, boolean revoked) {
+    public UserSession(SessionId id, UUID userId, RefreshToken refreshTokenHash, Instant expiresAt, boolean revoked, Instant revokedAt) {
         this.id = id;
         this.userId = userId;
         this.refreshTokenHash = refreshTokenHash;
         this.expiresAt = expiresAt;
         this.revoked = revoked;
+        this.revokedAt = revokedAt;
     }
 
     public SessionId getId() {
@@ -43,6 +45,10 @@ public class UserSession {
         return revoked;
     }
 
+    public Instant getRevokedAt() {
+        return revokedAt;
+    }
+
     public boolean isExpired() {
         return Instant.now().isAfter(expiresAt);
     }
@@ -57,5 +63,6 @@ public class UserSession {
 
     public void logout() {
         this.revoked = true;
+        this.revokedAt = Instant.now();
     }
 }

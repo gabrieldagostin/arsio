@@ -62,6 +62,7 @@ public interface ProfileEntityMapper {
     }
 
     default ObjectKey stringToProfileImageKey(String value) {
+        if (value == null || value.isBlank()) return null;
         return new ObjectKey(value);
     }
 

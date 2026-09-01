@@ -23,11 +23,11 @@ public interface AuthControllerMapper {
 
      ResetPasswordCommand toResetPasswordCommand(ResetPasswordRequest request);
 
-     default RefreshToken stringToRefreshToken(String refreshToken) {
-          return new RefreshToken(refreshToken);
+     default RefreshToken stringToRefreshToken(String value) {
+          return new RefreshToken(value);
      }
 
-     default PasswordToken  stringToPasswordToken(String passwordToken) {
-          return new PasswordToken(passwordToken);
+     default PasswordToken  stringToPasswordToken(String value) {
+          return new PasswordToken(value);
      }
 }

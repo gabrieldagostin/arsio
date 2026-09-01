@@ -17,7 +17,6 @@ public interface UserSessionEntityMapper {
 
     @Mapping(target = "id", source = "userSession.id")
     @Mapping(target = "user", source = "userAuthEntity")
-    @Mapping(target = "revokedAt", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     UserSessionEntity toEntity(UserSession userSession, UserAuthEntity userAuthEntity);
 

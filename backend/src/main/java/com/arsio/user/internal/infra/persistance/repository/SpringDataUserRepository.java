@@ -14,5 +14,7 @@ public interface SpringDataUserRepository extends JpaRepository<UserEntity, UUID
 
     boolean existsByUsername(String username);
 
+    Optional<UserAuthenticationData> findUserAuthenticationDataById(UUID id);
+
     Optional<UserAuthenticationData> findUserAuthenticationDataByUsername(String username);
 }

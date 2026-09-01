@@ -57,8 +57,8 @@ public class ConfirmBannerUploadService {
         profile.updateBannerObjectKey(command.objectKey());
         profiles.save(profile);
 
-        return new GetBannerResponse(
-                profile.getBannerObjectKey().value()
-        );
+        String avatarUrl = fileStorage.generatePresignedDownloadUrl(profile.getBannerObjectKey().value());
+
+        return new GetBannerResponse(avatarUrl);
     }
 }

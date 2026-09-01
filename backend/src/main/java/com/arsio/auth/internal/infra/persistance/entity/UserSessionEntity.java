@@ -29,11 +29,11 @@ public class UserSessionEntity {
     @Column(name = "expires_at", nullable = false)
     private Instant expiresAt;
 
-    @Column(name = "revoked_at")
-    private Instant revokedAt;
-
     @Column(nullable = false)
     private Boolean revoked;
+
+    @Column(name = "revoked_at")
+    private Instant revokedAt;
 
     @Column(name = "created_at", updatable = false, insertable = false, nullable = false)
     private Instant createdAt;

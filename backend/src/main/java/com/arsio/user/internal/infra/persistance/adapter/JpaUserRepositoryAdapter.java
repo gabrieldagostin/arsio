@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 @RequiredArgsConstructor
@@ -42,8 +43,8 @@ public class JpaUserRepositoryAdapter implements UserRepository {
     }
 
     @Override
-    public Optional<UserAuthenticationData> findUserAuthenticationDataByUsername(String username) {
-        return users.findUserAuthenticationDataByUsername(username)
+    public Optional<UserAuthenticationData> findUserAuthenticationDataById(UUID id) {
+        return users.findUserAuthenticationDataById(id)
                 .map(user -> new UserAuthenticationData(
                         user.id(),
                         user.username(),
@@ -57,5 +58,17 @@ public class JpaUserRepositoryAdapter implements UserRepository {
     public Optional<User> findById(UserId id) {
         return users.findById(id.value())
                 .map(mapper::toDomain);
+    }
+
+    @Override
+    public Optional<UserAuthenticationData> findUserAuthenticationDataByUsername(String username) {
+        return users.findUserAuthenticationDataByUsername(username)
+                .map(user -> new UserAuthenticationData(
+                        user.id(),
+                        user.username(),
+                        user.email(),
+                        user.passwordHash(),
+                        user.role()
+                ));
     }
 }

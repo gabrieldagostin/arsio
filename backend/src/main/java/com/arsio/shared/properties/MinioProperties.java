@@ -28,9 +28,11 @@ public class MinioProperties {
         return bucket.gameBuilds;
     }
 
-    private record Bucket(
-        String userFiles,
-        String gameMedia,
-        String gameBuilds
-    ) {}
+    @Getter
+    @Setter
+    public static class Bucket {
+        private String userFiles;
+        private String gameMedia;
+        private String gameBuilds;
+    }
 }

@@ -13,5 +13,7 @@ public interface UserFacade {
 
     void updateUserPasswordHash(UUID id, String passwordHash);
 
+    Optional<UserAuthenticationData> findUserAuthenticationDataById(UUID id);
+
     Optional<UserAuthenticationData> findUserAuthenticationDataByUsername(String username);
 }

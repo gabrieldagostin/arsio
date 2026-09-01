@@ -23,7 +23,7 @@ public class JpaProfileRepositoryAdapter implements ProfileRepository {
 
     @Override
     public Optional<Profile> findByUserId(UserId userId) {
-        return profiles.findByUserId(userId)
+        return profiles.findByUser_Id(userId.value())
                 .map(mapper::toDomain);
     }
 
