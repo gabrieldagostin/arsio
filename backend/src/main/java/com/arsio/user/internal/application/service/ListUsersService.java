@@ -1,0 +1,52 @@
+package com.arsio.user.internal.application.service;
+
+import com.arsio.user.api.exception.UserNotFoundException;
+import com.arsio.user.internal.application.port.output.FileStorage;
+import com.arsio.user.internal.domain.model.Profile;
+import com.arsio.user.internal.domain.repository.ProfileRepository;
+import com.arsio.user.internal.domain.repository.UserRepository;
+import com.arsio.user.internal.domain.valueobject.UserId;
+import com.arsio.user.internal.infra.controller.dto.response.ListUserResponse;
+import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+@Service
+@Transactional
+public class ListUsersService {
+
+    private final UserRepository users;
+    private final ProfileRepository profiles;
+    private final FileStorage fileStorage;
+
+    public ListUsersService(UserRepository users, ProfileRepository profiles, FileStorage fileStorage) {
+        this.users = users;
+        this.profiles = profiles;
+        this.fileStorage = fileStorage;
+    }
+
+    public Page<ListUserResponse> execute(String search, Pageable pageable) {
+
+        return users.findAll(search, pageable)
+                .map(user -> {
+
+                    UserId userId = user.getId();
+
+                    Profile profile = profiles.findByUserId(userId)
+                            .orElseThrow(UserNotFoundException::new);
+
+                    String avatarUrl = profile.getAvatarObjectKey() != null
+                            ? fileStorage.generatePresignedDownloadUrl(
+                                    profile.getAvatarObjectKey().value()
+                    )
+                            : null;
+
+                    return new ListUserResponse(
+                            user.getId().value(),
+                            profile.getDisplayName().value(),
+                            avatarUrl
+                    );
+                });
+    }
+}

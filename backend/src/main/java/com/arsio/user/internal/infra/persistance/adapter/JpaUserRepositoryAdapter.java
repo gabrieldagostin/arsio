@@ -10,6 +10,8 @@ import com.arsio.user.internal.infra.persistance.entity.UserEntity;
 import com.arsio.user.internal.infra.persistance.mapper.UserEntityMapper;
 import com.arsio.user.internal.infra.persistance.repository.SpringDataUserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -57,6 +59,18 @@ public class JpaUserRepositoryAdapter implements UserRepository {
     @Override
     public Optional<User> findById(UserId id) {
         return users.findById(id.value())
+                .map(mapper::toDomain);
+    }
+
+    @Override
+    public Page<User> findAll(String search, Pageable pageable) {
+
+        if (search == null || search.isBlank()) {
+            return users.findAll(pageable)
+                    .map(mapper::toDomain);
+        }
+
+        return users.findByUsernameContainingIgnoreCase(search.trim(), pageable)
                 .map(mapper::toDomain);
     }
 

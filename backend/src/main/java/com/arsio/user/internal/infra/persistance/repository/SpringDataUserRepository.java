@@ -2,8 +2,9 @@ package com.arsio.user.internal.infra.persistance.repository;
 
 import com.arsio.user.api.dto.UserAuthenticationData;
 import com.arsio.user.internal.infra.persistance.entity.UserEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -17,4 +18,6 @@ public interface SpringDataUserRepository extends JpaRepository<UserEntity, UUID
     Optional<UserAuthenticationData> findUserAuthenticationDataById(UUID id);
 
     Optional<UserAuthenticationData> findUserAuthenticationDataByUsername(String username);
+
+    Page<UserEntity> findByUsernameContainingIgnoreCase(String search, Pageable pageable);
 }

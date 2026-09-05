@@ -10,6 +10,10 @@ import com.arsio.user.internal.infra.controller.dto.response.*;
 import com.arsio.user.internal.infra.controller.mapper.UserControllerMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +28,7 @@ public class UserController {
     private final UserControllerMapper mapper;
     private final GetCurrentUserService getCurrentUserService;
     private final GetUserByIdService getUserByIdService;
+    private final ListUsersService listUsersService;
     private final UpdateUsernameService updateUsernameService;
     private final UpdateUserPasswordHashService updatePasswordService;
     private final DeactivateUserService deactivateUserService;
@@ -43,6 +48,20 @@ public class UserController {
     public ResponseEntity<GetUserResponse> getById(@PathVariable("id") UUID id) {
 
         GetUserResponse response = getUserByIdService.execute(id);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<ListUserResponse>> findAll(
+            @RequestParam(required = false) String search,
+            @PageableDefault(
+                    size = 20,
+                    sort = "username",
+                    direction = Sort.Direction.ASC
+            ) Pageable pageable) {
+
+        Page<ListUserResponse> response = listUsersService.execute(search, pageable);
 
         return ResponseEntity.ok(response);
     }
