@@ -1,7 +1,7 @@
 package com.arsio.user.internal.infra.controller;
 
 import com.arsio.config.security.SecurityUtils;
-import com.arsio.user.internal.application.service.*;
+import com.arsio.user.internal.application.usecase.*;
 import com.arsio.user.internal.domain.model.record.PageResult;
 import com.arsio.user.internal.domain.model.record.Pagination;
 import com.arsio.user.internal.infra.controller.dto.response.GetMyFriendshipsResponse;
@@ -20,12 +20,12 @@ import java.util.UUID;
 public class FriendshipController {
 
     private final PaginationMapper paginationMapper;
-    private final GetMyFriendshipsService getMyFriendshipsService;
-    private final GetMyFriendshipsRequestsService getMyFriendshipsRequestsService;
-    private final GetMyFriendshipsSendsService getMyFriendshipsSendsService;
-    private final SendFriendRequestService sendFriendRequestService;
-    private final AcceptFriendRequestService acceptFriendRequestService;
-    private final DeclineFriendRequestService declineFriendRequestService;
+    private final GetMyFriendshipsUseCase getMyFriendshipsUseCase;
+    private final GetMyFriendshipsRequestsUseCase getMyFriendshipsRequestsUseCase;
+    private final GetMyFriendshipsSendsUseCase getMyFriendshipsSendsUseCase;
+    private final SendFriendRequestUseCase sendFriendRequestUseCase;
+    private final AcceptFriendRequestUseCase acceptFriendRequestUseCase;
+    private final DeclineFriendRequestUseCase declineFriendRequestUseCase;
 
     @GetMapping
     @PreAuthorize("HasRole('USER')")
@@ -34,7 +34,7 @@ public class FriendshipController {
         Pagination pagination = paginationMapper.toPagination(pageable);
 
         PageResult<GetMyFriendshipsResponse> responses =
-                getMyFriendshipsService.execute(SecurityUtils.getCurrentUserId(), pagination);
+                getMyFriendshipsUseCase.execute(SecurityUtils.getCurrentUserId(), pagination);
 
         return ResponseEntity.ok(responses);
     }
@@ -46,7 +46,7 @@ public class FriendshipController {
         Pagination pagination = paginationMapper.toPagination(pageable);
 
         PageResult<GetMyFriendshipsResponse> responses =
-                getMyFriendshipsRequestsService.execute(SecurityUtils.getCurrentUserId(), pagination);
+                getMyFriendshipsRequestsUseCase.execute(SecurityUtils.getCurrentUserId(), pagination);
 
         return ResponseEntity.ok(responses);
     }
@@ -58,7 +58,7 @@ public class FriendshipController {
         Pagination pagination = paginationMapper.toPagination(pageable);
 
         PageResult<GetMyFriendshipsResponse> responses =
-                getMyFriendshipsSendsService.execute(SecurityUtils.getCurrentUserId(), pagination);
+                getMyFriendshipsSendsUseCase.execute(SecurityUtils.getCurrentUserId(), pagination);
 
         return ResponseEntity.ok(responses);
     }
@@ -67,7 +67,7 @@ public class FriendshipController {
     @PreAuthorize("HasRole('USER')")
     public ResponseEntity<Void> sendFriendRequest(@PathVariable("id") UUID id) {
 
-        sendFriendRequestService.execute(SecurityUtils.getCurrentUserId(), id);
+        sendFriendRequestUseCase.execute(SecurityUtils.getCurrentUserId(), id);
 
         return ResponseEntity.noContent().build();
     }
@@ -76,7 +76,7 @@ public class FriendshipController {
     @PreAuthorize("HasRole('USER')")
     public ResponseEntity<Void> acceptFriendRequest(@PathVariable("friendshipId") UUID friendshipId) {
 
-        acceptFriendRequestService.execute(friendshipId);
+        acceptFriendRequestUseCase.execute(friendshipId);
 
         return ResponseEntity.noContent().build();
     }
@@ -85,7 +85,7 @@ public class FriendshipController {
     @PreAuthorize("HasRole('USER')")
     public ResponseEntity<Void> declineFriendRequest(@PathVariable("friendshipId") UUID friendshipId) {
 
-        declineFriendRequestService.execute(friendshipId);
+        declineFriendRequestUseCase.execute(friendshipId);
 
         return ResponseEntity.noContent().build();
     }

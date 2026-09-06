@@ -1,4 +1,4 @@
-package com.arsio.auth.internal.application.service;
+package com.arsio.auth.internal.application.usecase;
 
 import com.arsio.auth.internal.application.command.ForgotPasswordCommand;
 import com.arsio.auth.internal.application.event.PasswordResetEvent;
@@ -17,14 +17,14 @@ import java.util.UUID;
 
 @Service
 @Transactional
-public class ForgotPasswordService {
+public class ForgotPasswordUseCase {
 
     private final UserAuthRepository users;
     private final PasswordResetTokenRepository passwordResetTokens;
     private final ApplicationEventPublisher eventPublisher;
     private final FrontendProperties frontend;
 
-    public ForgotPasswordService(UserAuthRepository users, PasswordResetTokenRepository passwordResetTokens, ApplicationEventPublisher eventPublisher, FrontendProperties frontend) {
+    public ForgotPasswordUseCase(UserAuthRepository users, PasswordResetTokenRepository passwordResetTokens, ApplicationEventPublisher eventPublisher, FrontendProperties frontend) {
         this.users = users;
         this.passwordResetTokens = passwordResetTokens;
         this.eventPublisher = eventPublisher;

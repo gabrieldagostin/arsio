@@ -1,4 +1,4 @@
-package com.arsio.user.internal.application.service;
+package com.arsio.user.internal.application.usecase;
 
 import com.arsio.user.internal.application.port.output.FileStorage;
 import com.arsio.user.internal.domain.exception.ProfileNotFoundException;
@@ -13,12 +13,12 @@ import java.util.UUID;
 
 @Service
 @Transactional
-public class GetUserProfileService {
+public class GetUserProfileUseCase {
 
     private final ProfileRepository profiles;
     private final FileStorage fileStorage;
 
-    public GetUserProfileService(ProfileRepository profiles, FileStorage fileStorage) {
+    public GetUserProfileUseCase(ProfileRepository profiles, FileStorage fileStorage) {
         this.profiles = profiles;
         this.fileStorage = fileStorage;
     }

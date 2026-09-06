@@ -1,4 +1,4 @@
-package com.arsio.user.internal.application.service;
+package com.arsio.user.internal.application.usecase;
 
 import com.arsio.user.internal.application.command.ConfirmFileUploadCommand;
 import com.arsio.user.internal.application.port.output.FileStorage;
@@ -7,7 +7,7 @@ import com.arsio.user.internal.domain.model.record.ObjectMetadata;
 import com.arsio.user.internal.domain.model.Profile;
 import com.arsio.user.internal.domain.repository.ProfileRepository;
 import com.arsio.user.internal.domain.valueobject.UserId;
-import com.arsio.user.internal.infra.controller.dto.response.GetBannerResponse;
+import com.arsio.user.internal.infra.controller.dto.response.GetAvatarResponse;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +16,9 @@ import java.util.UUID;
 
 @Service
 @Transactional
-public class ConfirmBannerUploadService {
+public class ConfirmAvatarUploadUseCase {
 
-    private static final long MAX_BANNER_SIZE = 10 * 1024 * 1024;
+    private static final long MAX_AVATAR_SIZE = 5 * 1024 * 1024;
 
     private static final Set<String> ALLOWED_TYPES = Set.of(
             "image/png",
@@ -29,35 +29,35 @@ public class ConfirmBannerUploadService {
     private final FileStorage fileStorage;
     private final ProfileRepository profiles;
 
-    public ConfirmBannerUploadService(FileStorage fileStorage, ProfileRepository profiles) {
+    public ConfirmAvatarUploadUseCase(FileStorage fileStorage, ProfileRepository profiles) {
         this.fileStorage = fileStorage;
         this.profiles = profiles;
     }
 
-    public GetBannerResponse execute(UUID userId, ConfirmFileUploadCommand command) {
+    public GetAvatarResponse execute(UUID userId, ConfirmFileUploadCommand command) {
 
         ObjectMetadata metadata = fileStorage.getObjectMetadata(command.objectKey().value());
 
-        if (metadata.size() > MAX_BANNER_SIZE) {
+        if (metadata.size() > MAX_AVATAR_SIZE) {
             throw new IllegalArgumentException(
-                    "Banner cannot exceed 10 MB"
+                    "Avatar cannot exceed 5 MB"
             );
         }
 
         if (!ALLOWED_TYPES.contains(metadata.contentType())) {
             throw new IllegalArgumentException(
-                    "Unsupported banner format"
+                    "Unsupported avatar format"
             );
         }
 
         Profile profile = profiles.findByUserId(new UserId(userId))
                 .orElseThrow(ProfileNotFoundException::new);
 
-        profile.updateBannerObjectKey(command.objectKey());
+        profile.updateAvatarObjectKey(command.objectKey());
         profiles.save(profile);
 
-        String avatarUrl = fileStorage.generatePresignedDownloadUrl(profile.getBannerObjectKey().value());
+        String avatarUrl = fileStorage.generatePresignedDownloadUrl(profile.getAvatarObjectKey().value());
 
-        return new GetBannerResponse(avatarUrl);
+        return new GetAvatarResponse(avatarUrl);
     }
 }

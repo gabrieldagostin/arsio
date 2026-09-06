@@ -1,4 +1,4 @@
-package com.arsio.auth.internal.application.service;
+package com.arsio.auth.internal.application.usecase;
 
 import com.arsio.auth.internal.application.command.RefreshTokenCommand;
 import com.arsio.auth.internal.domain.exception.SessionNotActiveException;
@@ -21,14 +21,14 @@ import java.util.UUID;
 
 @Service
 @Transactional
-public class RefreshTokenService {
+public class RefreshTokenUseCase {
 
     private final UserAuthRepository users;
     private final TokenProvider tokenProvider;
     private final SessionRepository sessions;
     private final Sha256TokenHasher tokenHasher;
 
-    public RefreshTokenService(UserAuthRepository users, TokenProvider tokenProvider, SessionRepository sessions, Sha256TokenHasher tokenHasher) {
+    public RefreshTokenUseCase(UserAuthRepository users, TokenProvider tokenProvider, SessionRepository sessions, Sha256TokenHasher tokenHasher) {
         this.users = users;
         this.tokenProvider = tokenProvider;
         this.sessions = sessions;

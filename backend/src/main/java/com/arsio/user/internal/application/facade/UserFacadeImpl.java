@@ -5,9 +5,9 @@ import com.arsio.user.api.dto.CreateUserCommand;
 import com.arsio.user.api.dto.UpdateUserPasswordHashCommand;
 import com.arsio.user.api.dto.UserCreatedResponse;
 import com.arsio.user.api.facade.UserFacade;
-import com.arsio.user.internal.application.service.UpdateUserPasswordHashService;
+import com.arsio.user.internal.application.usecase.UpdateUserPasswordHashUseCase;
 import com.arsio.user.internal.domain.repository.UserRepository;
-import com.arsio.user.internal.application.service.CreateUserService;
+import com.arsio.user.internal.application.usecase.CreateUserUseCase;
 import com.arsio.user.internal.domain.model.User;
 import org.springframework.stereotype.Service;
 
@@ -18,19 +18,19 @@ import java.util.UUID;
 public class UserFacadeImpl implements UserFacade {
 
     private final UserRepository users;
-    private final CreateUserService createUserService;
-    private final UpdateUserPasswordHashService updateUserPasswordService;
+    private final CreateUserUseCase createUserUseCase;
+    private final UpdateUserPasswordHashUseCase updateUserPasswordService;
 
-    public UserFacadeImpl(UserRepository users, CreateUserService createUserService, UpdateUserPasswordHashService updateUserPasswordService) {
+    public UserFacadeImpl(UserRepository users, CreateUserUseCase createUserUseCase, UpdateUserPasswordHashUseCase updateUserPasswordService) {
         this.users = users;
-        this.createUserService = createUserService;
+        this.createUserUseCase = createUserUseCase;
         this.updateUserPasswordService = updateUserPasswordService;
     }
 
     @Override
     public UserCreatedResponse createUser(String username, String email, String password) {
 
-        User user = createUserService.execute(
+        User user = createUserUseCase.execute(
                 new CreateUserCommand(username, email, password)
         );
 

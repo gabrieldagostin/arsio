@@ -1,4 +1,4 @@
-package com.arsio.user.internal.application.service;
+package com.arsio.user.internal.application.usecase;
 
 import com.arsio.user.api.dto.CreateUserCommand;
 import com.arsio.user.internal.application.event.CreatedUserEvent;
@@ -19,14 +19,14 @@ import java.util.Locale;
 
 @Service
 @Transactional
-public class CreateUserService {
+public class CreateUserUseCase {
 
     private final UserRepository users;
     private final PasswordEncoder passwordEncoder;
     private final ApplicationEventPublisher eventPublisher;
     private final ProfileRepository profiles;
 
-    public CreateUserService(UserRepository users, PasswordEncoder passwordEncoder, ApplicationEventPublisher eventPublisher, ProfileRepository profiles) {
+    public CreateUserUseCase(UserRepository users, PasswordEncoder passwordEncoder, ApplicationEventPublisher eventPublisher, ProfileRepository profiles) {
         this.users = users;
         this.passwordEncoder = passwordEncoder;
         this.eventPublisher = eventPublisher;

@@ -1,4 +1,4 @@
-package com.arsio.user.internal.application.service;
+package com.arsio.user.internal.application.usecase;
 
 import com.arsio.user.internal.application.command.UpdateUsernameCommand;
 import com.arsio.user.api.exception.UserNotFoundException;
@@ -15,12 +15,12 @@ import java.util.UUID;
 
 @Service
 @Transactional
-public class UpdateUsernameService {
+public class UpdateUsernameUseCase {
 
     private final UserRepository users;
     private final ProfileRepository profiles;
 
-    public UpdateUsernameService(UserRepository users, ProfileRepository profiles) {
+    public UpdateUsernameUseCase(UserRepository users, ProfileRepository profiles) {
         this.users = users;
         this.profiles = profiles;
     }

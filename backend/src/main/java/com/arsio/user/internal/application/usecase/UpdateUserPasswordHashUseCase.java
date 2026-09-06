@@ -1,4 +1,4 @@
-package com.arsio.user.internal.application.service;
+package com.arsio.user.internal.application.usecase;
 
 import com.arsio.user.internal.application.command.UpdatePasswordCommand;
 import com.arsio.user.api.exception.UserNotFoundException;
@@ -15,12 +15,12 @@ import java.util.UUID;
 
 @Service
 @Transactional
-public class UpdateUserPasswordHashService {
+public class UpdateUserPasswordHashUseCase {
 
     private final UserRepository users;
     private final PasswordEncoder passwordEncoder;
 
-    public UpdateUserPasswordHashService(UserRepository users, PasswordEncoder passwordEncoder) {
+    public UpdateUserPasswordHashUseCase(UserRepository users, PasswordEncoder passwordEncoder) {
         this.users = users;
         this.passwordEncoder = passwordEncoder;
     }

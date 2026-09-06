@@ -1,4 +1,4 @@
-package com.arsio.user.internal.application.service;
+package com.arsio.user.internal.application.usecase;
 
 import com.arsio.user.internal.domain.model.Friendship;
 import com.arsio.user.internal.domain.repository.FriendshipRepository;
@@ -10,12 +10,12 @@ import java.util.UUID;
 
 @Service
 @Transactional
-public class SendFriendRequestService {
+public class SendFriendRequestUseCase {
 
     private final FriendshipRepository friendships;
     private final UserRepository users;
 
-    public SendFriendRequestService(FriendshipRepository friendships, UserRepository users) {
+    public SendFriendRequestUseCase(FriendshipRepository friendships, UserRepository users) {
         this.friendships = friendships;
         this.users = users;
     }

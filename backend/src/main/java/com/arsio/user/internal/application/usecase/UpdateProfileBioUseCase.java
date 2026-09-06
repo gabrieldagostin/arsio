@@ -1,11 +1,11 @@
-package com.arsio.user.internal.application.service;
+package com.arsio.user.internal.application.usecase;
 
-import com.arsio.user.internal.application.command.UpdateProfileCountryCommand;
+import com.arsio.user.internal.application.command.UpdateProfileBioCommand;
 import com.arsio.user.api.exception.UserNotFoundException;
 import com.arsio.user.internal.domain.model.Profile;
 import com.arsio.user.internal.domain.repository.ProfileRepository;
 import com.arsio.user.internal.domain.valueobject.UserId;
-import com.arsio.user.internal.infra.controller.dto.response.UpdateProfileCountryResponse;
+import com.arsio.user.internal.infra.controller.dto.response.UpdateProfileBioResponse;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -13,27 +13,27 @@ import java.util.UUID;
 
 @Service
 @Transactional
-public class UpdateProfileCountryService {
+public class UpdateProfileBioUseCase {
 
     private final ProfileRepository profiles;
 
-    public UpdateProfileCountryService(ProfileRepository profiles) {
+    public UpdateProfileBioUseCase(ProfileRepository profiles) {
         this.profiles = profiles;
     }
 
-    public UpdateProfileCountryResponse execute(UUID id, UpdateProfileCountryCommand command) {
+    public UpdateProfileBioResponse execute(UUID id, UpdateProfileBioCommand command) {
 
         UserId userId = new UserId(id);
 
         Profile profile = profiles.findByUserId(userId)
                 .orElseThrow(UserNotFoundException::new);
 
-        profile.updateCountry(command.newCountry());
+        profile.updateBio(command.newBio());
 
         profiles.save(profile);
 
-        return new UpdateProfileCountryResponse(
-                profile.getCountry().getFlag() + profile.getCountry().getCode()
+        return new UpdateProfileBioResponse(
+                profile.getBio().value()
         );
     }
 }

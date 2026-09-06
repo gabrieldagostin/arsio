@@ -1,4 +1,4 @@
-package com.arsio.user.internal.application.service;
+package com.arsio.user.internal.application.usecase;
 
 import com.arsio.user.api.exception.UserNotFoundException;
 import com.arsio.user.internal.domain.model.User;
@@ -11,11 +11,11 @@ import java.util.UUID;
 
 @Service
 @Transactional
-public class DeactivateUserService {
+public class DeactivateUserUseCase {
 
     private final UserRepository users;
 
-    public DeactivateUserService(UserRepository users) {
+    public DeactivateUserUseCase(UserRepository users) {
         this.users = users;
     }
 

@@ -1,6 +1,7 @@
-package com.arsio.auth.internal.application.service;
+package com.arsio.auth.internal.application.usecase;
 
 import com.arsio.auth.internal.application.mapper.UserAuthMapper;
+import com.arsio.auth.internal.application.service.SessionService;
 import com.arsio.auth.internal.domain.model.UserAuth;
 import com.arsio.user.api.dto.UserCreatedResponse;
 import com.arsio.user.api.facade.UserFacade;
@@ -14,14 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class RegisterUserService {
+public class RegisterUserUseCase {
 
     private final TokenProvider tokenProvider;
     private final SessionService sessionService;
     private final UserFacade userFacade;
     private final UserAuthMapper userAuthMapper;
 
-    public RegisterUserService(TokenProvider tokenProvider, SessionService sessionService, UserFacade userFacade, UserAuthMapper userAuthMapper) {
+    public RegisterUserUseCase(TokenProvider tokenProvider, SessionService sessionService, UserFacade userFacade, UserAuthMapper userAuthMapper) {
         this.tokenProvider = tokenProvider;
         this.sessionService = sessionService;
         this.userFacade = userFacade;

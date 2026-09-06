@@ -1,6 +1,7 @@
-package com.arsio.auth.internal.application.service;
+package com.arsio.auth.internal.application.usecase;
 
 import com.arsio.auth.internal.application.port.output.TokenProvider;
+import com.arsio.auth.internal.application.service.SessionService;
 import com.arsio.auth.internal.domain.exception.InvalidCredentialException;
 import com.arsio.auth.internal.domain.repository.UserAuthRepository;
 import com.arsio.auth.internal.domain.model.UserAuth;
@@ -19,14 +20,14 @@ import java.util.Locale;
 
 @Service
 @Transactional
-public class LoginUserService {
+public class LoginUserUseCase {
 
     private final AuthenticationManager authenticationManager;
     private final UserAuthRepository users;
     private final TokenProvider tokenProvider;
     private final SessionService sessionService;
 
-    public LoginUserService(AuthenticationManager authenticationManager, UserAuthRepository users, TokenProvider tokenProvider, SessionService sessionService) {
+    public LoginUserUseCase(AuthenticationManager authenticationManager, UserAuthRepository users, TokenProvider tokenProvider, SessionService sessionService) {
         this.authenticationManager = authenticationManager;
         this.users = users;
         this.tokenProvider = tokenProvider;

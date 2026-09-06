@@ -3,7 +3,7 @@ package com.arsio.user.internal.infra.controller;
 import com.arsio.config.security.SecurityUtils;
 import com.arsio.user.internal.application.command.UpdatePasswordCommand;
 import com.arsio.user.internal.application.command.UpdateUsernameCommand;
-import com.arsio.user.internal.application.service.*;
+import com.arsio.user.internal.application.usecase.*;
 import com.arsio.user.internal.domain.model.record.PageResult;
 import com.arsio.user.internal.domain.model.record.Pagination;
 import com.arsio.user.internal.infra.controller.dto.request.UpdatePasswordRequest;
@@ -29,19 +29,19 @@ public class UserController {
 
     private final UserControllerMapper mapper;
     private final PaginationMapper paginationMapper;
-    private final GetCurrentUserService getCurrentUserService;
-    private final GetUserByIdService getUserByIdService;
-    private final ListUsersService listUsersService;
-    private final UpdateUsernameService updateUsernameService;
-    private final UpdateUserPasswordHashService updatePasswordService;
-    private final DeactivateUserService deactivateUserService;
+    private final GetCurrentUserUseCase getCurrentUserUseCase;
+    private final GetUserByIdUseCase getUserByIdUseCase;
+    private final ListUsersUseCase listUsersUseCase;
+    private final UpdateUsernameUseCase updateUsernameUseCase;
+    private final UpdateUserPasswordHashUseCase updatePasswordService;
+    private final DeactivateUserUseCase deactivateUserUseCase;
 
     @GetMapping("/me")
     @PreAuthorize("HasRole('USER')")
     public ResponseEntity<GetUserResponse> getCurrentUser() {
 
         GetUserResponse response =
-                getCurrentUserService.execute(SecurityUtils.getCurrentUserId());
+                getCurrentUserUseCase.execute(SecurityUtils.getCurrentUserId());
 
         return ResponseEntity.ok(response);
     }
@@ -50,7 +50,7 @@ public class UserController {
     @PreAuthorize("HasRole('USER')")
     public ResponseEntity<GetUserResponse> getById(@PathVariable("id") UUID id) {
 
-        GetUserResponse response = getUserByIdService.execute(id);
+        GetUserResponse response = getUserByIdUseCase.execute(id);
 
         return ResponseEntity.ok(response);
     }
@@ -66,7 +66,7 @@ public class UserController {
 
         Pagination pagination = paginationMapper.toPagination(pageable);
 
-        PageResult<ListUserResponse> response = listUsersService.execute(search, pagination);
+        PageResult<ListUserResponse> response = listUsersUseCase.execute(search, pagination);
 
         return ResponseEntity.ok(response);
     }
@@ -78,7 +78,7 @@ public class UserController {
         UpdateUsernameCommand command = mapper.toUpdateUsernameCommand(request);
 
         UpdateUsernameResponse response =
-                updateUsernameService.execute(SecurityUtils.getCurrentUserId(), command);
+                updateUsernameUseCase.execute(SecurityUtils.getCurrentUserId(), command);
 
         return ResponseEntity.ok(response);
     }
@@ -98,7 +98,7 @@ public class UserController {
     @PreAuthorize("HasRole('USER')")
     public ResponseEntity<Void> deactivateUser() {
 
-        deactivateUserService.execute(SecurityUtils.getCurrentUserId());
+        deactivateUserUseCase.execute(SecurityUtils.getCurrentUserId());
 
         return ResponseEntity.noContent().build();
     }

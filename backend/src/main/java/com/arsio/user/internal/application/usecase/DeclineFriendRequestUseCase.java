@@ -1,4 +1,4 @@
-package com.arsio.user.internal.application.service;
+package com.arsio.user.internal.application.usecase;
 
 import com.arsio.user.internal.domain.exception.FriendshipNotFoundException;
 import com.arsio.user.internal.domain.model.Friendship;
@@ -11,11 +11,11 @@ import java.util.UUID;
 
 @Service
 @Transactional
-public class DeclineFriendRequestService {
+public class DeclineFriendRequestUseCase {
 
     private final FriendshipRepository friendships;
 
-    public DeclineFriendRequestService(FriendshipRepository friendships) {
+    public DeclineFriendRequestUseCase(FriendshipRepository friendships) {
         this.friendships = friendships;
     }
 

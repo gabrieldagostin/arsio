@@ -1,4 +1,4 @@
-package com.arsio.user.internal.application.service;
+package com.arsio.user.internal.application.usecase;
 
 import com.arsio.user.api.exception.UserNotFoundException;
 import com.arsio.user.internal.application.port.output.FileStorage;
@@ -17,13 +17,13 @@ import java.util.UUID;
 
 @Service
 @Transactional
-public class GetMyFriendshipsRequestsService {
+public class GetMyFriendshipsSendsUseCase {
 
-    public final FriendshipRepository friendships;
-    public final ProfileRepository profiles;
-    public final FileStorage fileStorage;
+    private final FriendshipRepository friendships;
+    private final ProfileRepository profiles;
+    private final FileStorage fileStorage;
 
-    public GetMyFriendshipsRequestsService(FriendshipRepository friendships, ProfileRepository profiles, FileStorage fileStorage) {
+    public GetMyFriendshipsSendsUseCase(FriendshipRepository friendships, ProfileRepository profiles, FileStorage fileStorage) {
         this.friendships = friendships;
         this.profiles = profiles;
         this.fileStorage = fileStorage;
@@ -33,12 +33,12 @@ public class GetMyFriendshipsRequestsService {
 
         UserId userId = new UserId(id);
 
-        return friendships.findPendingReceivedByUserId(userId, pagination)
+        return friendships.findPendingSendByUserId(userId, pagination)
                 .map(friendship -> {
 
-                    UserId requesterId = friendship.getRequesterId();
+                    UserId addresseeId = friendship.getAddresseeId();
 
-                    Profile friendProfile = profiles.findByUserId(requesterId)
+                    Profile friendProfile = profiles.findByUserId(addresseeId)
                             .orElseThrow(UserNotFoundException::new);
 
                     String avatarUrl = friendProfile.getAvatarObjectKey() != null

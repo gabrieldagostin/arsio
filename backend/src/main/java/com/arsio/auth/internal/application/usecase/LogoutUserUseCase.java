@@ -1,4 +1,4 @@
-package com.arsio.auth.internal.application.service;
+package com.arsio.auth.internal.application.usecase;
 
 import com.arsio.auth.internal.application.command.LogoutCommand;
 import com.arsio.auth.internal.domain.exception.SessionNotFoundException;
@@ -11,12 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class LogoutUserService {
+public class LogoutUserUseCase {
 
     private final SessionRepository sessions;
     private final TokenProvider tokenProvider;
 
-    public LogoutUserService(SessionRepository sessions, TokenProvider tokenProvider) {
+    public LogoutUserUseCase(SessionRepository sessions, TokenProvider tokenProvider) {
         this.sessions = sessions;
         this.tokenProvider = tokenProvider;
     }

@@ -1,4 +1,4 @@
-package com.arsio.auth.internal.application.service;
+package com.arsio.auth.internal.application.usecase;
 
 import com.arsio.auth.internal.application.command.ResetPasswordCommand;
 import com.arsio.auth.internal.domain.exception.PasswordResetTokenNotFoundException;
@@ -6,7 +6,6 @@ import com.arsio.auth.internal.domain.exception.SessionNotActiveException;
 import com.arsio.auth.internal.domain.model.PasswordResetToken;
 import com.arsio.auth.internal.domain.repository.PasswordResetTokenRepository;
 import com.arsio.auth.internal.domain.repository.UserAuthRepository;
-import com.arsio.auth.internal.domain.valueobject.PasswordToken;
 import com.arsio.user.api.facade.UserFacade;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,13 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class ResetPasswordService {
+public class ResetPasswordUseCase {
 
     private final PasswordResetTokenRepository passwordResetTokens;
     private final PasswordEncoder passwordEncoder;
     private final UserFacade userFacade;
 
-    public ResetPasswordService(PasswordResetTokenRepository passwordResetTokens, UserAuthRepository users, PasswordEncoder passwordEncoder, UserFacade userFacade) {
+    public ResetPasswordUseCase(PasswordResetTokenRepository passwordResetTokens, UserAuthRepository users, PasswordEncoder passwordEncoder, UserFacade userFacade) {
         this.passwordResetTokens = passwordResetTokens;
         this.passwordEncoder = passwordEncoder;
         this.userFacade = userFacade;

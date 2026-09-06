@@ -1,4 +1,4 @@
-package com.arsio.user.internal.application.service;
+package com.arsio.user.internal.application.usecase;
 
 import com.arsio.user.api.exception.UserNotFoundException;
 import com.arsio.user.internal.application.port.output.FileStorage;
@@ -17,13 +17,13 @@ import java.util.UUID;
 
 @Service
 @Transactional
-public class GetMyFriendshipsService {
+public class GetMyFriendshipsUseCase {
 
     private final FriendshipRepository friendships;
     private final ProfileRepository profiles;
     private final FileStorage fileStorage;
 
-    public GetMyFriendshipsService(FriendshipRepository friendships, ProfileRepository profiles, FileStorage fileStorage) {
+    public GetMyFriendshipsUseCase(FriendshipRepository friendships, ProfileRepository profiles, FileStorage fileStorage) {
         this.friendships = friendships;
         this.profiles = profiles;
         this.fileStorage = fileStorage;

@@ -1,7 +1,7 @@
 package com.arsio.auth.internal.infra.controller;
 
 import com.arsio.auth.internal.application.command.*;
-import com.arsio.auth.internal.application.service.*;
+import com.arsio.auth.internal.application.usecase.*;
 import com.arsio.auth.internal.infra.controller.dto.request.*;
 import com.arsio.auth.internal.infra.controller.dto.response.AuthenticationResponse;
 import com.arsio.auth.internal.infra.controller.dto.response.RefreshTokenResponse;
@@ -22,20 +22,20 @@ import java.net.URI;
 public class AuthController {
 
     private final AuthControllerMapper mapper;
-    private final RegisterUserService registerUserService;
-    private final LoginUserService loginUserService;
-    private final RefreshTokenService refreshTokenService;
-    private final LogoutUserService logoutUserService;
-    private final ForgotPasswordService forgotPasswordService;
-    private final ResetPasswordService resetPasswordService;
-    private final RevokeAllSessionsService revokeAllSessionsService;
+    private final RegisterUserUseCase registerUserUseCase;
+    private final LoginUserUseCase loginUserUseCase;
+    private final RefreshTokenUseCase refreshTokenUseCase;
+    private final LogoutUserUseCase logoutUserUseCase;
+    private final ForgotPasswordUseCase forgotPasswordUseCase;
+    private final ResetPasswordUseCase resetPasswordUseCase;
+    private final RevokeAllSessionsUseCase revokeAllSessionsUseCase;
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody @Valid RegisterUserRequest request, UriComponentsBuilder builder) {
 
         CreateUserCommand command = mapper.toCreateUserCommand(request);
 
-        AuthenticationResponse response = registerUserService.execute(command);
+        AuthenticationResponse response = registerUserUseCase.execute(command);
 
         URI uri = builder.path("/users/{id}")
                 .buildAndExpand(response).toUri();
@@ -48,7 +48,7 @@ public class AuthController {
 
         LoginUserCommand command = mapper.toLoginUserCommand(request);
 
-        AuthenticationResponse response = loginUserService.execute(command);
+        AuthenticationResponse response = loginUserUseCase.execute(command);
 
         return ResponseEntity.ok(response);
     }
@@ -58,7 +58,7 @@ public class AuthController {
 
         RefreshTokenCommand command = mapper.toRefreshTokenCommand(request);
 
-        RefreshTokenResponse response = refreshTokenService.execute(command);
+        RefreshTokenResponse response = refreshTokenUseCase.execute(command);
 
         return ResponseEntity.ok(response);
     }
@@ -69,7 +69,7 @@ public class AuthController {
 
         LogoutCommand command = mapper.toLogoutCommand(request);
 
-        logoutUserService.execute(command);
+        logoutUserUseCase.execute(command);
 
         return ResponseEntity.noContent().build();
     }
@@ -79,7 +79,7 @@ public class AuthController {
 
         ForgotPasswordCommand command = mapper.toForgotPasswordCommand(request);
 
-        forgotPasswordService.execute(command);
+        forgotPasswordUseCase.execute(command);
 
         return ResponseEntity.noContent().build();
     }
@@ -89,7 +89,7 @@ public class AuthController {
 
         ResetPasswordCommand command = mapper.toResetPasswordCommand(request);
 
-        resetPasswordService.execute(command);
+        resetPasswordUseCase.execute(command);
 
         return ResponseEntity.noContent().build();
     }
@@ -98,7 +98,7 @@ public class AuthController {
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Void> revokeAllSessions() {
 
-        revokeAllSessionsService.execute(SecurityUtils.getCurrentUserId());
+        revokeAllSessionsUseCase.execute(SecurityUtils.getCurrentUserId());
 
         return ResponseEntity.noContent().build();
     }

@@ -5,7 +5,8 @@ import com.arsio.user.internal.application.command.ConfirmFileUploadCommand;
 import com.arsio.user.internal.application.command.UpdateProfileBioCommand;
 import com.arsio.user.internal.application.command.UpdateProfileCountryCommand;
 import com.arsio.user.internal.application.command.UploadFileUrlCommand;
-import com.arsio.user.internal.application.service.*;
+import com.arsio.user.internal.application.service.FileUploadPreparationService;
+import com.arsio.user.internal.application.usecase.*;
 import com.arsio.user.internal.infra.controller.dto.request.ConfirmFileUploadRequest;
 import com.arsio.user.internal.infra.controller.dto.request.UpdateProfileBioRequest;
 import com.arsio.user.internal.infra.controller.dto.request.UpdateProfileCountryRequest;
@@ -24,20 +25,20 @@ import org.springframework.web.bind.annotation.*;
 public class ProfileController {
 
     private final ProfileControllerMapper mapper;
-    private final GetUserAvatarService getUserAvatarService;
-    private final GetUserProfileService getUserProfileService;
-    private final UpdateProfileBioService updateProfileBioService;
+    private final GetUserAvatarUseCase getUserAvatarUseCase;
+    private final GetUserProfileUseCase getUserProfileUseCase;
+    private final UpdateProfileBioUseCase updateProfileBioUseCase;
     private final FileUploadPreparationService fileUploadPreparationService;
-    private final ConfirmAvatarUploadService confirmAvatarUploadService;
-    private final ConfirmBannerUploadService confirmBannerUploadService;
-    private final UpdateProfileCountryService updateProfileCountryService;
+    private final ConfirmAvatarUploadUseCase confirmAvatarUploadUseCase;
+    private final ConfirmBannerUploadUseCase confirmBannerUploadUseCase;
+    private final UpdateProfileCountryUseCase updateProfileCountryUseCase;
 
     @GetMapping("/me/avatar")
     @PreAuthorize("HasRole('USER')")
     public ResponseEntity<GetAvatarResponse> getUserAvatar() {
 
         GetAvatarResponse response =
-                getUserAvatarService.execute(SecurityUtils.getCurrentUserId());
+                getUserAvatarUseCase.execute(SecurityUtils.getCurrentUserId());
 
         return ResponseEntity.ok(response);
     }
@@ -47,7 +48,7 @@ public class ProfileController {
     public ResponseEntity<GetProfileResponse> getUserProfile() {
 
         GetProfileResponse response =
-                getUserProfileService.execute(SecurityUtils.getCurrentUserId());
+                getUserProfileUseCase.execute(SecurityUtils.getCurrentUserId());
 
         return ResponseEntity.ok(response);
     }
@@ -59,7 +60,7 @@ public class ProfileController {
         UpdateProfileBioCommand command = mapper.toUpdateProfileBioCommand(request);
 
         UpdateProfileBioResponse response =
-                updateProfileBioService.execute(SecurityUtils.getCurrentUserId(), command);
+                updateProfileBioUseCase.execute(SecurityUtils.getCurrentUserId(), command);
 
         return ResponseEntity.ok(response);
     }
@@ -83,7 +84,7 @@ public class ProfileController {
         ConfirmFileUploadCommand command = mapper.toConfirmFileUploadCommand(request);
 
         GetAvatarResponse response =
-                confirmAvatarUploadService.execute(SecurityUtils.getCurrentUserId(), command);
+                confirmAvatarUploadUseCase.execute(SecurityUtils.getCurrentUserId(), command);
 
         return ResponseEntity.ok(response);
     }
@@ -107,7 +108,7 @@ public class ProfileController {
         ConfirmFileUploadCommand command = mapper.toConfirmFileUploadCommand(request);
 
         GetBannerResponse response =
-                confirmBannerUploadService.execute(SecurityUtils.getCurrentUserId(), command);
+                confirmBannerUploadUseCase.execute(SecurityUtils.getCurrentUserId(), command);
 
         return ResponseEntity.ok(response);
     }
@@ -119,7 +120,7 @@ public class ProfileController {
         UpdateProfileCountryCommand command = mapper.toUpdateProfileCountryCommand(request);
 
         UpdateProfileCountryResponse response =
-                updateProfileCountryService.execute(SecurityUtils.getCurrentUserId(), command);
+                updateProfileCountryUseCase.execute(SecurityUtils.getCurrentUserId(), command);
 
         return ResponseEntity.ok(response);
     }

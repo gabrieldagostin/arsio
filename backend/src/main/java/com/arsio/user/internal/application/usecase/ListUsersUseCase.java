@@ -1,4 +1,4 @@
-package com.arsio.user.internal.application.service;
+package com.arsio.user.internal.application.usecase;
 
 import com.arsio.user.api.exception.UserNotFoundException;
 import com.arsio.user.internal.application.port.output.FileStorage;
@@ -14,13 +14,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Transactional
-public class ListUsersService {
+public class ListUsersUseCase {
 
     private final UserRepository users;
     private final ProfileRepository profiles;
     private final FileStorage fileStorage;
 
-    public ListUsersService(UserRepository users, ProfileRepository profiles, FileStorage fileStorage) {
+    public ListUsersUseCase(UserRepository users, ProfileRepository profiles, FileStorage fileStorage) {
         this.users = users;
         this.profiles = profiles;
         this.fileStorage = fileStorage;
