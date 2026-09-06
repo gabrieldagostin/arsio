@@ -1,11 +1,14 @@
 package com.arsio.user.internal.infra.persistance.adapter;
 
 import com.arsio.user.api.dto.UserAuthenticationData;
+import com.arsio.user.internal.domain.model.record.PageResult;
+import com.arsio.user.internal.domain.model.record.Pagination;
 import com.arsio.user.internal.domain.valueobject.UserId;
 import com.arsio.user.internal.domain.model.User;
 import com.arsio.user.internal.domain.repository.UserRepository;
 import com.arsio.user.internal.domain.valueobject.Email;
 import com.arsio.user.internal.domain.valueobject.Username;
+import com.arsio.user.internal.infra.controller.mapper.PaginationMapper;
 import com.arsio.user.internal.infra.persistance.entity.UserEntity;
 import com.arsio.user.internal.infra.persistance.mapper.UserEntityMapper;
 import com.arsio.user.internal.infra.persistance.repository.SpringDataUserRepository;
@@ -14,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -23,6 +27,7 @@ public class JpaUserRepositoryAdapter implements UserRepository {
 
     private final SpringDataUserRepository users;
     private final UserEntityMapper mapper;
+    private final PaginationMapper paginationMapper;
 
     @Override
     public void save(User user) {
@@ -63,15 +68,30 @@ public class JpaUserRepositoryAdapter implements UserRepository {
     }
 
     @Override
-    public Page<User> findAll(String search, Pageable pageable) {
+    public PageResult<User> findAll(String search, Pagination pagination) {
+
+        Pageable pageable = paginationMapper.toPageable(pagination);
+
+        Page<UserEntity> result;
 
         if (search == null || search.isBlank()) {
-            return users.findAll(pageable)
-                    .map(mapper::toDomain);
+            result = users.findAll(pageable);
+        } else {
+            result = users.findByUsernameContainingIgnoreCase(search.trim(), pageable);
         }
 
-        return users.findByUsernameContainingIgnoreCase(search.trim(), pageable)
-                .map(mapper::toDomain);
+        List<User> userList = result.getContent()
+                .stream()
+                .map(mapper::toDomain)
+                .toList();
+
+        return new PageResult<>(
+                userList,
+                result.getNumber(),
+                result.getSize(),
+                result.getTotalElements(),
+                result.getTotalPages()
+        );
     }
 
     @Override

@@ -6,6 +6,7 @@ import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+import java.time.Instant;
 import java.util.UUID;
 
 @Table(name = "friendships")
@@ -31,4 +32,7 @@ public class FriendshipEntity {
     @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     @Column(nullable = false)
     private FriendshipStatus status;
+
+    @Column(name = "created_at", insertable = false, updatable = false, nullable = false)
+    private Instant createdAt;
 }

@@ -2,7 +2,7 @@ package com.arsio.user.internal.infra.storage;
 
 import com.arsio.shared.properties.MinioProperties;
 import com.arsio.user.internal.application.port.output.FileStorage;
-import com.arsio.user.internal.domain.model.ObjectMetadata;
+import com.arsio.user.internal.domain.model.record.ObjectMetadata;
 import io.minio.*;
 import io.minio.errors.MinioException;
 import lombok.RequiredArgsConstructor;

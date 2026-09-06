@@ -1,12 +1,12 @@
 package com.arsio.user.internal.domain.repository;
 
 import com.arsio.user.internal.domain.model.Friendship;
+import com.arsio.user.internal.domain.model.record.PageResult;
+import com.arsio.user.internal.domain.model.record.Pagination;
 import com.arsio.user.internal.domain.valueobject.FriendshipId;
 import com.arsio.user.internal.domain.valueobject.UserId;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 public interface FriendshipRepository {
 
@@ -14,9 +14,9 @@ public interface FriendshipRepository {
 
     Optional<Friendship> findById(FriendshipId friendshipId);
 
-    List<Friendship> findAcceptedByUserId(UserId userId);
+    PageResult<Friendship> findAcceptedByUserId(UserId userId, Pagination pagination);
 
-    List<Friendship> findPendingReceivedByUserId(UserId userId);
+    PageResult<Friendship> findPendingReceivedByUserId(UserId userId, Pagination pagination);
 
-    List<Friendship> findPendingSendByUserId(UserId userId);
+    PageResult<Friendship> findPendingSendByUserId(UserId userId, Pagination pagination);
 }

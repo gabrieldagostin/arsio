@@ -2,8 +2,9 @@ package com.arsio.user.internal.application.service;
 
 import com.arsio.user.api.exception.UserNotFoundException;
 import com.arsio.user.internal.application.port.output.FileStorage;
-import com.arsio.user.internal.domain.model.Friendship;
 import com.arsio.user.internal.domain.model.Profile;
+import com.arsio.user.internal.domain.model.record.PageResult;
+import com.arsio.user.internal.domain.model.record.Pagination;
 import com.arsio.user.internal.domain.repository.FriendshipRepository;
 import com.arsio.user.internal.domain.repository.ProfileRepository;
 import com.arsio.user.internal.domain.valueobject.UserId;
@@ -12,7 +13,6 @@ import com.arsio.user.internal.infra.controller.dto.response.GetMyFriendshipsRes
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -29,13 +29,11 @@ public class GetMyFriendshipsService {
         this.fileStorage = fileStorage;
     }
 
-    public List<GetMyFriendshipsResponse> execute(UUID id) {
+    public PageResult<GetMyFriendshipsResponse> execute(UUID id, Pagination pagination) {
 
         UserId userId = new UserId(id);
 
-        List<Friendship> friendshipList = friendships.findAcceptedByUserId(userId);
-
-        return friendshipList.stream()
+        return friendships.findAcceptedByUserId(userId, pagination)
                 .map(friendship -> {
 
                     UserId friendId = friendship.getOtherUser(userId);
@@ -59,7 +57,6 @@ public class GetMyFriendshipsService {
                             friendship.getId().value(),
                             response
                     );
-                })
-                .toList();
+                });
     }
 }

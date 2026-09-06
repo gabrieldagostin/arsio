@@ -3,13 +3,13 @@ package com.arsio.user.internal.application.service;
 import com.arsio.user.api.exception.UserNotFoundException;
 import com.arsio.user.internal.application.port.output.FileStorage;
 import com.arsio.user.internal.domain.model.Profile;
+import com.arsio.user.internal.domain.model.record.PageResult;
+import com.arsio.user.internal.domain.model.record.Pagination;
 import com.arsio.user.internal.domain.repository.ProfileRepository;
 import com.arsio.user.internal.domain.repository.UserRepository;
 import com.arsio.user.internal.domain.valueobject.UserId;
 import com.arsio.user.internal.infra.controller.dto.response.ListUserResponse;
 import jakarta.transaction.Transactional;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,9 +26,9 @@ public class ListUsersService {
         this.fileStorage = fileStorage;
     }
 
-    public Page<ListUserResponse> execute(String search, Pageable pageable) {
+    public PageResult<ListUserResponse> execute(String search, Pagination pagination) {
 
-        return users.findAll(search, pageable)
+        return users.findAll(search, pagination)
                 .map(user -> {
 
                     UserId userId = user.getId();

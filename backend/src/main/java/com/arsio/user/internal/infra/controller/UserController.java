@@ -4,13 +4,15 @@ import com.arsio.config.security.SecurityUtils;
 import com.arsio.user.internal.application.command.UpdatePasswordCommand;
 import com.arsio.user.internal.application.command.UpdateUsernameCommand;
 import com.arsio.user.internal.application.service.*;
+import com.arsio.user.internal.domain.model.record.PageResult;
+import com.arsio.user.internal.domain.model.record.Pagination;
 import com.arsio.user.internal.infra.controller.dto.request.UpdatePasswordRequest;
 import com.arsio.user.internal.infra.controller.dto.request.UpdateUsernameRequest;
 import com.arsio.user.internal.infra.controller.dto.response.*;
+import com.arsio.user.internal.infra.controller.mapper.PaginationMapper;
 import com.arsio.user.internal.infra.controller.mapper.UserControllerMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -26,6 +28,7 @@ import java.util.UUID;
 public class UserController {
 
     private final UserControllerMapper mapper;
+    private final PaginationMapper paginationMapper;
     private final GetCurrentUserService getCurrentUserService;
     private final GetUserByIdService getUserByIdService;
     private final ListUsersService listUsersService;
@@ -53,7 +56,7 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<ListUserResponse>> findAll(
+    public ResponseEntity<PageResult<ListUserResponse>> findAll(
             @RequestParam(required = false) String search,
             @PageableDefault(
                     size = 20,
@@ -61,7 +64,9 @@ public class UserController {
                     direction = Sort.Direction.ASC
             ) Pageable pageable) {
 
-        Page<ListUserResponse> response = listUsersService.execute(search, pageable);
+        Pagination pagination = paginationMapper.toPagination(pageable);
+
+        PageResult<ListUserResponse> response = listUsersService.execute(search, pagination);
 
         return ResponseEntity.ok(response);
     }

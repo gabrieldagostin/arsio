@@ -2,13 +2,16 @@ package com.arsio.user.internal.infra.controller;
 
 import com.arsio.config.security.SecurityUtils;
 import com.arsio.user.internal.application.service.*;
+import com.arsio.user.internal.domain.model.record.PageResult;
+import com.arsio.user.internal.domain.model.record.Pagination;
 import com.arsio.user.internal.infra.controller.dto.response.GetMyFriendshipsResponse;
+import com.arsio.user.internal.infra.controller.mapper.PaginationMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -16,6 +19,7 @@ import java.util.UUID;
 @RequestMapping("/api/v1/friendships")
 public class FriendshipController {
 
+    private final PaginationMapper paginationMapper;
     private final GetMyFriendshipsService getMyFriendshipsService;
     private final GetMyFriendshipsRequestsService getMyFriendshipsRequestsService;
     private final GetMyFriendshipsSendsService getMyFriendshipsSendsService;
@@ -25,30 +29,36 @@ public class FriendshipController {
 
     @GetMapping
     @PreAuthorize("HasRole('USER')")
-    public ResponseEntity<List<GetMyFriendshipsResponse>> getMyFriendships() {
+    public ResponseEntity<PageResult<GetMyFriendshipsResponse>> getMyFriendships(Pageable pageable) {
 
-        List<GetMyFriendshipsResponse> responses =
-                getMyFriendshipsService.execute(SecurityUtils.getCurrentUserId());
+        Pagination pagination = paginationMapper.toPagination(pageable);
+
+        PageResult<GetMyFriendshipsResponse> responses =
+                getMyFriendshipsService.execute(SecurityUtils.getCurrentUserId(), pagination);
 
         return ResponseEntity.ok(responses);
     }
 
     @GetMapping("/requests/received")
     @PreAuthorize("HasRole('USER')")
-    public ResponseEntity<List<GetMyFriendshipsResponse>> getMyFriendshipsRequests() {
+    public ResponseEntity<PageResult<GetMyFriendshipsResponse>> getMyFriendshipsRequests(Pageable pageable) {
 
-        List<GetMyFriendshipsResponse> responses =
-                getMyFriendshipsRequestsService.execute(SecurityUtils.getCurrentUserId());
+        Pagination pagination = paginationMapper.toPagination(pageable);
+
+        PageResult<GetMyFriendshipsResponse> responses =
+                getMyFriendshipsRequestsService.execute(SecurityUtils.getCurrentUserId(), pagination);
 
         return ResponseEntity.ok(responses);
     }
 
     @GetMapping("/requests/send")
     @PreAuthorize("HasRole('USER')")
-    public ResponseEntity<List<GetMyFriendshipsResponse>> getMyFriendshipsSends() {
+    public ResponseEntity<PageResult<GetMyFriendshipsResponse>> getMyFriendshipsSends(Pageable pageable) {
 
-        List<GetMyFriendshipsResponse> responses =
-                getMyFriendshipsSendsService.execute(SecurityUtils.getCurrentUserId());
+        Pagination pagination = paginationMapper.toPagination(pageable);
+
+        PageResult<GetMyFriendshipsResponse> responses =
+                getMyFriendshipsSendsService.execute(SecurityUtils.getCurrentUserId(), pagination);
 
         return ResponseEntity.ok(responses);
     }

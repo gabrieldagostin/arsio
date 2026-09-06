@@ -17,6 +17,7 @@ public interface FriendshipEntityMapper {
 
     Friendship toDomain(FriendshipEntity friendshipEntity);
 
+    @Mapping(target = "createdAt", ignore = true)
     FriendshipEntity toEntity(Friendship friendship);
 
     default UUID friendshipIdToUuid(FriendshipId friendshipId) {

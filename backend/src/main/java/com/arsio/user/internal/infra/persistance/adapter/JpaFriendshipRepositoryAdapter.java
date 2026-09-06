@@ -2,12 +2,18 @@ package com.arsio.user.internal.infra.persistance.adapter;
 
 import com.arsio.user.internal.domain.model.Friendship;
 import com.arsio.user.internal.domain.model.enums.FriendshipStatus;
+import com.arsio.user.internal.domain.model.record.PageResult;
+import com.arsio.user.internal.domain.model.record.Pagination;
 import com.arsio.user.internal.domain.repository.FriendshipRepository;
 import com.arsio.user.internal.domain.valueobject.FriendshipId;
 import com.arsio.user.internal.domain.valueobject.UserId;
+import com.arsio.user.internal.infra.controller.mapper.PaginationMapper;
+import com.arsio.user.internal.infra.persistance.entity.FriendshipEntity;
 import com.arsio.user.internal.infra.persistance.mapper.FriendshipEntityMapper;
 import com.arsio.user.internal.infra.persistance.repository.SpringDataFriendshipRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,6 +25,7 @@ public class JpaFriendshipRepositoryAdapter implements FriendshipRepository {
 
     private final SpringDataFriendshipRepository friendships;
     private final FriendshipEntityMapper mapper;
+    private final PaginationMapper paginationMapper;
 
     @Override
     public void save(Friendship friendship) {
@@ -32,26 +39,76 @@ public class JpaFriendshipRepositoryAdapter implements FriendshipRepository {
     }
 
     @Override
-    public List<Friendship> findAcceptedByUserId(UserId userId) {
-        return friendships.findAcceptedByUserId(userId.value(), FriendshipStatus.ACCEPTED)
+    public PageResult<Friendship> findAcceptedByUserId(UserId userId, Pagination pagination) {
+
+        Pageable pageable = paginationMapper.toPageable(pagination);
+
+        Page<FriendshipEntity> result = friendships.findAcceptedByUserId(
+                userId.value(),
+                FriendshipStatus.ACCEPTED,
+                pageable
+        );
+
+        List<Friendship> friendshipList = result.getContent()
                 .stream()
                 .map(mapper::toDomain)
                 .toList();
+
+        return new PageResult<>(
+                friendshipList,
+                result.getNumber(),
+                result.getSize(),
+                result.getTotalElements(),
+                result.getTotalPages());
     }
 
     @Override
-    public List<Friendship> findPendingReceivedByUserId(UserId userId) {
-        return friendships.findPendingReceivedByUserId(userId.value(), FriendshipStatus.PENDING)
+    public PageResult<Friendship> findPendingReceivedByUserId(UserId userId, Pagination pagination) {
+
+        Pageable pageable = paginationMapper.toPageable(pagination);
+
+        Page<FriendshipEntity> result = friendships.findPendingReceivedByUserId(
+                userId.value(),
+                FriendshipStatus.PENDING,
+                pageable
+        );
+
+        List<Friendship> friendshipList = result.getContent()
                 .stream()
                 .map(mapper::toDomain)
                 .toList();
+
+        return new PageResult<>(
+                friendshipList,
+                result.getNumber(),
+                result.getSize(),
+                result.getTotalElements(),
+                result.getTotalPages()
+        );
     }
 
     @Override
-    public List<Friendship> findPendingSendByUserId(UserId userId) {
-        return friendships.findPendingSendByUserId(userId.value(), FriendshipStatus.PENDING)
+    public PageResult<Friendship> findPendingSendByUserId(UserId userId, Pagination pagination) {
+
+        Pageable pageable = paginationMapper.toPageable(pagination);
+
+        Page<FriendshipEntity> result = friendships.findPendingSendByUserId(
+                userId.value(),
+                FriendshipStatus.PENDING,
+                pageable
+        );
+
+        List<Friendship> friendshipList = result.getContent()
                 .stream()
                 .map(mapper::toDomain)
                 .toList();
+
+        return new PageResult<>(
+                friendshipList,
+                result.getNumber(),
+                result.getSize(),
+                result.getTotalElements(),
+                result.getTotalPages()
+        );
     }
 }

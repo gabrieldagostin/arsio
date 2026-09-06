@@ -1,6 +1,6 @@
 package com.arsio.user.internal.application.port.output;
 
-import com.arsio.user.internal.domain.model.ObjectMetadata;
+import com.arsio.user.internal.domain.model.record.ObjectMetadata;
 
 public interface FileStorage {
 

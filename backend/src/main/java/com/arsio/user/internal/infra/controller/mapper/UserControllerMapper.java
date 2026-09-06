@@ -2,12 +2,17 @@ package com.arsio.user.internal.infra.controller.mapper;
 
 import com.arsio.user.internal.application.command.UpdatePasswordCommand;
 import com.arsio.user.internal.application.command.UpdateUsernameCommand;
+import com.arsio.user.internal.domain.model.enums.SortDirection;
+import com.arsio.user.internal.domain.model.record.Pagination;
 import com.arsio.user.internal.domain.valueobject.PasswordHash;
 import com.arsio.user.internal.domain.valueobject.Username;
 import com.arsio.user.internal.infra.controller.dto.request.UpdatePasswordRequest;
 import com.arsio.user.internal.infra.controller.dto.request.UpdateUsernameRequest;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 @Mapper(componentModel = "spring",
 typeConversionPolicy = ReportingPolicy.ERROR)

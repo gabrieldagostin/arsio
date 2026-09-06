@@ -1,6 +1,7 @@
 package com.arsio.user.internal.infra.persistance.repository;
 
 import com.arsio.user.api.dto.UserAuthenticationData;
+import com.arsio.user.internal.domain.model.record.Pagination;
 import com.arsio.user.internal.infra.persistance.entity.UserEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
