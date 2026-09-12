@@ -8,7 +8,7 @@ public class ProfileNotFoundException extends NotFoundException {
 
     public ProfileNotFoundException() {
         super(
-                "Profile Not Found.",
+                "Profile not found, please try again.",
                 ErrorTypes.USER_PROFILE_NOT_FOUND,
                 ErrorCode.USER_PROFILE_NOT_FOUND
         );

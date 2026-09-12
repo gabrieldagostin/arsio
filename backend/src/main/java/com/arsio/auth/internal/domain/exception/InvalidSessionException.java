@@ -8,7 +8,7 @@ public class InvalidSessionException extends UnauthorizedException {
 
     public InvalidSessionException() {
         super(
-                "Invalid session.",
+                "Invalid session, please try again.",
                 ErrorTypes.AUTH_INVALID_SESSION,
                 ErrorCode.AUTH_INVALID_SESSION
         );

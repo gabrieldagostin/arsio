@@ -8,7 +8,7 @@ public class UsernameUnavailableException extends ConflictException {
 
     public UsernameUnavailableException() {
         super(
-                "Username unavailable.",
+                "Username unavailable, please try again.",
                 ErrorTypes.USER_USERNAME_UNAVAILABLE,
                 ErrorCode.USER_USERNAME_UNAVAILABLE
         );
@@ -16,7 +16,7 @@ public class UsernameUnavailableException extends ConflictException {
 
     public UsernameUnavailableException(String username) {
         super(
-                "Username %s unavailable.".formatted(username),
+                "Username %s unavailable, please try again.".formatted(username),
                 ErrorTypes.USER_USERNAME_UNAVAILABLE,
                 ErrorCode.USER_USERNAME_UNAVAILABLE
         );

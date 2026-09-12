@@ -8,7 +8,7 @@ public class InvalidTitleException extends ValidationException {
 
     public InvalidTitleException() {
         super(
-                "Invalid title.",
+                "Invalid title, please try again.",
                 ErrorTypes.NOTIFICATION_INVALID_TITLE,
                 ErrorCode.NOTIFICATION_INVALID_TITLE
         );

@@ -35,7 +35,7 @@ public class JwtTokenService implements TokenProvider, AuthFacade {
                     .sign(algorithm);
             return new AccessToken(token);
         } catch (JWTCreationException exception) {
-            throw new JwtGenerationException("Error while generating access token.");
+            throw new JwtGenerationException("Error while generating access token, please try again.");
         }
     }
 
@@ -51,7 +51,7 @@ public class JwtTokenService implements TokenProvider, AuthFacade {
                     .sign(algorithm);
             return new RefreshToken(token);
         } catch (JWTCreationException exception) {
-            throw new JwtGenerationException("Error while generating refresh token.");
+            throw new JwtGenerationException("Error while generating refresh token, please try again.");
         }
     }
 
@@ -67,7 +67,7 @@ public class JwtTokenService implements TokenProvider, AuthFacade {
 
             return UUID.fromString(subject);
         } catch (JWTVerificationException | IllegalArgumentException exception) {
-            throw new JwtParsingException("Error while extracting subject.");
+            throw new JwtParsingException("Error while extracting subject, please try again.");
         }
     }
 
@@ -82,7 +82,7 @@ public class JwtTokenService implements TokenProvider, AuthFacade {
                             .getClaim("session_id").asString());
             return new SessionId(value);
         } catch (JWTVerificationException exception) {
-            throw new JwtParsingException("Error while extracting session_id.");
+            throw new JwtParsingException("Error while extracting session_id, please try again.");
         }
     }
 

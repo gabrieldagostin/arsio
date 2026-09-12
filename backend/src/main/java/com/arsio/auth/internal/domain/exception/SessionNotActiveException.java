@@ -8,7 +8,7 @@ public class SessionNotActiveException extends UnauthorizedException {
 
     public SessionNotActiveException() {
         super(
-                "Session is expired or revoked.",
+                "Session is expired or revoked, please try again.",
                 ErrorTypes.AUTH_SESSION_NOT_ACTIVE,
                 ErrorCode.AUTH_SESSION_NOT_ACTIVE
         );

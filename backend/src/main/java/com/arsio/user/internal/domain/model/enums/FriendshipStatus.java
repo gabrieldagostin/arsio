@@ -1,6 +1,6 @@
 package com.arsio.user.internal.domain.model.enums;
 
-import com.arsio.user.internal.domain.exception.InvalidFriendshipStatus;
+import com.arsio.user.internal.domain.exception.InvalidFriendshipStatusException;
 
 public enum FriendshipStatus {
 
@@ -21,6 +21,6 @@ public enum FriendshipStatus {
         for (FriendshipStatus friendshipStatus : FriendshipStatus.values()) {
             if (cod.equals(friendshipStatus.cod)) return friendshipStatus;
         }
-        throw new InvalidFriendshipStatus();
+        throw new InvalidFriendshipStatusException();
     }
 }

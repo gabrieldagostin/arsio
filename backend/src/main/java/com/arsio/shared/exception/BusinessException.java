@@ -9,8 +9,6 @@ public abstract class BusinessException extends RuntimeException {
     private String type;
     private ErrorCode errorCode;
 
-    protected BusinessException() {}
-
     protected BusinessException(String message, HttpStatus status, String type, ErrorCode errorCode) {
         super(message);
         this.status = status;

@@ -8,7 +8,7 @@ public class InvalidMessageException extends ValidationException {
 
     public InvalidMessageException() {
         super(
-                "Invalid message.",
+                "Invalid message, please try again.",
                 ErrorTypes.NOTIFICATION_INVALID_MESSAGE,
                 ErrorCode.NOTIFICATION_INVALID_MESSAGE
         );

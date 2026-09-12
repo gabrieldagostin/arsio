@@ -8,7 +8,7 @@ public class InvalidTokenException extends UnauthorizedException {
 
     public InvalidTokenException() {
         super(
-                "Invalid token.",
+                "Invalid token, please try again.",
                 ErrorTypes.AUTH_INVALID_TOKEN,
                 ErrorCode.AUTH_INVALID_TOKEN
         );

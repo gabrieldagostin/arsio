@@ -8,7 +8,7 @@ public class SessionNotFoundException extends NotFoundException {
 
     public SessionNotFoundException() {
         super(
-                "Session not found.",
+                "Session not found, please try again.",
                 ErrorTypes.AUTH_SESSION_NOT_FOUND,
                 ErrorCode.AUTH_SESSION_NOT_FOUND
         );

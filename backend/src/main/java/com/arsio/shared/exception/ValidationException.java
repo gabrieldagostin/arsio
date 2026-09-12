@@ -4,6 +4,7 @@ import com.arsio.shared.exception.enums.ErrorCode;
 import org.springframework.http.HttpStatus;
 
 public class ValidationException extends BusinessException {
+
     protected ValidationException(String message, String errorType, ErrorCode errorCode) {
         super(
                 message,
@@ -11,9 +12,5 @@ public class ValidationException extends BusinessException {
                 errorType,
                 errorCode
         );
-    }
-
-    public ValidationException() {
-
     }
 }

@@ -8,7 +8,7 @@ public class InvalidPasswordException extends ValidationException {
 
     public InvalidPasswordException() {
         super(
-                "Invalid Password",
+                "Invalid password, please try again.",
                 ErrorTypes.USER_INVALID_PASSWORD,
                 ErrorCode.USER_INVALID_PASSWORD
         );

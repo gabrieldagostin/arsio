@@ -8,7 +8,7 @@ public class InvalidCredentialException extends ValidationException {
 
     public InvalidCredentialException() {
         super(
-                "Invalid username or password",
+                "Invalid username or password, please try again.",
                 ErrorTypes.AUTH_INVALID_CREDENTIALS,
                 ErrorCode.AUTH_INVALID_CREDENTIALS
         );

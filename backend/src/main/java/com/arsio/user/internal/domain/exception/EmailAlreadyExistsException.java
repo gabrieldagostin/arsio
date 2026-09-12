@@ -8,7 +8,7 @@ public class EmailAlreadyExistsException extends ConflictException {
 
     public EmailAlreadyExistsException() {
         super(
-                "Email already belongs to another user.",
+                "Email already belongs to another user, please try again.",
                 ErrorTypes.USER_EMAIL_ALREADY_EXISTS,
                 ErrorCode.USER_EMAIL_ALREADY_EXISTS
         );

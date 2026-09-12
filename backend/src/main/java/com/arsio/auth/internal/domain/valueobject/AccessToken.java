@@ -10,7 +10,7 @@ public record AccessToken(String value) {
 
     private static void validate(String value) {
         if (value == null || value.isBlank())
-            throw new InvalidTokenException("Invalid access token.");
+            throw new InvalidTokenException("Invalid access token, please try again.");
     }
 
     @Override

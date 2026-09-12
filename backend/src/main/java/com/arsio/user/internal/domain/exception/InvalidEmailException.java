@@ -8,7 +8,7 @@ public class InvalidEmailException extends ValidationException {
 
     public InvalidEmailException() {
         super(
-                "Email malformed",
+                "Email malformed, please try again.",
                 ErrorTypes.USER_EMAIL_MALFORMED,
                 ErrorCode.USER_EMAIL_MALFORMED
         );

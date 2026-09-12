@@ -8,7 +8,7 @@ public class JwtGenerationException extends UnauthorizedException {
 
     public JwtGenerationException() {
         super(
-                "Error while generating token.",
+                "Error while generating token, please try again.",
                 ErrorTypes.AUTH_JWT_GENERATION_ERROR,
                 ErrorCode.AUTH_JWT_GENERATION_ERROR
         );

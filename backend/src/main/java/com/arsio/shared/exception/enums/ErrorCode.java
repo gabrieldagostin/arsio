@@ -9,6 +9,7 @@ public enum ErrorCode {
     METHOD_NOT_ALLOWED("Method not allowed"),
     UNSUPPORTED_MEDIA_TYPE("Unsupported Media Type"),
     FORBIDDEN("Forbidden"),
+    INVALID_MONEY("Invalid Money"),
 
     AUTH_INVALID_CREDENTIALS("Invalid credentials"),
     AUTH_INVALID_TOKEN("Invalid token"),
@@ -29,8 +30,19 @@ public enum ErrorCode {
     USER_EMAIL_MALFORMED("Email malformed"),
     USER_USERNAME_UNAVAILABLE("Username unavailable"),
     USER_EMAIL_ALREADY_EXISTS("Email already exists"),
+    USER_FRIENDSHIP_NOT_FOUND("Friendship not found"),
+    USER_INVALID_PROFILE_COUNTRY_CODE("Invalid profile country code"),
+    USER_INVALID_FRIENDSHIP("Invalid friendship"),
+    USER_INVALID_FRIENDSHIP_STATUS("Invalid friendship status"),
 
     GAME_NOT_FOUND("Game not found"),
+    GAME_INVALID_TITLE("Invalid title"),
+    GAME_INVALID_DESCRIPTION("Invalid description"),
+    GAME_INVALID_STATUS("Invalid status"),
+    GAME_INVALID_REQUIREMENT("Invalid requirements"),
+    GAME_INVALID_MEDIA_TYPE("Invalid media type"),
+    GAME_INVALID_GENRE_NAME("Invalid genre name"),
+    GAME_INVALID_TAG_NAME("Invalid tag name"),
 
     NOTIFICATION_INVALID_MESSAGE("Invalid message"),
     NOTIFICATION_INVALID_TITLE("Invalid title");

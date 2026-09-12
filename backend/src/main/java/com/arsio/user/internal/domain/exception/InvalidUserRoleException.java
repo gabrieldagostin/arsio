@@ -8,7 +8,7 @@ public class InvalidUserRoleException extends ValidationException {
 
     public InvalidUserRoleException() {
         super(
-                "Invalid user role.",
+                "Invalid user role, please try again.",
                 ErrorTypes.USER_INVALID_USER_ROLE,
                 ErrorCode.USER_INVALID_USER_ROLE
         );

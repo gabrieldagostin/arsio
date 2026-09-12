@@ -14,6 +14,7 @@ public final class ErrorTypes {
     public static final String METHOD_NOT_ALLOWED = BASE + "method-not-allowed";
     public static final String UNSUPPORTED_MEDIA_TYPE = BASE + "unsupported-media-type";
     public static final String FORBIDDEN = BASE + "forbidden";
+    public static final String INVALID_MONEY = BASE + "invalid-money";
 
     public static final String AUTH_INVALID_CREDENTIALS = BASE + "invalid-credentials";
     public static final String AUTH_INVALID_TOKEN = BASE + "invalid-token";
@@ -34,8 +35,19 @@ public final class ErrorTypes {
     public static final String USER_EMAIL_MALFORMED = BASE + "email-malformed";
     public static final String USER_USERNAME_UNAVAILABLE = BASE + "username-unavailable";
     public static final String USER_EMAIL_ALREADY_EXISTS = BASE + "email-already-exists";
+    public static final String USER_FRIENDSHIP_NOT_FOUND = BASE + "friendship-not-found";
+    public static final String USER_INVALID_PROFILE_COUNTRY_CODE = BASE + "invalid-profile-country-code";
+    public static final String USER_INVALID_FRIENDSHIP_STATUS = BASE + "invalid-friendship-status";
+    public static final String USER_INVALID_FRIENDSHIP =  BASE + "invalid-friendship";
 
     public static final String GAME_NOT_FOUND = BASE + "game-not-found";
+    public static final String GAME_INVALID_TITLE = BASE + "game-invalid-title";
+    public static final String GAME_INVALID_DESCRIPTION = BASE + "game-invalid-description";
+    public static final String GAME_INVALID_STATUS = BASE + "game-invalid-game-status";
+    public static final String GAME_INVALID_REQUIREMENT = BASE + "game-invalid-requirement";
+    public static final String GAME_INVALID_MEDIA_TYPE = BASE + "game-invalid-media-type";
+    public static final String GAME_INVALID_GENRE_NAME = BASE + "game-invalid-genre-name";
+    public static final String GAME_INVALID_TAG_NAME = BASE + "game-invalid-tag-name";
 
     public static final String NOTIFICATION_INVALID_MESSAGE = BASE + "invalid-message";
     public static final String NOTIFICATION_INVALID_TITLE = BASE + "invalid-title";

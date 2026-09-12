@@ -31,10 +31,10 @@ public class ResetPasswordUseCase {
                 .orElseThrow(PasswordResetTokenNotFoundException::new);
 
         if (passwordResetToken.isExpired())
-            throw new SessionNotActiveException("Session is expired.");
+            throw new SessionNotActiveException("Session is expired, please try again.");
 
         if (passwordResetToken.isUsed())
-            throw new SessionNotActiveException("Session is revoked.");
+            throw new SessionNotActiveException("Session is revoked, please try again.");
 
         String passwordHash = passwordEncoder.encode(command.newPassword());
 

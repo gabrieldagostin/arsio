@@ -1,4 +1,5 @@
 CREATE TABLE processors (
+
     id UUID NOT NULL,
 
     manufacturer VARCHAR(50) NOT NULL,

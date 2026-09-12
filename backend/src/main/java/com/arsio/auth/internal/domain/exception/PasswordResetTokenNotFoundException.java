@@ -8,7 +8,7 @@ public class PasswordResetTokenNotFoundException extends NotFoundException {
 
     public PasswordResetTokenNotFoundException() {
         super(
-                "Password reset token not found.",
+                "Password reset token not found, please try again.",
                 ErrorTypes.AUTH_PASSWORD_RESET_TOKEN_NOT_FOUND,
                 ErrorCode.AUTH_PASSWORD_RESET_TOKEN_NOT_FOUND
         );

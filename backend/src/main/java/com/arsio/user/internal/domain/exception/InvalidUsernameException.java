@@ -8,7 +8,7 @@ public class InvalidUsernameException extends ValidationException {
 
     public InvalidUsernameException() {
         super(
-                "Invalid username",
+                "Invalid username, please try again.",
                 ErrorTypes.USER_INVALID_USERNAME,
                 ErrorCode.USER_INVALID_USERNAME
         );

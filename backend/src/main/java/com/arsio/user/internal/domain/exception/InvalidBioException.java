@@ -8,7 +8,7 @@ public class InvalidBioException extends ValidationException {
 
     public InvalidBioException() {
         super(
-                "Invalid bio",
+                "Invalid bio, please try again.",
                 ErrorTypes.USER_INVALID_BIO,
                 ErrorCode.USER_INVALID_BIO
         );

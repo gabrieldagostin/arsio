@@ -8,7 +8,7 @@ public class JwtParsingException extends UnauthorizedException {
 
     public JwtParsingException() {
         super(
-                "Error while extracting information.",
+                "Error while extracting information, please try again.",
                 ErrorTypes.AUTH_JWT_PARSING_ERROR,
                 ErrorCode.AUTH_JWT_PARSING_ERROR
         );
