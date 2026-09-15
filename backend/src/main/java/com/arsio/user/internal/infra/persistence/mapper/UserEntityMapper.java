@@ -1,5 +1,6 @@
 package com.arsio.user.internal.infra.persistence.mapper;
 
+import com.arsio.config.mapper.CentralMapperConfig;
 import com.arsio.user.internal.domain.model.User;
 import com.arsio.user.internal.domain.model.enums.UserRole;
 import com.arsio.user.internal.domain.model.enums.UserStatus;
@@ -10,12 +11,10 @@ import com.arsio.user.internal.domain.valueobject.Username;
 import com.arsio.user.internal.infra.persistence.entity.UserEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.ReportingPolicy;
 
 import java.util.UUID;
 
-@Mapper(componentModel = "spring",
-typeConversionPolicy = ReportingPolicy.ERROR)
+@Mapper(config =  CentralMapperConfig.class)
 public interface UserEntityMapper {
 
     @Mapping(target = "mpAccessToken", ignore = true)

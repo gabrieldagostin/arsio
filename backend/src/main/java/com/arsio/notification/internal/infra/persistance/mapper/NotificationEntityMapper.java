@@ -1,5 +1,6 @@
 package com.arsio.notification.internal.infra.persistance.mapper;
 
+import com.arsio.config.mapper.CentralMapperConfig;
 import com.arsio.notification.internal.domain.model.Notification;
 import com.arsio.notification.internal.domain.valueobject.Message;
 import com.arsio.notification.internal.domain.valueobject.NotificationId;
@@ -7,12 +8,10 @@ import com.arsio.notification.internal.domain.valueobject.Title;
 import com.arsio.notification.internal.infra.persistance.entity.NotificationEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.ReportingPolicy;
 
 import java.util.UUID;
 
-@Mapper(componentModel = "spring",
-typeConversionPolicy = ReportingPolicy.ERROR)
+@Mapper(config =  CentralMapperConfig.class)
 public interface NotificationEntityMapper {
 
     Notification toDomain(NotificationEntity entity);

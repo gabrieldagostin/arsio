@@ -4,11 +4,10 @@ import com.arsio.auth.internal.application.command.*;
 import com.arsio.auth.internal.domain.valueobject.PasswordToken;
 import com.arsio.auth.internal.domain.valueobject.RefreshToken;
 import com.arsio.auth.internal.infra.controller.dto.request.*;
+import com.arsio.config.mapper.CentralMapperConfig;
 import org.mapstruct.Mapper;
-import org.mapstruct.ReportingPolicy;
 
-@Mapper(componentModel = "spring",
-typeConversionPolicy = ReportingPolicy.ERROR)
+@Mapper(config = CentralMapperConfig.class)
 public interface AuthControllerMapper {
 
      CreateUserCommand toCreateUserCommand(RegisterUserRequest request);

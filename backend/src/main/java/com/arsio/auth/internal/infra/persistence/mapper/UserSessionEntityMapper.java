@@ -5,14 +5,13 @@ import com.arsio.auth.internal.domain.valueobject.RefreshToken;
 import com.arsio.auth.internal.domain.valueobject.SessionId;
 import com.arsio.auth.internal.infra.persistence.entity.UserAuthEntity;
 import com.arsio.auth.internal.infra.persistence.entity.UserSessionEntity;
+import com.arsio.config.mapper.CentralMapperConfig;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.ReportingPolicy;
 
 import java.util.UUID;
 
-@Mapper(componentModel = "spring",
-typeConversionPolicy = ReportingPolicy.ERROR)
+@Mapper(config = CentralMapperConfig.class)
 public interface UserSessionEntityMapper {
 
     @Mapping(target = "id", source = "userSession.id")

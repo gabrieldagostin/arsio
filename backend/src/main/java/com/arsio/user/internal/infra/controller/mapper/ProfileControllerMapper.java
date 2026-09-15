@@ -1,5 +1,6 @@
 package com.arsio.user.internal.infra.controller.mapper;
 
+import com.arsio.config.mapper.CentralMapperConfig;
 import com.arsio.user.internal.application.command.ConfirmFileUploadCommand;
 import com.arsio.user.internal.application.command.UpdateProfileBioCommand;
 import com.arsio.user.internal.application.command.UpdateProfileCountryCommand;
@@ -12,10 +13,8 @@ import com.arsio.user.internal.infra.controller.dto.request.UpdateProfileBioRequ
 import com.arsio.user.internal.infra.controller.dto.request.UpdateProfileCountryRequest;
 import com.arsio.user.internal.infra.controller.dto.request.UploadFileUrlRequest;
 import org.mapstruct.Mapper;
-import org.mapstruct.ReportingPolicy;
 
-@Mapper(componentModel = "spring",
-typeConversionPolicy = ReportingPolicy.ERROR)
+@Mapper(config =  CentralMapperConfig.class)
 public interface ProfileControllerMapper {
 
     UploadFileUrlCommand toUploadFileUrlCommand(UploadFileUrlRequest request);

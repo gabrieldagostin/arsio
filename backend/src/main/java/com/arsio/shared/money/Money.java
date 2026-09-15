@@ -4,14 +4,10 @@ import java.math.BigDecimal;
 import java.util.Currency;
 import java.util.Objects;
 
-public record Money(
-        BigDecimal amount,
-        Currency currency
-) {
+public record Money(BigDecimal amount) {
 
     public Money {
         Objects.requireNonNull(amount, "Amount cannot be null.");
-        Objects.requireNonNull(currency, "Currency cannot be null.");
 
         if (amount.signum() < 0) {
             throw new InvalidMoneyException("Amount cannot be negative.");
@@ -19,33 +15,33 @@ public record Money(
     }
 
     public Money add(Money other) {
-        validateCurrency(other);
 
-        return new Money(
-                amount.add(other.amount),
-                currency
-        );
+        return new Money(amount.add(other.amount));
     }
 
     public Money subtract(Money other) {
-        validateCurrency(other);
 
-        return new Money(
-                amount.subtract(other.amount),
-                currency
-        );
+        BigDecimal result = amount.subtract(other.amount);
+
+        if (result.signum() < 0) {
+            throw new InvalidMoneyException(
+                    "Resulting amount cannot be negative."
+            );
+        }
+
+        return new Money(result);
     }
 
     public Money multiply(BigDecimal multiplier) {
-        return new Money(
-                amount.multiply(multiplier),
-                currency
-        );
-    }
+        Objects.requireNonNull(multiplier, "Multiplier cannot be null.");
 
-    private void validateCurrency(Money other) {
-        if (!currency.equals(other.currency)) {
-            throw new InvalidMoneyException("Cannot operate with different currencies.");
+        if (multiplier.signum() < 0) {
+            throw new InvalidMoneyException(
+                    "Multiplier cannot be negative."
+            );
         }
+
+        return new Money(
+                amount.multiply(multiplier));
     }
 }

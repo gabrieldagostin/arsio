@@ -1,5 +1,6 @@
 package com.arsio.game.internal.infra.persistence.mapper;
 
+import com.arsio.config.mapper.CentralMapperConfig;
 import com.arsio.game.internal.domain.model.Game;
 import com.arsio.game.internal.domain.valueobject.Description;
 import com.arsio.game.internal.domain.valueobject.GameId;
@@ -8,15 +9,11 @@ import com.arsio.game.internal.infra.persistence.entity.GameEntity;
 import com.arsio.shared.money.Money;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.ReportingPolicy;
 
 import java.math.BigDecimal;
-import java.util.Currency;
 import java.util.UUID;
 
-@Mapper(componentModel = "spring",
-unmappedTargetPolicy = ReportingPolicy.ERROR,
-typeConversionPolicy = ReportingPolicy.ERROR)
+@Mapper(config = CentralMapperConfig.class)
 public interface GameEntityMapper {
 
     Game toDomain(GameEntity gameEntity);
@@ -49,22 +46,11 @@ public interface GameEntityMapper {
         return money == null ? null : money.amount();
     }
 
-    default String moneyToCurrency(Money money) {
-        return money == null ? null : money.currency().getCurrencyCode();
-    }
+    default Money bigDecimalToMoney(BigDecimal value) {
 
-    default Money toMoney(BigDecimal amount, String currency) {
-        if (amount == null || currency == null) {
+        if (value == null) {
             return null;
         }
-
-        return new Money(
-                amount,
-                Currency.getInstance(currency)
-        );
-    }
-
-    default Money bigDecimalToMoney(BigDecimal value, Currency currency) {
-        return new Money(value, currency);
+        return new Money(value);
     }
 }

@@ -1,16 +1,15 @@
 package com.arsio.user.internal.infra.controller.mapper;
 
+import com.arsio.config.mapper.CentralMapperConfig;
 import com.arsio.user.internal.domain.model.enums.SortDirection;
 import com.arsio.user.internal.domain.model.record.Pagination;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.ReportingPolicy;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-@Mapper(componentModel = "spring",
-typeConversionPolicy = ReportingPolicy.ERROR)
+@Mapper(config = CentralMapperConfig.class)
 public interface PaginationMapper {
 
     @Mapping(target = "page", source = "pageNumber")

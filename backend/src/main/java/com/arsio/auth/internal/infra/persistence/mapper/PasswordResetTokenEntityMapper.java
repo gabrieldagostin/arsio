@@ -5,14 +5,13 @@ import com.arsio.auth.internal.domain.valueobject.PasswordResetTokenId;
 import com.arsio.auth.internal.domain.valueobject.PasswordToken;
 import com.arsio.auth.internal.infra.persistence.entity.PasswordResetTokenEntity;
 import com.arsio.auth.internal.infra.persistence.entity.UserAuthEntity;
+import com.arsio.config.mapper.CentralMapperConfig;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.ReportingPolicy;
 
 import java.util.UUID;
 
-@Mapper(componentModel = "spring",
-typeConversionPolicy = ReportingPolicy.ERROR)
+@Mapper(config = CentralMapperConfig.class)
 public interface PasswordResetTokenEntityMapper {
 
     @Mapping(target = "id", source = "passwordResetTokenEntity.id")

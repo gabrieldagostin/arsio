@@ -1,14 +1,13 @@
 package com.arsio.notification.internal.infra.controller.mapper;
 
+import com.arsio.config.mapper.CentralMapperConfig;
 import com.arsio.notification.internal.application.command.SendEmailCommand;
 import com.arsio.notification.internal.domain.valueobject.Message;
 import com.arsio.notification.internal.domain.valueobject.Title;
 import com.arsio.notification.internal.infra.controller.dto.request.SendEmailRequest;
 import org.mapstruct.Mapper;
-import org.mapstruct.ReportingPolicy;
 
-@Mapper(componentModel = "spring",
-typeConversionPolicy = ReportingPolicy.ERROR)
+@Mapper(config = CentralMapperConfig.class)
 public interface EmailControllerMapper {
 
     SendEmailCommand toSendEmailCommand(SendEmailRequest request);

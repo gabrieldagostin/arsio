@@ -1,17 +1,16 @@
 package com.arsio.user.internal.infra.persistence.mapper;
 
+import com.arsio.config.mapper.CentralMapperConfig;
 import com.arsio.user.internal.domain.model.Profile;
 import com.arsio.user.internal.domain.valueobject.*;
 import com.arsio.user.internal.infra.persistence.entity.ProfileEntity;
 import com.arsio.user.internal.infra.persistence.entity.UserEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.ReportingPolicy;
 
 import java.util.UUID;
 
-@Mapper(componentModel = "spring",
-typeConversionPolicy = ReportingPolicy.ERROR)
+@Mapper(config = CentralMapperConfig.class)
 public interface ProfileEntityMapper {
 
     @Mapping(target = "id", source = "profileEntity.id")

@@ -1,9 +1,8 @@
 package com.arsio.game.internal.infra.persistence.mapper;
 
+import com.arsio.config.mapper.CentralMapperConfig;
 import org.mapstruct.Mapper;
-import org.mapstruct.ReportingPolicy;
 
-@Mapper(componentModel = "spring",
-typeConversionPolicy = ReportingPolicy.ERROR)
+@Mapper(config = CentralMapperConfig.class)
 public interface TagEntityMapper {
 }

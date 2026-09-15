@@ -1,17 +1,16 @@
 package com.arsio.user.internal.infra.persistence.mapper;
 
+import com.arsio.config.mapper.CentralMapperConfig;
 import com.arsio.user.internal.domain.model.Friendship;
 import com.arsio.user.internal.domain.valueobject.FriendshipId;
 import com.arsio.user.internal.domain.valueobject.UserId;
 import com.arsio.user.internal.infra.persistence.entity.FriendshipEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.ReportingPolicy;
 
 import java.util.UUID;
 
-@Mapper(componentModel = "spring",
-typeConversionPolicy = ReportingPolicy.ERROR)
+@Mapper(config = CentralMapperConfig.class)
 public interface FriendshipEntityMapper {
 
     Friendship toDomain(FriendshipEntity friendshipEntity);
