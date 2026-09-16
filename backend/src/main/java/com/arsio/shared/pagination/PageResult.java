@@ -1,4 +1,4 @@
-package com.arsio.user.internal.domain.model.record;
+package com.arsio.shared.pagination;
 
 import java.util.List;
 import java.util.function.Function;

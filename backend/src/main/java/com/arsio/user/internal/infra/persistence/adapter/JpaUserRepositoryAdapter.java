@@ -1,14 +1,14 @@
 package com.arsio.user.internal.infra.persistence.adapter;
 
 import com.arsio.user.api.dto.UserAuthenticationData;
-import com.arsio.user.internal.domain.model.record.PageResult;
-import com.arsio.user.internal.domain.model.record.Pagination;
+import com.arsio.shared.pagination.PageResult;
+import com.arsio.shared.pagination.Pagination;
 import com.arsio.user.internal.domain.valueobject.UserId;
 import com.arsio.user.internal.domain.model.User;
 import com.arsio.user.internal.domain.repository.UserRepository;
 import com.arsio.user.internal.domain.valueobject.Email;
 import com.arsio.user.internal.domain.valueobject.Username;
-import com.arsio.user.internal.infra.controller.mapper.PaginationMapper;
+import com.arsio.shared.pagination.PaginationMapper;
 import com.arsio.user.internal.infra.persistence.entity.UserEntity;
 import com.arsio.user.internal.infra.persistence.mapper.UserEntityMapper;
 import com.arsio.user.internal.infra.persistence.repository.SpringDataUserRepository;

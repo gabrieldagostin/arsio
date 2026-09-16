@@ -1,6 +1,4 @@
-package com.arsio.user.internal.domain.model.record;
-
-import com.arsio.user.internal.domain.model.enums.SortDirection;
+package com.arsio.shared.pagination;
 
 public record Pagination(
         int page,

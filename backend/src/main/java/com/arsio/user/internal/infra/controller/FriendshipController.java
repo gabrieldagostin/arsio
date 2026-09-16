@@ -2,10 +2,10 @@ package com.arsio.user.internal.infra.controller;
 
 import com.arsio.config.security.SecurityUtils;
 import com.arsio.user.internal.application.usecase.*;
-import com.arsio.user.internal.domain.model.record.PageResult;
-import com.arsio.user.internal.domain.model.record.Pagination;
+import com.arsio.shared.pagination.PageResult;
+import com.arsio.shared.pagination.Pagination;
 import com.arsio.user.internal.infra.controller.dto.response.GetMyFriendshipsResponse;
-import com.arsio.user.internal.infra.controller.mapper.PaginationMapper;
+import com.arsio.shared.pagination.PaginationMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;

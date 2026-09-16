@@ -1,8 +1,8 @@
 package com.arsio.user.internal.domain.repository;
 
 import com.arsio.user.api.dto.UserAuthenticationData;
-import com.arsio.user.internal.domain.model.record.PageResult;
-import com.arsio.user.internal.domain.model.record.Pagination;
+import com.arsio.shared.pagination.PageResult;
+import com.arsio.shared.pagination.Pagination;
 import com.arsio.user.internal.domain.valueobject.UserId;
 import com.arsio.user.internal.domain.model.User;
 import com.arsio.user.internal.domain.valueobject.Email;

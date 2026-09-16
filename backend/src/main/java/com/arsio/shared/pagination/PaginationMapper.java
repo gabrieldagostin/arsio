@@ -1,8 +1,6 @@
-package com.arsio.user.internal.infra.controller.mapper;
+package com.arsio.shared.pagination;
 
 import com.arsio.config.mapper.CentralMapperConfig;
-import com.arsio.user.internal.domain.model.enums.SortDirection;
-import com.arsio.user.internal.domain.model.record.Pagination;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.data.domain.PageRequest;

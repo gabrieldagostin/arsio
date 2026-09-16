@@ -1,8 +1,8 @@
 package com.arsio.user.internal.domain.repository;
 
 import com.arsio.user.internal.domain.model.Friendship;
-import com.arsio.user.internal.domain.model.record.PageResult;
-import com.arsio.user.internal.domain.model.record.Pagination;
+import com.arsio.shared.pagination.PageResult;
+import com.arsio.shared.pagination.Pagination;
 import com.arsio.user.internal.domain.valueobject.FriendshipId;
 import com.arsio.user.internal.domain.valueobject.UserId;
 
