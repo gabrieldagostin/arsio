@@ -49,6 +49,8 @@ public final class ErrorTypes {
     public static final String GAME_INVALID_GENRE_NAME = BASE + "game-invalid-genre-name";
     public static final String GAME_INVALID_TAG_NAME = BASE + "game-invalid-tag-name";
 
+    public static final String DEVELOPER_INVALID_MP_ACCESS_TOKEN =  BASE + "developer-invalid-MP-access-token";
+
     public static final String NOTIFICATION_INVALID_MESSAGE = BASE + "invalid-message";
     public static final String NOTIFICATION_INVALID_TITLE = BASE + "invalid-title";
 

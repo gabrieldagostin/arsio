@@ -1,11 +1,10 @@
 @ApplicationModule(
-        displayName = "Game Module",
+        displayName = "Developer Module",
         allowedDependencies = {
-                "developer::api",
                 "config",
                 "shared"
         }
 )
-package com.arsio.game;
+package com.arsio.developer;
 
 import org.springframework.modulith.ApplicationModule;
