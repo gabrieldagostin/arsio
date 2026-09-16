@@ -44,6 +44,7 @@ public enum ErrorCode {
     GAME_INVALID_GENRE_NAME("Invalid genre name"),
     GAME_INVALID_TAG_NAME("Invalid tag name"),
 
+    DEVELOPER_NOT_FOUND("Developer not found"),
     DEVELOPER_INVALID_MP_ACCESS_TOKEN("Invalid MP access token"),
 
     NOTIFICATION_INVALID_MESSAGE("Invalid message"),

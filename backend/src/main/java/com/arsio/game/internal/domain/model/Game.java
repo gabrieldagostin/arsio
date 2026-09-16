@@ -29,6 +29,19 @@ public class Game {
         this.releaseDate = releaseDate;
     }
 
+    public static Game create(UUID developerId, GameTitle title, Description description, Money basePrice, LocalDate releaseDate) {
+
+        return new Game(
+                GameId.generate(),
+                developerId,
+                title,
+                description,
+                basePrice,
+                GameStatus.DRAFT,
+                releaseDate
+        );
+    }
+
     public GameId getId() {
         return id;
     }
@@ -51,6 +64,14 @@ public class Game {
 
     public GameStatus getStatus() {
         return status;
+    }
+
+    public Set<GenreId> getGenres() {
+        return genres;
+    }
+
+    public Set<TagId> getTags() {
+        return tags;
     }
 
     public LocalDate getReleaseDate() {

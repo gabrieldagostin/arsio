@@ -14,7 +14,7 @@ CREATE TABLE games (
 
     release_date DATE,
 
-    platform_rate_percentage DECIMAL(3,2) NOT NULL,
+    platform_rate_percentage DECIMAL(3,2),
 
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 
