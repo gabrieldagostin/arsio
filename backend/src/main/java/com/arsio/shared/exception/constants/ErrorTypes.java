@@ -41,6 +41,7 @@ public final class ErrorTypes {
     public static final String USER_INVALID_FRIENDSHIP =  BASE + "invalid-friendship";
 
     public static final String GAME_NOT_FOUND = BASE + "game-not-found";
+    public static final String GAME_GENRE_NOT_FOUND = BASE + "game-genre-not-found";
     public static final String GAME_INVALID_TITLE = BASE + "game-invalid-title";
     public static final String GAME_INVALID_DESCRIPTION = BASE + "game-invalid-description";
     public static final String GAME_INVALID_STATUS = BASE + "game-invalid-game-status";

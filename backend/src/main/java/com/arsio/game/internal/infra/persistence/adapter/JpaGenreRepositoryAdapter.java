@@ -2,6 +2,7 @@ package com.arsio.game.internal.infra.persistence.adapter;
 
 import com.arsio.game.internal.domain.model.Genre;
 import com.arsio.game.internal.domain.repository.GenreRepository;
+import com.arsio.game.internal.domain.valueobject.GenreId;
 import com.arsio.game.internal.infra.persistence.entity.GenreEntity;
 import com.arsio.game.internal.infra.persistence.mapper.GenreEntityMapper;
 import com.arsio.game.internal.infra.persistence.repository.SpringDataGenreRepository;
@@ -14,6 +15,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
@@ -48,5 +52,18 @@ public class JpaGenreRepositoryAdapter implements GenreRepository {
                 result.getTotalElements(),
                 result.getTotalPages()
         );
+    }
+
+    @Override
+    public Set<Genre> findAllByIds(Set<GenreId> genreIds) {
+
+        Set<UUID> ids = genreIds.stream()
+                .map(GenreId::value)
+                .collect(Collectors.toSet());
+
+        return genres.findAllById(ids)
+                .stream()
+                .map(mapper::toDomain)
+                .collect(Collectors.toSet());
     }
 }

@@ -77,4 +77,9 @@ public class Game {
     public LocalDate getReleaseDate() {
         return releaseDate;
     }
+
+    public void associateGenres(Set<GenreId> genreIds) {
+        this.genres.clear();
+        this.genres.addAll(genreIds);
+    }
 }
