@@ -1,7 +1,9 @@
 package com.arsio.game.internal.infra.Controller;
 
 import com.arsio.game.internal.application.command.AssociateTagsCommand;
+import com.arsio.game.internal.application.command.DeleteTagFromGameCommand;
 import com.arsio.game.internal.application.usecase.AssociateTagsUseCase;
+import com.arsio.game.internal.application.usecase.DeleteTagFromGameUseCase;
 import com.arsio.game.internal.application.usecase.ListTagsUseCase;
 import com.arsio.game.internal.infra.Controller.dto.request.AssociateTagsRequest;
 import com.arsio.game.internal.infra.Controller.dto.response.TagResponse;
@@ -30,6 +32,7 @@ public class TagController {
     private final PaginationMapper paginationMapper;
     private final ListTagsUseCase listTagsUseCase;
     private final AssociateTagsUseCase associateTagsUseCase;
+    private final DeleteTagFromGameUseCase deleteTagFromGameUseCase;
 
     @GetMapping
     @PreAuthorize("HasRole('DEV')")
@@ -53,12 +56,26 @@ public class TagController {
     public ResponseEntity<Set<TagResponse>> associateTag(
             @PathVariable(name = "gameId") UUID gameId,
             @RequestBody @Valid AssociateTagsRequest request
-            ) {
+    ) {
 
         AssociateTagsCommand command = mapper.toAssociateTagsCommand(request);
 
         Set<TagResponse> responses = associateTagsUseCase.execute(gameId, command);
 
         return ResponseEntity.ok(responses);
+    }
+
+    @DeleteMapping("/{gameId}/tags/{tagId}")
+    @PreAuthorize("HasRole('DEV')")
+    public ResponseEntity<Void> deleteTag(
+            @PathVariable(name = "gameId") UUID gameId,
+            @PathVariable(name = "tagId") UUID tagId
+    ) {
+
+        DeleteTagFromGameCommand command = mapper.toDeleteTagFromGameCommand(gameId, tagId);
+
+        deleteTagFromGameUseCase.execute(command);
+
+        return ResponseEntity.noContent().build();
     }
 }
