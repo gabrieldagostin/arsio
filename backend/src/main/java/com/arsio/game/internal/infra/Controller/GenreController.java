@@ -1,7 +1,9 @@
 package com.arsio.game.internal.infra.Controller;
 
 import com.arsio.game.internal.application.command.AssociateGenresCommand;
+import com.arsio.game.internal.application.command.DeleteGenreFromGameCommand;
 import com.arsio.game.internal.application.usecase.AssociateGenresUseCase;
+import com.arsio.game.internal.application.usecase.DeleteGenreFromGameUseCase;
 import com.arsio.game.internal.application.usecase.ListGenresUseCase;
 import com.arsio.game.internal.infra.Controller.dto.request.AssociateGenresRequest;
 import com.arsio.game.internal.infra.Controller.dto.response.GenreResponse;
@@ -30,6 +32,7 @@ public class GenreController {
     private final PaginationMapper paginationMapper;
     private final ListGenresUseCase listGenresUseCase;
     private final AssociateGenresUseCase associateGenresUseCase;
+    private final DeleteGenreFromGameUseCase deleteGenreFromGameUseCase;
     
     @GetMapping
     @PreAuthorize("HasRole('DEV')")
@@ -51,7 +54,7 @@ public class GenreController {
     @PutMapping("/{gameId}/genres")
     @PreAuthorize("HasRole('DEV')")
     public ResponseEntity<Set<GenreResponse>> associateGenre(
-            @RequestParam(name = "gameId") UUID gameId,
+            @PathVariable(name = "gameId") UUID gameId,
             @RequestBody @Valid AssociateGenresRequest request
     ) {
 
@@ -60,5 +63,19 @@ public class GenreController {
         Set<GenreResponse> response = associateGenresUseCase.execute(gameId, command);
 
         return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{gameId}/genres/{genreId}")
+    @PreAuthorize("HasRole('DEV')")
+    public ResponseEntity<Void> deleteGenre(
+            @PathVariable(name = "gameId") UUID gameId,
+            @PathVariable("genreId") UUID genreId
+    ) {
+
+        DeleteGenreFromGameCommand command = mapper.toDeleteGenreFromGameCommand(gameId, genreId);
+
+        deleteGenreFromGameUseCase.execute(command);
+
+        return ResponseEntity.noContent().build();
     }
 }
