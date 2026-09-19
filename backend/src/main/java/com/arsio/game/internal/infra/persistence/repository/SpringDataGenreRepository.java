@@ -9,5 +9,5 @@ import java.util.UUID;
 
 public interface SpringDataGenreRepository extends JpaRepository<GenreEntity, UUID> {
 
-    Page<GenreEntity> findByNameContainingIgnoreCase(String search, Pageable pageable);
+    Page<GenreEntity> findByNameContainingIgnoreCaseAndActiveTrue(String search, Pageable pageable);
 }

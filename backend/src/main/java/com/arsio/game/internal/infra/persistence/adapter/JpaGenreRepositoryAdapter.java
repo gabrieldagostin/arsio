@@ -37,7 +37,7 @@ public class JpaGenreRepositoryAdapter implements GenreRepository {
         if (search == null || search.isBlank()) {
             result = genres.findAll(pageable);
         } else {
-            result = genres.findByNameContainingIgnoreCase(search.trim(), pageable);
+            result = genres.findByNameContainingIgnoreCaseAndActiveTrue(search.trim(), pageable);
         }
 
         List<Genre> genreList = result.getContent()
