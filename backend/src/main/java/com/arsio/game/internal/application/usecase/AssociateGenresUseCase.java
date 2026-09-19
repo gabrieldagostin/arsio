@@ -35,7 +35,7 @@ public class AssociateGenresUseCase {
         Game game = games.findById(gameId)
                 .orElseThrow(GameNotFoundException::new);
 
-        Set<Genre> genreSet = genres.findAllByIds(command.genreIds());
+        Set<Genre> genreSet = genres.findAllById(command.genreIds());
 
         if (genreSet.size() != command.genreIds().size()) {
             throw new GenreNotFoundException();

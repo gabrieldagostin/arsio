@@ -82,4 +82,9 @@ public class Game {
         this.genres.clear();
         this.genres.addAll(genreIds);
     }
+
+    public void associateTags(Set<TagId> tagIds) {
+        this.tags.clear();
+        this.tags.addAll(tagIds);
+    }
 }

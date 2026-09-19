@@ -11,5 +11,5 @@ public interface GenreRepository {
 
     PageResult<Genre> findAll(String search, Pagination pagination);
 
-    Set<Genre> findAllByIds(Set<GenreId> genreIds);
+    Set<Genre> findAllById(Set<GenreId> genreIds);
 }

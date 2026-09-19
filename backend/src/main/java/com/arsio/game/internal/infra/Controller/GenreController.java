@@ -60,9 +60,9 @@ public class GenreController {
 
         AssociateGenresCommand command = mapper.toAssociateGenresCommand(request);
 
-        Set<GenreResponse> response = associateGenresUseCase.execute(gameId, command);
+        Set<GenreResponse> responses = associateGenresUseCase.execute(gameId, command);
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(responses);
     }
 
     @DeleteMapping("/{gameId}/genres/{genreId}")

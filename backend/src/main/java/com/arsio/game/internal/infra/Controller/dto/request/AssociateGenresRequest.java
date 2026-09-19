@@ -6,7 +6,8 @@ import java.util.Set;
 import java.util.UUID;
 
 public record AssociateGenresRequest(
-        @NotEmpty
+
+        @NotEmpty(message = "{genreId.require}")
         Set<UUID> genreIds
 ) {
 }

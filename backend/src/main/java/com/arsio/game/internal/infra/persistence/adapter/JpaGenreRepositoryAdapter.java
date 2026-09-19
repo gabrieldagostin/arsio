@@ -55,7 +55,7 @@ public class JpaGenreRepositoryAdapter implements GenreRepository {
     }
 
     @Override
-    public Set<Genre> findAllByIds(Set<GenreId> genreIds) {
+    public Set<Genre> findAllById(Set<GenreId> genreIds) {
 
         Set<UUID> ids = genreIds.stream()
                 .map(GenreId::value)
