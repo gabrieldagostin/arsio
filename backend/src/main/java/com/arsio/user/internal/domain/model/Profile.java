@@ -1,5 +1,6 @@
 package com.arsio.user.internal.domain.model;
 
+import com.arsio.shared.storage.ObjectKey;
 import com.arsio.user.internal.domain.valueobject.*;
 
 import java.util.UUID;

@@ -1,4 +1,4 @@
-package com.arsio.user.internal.domain.model.record;
+package com.arsio.shared.storage;
 
 public record ObjectMetadata(
         Long size,

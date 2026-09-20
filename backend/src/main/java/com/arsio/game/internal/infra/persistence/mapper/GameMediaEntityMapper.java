@@ -5,9 +5,9 @@ import com.arsio.game.internal.domain.model.GameMedia;
 import com.arsio.game.internal.domain.valueobject.GameId;
 import com.arsio.game.internal.domain.valueobject.GameMediaId;
 import com.arsio.game.internal.domain.valueobject.MediaType;
-import com.arsio.game.internal.domain.valueobject.ObjectKey;
 import com.arsio.game.internal.infra.persistence.entity.GameEntity;
 import com.arsio.game.internal.infra.persistence.entity.GameMediaEntity;
+import com.arsio.shared.storage.ObjectKey;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

@@ -1,6 +1,7 @@
 package com.arsio.user.internal.infra.persistence.mapper;
 
 import com.arsio.config.mapper.CentralMapperConfig;
+import com.arsio.shared.storage.ObjectKey;
 import com.arsio.user.internal.domain.model.Profile;
 import com.arsio.user.internal.domain.valueobject.*;
 import com.arsio.user.internal.infra.persistence.entity.ProfileEntity;

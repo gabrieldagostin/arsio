@@ -4,7 +4,6 @@ import com.arsio.game.api.exception.GameNotFoundException;
 import com.arsio.game.internal.application.command.DeleteTagFromGameCommand;
 import com.arsio.game.internal.domain.model.Game;
 import com.arsio.game.internal.domain.repository.GameRepository;
-import com.arsio.game.internal.domain.repository.TagRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 

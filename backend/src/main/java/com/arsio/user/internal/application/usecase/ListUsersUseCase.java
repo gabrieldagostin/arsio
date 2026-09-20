@@ -1,7 +1,7 @@
 package com.arsio.user.internal.application.usecase;
 
 import com.arsio.user.api.exception.UserNotFoundException;
-import com.arsio.user.internal.application.port.output.FileStorage;
+import com.arsio.shared.storage.FileStorage;
 import com.arsio.user.internal.domain.model.Profile;
 import com.arsio.shared.pagination.PageResult;
 import com.arsio.shared.pagination.Pagination;

@@ -1,4 +1,4 @@
-package com.arsio.user.internal.application.command;
+package com.arsio.shared.storage;
 
 public record UploadFileUrlCommand(
         String contentType,

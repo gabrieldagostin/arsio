@@ -1,4 +1,4 @@
-package com.arsio.user.internal.infra.controller.dto.response;
+package com.arsio.shared.storage;
 
 public record UploadFileUrlResponse(
         String uploadUrl,

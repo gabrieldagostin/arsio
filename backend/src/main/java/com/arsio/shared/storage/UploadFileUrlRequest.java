@@ -1,4 +1,4 @@
-package com.arsio.user.internal.infra.controller.dto.request;
+package com.arsio.shared.storage;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -14,6 +14,8 @@ public record UploadFileUrlRequest(
         Long size,
 
         @NotBlank(message = "{imageType.require}")
-        String imageType
+        String imageType,
+
+        String external_url
 ) {
 }

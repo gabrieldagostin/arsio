@@ -1,9 +1,9 @@
 package com.arsio.user.internal.application.usecase;
 
-import com.arsio.user.internal.application.command.ConfirmFileUploadCommand;
-import com.arsio.user.internal.application.port.output.FileStorage;
+import com.arsio.shared.storage.ConfirmFileUploadCommand;
+import com.arsio.shared.storage.FileStorage;
 import com.arsio.user.internal.domain.exception.ProfileNotFoundException;
-import com.arsio.user.internal.domain.model.record.ObjectMetadata;
+import com.arsio.shared.storage.ObjectMetadata;
 import com.arsio.user.internal.domain.model.Profile;
 import com.arsio.user.internal.domain.repository.ProfileRepository;
 import com.arsio.user.internal.domain.valueobject.UserId;

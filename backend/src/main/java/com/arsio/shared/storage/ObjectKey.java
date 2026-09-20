@@ -1,4 +1,4 @@
-package com.arsio.game.internal.domain.valueobject;
+package com.arsio.shared.storage;
 
 public record ObjectKey(String value) {
 
@@ -11,6 +11,6 @@ public record ObjectKey(String value) {
 
     @Override
     public String toString() {
-        return "GameObjectKey[PROTECTED]";
+        return "ObjectKey[PROTECTED]";
     }
 }

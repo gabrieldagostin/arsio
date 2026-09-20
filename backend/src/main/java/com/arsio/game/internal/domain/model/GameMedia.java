@@ -3,7 +3,7 @@ package com.arsio.game.internal.domain.model;
 import com.arsio.game.internal.domain.valueobject.GameId;
 import com.arsio.game.internal.domain.valueobject.GameMediaId;
 import com.arsio.game.internal.domain.valueobject.MediaType;
-import com.arsio.game.internal.domain.valueobject.ObjectKey;
+import com.arsio.shared.storage.ObjectKey;
 
 public class GameMedia {
 
@@ -17,6 +17,15 @@ public class GameMedia {
         this.gameId = gameId;
         this.objectKey = objectKey;
         this.type = type;
+    }
+
+    public static GameMedia create(GameId gameId, ObjectKey objectKey, MediaType type) {
+        return new GameMedia(
+                GameMediaId.generate(),
+                gameId,
+                objectKey,
+                type
+        );
     }
 
     public GameMediaId getId() {

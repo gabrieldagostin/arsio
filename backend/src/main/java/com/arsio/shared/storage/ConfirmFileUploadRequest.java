@@ -1,4 +1,4 @@
-package com.arsio.user.internal.infra.controller.dto.request;
+package com.arsio.shared.storage;
 
 import jakarta.validation.constraints.NotBlank;
 

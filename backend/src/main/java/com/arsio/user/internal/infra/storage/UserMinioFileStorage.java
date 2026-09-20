@@ -1,8 +1,8 @@
 package com.arsio.user.internal.infra.storage;
 
 import com.arsio.shared.properties.MinioProperties;
-import com.arsio.user.internal.application.port.output.FileStorage;
-import com.arsio.user.internal.domain.model.record.ObjectMetadata;
+import com.arsio.shared.storage.ObjectMetadata;
+import com.arsio.user.internal.application.port.output.UserFileStorage;
 import io.minio.*;
 import io.minio.errors.MinioException;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
-public class MinioFileStorage implements FileStorage {
+public class UserMinioFileStorage implements UserFileStorage {
 
     private final MinioClient minioClient;
     private final MinioProperties minioProperties;
@@ -21,7 +21,8 @@ public class MinioFileStorage implements FileStorage {
     public String generatePresignedUploadUrl(String objectKey) {
 
         try {
-            String uploadUrl = minioClient.getPresignedObjectUrl(
+
+            return minioClient.getPresignedObjectUrl(
                     GetPresignedObjectUrlArgs.builder()
                             .method(Http.Method.PUT)
                             .bucket(minioProperties.getUserFilesBucket())
@@ -29,8 +30,6 @@ public class MinioFileStorage implements FileStorage {
                             .expiry(15, TimeUnit.MINUTES)
                             .build()
             );
-
-            return uploadUrl;
 
         } catch (MinioException e) {
             throw new RuntimeException("Failed to generate presigned URL", e);
@@ -41,7 +40,8 @@ public class MinioFileStorage implements FileStorage {
     public String generatePresignedDownloadUrl(String objectKey) {
 
         try {
-            String uploadUrl = minioClient.getPresignedObjectUrl(
+
+            return minioClient.getPresignedObjectUrl(
                     GetPresignedObjectUrlArgs.builder()
                             .method(Http.Method.GET)
                             .bucket(minioProperties.getUserFilesBucket())
@@ -49,8 +49,6 @@ public class MinioFileStorage implements FileStorage {
                             .expiry(15, TimeUnit.MINUTES)
                             .build()
             );
-
-            return uploadUrl;
 
         } catch (MinioException e) {
             throw new RuntimeException("Failed to generate presigned URL", e);
@@ -74,7 +72,7 @@ public class MinioFileStorage implements FileStorage {
                     stat.contentType()
             );
 
-        }catch (MinioException e) {
+        } catch (MinioException e) {
             throw new RuntimeException("Failed to retrieve object metadata", e);
         }
     }

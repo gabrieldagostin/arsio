@@ -1,8 +1,9 @@
-package com.arsio.user.internal.application.service;
+package com.arsio.game.internal.application.service;
 
-import com.arsio.user.internal.application.command.UploadFileUrlCommand;
-import com.arsio.user.internal.application.port.output.FileStorage;
-import com.arsio.user.internal.infra.controller.dto.response.UploadFileUrlResponse;
+import com.arsio.game.internal.application.port.output.GameMediaStorage;
+import com.arsio.game.internal.domain.valueobject.GameId;
+import com.arsio.shared.storage.UploadFileUrlCommand;
+import com.arsio.shared.storage.UploadFileUrlResponse;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -10,23 +11,25 @@ import java.util.UUID;
 
 @Service
 @Transactional
-public class FileUploadPreparationService {
+public class GameMediaUploadPreparationService {
 
-    private final FileStorage fileStorage;
+    private final GameMediaStorage fileStorage;
     private String objectKey;
 
-    public FileUploadPreparationService(FileStorage fileStorage) {
+    public GameMediaUploadPreparationService(GameMediaStorage fileStorage) {
         this.fileStorage = fileStorage;
     }
 
-    public UploadFileUrlResponse execute(UUID userId, UploadFileUrlCommand command) {
+    public UploadFileUrlResponse execute(UUID id, UploadFileUrlCommand command) {
+
+        GameId gameId = new GameId(id);
 
         String extension = getExtension(command.contentType());
 
-        if ("AVATAR".equals(command.imageType())) {
+        if ("THUMBNAIL".equals(command.imageType())) {
             objectKey = String.format(
-                    "avatars/%s/%s%s",
-                    userId,
+                    "thumbnails/%s/%s%s",
+                    gameId.value(),
                     UUID.randomUUID(),
                     extension
             );
@@ -35,7 +38,16 @@ public class FileUploadPreparationService {
         if ("BANNER".equals(command.imageType())) {
             objectKey = String.format(
                     "banners/%s/%s%s",
-                    userId,
+                    gameId.value(),
+                    UUID.randomUUID(),
+                    extension
+            );
+        }
+
+        if ("SCREENSHOT".equals(command.imageType())) {
+            objectKey = String.format(
+                    "screenshots/%s/%s%s",
+                    gameId.value(),
                     UUID.randomUUID(),
                     extension
             );
@@ -50,6 +62,7 @@ public class FileUploadPreparationService {
     }
 
     private String getExtension(String contentType) {
+
         return switch (contentType) {
             case "image/png" -> ".png";
             case "image/jpeg" -> ".jpg";

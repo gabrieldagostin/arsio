@@ -1,16 +1,17 @@
 package com.arsio.user.internal.infra.controller;
 
 import com.arsio.config.security.SecurityUtils;
-import com.arsio.user.internal.application.command.ConfirmFileUploadCommand;
+import com.arsio.shared.storage.UploadFileUrlResponse;
+import com.arsio.shared.storage.ConfirmFileUploadCommand;
 import com.arsio.user.internal.application.command.UpdateProfileBioCommand;
 import com.arsio.user.internal.application.command.UpdateProfileCountryCommand;
-import com.arsio.user.internal.application.command.UploadFileUrlCommand;
-import com.arsio.user.internal.application.service.FileUploadPreparationService;
+import com.arsio.shared.storage.UploadFileUrlCommand;
+import com.arsio.user.internal.application.service.UserFileUploadPreparationService;
 import com.arsio.user.internal.application.usecase.*;
-import com.arsio.user.internal.infra.controller.dto.request.ConfirmFileUploadRequest;
+import com.arsio.shared.storage.ConfirmFileUploadRequest;
 import com.arsio.user.internal.infra.controller.dto.request.UpdateProfileBioRequest;
 import com.arsio.user.internal.infra.controller.dto.request.UpdateProfileCountryRequest;
-import com.arsio.user.internal.infra.controller.dto.request.UploadFileUrlRequest;
+import com.arsio.shared.storage.UploadFileUrlRequest;
 import com.arsio.user.internal.infra.controller.dto.response.*;
 import com.arsio.user.internal.infra.controller.mapper.ProfileControllerMapper;
 import jakarta.validation.Valid;
@@ -28,7 +29,7 @@ public class ProfileController {
     private final GetUserAvatarUseCase getUserAvatarUseCase;
     private final GetUserProfileUseCase getUserProfileUseCase;
     private final UpdateProfileBioUseCase updateProfileBioUseCase;
-    private final FileUploadPreparationService fileUploadPreparationService;
+    private final UserFileUploadPreparationService userFileUploadPreparationService;
     private final ConfirmAvatarUploadUseCase confirmAvatarUploadUseCase;
     private final ConfirmBannerUploadUseCase confirmBannerUploadUseCase;
     private final UpdateProfileCountryUseCase updateProfileCountryUseCase;
@@ -72,7 +73,7 @@ public class ProfileController {
         UploadFileUrlCommand command = mapper.toUploadFileUrlCommand(request);
 
         UploadFileUrlResponse response =
-                fileUploadPreparationService.execute(SecurityUtils.getCurrentUserId(), command);
+                userFileUploadPreparationService.execute(SecurityUtils.getCurrentUserId(), command);
 
         return ResponseEntity.ok(response);
     }
@@ -96,7 +97,7 @@ public class ProfileController {
         UploadFileUrlCommand command = mapper.toUploadFileUrlCommand(request);
 
         UploadFileUrlResponse response =
-                fileUploadPreparationService.execute(SecurityUtils.getCurrentUserId(), command);
+                userFileUploadPreparationService.execute(SecurityUtils.getCurrentUserId(), command);
 
         return ResponseEntity.ok(response);
     }
