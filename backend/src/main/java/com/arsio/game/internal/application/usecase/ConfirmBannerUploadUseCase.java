@@ -6,7 +6,7 @@ import com.arsio.game.internal.domain.repository.GameMediaRepository;
 import com.arsio.game.internal.domain.valueobject.GameId;
 import com.arsio.game.internal.domain.valueobject.MediaRole;
 import com.arsio.game.internal.domain.valueobject.MediaType;
-import com.arsio.game.internal.infra.Controller.dto.response.GetThumbnailResponse;
+import com.arsio.game.internal.infra.Controller.dto.response.GetBannerResponse;
 import com.arsio.shared.storage.ConfirmFileUploadCommand;
 import com.arsio.shared.storage.ObjectMetadata;
 import jakarta.transaction.Transactional;
@@ -17,9 +17,9 @@ import java.util.UUID;
 
 @Service
 @Transactional
-public class ConfirmThumbnailUploadUseCase {
+public class ConfirmBannerUploadUseCase {
 
-    private static final long MAX_THUMBNAIL_SIZE = 5 * 1024 * 1024;
+    private static final long MAX_BANNER_SIZE = 10 * 1024 * 1024;
 
     private static final Set<String> ALLOWED_TYPES = Set.of(
             "image/png",
@@ -30,26 +30,26 @@ public class ConfirmThumbnailUploadUseCase {
     private final GameMediaStorage fileStorage;
     private final GameMediaRepository gameMediaRepository;
 
-    public ConfirmThumbnailUploadUseCase(GameMediaStorage fileStorage, GameMediaRepository gameMediaRepository) {
+    public ConfirmBannerUploadUseCase(GameMediaStorage fileStorage, GameMediaRepository gameMediaRepository) {
         this.fileStorage = fileStorage;
         this.gameMediaRepository = gameMediaRepository;
     }
 
-    public GetThumbnailResponse execute(UUID id, ConfirmFileUploadCommand command) {
+    public GetBannerResponse execute(UUID id, ConfirmFileUploadCommand command) {
 
         GameId gameId = new GameId(id);
 
         ObjectMetadata metadata = fileStorage.getObjectMetadata(command.objectKey().value());
 
-        if (metadata.size() > MAX_THUMBNAIL_SIZE) {
+        if (metadata.size() > MAX_BANNER_SIZE) {
             throw new IllegalArgumentException(
-                    "Thumbnail cannot exceed 5 MB"
+                    "Banner cannot exceed 10 MB"
             );
         }
 
         if (!ALLOWED_TYPES.contains(metadata.contentType())) {
             throw new IllegalArgumentException(
-                    "Unsupported thumbnail format"
+                    "Unsupported banner format"
             );
         }
 
@@ -57,13 +57,13 @@ public class ConfirmThumbnailUploadUseCase {
                 gameId,
                 command.objectKey(),
                 MediaType.IMAGE,
-                MediaRole.THUMBNAIL
+                MediaRole.BANNER
         );
 
         gameMediaRepository.save(gameMedia);
 
-        String thumbnailUrl = fileStorage.generatePresignedDownloadUrl(gameMedia.getObjectKey().value());
+        String bannerUrl = fileStorage.generatePresignedDownloadUrl(gameMedia.getObjectKey().value());
 
-        return new GetThumbnailResponse(thumbnailUrl);
+        return new GetBannerResponse(bannerUrl);
     }
 }

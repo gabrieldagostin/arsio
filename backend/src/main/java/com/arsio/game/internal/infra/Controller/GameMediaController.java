@@ -1,10 +1,8 @@
 package com.arsio.game.internal.infra.Controller;
 
 import com.arsio.game.internal.application.service.GameMediaUploadPreparationService;
-import com.arsio.game.internal.application.usecase.ConfirmScreenshotUploadUseCase;
-import com.arsio.game.internal.application.usecase.ConfirmThumbnailUploadUseCase;
-import com.arsio.game.internal.application.usecase.DeleteScreenshotUseCase;
-import com.arsio.game.internal.application.usecase.DeleteThumbnailUseCase;
+import com.arsio.game.internal.application.usecase.*;
+import com.arsio.game.internal.infra.Controller.dto.response.GetBannerResponse;
 import com.arsio.game.internal.infra.Controller.dto.response.GetScreenshotResponse;
 import com.arsio.game.internal.infra.Controller.dto.response.GetThumbnailResponse;
 import com.arsio.game.internal.infra.Controller.mapper.GameMediaControllerMapper;
@@ -26,6 +24,7 @@ public class GameMediaController {
     private final GameMediaUploadPreparationService gameMediaUploadPreparationService;
     private final ConfirmThumbnailUploadUseCase confirmThumbnailUploadUseCase;
     private final DeleteThumbnailUseCase deleteThumbnailUseCase;
+    private final ConfirmBannerUploadUseCase confirmBannerUploadUseCase;
     private final ConfirmScreenshotUploadUseCase confirmScreenshotUploadUseCase;
     private final DeleteScreenshotUseCase deleteScreenshotUseCase;
 
@@ -55,6 +54,36 @@ public class GameMediaController {
 
         GetThumbnailResponse response =
                 confirmThumbnailUploadUseCase.execute(id, command);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/{id}/banners/upload-url")
+    @PreAuthorize("HasRole('DEV')")
+    public ResponseEntity<UploadFileUrlResponse> generateBannerUploadUrl(
+            @PathVariable(name = "id") UUID id,
+            @RequestBody @Valid UploadFileUrlRequest request
+    ) {
+
+        UploadFileUrlCommand command = mapper.toUploadFileUrlCommand(request);
+
+        UploadFileUrlResponse response =
+                gameMediaUploadPreparationService.execute(id, command);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/{id}/banners/confirm")
+    @PreAuthorize("HasRole('DEV')")
+    public ResponseEntity<GetBannerResponse> confirmBannerUpload(
+            @PathVariable(name = "id") UUID id,
+            @RequestBody @Valid ConfirmFileUploadRequest request
+    ) {
+
+        ConfirmFileUploadCommand command = mapper.toConfirmFileUploadCommand(request);
+
+        GetBannerResponse response =
+                confirmBannerUploadUseCase.execute(id, command);
 
         return ResponseEntity.ok(response);
     }
