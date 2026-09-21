@@ -36,6 +36,7 @@ public enum ErrorCode {
     USER_INVALID_FRIENDSHIP_STATUS("Invalid friendship status"),
 
     GAME_NOT_FOUND("Game not found"),
+    GAME_MEDIA_NOT_FOUND("Media not found"),
     GAME_GENRE_NOT_FOUND("Game not found"),
     GAME_TAG_NOT_FOUND("Game tag not found"),
     GAME_INVALID_TITLE("Invalid title"),

@@ -1,7 +1,9 @@
 package com.arsio.game.internal.infra.Controller;
 
+import com.arsio.game.internal.application.command.DeleteScreenshotCommand;
 import com.arsio.game.internal.application.service.GameMediaUploadPreparationService;
 import com.arsio.game.internal.application.usecase.ConfirmScreenshotUploadUseCase;
+import com.arsio.game.internal.application.usecase.DeleteScreenshotUseCase;
 import com.arsio.game.internal.infra.Controller.dto.response.GetScreenshotResponse;
 import com.arsio.game.internal.infra.Controller.mapper.GameMediaControllerMapper;
 import com.arsio.shared.storage.*;
@@ -21,6 +23,7 @@ public class GameMediaController {
     private final GameMediaControllerMapper mapper;
     private final GameMediaUploadPreparationService gameMediaUploadPreparationService;
     private final ConfirmScreenshotUploadUseCase confirmScreenshotUploadUseCase;
+    private final DeleteScreenshotUseCase deleteScreenshotUseCase;
 
     @PostMapping("/{id}/screenshots/upload-url")
     @PreAuthorize("HasRole('DEV')")
@@ -50,5 +53,16 @@ public class GameMediaController {
                 confirmScreenshotUploadUseCase.execute(id, command);
 
         return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/screenshot/{imageId}")
+    @PreAuthorize("HasRole('DEV')")
+    public ResponseEntity<Void> deleteScreenshot(@PathVariable(name = "imageId") UUID imageId) {
+
+        DeleteScreenshotCommand command = mapper.toDeleteScreenshotCommand(imageId);
+
+        deleteScreenshotUseCase.execute(command);
+
+        return ResponseEntity.noContent().build();
     }
 }

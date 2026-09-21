@@ -3,6 +3,7 @@ package com.arsio.game.internal.infra.persistence.adapter;
 import com.arsio.game.internal.domain.model.GameMedia;
 import com.arsio.game.internal.domain.repository.GameMediaRepository;
 import com.arsio.game.internal.domain.valueobject.GameId;
+import com.arsio.game.internal.domain.valueobject.GameMediaId;
 import com.arsio.game.internal.infra.persistence.entity.GameEntity;
 import com.arsio.game.internal.infra.persistence.entity.GameMediaEntity;
 import com.arsio.game.internal.infra.persistence.mapper.GameMediaEntityMapper;
@@ -35,8 +36,19 @@ public class JpaGameMediaRepositoryAdapter implements GameMediaRepository {
     }
 
     @Override
+    public Optional<GameMedia> findById(GameMediaId gameMediaId) {
+        return gameMediaRepository.findById(gameMediaId.value())
+                .map(mapper::toDomain);
+    }
+
+    @Override
     public Optional<GameMedia> findByGameId(GameId gameId) {
         return gameMediaRepository.findByGameId(gameId.value())
                 .map(mapper::toDomain);
+    }
+
+    @Override
+    public void deleteById(GameMediaId gameMediaId) {
+        gameMediaRepository.deleteById(gameMediaId.value());
     }
 }

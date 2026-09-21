@@ -1,7 +1,7 @@
 package com.arsio.game.internal.infra.storage;
 
+import com.arsio.game.internal.application.port.output.GameMediaStorage;
 import com.arsio.shared.properties.MinioProperties;
-import com.arsio.shared.storage.FileStorage;
 import com.arsio.shared.storage.ObjectMetadata;
 import io.minio.*;
 import io.minio.errors.MinioException;
@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
-public class GameMediaMinioFileStorage implements FileStorage {
+public class GameMediaMinioFileStorage implements GameMediaStorage {
 
     private final MinioClient minioClient;
     private final MinioProperties minioProperties;
@@ -74,6 +74,20 @@ public class GameMediaMinioFileStorage implements FileStorage {
 
         } catch (MinioException e) {
             throw new RuntimeException("Failed to retrieve object metadata", e);
+        }
+    }
+
+    @Override
+    public void delete(String objectKey) {
+        try {
+            minioClient.removeObject(
+                    RemoveObjectArgs.builder()
+                            .bucket(minioProperties.getGameMediaBucket())
+                            .object(objectKey)
+                            .build()
+            );
+        } catch (MinioException e) {
+            throw new RuntimeException("Failed to delete object", e);
         }
     }
 }
