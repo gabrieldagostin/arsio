@@ -1,9 +1,6 @@
 package com.arsio.game.internal.domain.model;
 
-import com.arsio.game.internal.domain.valueobject.GameId;
-import com.arsio.game.internal.domain.valueobject.GameMediaId;
-import com.arsio.game.internal.domain.valueobject.MediaRole;
-import com.arsio.game.internal.domain.valueobject.MediaType;
+import com.arsio.game.internal.domain.valueobject.*;
 import com.arsio.shared.storage.ObjectKey;
 
 public class GameMedia {
@@ -13,13 +10,15 @@ public class GameMedia {
     private ObjectKey objectKey;
     private MediaType type;
     private MediaRole role;
+    private ExternalUrl externalUrl;
 
-    public GameMedia(GameMediaId id, GameId gameId, ObjectKey objectKey, MediaType type, MediaRole role) {
+    public GameMedia(GameMediaId id, GameId gameId, ObjectKey objectKey, MediaType type, MediaRole role, ExternalUrl externalUrl) {
         this.id = id;
         this.gameId = gameId;
         this.objectKey = objectKey;
         this.type = type;
         this.role = role;
+        this.externalUrl = externalUrl;
     }
 
     public static GameMedia create(GameId gameId, ObjectKey objectKey, MediaType type, MediaRole role) {
@@ -28,7 +27,19 @@ public class GameMedia {
                 gameId,
                 objectKey,
                 type,
-                role
+                role,
+                null
+        );
+    }
+
+    public static GameMedia createVideo(GameId gameId, MediaType type, MediaRole role, String externalUrl) {
+        return new GameMedia(
+                GameMediaId.generate(),
+                gameId,
+                null,
+                type,
+                role,
+                new ExternalUrl(externalUrl)
         );
     }
 
@@ -50,5 +61,9 @@ public class GameMedia {
 
     public MediaRole getRole() {
         return role;
+    }
+
+    public ExternalUrl getExternalUrl() {
+        return externalUrl;
     }
 }

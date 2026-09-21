@@ -14,8 +14,6 @@ public record UploadFileUrlRequest(
         Long size,
 
         @NotBlank(message = "{imageType.require}")
-        String imageType,
-
-        String external_url
+        String imageType
 ) {
 }

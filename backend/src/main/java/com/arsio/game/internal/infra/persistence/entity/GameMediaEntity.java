@@ -27,7 +27,7 @@ public class GameMediaEntity {
     @JoinColumn(name = "game_id", nullable = false)
     private GameEntity game;
 
-    @Column(name = "object_key", nullable = false)
+    @Column(name = "object_key")
     private String objectKey;
 
     @Enumerated(EnumType.STRING)
@@ -39,6 +39,9 @@ public class GameMediaEntity {
     @JdbcTypeCode(SqlTypes.ENUM)
     @Column(nullable = false)
     private MediaRole role;
+
+    @Column(name = "external_url")
+    private String externalUrl;
 
     @Column(name = "created_at", nullable = false, updatable = false, insertable = false)
     private Instant createdAt;
