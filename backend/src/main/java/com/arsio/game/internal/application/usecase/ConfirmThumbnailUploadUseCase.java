@@ -6,7 +6,7 @@ import com.arsio.game.internal.domain.repository.GameMediaRepository;
 import com.arsio.game.internal.domain.valueobject.GameId;
 import com.arsio.game.internal.domain.valueobject.MediaRole;
 import com.arsio.game.internal.domain.valueobject.MediaType;
-import com.arsio.game.internal.infra.Controller.dto.response.GetScreenshotResponse;
+import com.arsio.game.internal.infra.Controller.dto.response.GetThumbnailResponse;
 import com.arsio.shared.storage.ConfirmFileUploadCommand;
 import com.arsio.shared.storage.ObjectMetadata;
 import jakarta.transaction.Transactional;
@@ -17,9 +17,9 @@ import java.util.UUID;
 
 @Service
 @Transactional
-public class ConfirmScreenshotUploadUseCase {
+public class ConfirmThumbnailUploadUseCase {
 
-    private static final long MAX_SCREENSHOT_SIZE = 5 * 1024 * 1024;
+    private static final long MAX_THUMBNAIL_SIZE = 5 * 1024 * 1024;
 
     private static final Set<String> ALLOWED_TYPES = Set.of(
             "image/png",
@@ -30,18 +30,18 @@ public class ConfirmScreenshotUploadUseCase {
     private final GameMediaStorage fileStorage;
     private final GameMediaRepository gameMediaRepository;
 
-    public ConfirmScreenshotUploadUseCase(GameMediaStorage fileStorage, GameMediaRepository gameMediaRepository) {
+    public ConfirmThumbnailUploadUseCase(GameMediaStorage fileStorage, GameMediaRepository gameMediaRepository) {
         this.fileStorage = fileStorage;
         this.gameMediaRepository = gameMediaRepository;
     }
 
-    public GetScreenshotResponse execute(UUID id, ConfirmFileUploadCommand command) {
+    public GetThumbnailResponse execute(UUID id, ConfirmFileUploadCommand command) {
 
         GameId gameId = new GameId(id);
 
         ObjectMetadata metadata = fileStorage.getObjectMetadata(command.objectKey().value());
 
-        if (metadata.size() > MAX_SCREENSHOT_SIZE) {
+        if (metadata.size() > MAX_THUMBNAIL_SIZE) {
             throw new IllegalArgumentException(
                     "Screenshot cannot exceed 5 MB"
             );
@@ -57,13 +57,13 @@ public class ConfirmScreenshotUploadUseCase {
                 gameId,
                 command.objectKey(),
                 MediaType.IMAGE,
-                MediaRole.SCREENSHOT
+                MediaRole.THUMBNAIL
         );
 
         gameMediaRepository.save(gameMedia);
 
-        String screenshotUrl = fileStorage.generatePresignedDownloadUrl(gameMedia.getObjectKey().value());
+        String thumbnailUrl = fileStorage.generatePresignedDownloadUrl(gameMedia.getObjectKey().value());
 
-        return new GetScreenshotResponse(screenshotUrl);
+        return new GetThumbnailResponse(thumbnailUrl);
     }
 }

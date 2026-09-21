@@ -1,5 +1,6 @@
 package com.arsio.game.internal.infra.persistence.entity;
 
+import com.arsio.game.internal.domain.valueobject.MediaRole;
 import com.arsio.game.internal.domain.valueobject.MediaType;
 import jakarta.persistence.*;
 import lombok.*;
@@ -33,6 +34,11 @@ public class GameMediaEntity {
     @JdbcTypeCode(SqlTypes.ENUM)
     @Column(nullable = false)
     private MediaType type;
+
+    @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.ENUM)
+    @Column(nullable = false)
+    private MediaRole role;
 
     @Column(name = "created_at", nullable = false, updatable = false, insertable = false)
     private Instant createdAt;

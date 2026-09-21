@@ -3,8 +3,10 @@ package com.arsio.game.internal.infra.Controller;
 import com.arsio.game.internal.application.command.DeleteScreenshotCommand;
 import com.arsio.game.internal.application.service.GameMediaUploadPreparationService;
 import com.arsio.game.internal.application.usecase.ConfirmScreenshotUploadUseCase;
+import com.arsio.game.internal.application.usecase.ConfirmThumbnailUploadUseCase;
 import com.arsio.game.internal.application.usecase.DeleteScreenshotUseCase;
 import com.arsio.game.internal.infra.Controller.dto.response.GetScreenshotResponse;
+import com.arsio.game.internal.infra.Controller.dto.response.GetThumbnailResponse;
 import com.arsio.game.internal.infra.Controller.mapper.GameMediaControllerMapper;
 import com.arsio.shared.storage.*;
 import jakarta.validation.Valid;
@@ -22,8 +24,39 @@ public class GameMediaController {
 
     private final GameMediaControllerMapper mapper;
     private final GameMediaUploadPreparationService gameMediaUploadPreparationService;
+    private final ConfirmThumbnailUploadUseCase confirmThumbnailUploadUseCase;
     private final ConfirmScreenshotUploadUseCase confirmScreenshotUploadUseCase;
     private final DeleteScreenshotUseCase deleteScreenshotUseCase;
+
+    @PostMapping("/{id}/thumbnails/upload-url")
+    @PreAuthorize("HasRole('DEV')")
+    public ResponseEntity<UploadFileUrlResponse> generateThumbnailUploadUrl(
+            @PathVariable(name = "id") UUID id,
+            @RequestBody @Valid UploadFileUrlRequest request
+    ) {
+
+        UploadFileUrlCommand command = mapper.toUploadFileUrlCommand(request);
+
+        UploadFileUrlResponse response =
+                gameMediaUploadPreparationService.execute(id, command);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/{id}/thumbnails/confirm")
+    @PreAuthorize("HasRole('DEV')")
+    public ResponseEntity<GetThumbnailResponse> confirmThumbnailUpload(
+            @PathVariable(name = "id") UUID id,
+            @RequestBody @Valid ConfirmFileUploadRequest request
+    ) {
+
+        ConfirmFileUploadCommand command = mapper.toConfirmFileUploadCommand(request);
+
+        GetThumbnailResponse response =
+                confirmThumbnailUploadUseCase.execute(id, command);
+
+        return ResponseEntity.ok(response);
+    }
 
     @PostMapping("/{id}/screenshots/upload-url")
     @PreAuthorize("HasRole('DEV')")
@@ -40,7 +73,7 @@ public class GameMediaController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/{id}/screenshot/confirm")
+    @PostMapping("/{id}/screenshots/confirm")
     @PreAuthorize("HasRole('DEV')")
     public ResponseEntity<GetScreenshotResponse> confirmScreenshotUpload(
             @PathVariable(name = "id") UUID id,

@@ -44,6 +44,7 @@ public enum ErrorCode {
     GAME_INVALID_STATUS("Invalid status"),
     GAME_INVALID_REQUIREMENT("Invalid requirements"),
     GAME_INVALID_MEDIA_TYPE("Invalid media type"),
+    GAME_INVALID_MEDIA_ROLE("Invalid media role"),
     GAME_INVALID_GENRE_NAME("Invalid genre name"),
     GAME_INVALID_TAG_NAME("Invalid tag name"),
 

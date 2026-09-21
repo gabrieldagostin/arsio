@@ -49,6 +49,7 @@ public final class ErrorTypes {
     public static final String GAME_INVALID_STATUS = BASE + "game-invalid-game-status";
     public static final String GAME_INVALID_REQUIREMENT = BASE + "game-invalid-requirement";
     public static final String GAME_INVALID_MEDIA_TYPE = BASE + "game-invalid-media-type";
+    public static final String GAME_INVALID_MEDIA_ROLE = BASE + "game-invalid-media-role";
     public static final String GAME_INVALID_GENRE_NAME = BASE + "game-invalid-genre-name";
     public static final String GAME_INVALID_TAG_NAME = BASE + "game-invalid-tag-name";
 
