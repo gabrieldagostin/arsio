@@ -12,12 +12,12 @@ import java.util.UUID;
 
 @Service
 @Transactional
-public class DeleteScreenshotUseCase {
+public class DeleteThumbnailUseCase {
 
     private final GameMediaRepository gameMediaRepository;
     private final GameMediaStorage fileStorage;
 
-    public DeleteScreenshotUseCase(GameMediaRepository gameMediaRepository, GameMediaStorage fileStorage) {
+    public DeleteThumbnailUseCase(GameMediaRepository gameMediaRepository, GameMediaStorage fileStorage) {
         this.gameMediaRepository = gameMediaRepository;
         this.fileStorage = fileStorage;
     }

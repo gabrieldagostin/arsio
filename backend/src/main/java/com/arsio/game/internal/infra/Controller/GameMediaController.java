@@ -1,10 +1,10 @@
 package com.arsio.game.internal.infra.Controller;
 
-import com.arsio.game.internal.application.command.DeleteScreenshotCommand;
 import com.arsio.game.internal.application.service.GameMediaUploadPreparationService;
 import com.arsio.game.internal.application.usecase.ConfirmScreenshotUploadUseCase;
 import com.arsio.game.internal.application.usecase.ConfirmThumbnailUploadUseCase;
 import com.arsio.game.internal.application.usecase.DeleteScreenshotUseCase;
+import com.arsio.game.internal.application.usecase.DeleteThumbnailUseCase;
 import com.arsio.game.internal.infra.Controller.dto.response.GetScreenshotResponse;
 import com.arsio.game.internal.infra.Controller.dto.response.GetThumbnailResponse;
 import com.arsio.game.internal.infra.Controller.mapper.GameMediaControllerMapper;
@@ -25,6 +25,7 @@ public class GameMediaController {
     private final GameMediaControllerMapper mapper;
     private final GameMediaUploadPreparationService gameMediaUploadPreparationService;
     private final ConfirmThumbnailUploadUseCase confirmThumbnailUploadUseCase;
+    private final DeleteThumbnailUseCase deleteThumbnailUseCase;
     private final ConfirmScreenshotUploadUseCase confirmScreenshotUploadUseCase;
     private final DeleteScreenshotUseCase deleteScreenshotUseCase;
 
@@ -58,6 +59,15 @@ public class GameMediaController {
         return ResponseEntity.ok(response);
     }
 
+    @DeleteMapping("/thumbnails/{imageId}")
+    @PreAuthorize("HasRole('DEV')")
+    public ResponseEntity<Void> deleteThumbnail(@PathVariable(name = "imageId") UUID imageId) {
+
+        deleteThumbnailUseCase.execute(imageId);
+
+        return ResponseEntity.noContent().build();
+    }
+
     @PostMapping("/{id}/screenshots/upload-url")
     @PreAuthorize("HasRole('DEV')")
     public ResponseEntity<UploadFileUrlResponse> generateScreenshotUploadUrl(
@@ -88,13 +98,11 @@ public class GameMediaController {
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/screenshot/{imageId}")
+    @DeleteMapping("/screenshots/{imageId}")
     @PreAuthorize("HasRole('DEV')")
     public ResponseEntity<Void> deleteScreenshot(@PathVariable(name = "imageId") UUID imageId) {
 
-        DeleteScreenshotCommand command = mapper.toDeleteScreenshotCommand(imageId);
-
-        deleteScreenshotUseCase.execute(command);
+        deleteScreenshotUseCase.execute(imageId);
 
         return ResponseEntity.noContent().build();
     }
