@@ -25,6 +25,7 @@ public class GameMediaController {
     private final ConfirmThumbnailUploadUseCase confirmThumbnailUploadUseCase;
     private final DeleteThumbnailUseCase deleteThumbnailUseCase;
     private final ConfirmBannerUploadUseCase confirmBannerUploadUseCase;
+    private final DeleteBannerUseCase deleteBannerUseCase;
     private final ConfirmScreenshotUploadUseCase confirmScreenshotUploadUseCase;
     private final DeleteScreenshotUseCase deleteScreenshotUseCase;
 
@@ -58,6 +59,15 @@ public class GameMediaController {
         return ResponseEntity.ok(response);
     }
 
+    @DeleteMapping("/thumbnails/{imageId}")
+    @PreAuthorize("HasRole('DEV')")
+    public ResponseEntity<Void> deleteThumbnail(@PathVariable(name = "imageId") UUID imageId) {
+
+        deleteThumbnailUseCase.execute(imageId);
+
+        return ResponseEntity.noContent().build();
+    }
+
     @PostMapping("/{id}/banners/upload-url")
     @PreAuthorize("HasRole('DEV')")
     public ResponseEntity<UploadFileUrlResponse> generateBannerUploadUrl(
@@ -88,11 +98,11 @@ public class GameMediaController {
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/thumbnails/{imageId}")
+    @DeleteMapping("/banners/{imageId}")
     @PreAuthorize("HasRole('DEV')")
-    public ResponseEntity<Void> deleteThumbnail(@PathVariable(name = "imageId") UUID imageId) {
+    public ResponseEntity<Void> deleteBanner(@PathVariable(name = "imageId") UUID imageId) {
 
-        deleteThumbnailUseCase.execute(imageId);
+        deleteBannerUseCase.execute(imageId);
 
         return ResponseEntity.noContent().build();
     }
