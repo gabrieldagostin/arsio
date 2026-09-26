@@ -2,8 +2,9 @@ package com.arsio.game.internal.infra.Controller.dto.response;
 
 import java.util.UUID;
 
-public record TagResponse(
+public record GetProcessorResponse(
         UUID id,
-        String name
+        String manufacturer,
+        String model
 ) {
 }

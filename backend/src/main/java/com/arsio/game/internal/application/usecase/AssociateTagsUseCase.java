@@ -8,7 +8,7 @@ import com.arsio.game.internal.domain.model.Tag;
 import com.arsio.game.internal.domain.repository.GameRepository;
 import com.arsio.game.internal.domain.repository.TagRepository;
 import com.arsio.game.internal.domain.valueobject.GameId;
-import com.arsio.game.internal.infra.Controller.dto.response.TagResponse;
+import com.arsio.game.internal.infra.Controller.dto.response.GetTagResponse;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +28,7 @@ public class AssociateTagsUseCase {
         this.games = games;
     }
 
-    public Set<TagResponse> execute(UUID id, AssociateTagsCommand command) {
+    public Set<GetTagResponse> execute(UUID id, AssociateTagsCommand command) {
 
         GameId gameId = new GameId(id);
 
@@ -46,7 +46,7 @@ public class AssociateTagsUseCase {
 
         return tagSet.stream()
                 .map(tag -> {
-                    return new TagResponse(
+                    return new GetTagResponse(
                             tag.getId().value(),
                             tag.getName().value()
                     );

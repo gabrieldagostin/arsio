@@ -8,7 +8,7 @@ import com.arsio.game.internal.domain.model.Genre;
 import com.arsio.game.internal.domain.repository.GameRepository;
 import com.arsio.game.internal.domain.repository.GenreRepository;
 import com.arsio.game.internal.domain.valueobject.GameId;
-import com.arsio.game.internal.infra.Controller.dto.response.GenreResponse;
+import com.arsio.game.internal.infra.Controller.dto.response.GetGenreResponse;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +28,7 @@ public class AssociateGenresUseCase {
         this.genres = genres;
     }
 
-    public Set<GenreResponse> execute(UUID id, AssociateGenresCommand command) {
+    public Set<GetGenreResponse> execute(UUID id, AssociateGenresCommand command) {
 
         GameId gameId = new GameId(id);
 
@@ -47,7 +47,7 @@ public class AssociateGenresUseCase {
 
         return genreSet.stream()
                 .map(genre -> {
-                    return new GenreResponse(
+                    return new GetGenreResponse(
                             genre.getId().value(),
                             genre.getName().value()
                     );

@@ -6,7 +6,7 @@ import com.arsio.game.internal.application.usecase.AssociateGenresUseCase;
 import com.arsio.game.internal.application.usecase.DeleteGenreFromGameUseCase;
 import com.arsio.game.internal.application.usecase.ListGenresUseCase;
 import com.arsio.game.internal.infra.Controller.dto.request.AssociateGenresRequest;
-import com.arsio.game.internal.infra.Controller.dto.response.GenreResponse;
+import com.arsio.game.internal.infra.Controller.dto.response.GetGenreResponse;
 import com.arsio.game.internal.infra.Controller.mapper.GenreControllerMapper;
 import com.arsio.shared.pagination.PageResult;
 import com.arsio.shared.pagination.Pagination;
@@ -36,7 +36,7 @@ public class GenreController {
     
     @GetMapping
     @PreAuthorize("HasRole('DEV')")
-    public ResponseEntity<PageResult<GenreResponse>> findAll(
+    public ResponseEntity<PageResult<GetGenreResponse>> findAll(
             @RequestParam(required = false) String search,
             @PageableDefault(
                     size = 20,
@@ -46,21 +46,21 @@ public class GenreController {
 
         Pagination pagination = paginationMapper.toPagination(pageable);
 
-        PageResult<GenreResponse> response = listGenresUseCase.execute(search, pagination);
+        PageResult<GetGenreResponse> response = listGenresUseCase.execute(search, pagination);
 
         return ResponseEntity.ok(response);
     }
 
     @PutMapping("/{gameId}/genres")
     @PreAuthorize("HasRole('DEV')")
-    public ResponseEntity<Set<GenreResponse>> associateGenre(
+    public ResponseEntity<Set<GetGenreResponse>> associateGenre(
             @PathVariable(name = "gameId") UUID gameId,
             @RequestBody @Valid AssociateGenresRequest request
     ) {
 
         AssociateGenresCommand command = mapper.toAssociateGenresCommand(request);
 
-        Set<GenreResponse> responses = associateGenresUseCase.execute(gameId, command);
+        Set<GetGenreResponse> responses = associateGenresUseCase.execute(gameId, command);
 
         return ResponseEntity.ok(responses);
     }

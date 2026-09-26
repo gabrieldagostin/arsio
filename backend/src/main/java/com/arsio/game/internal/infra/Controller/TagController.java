@@ -6,7 +6,7 @@ import com.arsio.game.internal.application.usecase.AssociateTagsUseCase;
 import com.arsio.game.internal.application.usecase.DeleteTagFromGameUseCase;
 import com.arsio.game.internal.application.usecase.ListTagsUseCase;
 import com.arsio.game.internal.infra.Controller.dto.request.AssociateTagsRequest;
-import com.arsio.game.internal.infra.Controller.dto.response.TagResponse;
+import com.arsio.game.internal.infra.Controller.dto.response.GetTagResponse;
 import com.arsio.game.internal.infra.Controller.mapper.TagControllerMapper;
 import com.arsio.shared.pagination.PageResult;
 import com.arsio.shared.pagination.Pagination;
@@ -36,7 +36,7 @@ public class TagController {
 
     @GetMapping
     @PreAuthorize("HasRole('DEV')")
-    public ResponseEntity<PageResult<TagResponse>> findAll(
+    public ResponseEntity<PageResult<GetTagResponse>> findAll(
             @RequestParam(required = false) String search,
             @PageableDefault(
                     size = 20,
@@ -46,21 +46,21 @@ public class TagController {
 
         Pagination pagination = paginationMapper.toPagination(pageable);
 
-        PageResult<TagResponse> response = listTagsUseCase.execute(search, pagination);
+        PageResult<GetTagResponse> response = listTagsUseCase.execute(search, pagination);
 
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/{gameId}/tags")
     @PreAuthorize("HasRole('DEV')")
-    public ResponseEntity<Set<TagResponse>> associateTag(
+    public ResponseEntity<Set<GetTagResponse>> associateTag(
             @PathVariable(name = "gameId") UUID gameId,
             @RequestBody @Valid AssociateTagsRequest request
     ) {
 
         AssociateTagsCommand command = mapper.toAssociateTagsCommand(request);
 
-        Set<TagResponse> responses = associateTagsUseCase.execute(gameId, command);
+        Set<GetTagResponse> responses = associateTagsUseCase.execute(gameId, command);
 
         return ResponseEntity.ok(responses);
     }
