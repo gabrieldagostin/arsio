@@ -49,4 +49,9 @@ public class JpaProcessorRepositoryAdapter implements ProcessorRepository {
                 result.getTotalPages()
         );
     }
+
+    @Override
+    public void save(Processor processor) {
+        processors.save(mapper.toEntity(processor));
+    }
 }

@@ -7,4 +7,6 @@ import com.arsio.shared.pagination.Pagination;
 public interface ProcessorRepository {
 
     PageResult<Processor> findAll(String search, Pagination pagination);
+
+    void save(Processor processor);
 }

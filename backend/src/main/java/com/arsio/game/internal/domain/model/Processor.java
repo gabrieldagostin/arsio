@@ -16,6 +16,15 @@ public class Processor {
         this.manufacturer = manufacturer;
     }
 
+    public static Processor create(Model model, Manufacturer manufacturer) {
+
+        return new Processor(
+                RequirementId.generate(),
+                model,
+                manufacturer
+        );
+    }
+
     public RequirementId getId() {
         return id;
     }
