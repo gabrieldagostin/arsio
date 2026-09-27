@@ -38,4 +38,8 @@ public class Genre {
     public void update(GenreName name) {
         this.name = name;
     }
+
+    public void deactivate() {
+        this.active = false;
+    }
 }
