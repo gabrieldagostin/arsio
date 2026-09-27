@@ -2,6 +2,7 @@ package com.arsio.game.internal.infra.persistence.adapter;
 
 import com.arsio.game.internal.domain.model.Processor;
 import com.arsio.game.internal.domain.repository.ProcessorRepository;
+import com.arsio.game.internal.domain.valueobject.RequirementId;
 import com.arsio.game.internal.infra.persistence.entity.ProcessorEntity;
 import com.arsio.game.internal.infra.persistence.mapper.ProcessorEntityMapper;
 import com.arsio.game.internal.infra.persistence.repository.SpringDataProcessorRepository;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -53,5 +55,11 @@ public class JpaProcessorRepositoryAdapter implements ProcessorRepository {
     @Override
     public void save(Processor processor) {
         processors.save(mapper.toEntity(processor));
+    }
+
+    @Override
+    public Optional<Processor> findById(RequirementId processorId) {
+        return processors.findById(processorId.value())
+                .map(mapper::toDomain);
     }
 }

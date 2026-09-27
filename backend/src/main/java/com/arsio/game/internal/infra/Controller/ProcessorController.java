@@ -1,9 +1,12 @@
 package com.arsio.game.internal.infra.Controller;
 
 import com.arsio.game.internal.application.command.CreateProcessorCommand;
+import com.arsio.game.internal.application.command.UpdateProcessorCommand;
 import com.arsio.game.internal.application.usecase.CreateProcessorUseCase;
 import com.arsio.game.internal.application.usecase.ListProcessorsUseCase;
+import com.arsio.game.internal.application.usecase.UpdateProcessorUseCase;
 import com.arsio.game.internal.infra.Controller.dto.request.CreateProcessorRequest;
+import com.arsio.game.internal.infra.Controller.dto.request.UpdateProcessorRequest;
 import com.arsio.game.internal.infra.Controller.dto.response.GetProcessorResponse;
 import com.arsio.game.internal.infra.Controller.mapper.ProcessorControllerMapper;
 import com.arsio.shared.pagination.PageResult;
@@ -18,6 +21,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/game-requirements/processors")
@@ -27,6 +32,7 @@ public class ProcessorController {
     private final PaginationMapper paginationMapper;
     private final ListProcessorsUseCase listProcessorsUseCase;
     private final CreateProcessorUseCase createProcessorUseCase;
+    private final UpdateProcessorUseCase updateProcessorUseCase;
 
     @GetMapping
     @PreAuthorize("HasRole('DEV')")
@@ -54,6 +60,20 @@ public class ProcessorController {
 
         GetProcessorResponse response =
                 createProcessorUseCase.execute(command);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("{processorId}")
+    @PreAuthorize("HasRole('ADMIN')")
+    public ResponseEntity<GetProcessorResponse> update(
+            @PathVariable(name = "processorId") UUID processorId,
+            @RequestBody @Valid UpdateProcessorRequest request) {
+
+        UpdateProcessorCommand command = mapper.toUpdateProcessorCommand(processorId, request);
+
+        GetProcessorResponse response =
+                updateProcessorUseCase.execute(command);
 
         return ResponseEntity.ok(response);
     }
