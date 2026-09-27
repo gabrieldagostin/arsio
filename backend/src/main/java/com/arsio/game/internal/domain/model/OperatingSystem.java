@@ -38,4 +38,8 @@ public class OperatingSystem {
     public void update(Model name) {
         this.name = name;
     }
+
+    public void deactivate() {
+        this.active = false;
+    }
 }

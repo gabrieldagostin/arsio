@@ -3,6 +3,7 @@ package com.arsio.game.internal.infra.Controller;
 import com.arsio.game.internal.application.command.CreateOperatingSystemCommand;
 import com.arsio.game.internal.application.command.UpdateOperatingSystemCommand;
 import com.arsio.game.internal.application.usecase.CreateOperatingSystemUseCase;
+import com.arsio.game.internal.application.usecase.DeleteOperatingSystemUseCase;
 import com.arsio.game.internal.application.usecase.ListOperatingSystemsUseCase;
 import com.arsio.game.internal.application.usecase.UpdateOperatingSystemUseCase;
 import com.arsio.game.internal.infra.Controller.dto.request.CreateOperatingSystemRequest;
@@ -34,6 +35,7 @@ public class OperatingSystemController {
     private final ListOperatingSystemsUseCase listOperatingSystemsUseCase;
     private final CreateOperatingSystemUseCase createOperatingSystemUseCase;
     private final UpdateOperatingSystemUseCase updateOperatingSystemUseCase;
+    private final DeleteOperatingSystemUseCase deleteOperatingSystemUseCase;
 
     @GetMapping
     @PreAuthorize("HasRole('DEV')")
@@ -67,7 +69,7 @@ public class OperatingSystemController {
     @PutMapping("/{operatingSystemId}")
     @PreAuthorize("HasRole('ADMIN')")
     public ResponseEntity<GetOperatingSystemResponse> update(
-            @RequestParam(name = "operatingSystemId") UUID operatingSystemId,
+            @PathVariable(name = "operatingSystemId") UUID operatingSystemId,
             @RequestBody @Valid UpdateOperatingSystemRequest request) {
 
         UpdateOperatingSystemCommand command = mapper.toUpdateOperatingSystemCommand(operatingSystemId, request);
@@ -75,5 +77,14 @@ public class OperatingSystemController {
         GetOperatingSystemResponse response = updateOperatingSystemUseCase.execute(command);
 
         return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{operatingSystemId}")
+    @PreAuthorize("HasRole('ADMIN')")
+    public ResponseEntity<Void> delete(@PathVariable(name = "operatingSystemId") UUID operatingSystemId) {
+
+        deleteOperatingSystemUseCase.execute(operatingSystemId);
+
+        return ResponseEntity.noContent().build();
     }
 }

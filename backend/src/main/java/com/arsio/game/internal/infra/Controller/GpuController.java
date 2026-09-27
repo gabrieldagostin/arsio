@@ -68,7 +68,7 @@ public class GpuController {
     @PutMapping("/{gpuId}")
     @PreAuthorize("HasRole('ADMIN')")
     public ResponseEntity<GetGpuResponse> update(
-            @RequestParam(name = "gpuId") UUID gpuId,
+            @PathVariable(name = "gpuId") UUID gpuId,
             @RequestBody @Valid UpdateGpuRequest request
     ) {
 
@@ -81,7 +81,7 @@ public class GpuController {
 
     @DeleteMapping("/{gpuId}")
     @PreAuthorize("HasRole('ADMIN')")
-    public ResponseEntity<Void>  delete(@RequestParam(name = "gpuId") UUID gpuId) {
+    public ResponseEntity<Void>  delete(@PathVariable(name = "gpuId") UUID gpuId) {
 
         deleteGpuUseCase.execute(gpuId);
 
