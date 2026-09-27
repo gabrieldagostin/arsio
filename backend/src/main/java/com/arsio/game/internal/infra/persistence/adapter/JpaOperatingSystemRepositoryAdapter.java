@@ -49,4 +49,9 @@ public class JpaOperatingSystemRepositoryAdapter implements OperatingSystemRepos
                 result.getTotalPages()
         );
     }
+
+    @Override
+    public void save(OperatingSystem operatingSystem) {
+        operatingSystems.save(mapper.toEntity(operatingSystem));
+    }
 }

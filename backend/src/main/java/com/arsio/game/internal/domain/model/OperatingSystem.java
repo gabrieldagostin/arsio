@@ -15,6 +15,14 @@ public class OperatingSystem {
         this.active = active;
     }
 
+    public static OperatingSystem create(Model name) {
+        return new OperatingSystem(
+                RequirementId.generate(),
+                name,
+                true
+        );
+    }
+
     public RequirementId getId() {
         return id;
     }

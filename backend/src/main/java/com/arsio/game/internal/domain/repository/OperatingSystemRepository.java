@@ -8,4 +8,6 @@ import com.arsio.shared.pagination.Pagination;
 public interface OperatingSystemRepository {
 
     PageResult<OperatingSystem> findAll(String search, Pagination pagination);
+
+    void save(OperatingSystem operatingSystem);
 }
