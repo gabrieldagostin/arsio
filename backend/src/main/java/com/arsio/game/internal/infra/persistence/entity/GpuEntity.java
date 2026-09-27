@@ -29,7 +29,7 @@ public class GpuEntity {
     private String manufacturer;
 
     @Column(columnDefinition = "BOOLEAN DEFAULT TRUE", nullable = false)
-    private Boolean active;
+    private boolean active;
 
     @Column(name = "created_at", nullable = false, updatable = false, insertable = false)
     private Instant createdAt;

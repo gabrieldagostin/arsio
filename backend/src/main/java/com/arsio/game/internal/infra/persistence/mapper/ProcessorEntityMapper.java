@@ -16,7 +16,6 @@ public interface ProcessorEntityMapper {
 
     Processor toDomain(ProcessorEntity entity);
 
-    @Mapping(target = "active", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     ProcessorEntity toEntity(Processor domain);
 

@@ -9,11 +9,13 @@ public class Processor {
     private final RequirementId id;
     private Model model;
     private Manufacturer manufacturer;
+    private boolean active;
 
-    public Processor(RequirementId id, Model model, Manufacturer manufacturer) {
+    public Processor(RequirementId id, Model model, Manufacturer manufacturer, boolean active) {
         this.id = id;
         this.model = model;
         this.manufacturer = manufacturer;
+        this.active = active;
     }
 
     public static Processor create(Model model, Manufacturer manufacturer) {
@@ -21,7 +23,8 @@ public class Processor {
         return new Processor(
                 RequirementId.generate(),
                 model,
-                manufacturer
+                manufacturer,
+                true
         );
     }
 
@@ -35,5 +38,13 @@ public class Processor {
 
     public Manufacturer getManufacturer() {
         return manufacturer;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void deactivate() {
+        this.active = false;
     }
 }

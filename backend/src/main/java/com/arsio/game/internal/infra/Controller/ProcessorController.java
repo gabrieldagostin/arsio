@@ -3,6 +3,7 @@ package com.arsio.game.internal.infra.Controller;
 import com.arsio.game.internal.application.command.CreateProcessorCommand;
 import com.arsio.game.internal.application.command.UpdateProcessorCommand;
 import com.arsio.game.internal.application.usecase.CreateProcessorUseCase;
+import com.arsio.game.internal.application.usecase.DeleteProcessorUseCase;
 import com.arsio.game.internal.application.usecase.ListProcessorsUseCase;
 import com.arsio.game.internal.application.usecase.UpdateProcessorUseCase;
 import com.arsio.game.internal.infra.Controller.dto.request.CreateProcessorRequest;
@@ -33,6 +34,7 @@ public class ProcessorController {
     private final ListProcessorsUseCase listProcessorsUseCase;
     private final CreateProcessorUseCase createProcessorUseCase;
     private final UpdateProcessorUseCase updateProcessorUseCase;
+    private final DeleteProcessorUseCase deleteProcessorUseCase;
 
     @GetMapping
     @PreAuthorize("HasRole('DEV')")
@@ -64,7 +66,7 @@ public class ProcessorController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("{processorId}")
+    @PutMapping("/{processorId}")
     @PreAuthorize("HasRole('ADMIN')")
     public ResponseEntity<GetProcessorResponse> update(
             @PathVariable(name = "processorId") UUID processorId,
@@ -76,5 +78,14 @@ public class ProcessorController {
                 updateProcessorUseCase.execute(command);
 
         return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{processorId}")
+    @PreAuthorize("HasRole('ADMIN')")
+    private ResponseEntity<Void> delete(@PathVariable(name = "processorId") UUID processorId) {
+
+        deleteProcessorUseCase.execute(processorId);
+
+        return ResponseEntity.noContent().build();
     }
 }
