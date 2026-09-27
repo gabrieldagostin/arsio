@@ -5,6 +5,7 @@ import com.arsio.game.internal.domain.valueobject.GenreId;
 import com.arsio.shared.pagination.PageResult;
 import com.arsio.shared.pagination.Pagination;
 
+import java.util.Optional;
 import java.util.Set;
 
 public interface GenreRepository {
@@ -14,4 +15,6 @@ public interface GenreRepository {
     Set<Genre> findAllById(Set<GenreId> genreIds);
 
     void save(Genre genre);
+
+    Optional<Genre> findById(GenreId genreId);
 }

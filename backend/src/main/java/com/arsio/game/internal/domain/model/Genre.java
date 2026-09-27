@@ -34,4 +34,8 @@ public class Genre {
     public boolean isActive() {
         return active;
     }
+
+    public void update(GenreName name) {
+        this.name = name;
+    }
 }

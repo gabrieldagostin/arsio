@@ -3,12 +3,11 @@ package com.arsio.game.internal.infra.Controller;
 import com.arsio.game.internal.application.command.AssociateGenresCommand;
 import com.arsio.game.internal.application.command.CreateGenreCommand;
 import com.arsio.game.internal.application.command.DeleteGenreFromGameCommand;
-import com.arsio.game.internal.application.usecase.AssociateGenresUseCase;
-import com.arsio.game.internal.application.usecase.CreateGenreUseCase;
-import com.arsio.game.internal.application.usecase.DeleteGenreFromGameUseCase;
-import com.arsio.game.internal.application.usecase.ListGenresUseCase;
+import com.arsio.game.internal.application.command.UpdateGenreCommand;
+import com.arsio.game.internal.application.usecase.*;
 import com.arsio.game.internal.infra.Controller.dto.request.AssociateGenresRequest;
 import com.arsio.game.internal.infra.Controller.dto.request.CreateGenreRequest;
+import com.arsio.game.internal.infra.Controller.dto.request.UpdateGenreRequest;
 import com.arsio.game.internal.infra.Controller.dto.response.GetGenreResponse;
 import com.arsio.game.internal.infra.Controller.mapper.GenreControllerMapper;
 import com.arsio.shared.pagination.PageResult;
@@ -37,6 +36,7 @@ public class GenreController {
     private final AssociateGenresUseCase associateGenresUseCase;
     private final DeleteGenreFromGameUseCase deleteGenreFromGameUseCase;
     private final CreateGenreUseCase createGenreUseCase;
+    private final UpdateGenreUseCase updateGenreUseCase;
     
     @GetMapping
     @PreAuthorize("HasRole('DEV')")
@@ -59,8 +59,7 @@ public class GenreController {
     @PreAuthorize("HasRole('DEV')")
     public ResponseEntity<Set<GetGenreResponse>> associateGenre(
             @PathVariable(name = "gameId") UUID gameId,
-            @RequestBody @Valid AssociateGenresRequest request
-    ) {
+            @RequestBody @Valid AssociateGenresRequest request) {
 
         AssociateGenresCommand command = mapper.toAssociateGenresCommand(request);
 
@@ -73,8 +72,7 @@ public class GenreController {
     @PreAuthorize("HasRole('DEV')")
     public ResponseEntity<Void> deleteGenre(
             @PathVariable(name = "gameId") UUID gameId,
-            @PathVariable("genreId") UUID genreId
-    ) {
+            @PathVariable("genreId") UUID genreId) {
 
         DeleteGenreFromGameCommand command = mapper.toDeleteGenreFromGameCommand(gameId, genreId);
 
@@ -90,6 +88,19 @@ public class GenreController {
         CreateGenreCommand command = mapper.toCreateGenreCommand(request);
 
         GetGenreResponse response = createGenreUseCase.execute(command);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/{genreId}")
+    @PreAuthorize("HasRole('ADMIN')")
+    public ResponseEntity<GetGenreResponse> update(
+            @PathVariable(name = "genreId") UUID genreId,
+            @RequestBody @Valid UpdateGenreRequest request) {
+
+        UpdateGenreCommand command = mapper.toUpdateGenreCommand(genreId, request);
+
+        GetGenreResponse response = updateGenreUseCase.execute(command);
 
         return ResponseEntity.ok(response);
     }

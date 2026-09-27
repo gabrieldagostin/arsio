@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -35,7 +36,7 @@ public class JpaGenreRepositoryAdapter implements GenreRepository {
         Page<GenreEntity> result;
 
         if (search == null || search.isBlank()) {
-            result = genres.findAll(pageable);
+            result = genres.findAllByActiveTrue(pageable);
         } else {
             result = genres.findByNameContainingIgnoreCaseAndActiveTrue(search.trim(), pageable);
         }
@@ -61,7 +62,7 @@ public class JpaGenreRepositoryAdapter implements GenreRepository {
                 .map(GenreId::value)
                 .collect(Collectors.toSet());
 
-        return genres.findAllById(ids)
+        return genres.findAllByIdAndActiveTrue(ids)
                 .stream()
                 .map(mapper::toDomain)
                 .collect(Collectors.toSet());
@@ -70,5 +71,11 @@ public class JpaGenreRepositoryAdapter implements GenreRepository {
     @Override
     public void save(Genre genre) {
         genres.save(mapper.toEntity(genre));
+    }
+
+    @Override
+    public Optional<Genre> findById(GenreId genreId) {
+        return genres.findByIdAndActiveTrue(genreId.value())
+                .map(mapper::toDomain);
     }
 }
