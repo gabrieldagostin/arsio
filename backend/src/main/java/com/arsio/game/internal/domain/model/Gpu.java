@@ -42,4 +42,9 @@ public class Gpu {
     public boolean isActive() {
         return active;
     }
+
+    public void update(Manufacturer manufacturer, Model model) {
+        this.manufacturer = manufacturer;
+        this.model = model;
+    }
 }

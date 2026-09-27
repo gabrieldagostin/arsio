@@ -23,8 +23,8 @@ public class ListGpusUseCase {
                 .map(gpu -> {
                     return new GetGpuResponse(
                             gpu.getId().value(),
-                            gpu.getModel().value(),
-                            gpu.getManufacturer().value()
+                            gpu.getManufacturer().value(),
+                            gpu.getModel().value()
                     );
                 });
     }

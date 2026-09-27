@@ -1,9 +1,12 @@
 package com.arsio.game.internal.infra.Controller;
 
 import com.arsio.game.internal.application.command.CreateGpuCommand;
+import com.arsio.game.internal.application.command.UpdateGpuCommand;
 import com.arsio.game.internal.application.usecase.CreateGpuUseCase;
 import com.arsio.game.internal.application.usecase.ListGpusUseCase;
+import com.arsio.game.internal.application.usecase.UpdateGpuUseCase;
 import com.arsio.game.internal.infra.Controller.dto.request.CreateGpuRequest;
+import com.arsio.game.internal.infra.Controller.dto.request.UpdateGpuRequest;
 import com.arsio.game.internal.infra.Controller.dto.response.GetGpuResponse;
 import com.arsio.game.internal.infra.Controller.mapper.GpuControllerMapper;
 import com.arsio.shared.pagination.PageResult;
@@ -19,6 +22,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/game-requirements/gpus")
@@ -28,6 +33,7 @@ public class GpuController {
     private final PaginationMapper paginationMapper;
     private final ListGpusUseCase listGpusUseCase;
     private final CreateGpuUseCase createGpuUseCase;
+    private final UpdateGpuUseCase updateGpuUseCase;
 
     @GetMapping
     @PreAuthorize("HasRole('DEV')")
@@ -55,5 +61,19 @@ public class GpuController {
         GetGpuResponse response = createGpuUseCase.execute(command);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @PutMapping("/{gpuId}")
+    @PreAuthorize("HasRole('ADMIN')")
+    public ResponseEntity<GetGpuResponse> update(
+            @RequestParam(name = "gpuId") UUID gpuId,
+            @RequestBody @Valid UpdateGpuRequest request
+    ) {
+
+        UpdateGpuCommand command = mapper.toUpdateGpuCommand(gpuId, request);
+
+        GetGpuResponse response = updateGpuUseCase.execute(command);
+
+        return ResponseEntity.ok(response);
     }
 }

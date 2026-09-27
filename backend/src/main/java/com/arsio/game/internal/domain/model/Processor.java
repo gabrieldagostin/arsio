@@ -43,6 +43,11 @@ public class Processor {
         return active;
     }
 
+    public void update(Manufacturer manufacturer, Model model) {
+        this.manufacturer = manufacturer;
+        this.model = model;
+    }
+
     public void deactivate() {
         this.active = false;
     }

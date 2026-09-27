@@ -2,6 +2,7 @@ package com.arsio.game.internal.infra.persistence.adapter;
 
 import com.arsio.game.internal.domain.model.Gpu;
 import com.arsio.game.internal.domain.repository.GpuRepository;
+import com.arsio.game.internal.domain.valueobject.RequirementId;
 import com.arsio.game.internal.infra.persistence.entity.GpuEntity;
 import com.arsio.game.internal.infra.persistence.mapper.GpuEntityMapper;
 import com.arsio.game.internal.infra.persistence.repository.SpringDataGpuRepository;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -53,5 +55,11 @@ public class JpaGpuRepositoryAdapter implements GpuRepository {
     @Override
     public void save(Gpu gpu) {
         gpus.save(mapper.toEntity(gpu));
+    }
+
+    @Override
+    public Optional<Gpu> findById(RequirementId requirementId) {
+        return gpus.findById(requirementId.value())
+                .map(mapper::toDomain);
     }
 }

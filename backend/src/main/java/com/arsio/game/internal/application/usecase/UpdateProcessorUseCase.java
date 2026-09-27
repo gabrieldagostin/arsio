@@ -23,12 +23,14 @@ public class UpdateProcessorUseCase {
         Processor processor = processors.findById(command.processorId())
                 .orElseThrow(ProcessorNotFoundException::new);
 
+        processor.update(command.manufacturer(), command.model());
+
         processors.save(processor);
 
         return new GetProcessorResponse(
                 processor.getId().value(),
-                processor.getModel().value(),
-                processor.getManufacturer().value()
+                processor.getManufacturer().value(),
+                processor.getModel().value()
         );
     }
 }

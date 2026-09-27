@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public record GetGpuResponse(
         UUID id,
-        String model,
-        String manufacturer
+        String manufacturer,
+        String model
 ) {
 }

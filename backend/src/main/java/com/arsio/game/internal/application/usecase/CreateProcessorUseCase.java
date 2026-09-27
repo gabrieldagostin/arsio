@@ -28,8 +28,8 @@ public class CreateProcessorUseCase {
 
         return new GetProcessorResponse(
                 processor.getId().value(),
-                processor.getModel().value(),
-                processor.getManufacturer().value()
+                processor.getManufacturer().value(),
+                processor.getModel().value()
         );
     }
 }
