@@ -20,8 +20,8 @@ public class CreateProcessorUseCase {
     public GetProcessorResponse execute(CreateProcessorCommand command) {
 
         Processor processor = Processor.create(
-                command.model(),
-                command.manufacturer()
+                command.manufacturer(),
+                command.model()
         );
 
         processors.save(processor);

@@ -7,4 +7,6 @@ import com.arsio.shared.pagination.Pagination;
 public interface GpuRepository {
 
     PageResult<Gpu> findAll(String search, Pagination pagination);
+
+    void save(Gpu gpu);
 }

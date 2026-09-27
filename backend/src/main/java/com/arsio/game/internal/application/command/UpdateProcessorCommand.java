@@ -6,7 +6,7 @@ import com.arsio.game.internal.domain.valueobject.RequirementId;
 
 public record UpdateProcessorCommand(
         RequirementId processorId,
-        Model model,
-        Manufacturer manufacturer
+        Manufacturer manufacturer,
+        Model model
 ) {
 }

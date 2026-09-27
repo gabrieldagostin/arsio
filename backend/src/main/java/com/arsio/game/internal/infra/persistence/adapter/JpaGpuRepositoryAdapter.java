@@ -49,4 +49,9 @@ public class JpaGpuRepositoryAdapter implements GpuRepository {
                 result.getTotalPages()
         );
     }
+
+    @Override
+    public void save(Gpu gpu) {
+        gpus.save(mapper.toEntity(gpu));
+    }
 }

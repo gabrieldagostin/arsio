@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -48,8 +49,7 @@ public class ProcessorController {
 
         Pagination pagination = paginationMapper.toPagination(pageable);
 
-        PageResult<GetProcessorResponse> response =
-                listProcessorsUseCase.execute(search, pagination);
+        PageResult<GetProcessorResponse> response = listProcessorsUseCase.execute(search, pagination);
 
         return ResponseEntity.ok(response);
     }
@@ -60,10 +60,9 @@ public class ProcessorController {
 
         CreateProcessorCommand command = mapper.toCreateProcessorCommand(request);
 
-        GetProcessorResponse response =
-                createProcessorUseCase.execute(command);
+        GetProcessorResponse response = createProcessorUseCase.execute(command);
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/{processorId}")
@@ -74,8 +73,7 @@ public class ProcessorController {
 
         UpdateProcessorCommand command = mapper.toUpdateProcessorCommand(processorId, request);
 
-        GetProcessorResponse response =
-                updateProcessorUseCase.execute(command);
+        GetProcessorResponse response = updateProcessorUseCase.execute(command);
 
         return ResponseEntity.ok(response);
     }

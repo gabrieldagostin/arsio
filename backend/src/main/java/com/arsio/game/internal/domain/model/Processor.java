@@ -7,23 +7,22 @@ import com.arsio.game.internal.domain.valueobject.RequirementId;
 public class Processor {
 
     private final RequirementId id;
-    private Model model;
     private Manufacturer manufacturer;
+    private Model model;
     private boolean active;
 
-    public Processor(RequirementId id, Model model, Manufacturer manufacturer, boolean active) {
+    public Processor(RequirementId id, Manufacturer manufacturer, Model model, boolean active) {
         this.id = id;
-        this.model = model;
         this.manufacturer = manufacturer;
+        this.model = model;
         this.active = active;
     }
 
-    public static Processor create(Model model, Manufacturer manufacturer) {
-
+    public static Processor create(Manufacturer manufacturer, Model model) {
         return new Processor(
                 RequirementId.generate(),
-                model,
                 manufacturer,
+                model,
                 true
         );
     }
@@ -32,12 +31,12 @@ public class Processor {
         return id;
     }
 
-    public Model getModel() {
-        return model;
-    }
-
     public Manufacturer getManufacturer() {
         return manufacturer;
+    }
+
+    public Model getModel() {
+        return model;
     }
 
     public boolean isActive() {

@@ -23,10 +23,10 @@ public class GpuEntity {
     private UUID id;
 
     @Column(nullable = false)
-    private String model;
+    private String manufacturer;
 
     @Column(nullable = false)
-    private String manufacturer;
+    private String model;
 
     @Column(columnDefinition = "BOOLEAN DEFAULT TRUE", nullable = false)
     private boolean active;
