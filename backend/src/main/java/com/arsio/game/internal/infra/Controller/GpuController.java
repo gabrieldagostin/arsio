@@ -3,6 +3,7 @@ package com.arsio.game.internal.infra.Controller;
 import com.arsio.game.internal.application.command.CreateGpuCommand;
 import com.arsio.game.internal.application.command.UpdateGpuCommand;
 import com.arsio.game.internal.application.usecase.CreateGpuUseCase;
+import com.arsio.game.internal.application.usecase.DeleteGpuUseCase;
 import com.arsio.game.internal.application.usecase.ListGpusUseCase;
 import com.arsio.game.internal.application.usecase.UpdateGpuUseCase;
 import com.arsio.game.internal.infra.Controller.dto.request.CreateGpuRequest;
@@ -34,6 +35,7 @@ public class GpuController {
     private final ListGpusUseCase listGpusUseCase;
     private final CreateGpuUseCase createGpuUseCase;
     private final UpdateGpuUseCase updateGpuUseCase;
+    private final DeleteGpuUseCase deleteGpuUseCase;
 
     @GetMapping
     @PreAuthorize("HasRole('DEV')")
@@ -75,5 +77,14 @@ public class GpuController {
         GetGpuResponse response = updateGpuUseCase.execute(command);
 
         return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{gpuId}")
+    @PreAuthorize("HasRole('ADMIN')")
+    public ResponseEntity<Void>  delete(@RequestParam(name = "gpuId") UUID gpuId) {
+
+        deleteGpuUseCase.execute(gpuId);
+
+        return ResponseEntity.noContent().build();
     }
 }

@@ -33,7 +33,7 @@ public class JpaGpuRepositoryAdapter implements GpuRepository {
         Page<GpuEntity> result;
 
         if (search == null || search.isBlank()) {
-            result = gpus.findAll(pageable);
+            result = gpus.findAllByActiveTrue(pageable);
         } else {
             result = gpus.findByModelContainingIgnoreCaseAndActiveTrue(search.trim(), pageable);
         }
@@ -59,7 +59,7 @@ public class JpaGpuRepositoryAdapter implements GpuRepository {
 
     @Override
     public Optional<Gpu> findById(RequirementId requirementId) {
-        return gpus.findById(requirementId.value())
+        return gpus.findByIdAndActiveTrue(requirementId.value())
                 .map(mapper::toDomain);
     }
 }

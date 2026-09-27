@@ -33,7 +33,7 @@ public class JpaProcessorRepositoryAdapter implements ProcessorRepository {
         Page<ProcessorEntity> result;
 
         if (search == null || search.isBlank()) {
-            result = processors.findAll(pageable);
+            result = processors.findAllByActiveTrue(pageable);
         } else {
             result = processors.findByModelContainingIgnoreCaseAndActiveTrue(search.trim(), pageable);
         }
@@ -59,7 +59,7 @@ public class JpaProcessorRepositoryAdapter implements ProcessorRepository {
 
     @Override
     public Optional<Processor> findById(RequirementId processorId) {
-        return processors.findById(processorId.value())
+        return processors.findByIdAndActiveTrue(processorId.value())
                 .map(mapper::toDomain);
     }
 }

@@ -47,4 +47,8 @@ public class Gpu {
         this.manufacturer = manufacturer;
         this.model = model;
     }
+
+    public void deactivate() {
+        this.active = false;
+    }
 }
