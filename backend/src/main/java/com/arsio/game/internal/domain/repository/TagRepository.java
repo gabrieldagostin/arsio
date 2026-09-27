@@ -5,6 +5,7 @@ import com.arsio.game.internal.domain.valueobject.TagId;
 import com.arsio.shared.pagination.PageResult;
 import com.arsio.shared.pagination.Pagination;
 
+import java.util.Optional;
 import java.util.Set;
 
 public interface TagRepository {
@@ -14,4 +15,6 @@ public interface TagRepository {
     Set<Tag> findAllByIds(Set<TagId> tagIds);
 
     void save(Tag tag);
+
+    Optional<Tag> findById(TagId tagId);
 }

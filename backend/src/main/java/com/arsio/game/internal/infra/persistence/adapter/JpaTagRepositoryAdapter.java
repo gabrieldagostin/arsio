@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -35,7 +36,7 @@ public class JpaTagRepositoryAdapter implements TagRepository {
         Page<TagEntity> result;
 
         if (search == null || search.isBlank()) {
-            result = tags.findAll(pageable);
+            result = tags.findAllByActiveTrue(pageable);
         } else {
             result = tags.findByNameContainingIgnoreCaseAndActiveTrue(search.trim(), pageable);
         }
@@ -62,7 +63,7 @@ public class JpaTagRepositoryAdapter implements TagRepository {
                 .map(TagId::value)
                 .collect(Collectors.toSet());
 
-        return tags.findAllById(ids)
+        return tags.findAllByIdAndActiveTrue(ids)
                 .stream()
                 .map(mapper::toDomain)
                 .collect(Collectors.toSet());
@@ -71,5 +72,11 @@ public class JpaTagRepositoryAdapter implements TagRepository {
     @Override
     public void save(Tag tag) {
         tags.save(mapper.toEntity(tag));
+    }
+
+    @Override
+    public Optional<Tag> findById(TagId tagId) {
+        return tags.findByIdAndActiveTrue(tagId.value())
+                .map(mapper::toDomain);
     }
 }

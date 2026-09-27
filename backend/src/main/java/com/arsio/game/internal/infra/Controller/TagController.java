@@ -3,12 +3,11 @@ package com.arsio.game.internal.infra.Controller;
 import com.arsio.game.internal.application.command.AssociateTagsCommand;
 import com.arsio.game.internal.application.command.CreateTagCommand;
 import com.arsio.game.internal.application.command.DeleteTagFromGameCommand;
-import com.arsio.game.internal.application.usecase.AssociateTagsUseCase;
-import com.arsio.game.internal.application.usecase.CreateTagUseCase;
-import com.arsio.game.internal.application.usecase.DeleteTagFromGameUseCase;
-import com.arsio.game.internal.application.usecase.ListTagsUseCase;
+import com.arsio.game.internal.application.command.UpdateTagCommand;
+import com.arsio.game.internal.application.usecase.*;
 import com.arsio.game.internal.infra.Controller.dto.request.AssociateTagsRequest;
 import com.arsio.game.internal.infra.Controller.dto.request.CreateTagRequest;
+import com.arsio.game.internal.infra.Controller.dto.request.UpdateTagRequest;
 import com.arsio.game.internal.infra.Controller.dto.response.GetTagResponse;
 import com.arsio.game.internal.infra.Controller.mapper.TagControllerMapper;
 import com.arsio.shared.pagination.PageResult;
@@ -38,6 +37,7 @@ public class TagController {
     private final AssociateTagsUseCase associateTagsUseCase;
     private final DeleteTagFromGameUseCase deleteTagFromGameUseCase;
     private final CreateTagUseCase createTagUseCase;
+    private final UpdateTagUseCase updateTagUseCase;
 
     @GetMapping
     @PreAuthorize("HasRole('DEV')")
@@ -91,5 +91,18 @@ public class TagController {
         GetTagResponse response = createTagUseCase.execute(command);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @PutMapping("/{tagId}")
+    @PreAuthorize("HasRole('ADMIN')")
+    public ResponseEntity<GetTagResponse> update(
+            @PathVariable(name = "tagId") UUID tagId,
+            @RequestBody @Valid UpdateTagRequest request) {
+
+        UpdateTagCommand command = mapper.toUpdateTagCommand(tagId, request);
+
+        GetTagResponse response = updateTagUseCase.execute(command);
+
+        return ResponseEntity.ok(response);
     }
 }

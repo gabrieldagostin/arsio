@@ -34,4 +34,8 @@ public class Tag {
     public boolean idActive() {
         return active;
     }
+
+    public void update(TagName name) {
+        this.name = name;
+    }
 }
