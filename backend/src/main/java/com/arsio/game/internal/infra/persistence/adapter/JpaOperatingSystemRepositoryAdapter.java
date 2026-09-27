@@ -2,6 +2,7 @@ package com.arsio.game.internal.infra.persistence.adapter;
 
 import com.arsio.game.internal.domain.model.OperatingSystem;
 import com.arsio.game.internal.domain.repository.OperatingSystemRepository;
+import com.arsio.game.internal.domain.valueobject.RequirementId;
 import com.arsio.game.internal.infra.persistence.entity.OperatingSystemEntity;
 import com.arsio.game.internal.infra.persistence.mapper.OperatingSystemEntityMapper;
 import com.arsio.game.internal.infra.persistence.repository.SpringDataOperatingSystemRepository;
@@ -14,6 +15,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 @RequiredArgsConstructor
@@ -53,5 +56,11 @@ public class JpaOperatingSystemRepositoryAdapter implements OperatingSystemRepos
     @Override
     public void save(OperatingSystem operatingSystem) {
         operatingSystems.save(mapper.toEntity(operatingSystem));
+    }
+
+    @Override
+    public Optional<OperatingSystem> findById(RequirementId operatingSystemId) {
+        return operatingSystems.findByIdAndActiveTrue(operatingSystemId.value())
+                .map(mapper::toDomain);
     }
 }

@@ -34,4 +34,8 @@ public class OperatingSystem {
     public boolean isActive() {
         return active;
     }
+
+    public void update(Model name) {
+        this.name = name;
+    }
 }
