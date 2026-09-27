@@ -38,4 +38,8 @@ public class Tag {
     public void update(TagName name) {
         this.name = name;
     }
+
+    public void deactivate() {
+        this.active = false;
+    }
 }

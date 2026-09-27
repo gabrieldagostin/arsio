@@ -38,6 +38,7 @@ public class TagController {
     private final DeleteTagFromGameUseCase deleteTagFromGameUseCase;
     private final CreateTagUseCase createTagUseCase;
     private final UpdateTagUseCase updateTagUseCase;
+    private final DeleteTagUseCase deleteTagUseCase;
 
     @GetMapping
     @PreAuthorize("HasRole('DEV')")
@@ -104,5 +105,14 @@ public class TagController {
         GetTagResponse response = updateTagUseCase.execute(command);
 
         return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{tagId}")
+    @PreAuthorize("HasRole('ADMIN')")
+    public ResponseEntity<Void> delete(@PathVariable(name = "tagId") UUID tagId) {
+
+        deleteTagUseCase.execute(tagId);
+
+        return ResponseEntity.noContent().build();
     }
 }
