@@ -66,4 +66,9 @@ public class JpaGenreRepositoryAdapter implements GenreRepository {
                 .map(mapper::toDomain)
                 .collect(Collectors.toSet());
     }
+
+    @Override
+    public void save(Genre genre) {
+        genres.save(mapper.toEntity(genre));
+    }
 }

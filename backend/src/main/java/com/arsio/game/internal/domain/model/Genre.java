@@ -7,12 +7,20 @@ public class Genre {
 
     private final GenreId id;
     private GenreName name;
-    private Boolean active;
+    private boolean active;
 
-    public Genre(GenreId id, GenreName name, Boolean active) {
+    public Genre(GenreId id, GenreName name, boolean active) {
         this.id = id;
         this.name = name;
         this.active = active;
+    }
+
+    public static Genre create(GenreName name) {
+        return new Genre(
+                GenreId.generate(),
+                name,
+                true
+        );
     }
 
     public GenreId getId() {
@@ -23,7 +31,7 @@ public class Genre {
         return name;
     }
 
-    public Boolean getActive() {
+    public boolean isActive() {
         return active;
     }
 }

@@ -25,5 +25,5 @@ public class GenreEntity {
     private String name;
 
     @Column(nullable = false)
-    private Boolean active;
+    private boolean active;
 }
