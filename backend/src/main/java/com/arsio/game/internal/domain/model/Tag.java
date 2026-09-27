@@ -7,12 +7,20 @@ public class Tag {
 
     private final TagId id;
     private TagName name;
-    private Boolean active;
+    private boolean active;
 
-    public Tag(TagId id, TagName name, Boolean active) {
+    public Tag(TagId id, TagName name, boolean active) {
         this.id = id;
         this.name = name;
         this.active = active;
+    }
+
+    public static Tag create(TagName name) {
+        return new Tag(
+                TagId.generate(),
+                name,
+                true
+        );
     }
 
     public TagId getId() {
@@ -23,7 +31,7 @@ public class Tag {
         return name;
     }
 
-    public Boolean getActive() {
+    public boolean idActive() {
         return active;
     }
 }

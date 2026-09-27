@@ -67,4 +67,9 @@ public class JpaTagRepositoryAdapter implements TagRepository {
                 .map(mapper::toDomain)
                 .collect(Collectors.toSet());
     }
+
+    @Override
+    public void save(Tag tag) {
+        tags.save(mapper.toEntity(tag));
+    }
 }

@@ -12,4 +12,6 @@ public interface TagRepository {
     PageResult<Tag> findAll(String search, Pagination pagination);
 
     Set<Tag> findAllByIds(Set<TagId> tagIds);
+
+    void save(Tag tag);
 }

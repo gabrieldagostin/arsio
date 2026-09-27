@@ -25,5 +25,5 @@ public class TagEntity {
     private String name;
 
     @Column(nullable = false)
-    private Boolean active;
+    private boolean active;
 }

@@ -1,11 +1,14 @@
 package com.arsio.game.internal.infra.Controller;
 
 import com.arsio.game.internal.application.command.AssociateTagsCommand;
+import com.arsio.game.internal.application.command.CreateTagCommand;
 import com.arsio.game.internal.application.command.DeleteTagFromGameCommand;
 import com.arsio.game.internal.application.usecase.AssociateTagsUseCase;
+import com.arsio.game.internal.application.usecase.CreateTagUseCase;
 import com.arsio.game.internal.application.usecase.DeleteTagFromGameUseCase;
 import com.arsio.game.internal.application.usecase.ListTagsUseCase;
 import com.arsio.game.internal.infra.Controller.dto.request.AssociateTagsRequest;
+import com.arsio.game.internal.infra.Controller.dto.request.CreateTagRequest;
 import com.arsio.game.internal.infra.Controller.dto.response.GetTagResponse;
 import com.arsio.game.internal.infra.Controller.mapper.TagControllerMapper;
 import com.arsio.shared.pagination.PageResult;
@@ -16,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +37,7 @@ public class TagController {
     private final ListTagsUseCase listTagsUseCase;
     private final AssociateTagsUseCase associateTagsUseCase;
     private final DeleteTagFromGameUseCase deleteTagFromGameUseCase;
+    private final CreateTagUseCase createTagUseCase;
 
     @GetMapping
     @PreAuthorize("HasRole('DEV')")
@@ -55,8 +60,7 @@ public class TagController {
     @PreAuthorize("HasRole('DEV')")
     public ResponseEntity<Set<GetTagResponse>> associateTag(
             @PathVariable(name = "gameId") UUID gameId,
-            @RequestBody @Valid AssociateTagsRequest request
-    ) {
+            @RequestBody @Valid AssociateTagsRequest request) {
 
         AssociateTagsCommand command = mapper.toAssociateTagsCommand(request);
 
@@ -69,13 +73,23 @@ public class TagController {
     @PreAuthorize("HasRole('DEV')")
     public ResponseEntity<Void> deleteTag(
             @PathVariable(name = "gameId") UUID gameId,
-            @PathVariable(name = "tagId") UUID tagId
-    ) {
+            @PathVariable(name = "tagId") UUID tagId) {
 
         DeleteTagFromGameCommand command = mapper.toDeleteTagFromGameCommand(gameId, tagId);
 
         deleteTagFromGameUseCase.execute(command);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping
+    @PreAuthorize("HasRole('ADMIN')")
+    public ResponseEntity<GetTagResponse> create(@RequestBody @Valid CreateTagRequest request) {
+
+        CreateTagCommand command = mapper.toCreateTagCommand(request);
+
+        GetTagResponse response = createTagUseCase.execute(command);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }
