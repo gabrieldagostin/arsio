@@ -1,0 +1,2 @@
+ALTER TABLE operating_systems
+    ADD COLUMN active BOOLEAN NOT NULL DEFAULT TRUE;

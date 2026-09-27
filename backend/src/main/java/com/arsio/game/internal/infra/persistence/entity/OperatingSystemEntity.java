@@ -25,6 +25,9 @@ public class OperatingSystemEntity {
     @Column(nullable = false)
     private String name;
 
+    @Column(columnDefinition = "BOOLEAN DEFAULT TRUE", nullable = false)
+    private boolean active;
+
     @Column(name = "created_at", nullable = false, updatable = false, insertable = false)
     private Instant createdAt;
 }

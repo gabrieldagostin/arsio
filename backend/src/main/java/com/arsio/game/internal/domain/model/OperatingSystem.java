@@ -7,10 +7,12 @@ public class OperatingSystem {
 
     private final RequirementId id;
     private Model name;
+    private boolean active;
 
-    public OperatingSystem(RequirementId id, Model name) {
+    public OperatingSystem(RequirementId id, Model name, boolean active) {
         this.id = id;
         this.name = name;
+        this.active = active;
     }
 
     public RequirementId getId() {
@@ -19,5 +21,9 @@ public class OperatingSystem {
 
     public Model getName() {
         return name;
+    }
+
+    public boolean isActive() {
+        return active;
     }
 }

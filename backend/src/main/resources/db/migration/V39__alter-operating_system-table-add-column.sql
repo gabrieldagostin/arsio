@@ -1,2 +1,2 @@
-ALTER TABLE operating_system
+ALTER TABLE operating_systems
 ADD COLUMN created_at TIMESTAMPTZ NOT NULL DEFAULT NOW();
