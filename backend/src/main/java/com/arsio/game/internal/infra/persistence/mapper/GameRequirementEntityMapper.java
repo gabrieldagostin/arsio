@@ -66,6 +66,7 @@ public interface GameRequirementEntityMapper {
     default String storageUnitToString(StorageUnit storageUnit) {
         return storageUnit.name();
     }
+
     default StorageUnit stringToStorageUnit(String value) {
         return StorageUnit.valueOf(value);
     }

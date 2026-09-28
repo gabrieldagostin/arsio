@@ -51,10 +51,12 @@ public final class ErrorTypes {
     public static final String GAME_INVALID_DESCRIPTION = BASE + "game-invalid-description";
     public static final String GAME_INVALID_STATUS = BASE + "game-invalid-game-status";
     public static final String GAME_INVALID_REQUIREMENT = BASE + "game-invalid-requirement";
+    public static final String GAME_INVALID_REQUIREMENT_CATEGORY = BASE + "game-invalid-requirement-category";
     public static final String GAME_INVALID_MEDIA_TYPE = BASE + "game-invalid-media-type";
     public static final String GAME_INVALID_MEDIA_ROLE = BASE + "game-invalid-media-role";
     public static final String GAME_INVALID_GENRE_NAME = BASE + "game-invalid-genre-name";
     public static final String GAME_INVALID_TAG_NAME = BASE + "game-invalid-tag-name";
+    public static final String GAME_INVALID_STORAGE_UNIT = BASE + "game-invalid-storage-unit";
 
     public static final String DEVELOPER_NOT_FOUND = BASE + "developer-not-found";
     public static final String DEVELOPER_INVALID_MP_ACCESS_TOKEN =  BASE + "developer-invalid-MP-access-token";

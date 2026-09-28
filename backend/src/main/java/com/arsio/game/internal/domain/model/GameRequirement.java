@@ -2,6 +2,8 @@ package com.arsio.game.internal.domain.model;
 
 import com.arsio.game.internal.domain.valueobject.*;
 
+import java.util.UUID;
+
 public class GameRequirement {
 
     private final RequirementId id;
@@ -24,6 +26,29 @@ public class GameRequirement {
         this.ram = ram;
         this.storage = storage;
         this.storageUnit = storageUnit;
+    }
+
+    public static GameRequirement create(
+            GameId gameId,
+            RequirementCategory category,
+            RequirementId operatingSystemId,
+            RequirementId processorId,
+            RequirementId gpuId,
+            Ram ram,
+            Storage storage,
+            StorageUnit storageUnit) {
+
+        return new GameRequirement(
+                RequirementId.generate(),
+                gameId,
+                category,
+                operatingSystemId,
+                processorId,
+                gpuId,
+                ram,
+                storage,
+                storageUnit
+        );
     }
 
     public RequirementId getId() {

@@ -46,10 +46,12 @@ public enum ErrorCode {
     GAME_INVALID_DESCRIPTION("Invalid description"),
     GAME_INVALID_STATUS("Invalid status"),
     GAME_INVALID_REQUIREMENT("Invalid requirements"),
+    GAME_INVALID_REQUIREMENT_CATEGORY("Invalid requirement category"),
     GAME_INVALID_MEDIA_TYPE("Invalid media type"),
     GAME_INVALID_MEDIA_ROLE("Invalid media role"),
     GAME_INVALID_GENRE_NAME("Invalid genre name"),
     GAME_INVALID_TAG_NAME("Invalid tag name"),
+    GAME_INVALID_STORAGE_UNIT("Invalid storage unit"),
 
     DEVELOPER_NOT_FOUND("Developer not found"),
     DEVELOPER_INVALID_MP_ACCESS_TOKEN("Invalid MP access token"),

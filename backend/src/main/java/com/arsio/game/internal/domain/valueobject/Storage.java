@@ -10,7 +10,7 @@ public record Storage(Double value) {
 
     private void validate(Double value) {
 
-        if (value == null || value < 0)
+        if (value < 0)
             throw new InvalidRequirementException("Invalid storage, please try again.");
     }
 }

@@ -10,7 +10,7 @@ public record Ram(Integer value) {
 
     private void validate(Integer value) {
 
-        if (value == null || value < 0)
+        if (value < 0)
             throw new InvalidRequirementException("Invalid ram, please try again.");
     }
 }
