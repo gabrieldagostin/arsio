@@ -6,4 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.UUID;
 
 public interface SpringDataGameRequirementRepository extends JpaRepository<GameRequirementEntity, UUID> {
+
+    GameRequirementEntity findByGameIdAndCategoryMinimum(UUID gameId);
+
+    GameRequirementEntity findByGameIdAndCategoryRecommended(UUID gameId);
 }

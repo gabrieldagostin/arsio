@@ -2,8 +2,10 @@ package com.arsio.game.internal.infra.Controller;
 
 import com.arsio.game.internal.application.command.CreateGameRequirementCommand;
 import com.arsio.game.internal.application.usecase.CreateGameRequirementUseCase;
+import com.arsio.game.internal.application.usecase.GetGameRequirementsUseCase;
 import com.arsio.game.internal.infra.Controller.dto.request.CreateGameRequirementRequest;
 import com.arsio.game.internal.infra.Controller.dto.response.GetGameRequirementResponse;
+import com.arsio.game.internal.infra.Controller.dto.response.GetGameRequirementsResponse;
 import com.arsio.game.internal.infra.Controller.mapper.GameRequirementControllerMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +23,7 @@ public class GameRequirementController {
 
     private final GameRequirementControllerMapper mapper;
     private final CreateGameRequirementUseCase createGameRequirementUseCase;
+    private final GetGameRequirementsUseCase getGameRequirementsUseCase;
 
     @PostMapping
     @PreAuthorize("HasRole('DEV')")
@@ -33,5 +36,14 @@ public class GameRequirementController {
         GetGameRequirementResponse response = createGameRequirementUseCase.execute(command);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @GetMapping("/{gameId}")
+    @PreAuthorize("HasRole('USER')")
+    public ResponseEntity<GetGameRequirementsResponse> get(@PathVariable(name = "gameId") UUID gameId) {
+
+        GetGameRequirementsResponse response = getGameRequirementsUseCase.execute(gameId);
+
+        return ResponseEntity.ok(response);
     }
 }
