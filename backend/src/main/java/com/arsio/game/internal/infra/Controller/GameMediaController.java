@@ -4,10 +4,7 @@ import com.arsio.game.internal.application.command.AddGameTrailerCommand;
 import com.arsio.game.internal.application.service.GameMediaUploadPreparationService;
 import com.arsio.game.internal.application.usecase.*;
 import com.arsio.game.internal.infra.Controller.dto.request.AddGameTrailerRequest;
-import com.arsio.game.internal.infra.Controller.dto.response.GetBannerResponse;
-import com.arsio.game.internal.infra.Controller.dto.response.GetScreenshotResponse;
-import com.arsio.game.internal.infra.Controller.dto.response.GetThumbnailResponse;
-import com.arsio.game.internal.infra.Controller.dto.response.GetTrailerResponse;
+import com.arsio.game.internal.infra.Controller.dto.response.*;
 import com.arsio.game.internal.infra.Controller.mapper.GameMediaControllerMapper;
 import com.arsio.shared.storage.*;
 import jakarta.validation.Valid;
@@ -33,6 +30,7 @@ public class GameMediaController {
     private final DeleteScreenshotUseCase deleteScreenshotUseCase;
     private final AddGameTrailerUseCase addGameTrailerUseCase;
     private final DeleteTrailerUseCase deleteTrailerUseCase;
+    private final GetGameMediaUseCase getGameMediaUseCase;
 
     @PostMapping("/{id}/thumbnails/upload-url")
     @PreAuthorize("HasRole('DEV')")
@@ -172,5 +170,14 @@ public class GameMediaController {
         deleteTrailerUseCase.execute(id);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{gameId}")
+    @PreAuthorize("HasRole('USER')")
+    public ResponseEntity<GetGameMediaResponse> getGameMedia(@PathVariable(name = "gameId") UUID gameId) {
+
+        GetGameMediaResponse response = getGameMediaUseCase.execute(gameId);
+
+        return ResponseEntity.ok(response);
     }
 }

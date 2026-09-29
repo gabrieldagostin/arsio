@@ -4,6 +4,7 @@ import com.arsio.game.internal.domain.model.GameMedia;
 import com.arsio.game.internal.domain.repository.GameMediaRepository;
 import com.arsio.game.internal.domain.valueobject.GameId;
 import com.arsio.game.internal.domain.valueobject.GameMediaId;
+import com.arsio.game.internal.domain.valueobject.MediaRole;
 import com.arsio.game.internal.infra.persistence.entity.GameEntity;
 import com.arsio.game.internal.infra.persistence.entity.GameMediaEntity;
 import com.arsio.game.internal.infra.persistence.mapper.GameMediaEntityMapper;
@@ -13,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
@@ -42,9 +45,11 @@ public class JpaGameMediaRepositoryAdapter implements GameMediaRepository {
     }
 
     @Override
-    public Optional<GameMedia> findByGameId(GameId gameId) {
-        return gameMediaRepository.findByGameId(gameId.value())
-                .map(mapper::toDomain);
+    public Set<GameMedia> findAllByGameId(GameId gameId) {
+        return gameMediaRepository.findAllByGameId(gameId.value())
+                .stream()
+                .map(mapper::toDomain)
+                .collect(Collectors.toSet());
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.arsio.user.internal.application.usecase;
 
-import com.arsio.shared.storage.FileStorage;
+import com.arsio.user.internal.application.port.output.UserFileStorage;
 import com.arsio.user.internal.domain.exception.ProfileNotFoundException;
 import com.arsio.user.internal.domain.model.Profile;
 import com.arsio.user.internal.domain.repository.ProfileRepository;
@@ -16,11 +16,11 @@ import java.util.UUID;
 public class GetUserProfileUseCase {
 
     private final ProfileRepository profiles;
-    private final FileStorage fileStorage;
+    private final UserFileStorage userFileStorage;
 
-    public GetUserProfileUseCase(ProfileRepository profiles, FileStorage fileStorage) {
+    public GetUserProfileUseCase(ProfileRepository profiles, UserFileStorage userFileStorage) {
         this.profiles = profiles;
-        this.fileStorage = fileStorage;
+        this.userFileStorage = userFileStorage;
     }
 
     public GetProfileResponse execute(UUID value) {
@@ -34,13 +34,13 @@ public class GetUserProfileUseCase {
                 : null;
 
         String avatarUrl = profile.getAvatarObjectKey() != null
-                ? fileStorage.generatePresignedDownloadUrl(
+                ? userFileStorage.generatePresignedDownloadUrl(
                 profile.getAvatarObjectKey().value()
         )
                 : null;
 
         String bannerUrl = profile.getBannerObjectKey() != null
-                ? fileStorage.generatePresignedDownloadUrl(
+                ? userFileStorage.generatePresignedDownloadUrl(
                 profile.getBannerObjectKey().value()
         )
                 : null;

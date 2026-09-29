@@ -5,6 +5,7 @@ import com.arsio.game.internal.domain.valueobject.GameId;
 import com.arsio.game.internal.domain.valueobject.GameMediaId;
 
 import java.util.Optional;
+import java.util.Set;
 
 public interface GameMediaRepository {
 
@@ -12,7 +13,7 @@ public interface GameMediaRepository {
 
     Optional<GameMedia> findById(GameMediaId gameMediaId);
 
-    Optional<GameMedia> findByGameId(GameId gameId);
+    Set<GameMedia> findAllByGameId(GameId gameId);
 
     void deleteById(GameMediaId gameMediaId);
 }
