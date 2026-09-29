@@ -17,5 +17,7 @@ public interface SpringDataGenreRepository extends JpaRepository<GenreEntity, UU
 
     Set<GenreEntity> findAllByIdAndActiveTrue(Set<UUID> ids);
 
-    Optional<GenreEntity> findByIdAndActiveTrue(UUID value);
+    Optional<GenreEntity> findByIdAndActiveTrue(UUID genreId);
+
+    Set<GenreEntity> findAllByGameId(UUID gameId);
 }

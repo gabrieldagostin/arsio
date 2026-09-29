@@ -2,6 +2,7 @@ package com.arsio.game.internal.infra.persistence.adapter;
 
 import com.arsio.game.internal.domain.model.Genre;
 import com.arsio.game.internal.domain.repository.GenreRepository;
+import com.arsio.game.internal.domain.valueobject.GameId;
 import com.arsio.game.internal.domain.valueobject.GenreId;
 import com.arsio.game.internal.infra.persistence.entity.GenreEntity;
 import com.arsio.game.internal.infra.persistence.mapper.GenreEntityMapper;
@@ -77,5 +78,13 @@ public class JpaGenreRepositoryAdapter implements GenreRepository {
     public Optional<Genre> findById(GenreId genreId) {
         return genres.findByIdAndActiveTrue(genreId.value())
                 .map(mapper::toDomain);
+    }
+
+    @Override
+    public Set<Genre> findAllByGameId(GameId gameId) {
+        return genres.findAllByGameId(gameId.value())
+                .stream()
+                .map(mapper::toDomain)
+                .collect(Collectors.toSet());
     }
 }

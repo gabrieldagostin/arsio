@@ -1,6 +1,7 @@
 package com.arsio.game.internal.domain.repository;
 
 import com.arsio.game.internal.domain.model.Genre;
+import com.arsio.game.internal.domain.valueobject.GameId;
 import com.arsio.game.internal.domain.valueobject.GenreId;
 import com.arsio.shared.pagination.PageResult;
 import com.arsio.shared.pagination.Pagination;
@@ -17,4 +18,6 @@ public interface GenreRepository {
     void save(Genre genre);
 
     Optional<Genre> findById(GenreId genreId);
+
+    Set<Genre> findAllByGameId(GameId gameId);
 }

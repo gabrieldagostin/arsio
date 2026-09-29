@@ -39,6 +39,7 @@ public class GenreController {
     private final CreateGenreUseCase createGenreUseCase;
     private final UpdateGenreUseCase updateGenreUseCase;
     private final DeleteGenreUseCase deleteGenreUseCase;
+    private final GetGameGenresUseCase getGameGenresUseCase;
     
     @GetMapping
     @PreAuthorize("HasRole('DEV')")
@@ -114,5 +115,14 @@ public class GenreController {
         deleteGenreUseCase.execute(genreId);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{gameId}")
+    @PreAuthorize("HasRole('USER')")
+    public ResponseEntity<Set<GetGenreResponse>> getGenres(@PathVariable(name = "gameId") UUID gameId) {
+
+        Set<GetGenreResponse> responses = getGameGenresUseCase.execute(gameId);
+
+        return ResponseEntity.ok(responses);
     }
 }
