@@ -1,6 +1,7 @@
 package com.arsio.game.internal.domain.repository;
 
 import com.arsio.game.internal.domain.model.Tag;
+import com.arsio.game.internal.domain.valueobject.GameId;
 import com.arsio.game.internal.domain.valueobject.TagId;
 import com.arsio.shared.pagination.PageResult;
 import com.arsio.shared.pagination.Pagination;
@@ -17,4 +18,6 @@ public interface TagRepository {
     void save(Tag tag);
 
     Optional<Tag> findById(TagId tagId);
+
+    Set<Tag> findAllByGameId(GameId gameId);
 }

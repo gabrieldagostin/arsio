@@ -2,6 +2,7 @@ package com.arsio.game.internal.infra.persistence.adapter;
 
 import com.arsio.game.internal.domain.model.Tag;
 import com.arsio.game.internal.domain.repository.TagRepository;
+import com.arsio.game.internal.domain.valueobject.GameId;
 import com.arsio.game.internal.domain.valueobject.TagId;
 import com.arsio.game.internal.infra.persistence.entity.TagEntity;
 import com.arsio.game.internal.infra.persistence.mapper.TagEntityMapper;
@@ -78,5 +79,13 @@ public class JpaTagRepositoryAdapter implements TagRepository {
     public Optional<Tag> findById(TagId tagId) {
         return tags.findByIdAndActiveTrue(tagId.value())
                 .map(mapper::toDomain);
+    }
+
+    @Override
+    public Set<Tag> findAllByGameId(GameId gameId) {
+        return tags.findAllByGameId(gameId.value())
+                .stream()
+                .map(mapper::toDomain)
+                .collect(Collectors.toSet());
     }
 }

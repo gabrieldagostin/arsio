@@ -119,7 +119,7 @@ public class GenreController {
 
     @GetMapping("/{gameId}")
     @PreAuthorize("HasRole('USER')")
-    public ResponseEntity<Set<GetGenreResponse>> getGenres(@PathVariable(name = "gameId") UUID gameId) {
+    public ResponseEntity<Set<GetGenreResponse>> getGameGenres(@PathVariable(name = "gameId") UUID gameId) {
 
         Set<GetGenreResponse> responses = getGameGenresUseCase.execute(gameId);
 
