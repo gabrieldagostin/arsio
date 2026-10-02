@@ -4,12 +4,19 @@ import com.arsio.config.security.SecurityUtils;
 import com.arsio.game.internal.application.command.CreateGameCommand;
 import com.arsio.game.internal.application.usecase.CreateGameUseCase;
 import com.arsio.game.internal.application.usecase.GetGameUseCase;
+import com.arsio.game.internal.application.usecase.ListGamesUseCase;
 import com.arsio.game.internal.infra.Controller.dto.request.CreateGameRequest;
 import com.arsio.game.internal.infra.Controller.dto.response.CreateGameResponse;
 import com.arsio.game.internal.infra.Controller.dto.response.GetGameResponse;
+import com.arsio.game.internal.infra.Controller.dto.response.ListGamesResponse;
 import com.arsio.game.internal.infra.Controller.mapper.GameControllerMapper;
+import com.arsio.shared.pagination.PageResult;
+import com.arsio.shared.pagination.Pagination;
+import com.arsio.shared.pagination.PaginationMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +31,10 @@ import java.util.UUID;
 public class GameController {
 
     private final GameControllerMapper mapper;
+    private final PaginationMapper paginationMapper;
     private final CreateGameUseCase registerGameUseCase;
     private final GetGameUseCase getGameUseCase;
+    private final ListGamesUseCase listGamesUseCase;
 
     @PostMapping
     @PreAuthorize("hasRole('DEV')")
@@ -44,10 +53,22 @@ public class GameController {
 
     @GetMapping("/{gameId}")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<GetGameResponse> getGame(@PathVariable(name = "gameId") UUID gameId) {
+    public ResponseEntity<GetGameResponse> get(@PathVariable(name = "gameId") UUID gameId) {
 
         GetGameResponse response = getGameUseCase.execute(gameId);
 
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping
+    @PreAuthorize("HasRole('USER')")
+    public ResponseEntity<PageResult<ListGamesResponse>> findAll(
+            @PageableDefault(size = 20)Pageable pageable) {
+
+        Pagination pagination = paginationMapper.toPagination(pageable);
+
+        PageResult<ListGamesResponse> responses = listGamesUseCase.execute(pagination);
+
+        return ResponseEntity.ok(responses);
     }
 }

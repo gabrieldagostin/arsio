@@ -16,4 +16,6 @@ public interface GameMediaRepository {
     Set<GameMedia> findAllByGameId(GameId gameId);
 
     void deleteById(GameMediaId gameMediaId);
+
+    Optional<GameMedia> findByGameIdAndRoleThumbnail(GameId gameId);
 }
