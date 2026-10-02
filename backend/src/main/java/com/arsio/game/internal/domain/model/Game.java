@@ -87,4 +87,10 @@ public class Game {
         this.tags.clear();
         this.tags.addAll(tagIds);
     }
+
+    public void update(GameTitle title, Description description, LocalDate releaseDate) {
+        this.title = title;
+        this.description = description;
+        this.releaseDate = releaseDate;
+    }
 }
