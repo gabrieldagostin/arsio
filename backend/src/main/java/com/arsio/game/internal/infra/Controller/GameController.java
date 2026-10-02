@@ -1,15 +1,14 @@
 package com.arsio.game.internal.infra.Controller;
 
 import com.arsio.config.security.SecurityUtils;
+import com.arsio.game.internal.application.command.ChangeGamePriceCommand;
 import com.arsio.game.internal.application.command.CreateGameCommand;
 import com.arsio.game.internal.application.command.UpdateGameCommand;
 import com.arsio.game.internal.application.usecase.*;
+import com.arsio.game.internal.infra.Controller.dto.request.ChangeGamePriceRequest;
 import com.arsio.game.internal.infra.Controller.dto.request.CreateGameRequest;
-import com.arsio.game.internal.infra.Controller.dto.response.CreateGameResponse;
-import com.arsio.game.internal.infra.Controller.dto.response.GetGameResponse;
-import com.arsio.game.internal.infra.Controller.dto.response.ListGamesResponse;
+import com.arsio.game.internal.infra.Controller.dto.response.*;
 import com.arsio.game.internal.infra.Controller.dto.request.UpdateGameRequest;
-import com.arsio.game.internal.infra.Controller.dto.response.UpdateGameResponse;
 import com.arsio.game.internal.infra.Controller.mapper.GameControllerMapper;
 import com.arsio.shared.pagination.PageResult;
 import com.arsio.shared.pagination.Pagination;
@@ -40,6 +39,7 @@ public class GameController {
     private final UpdateGameUseCase updateGameUseCase;
     private final ArchiveGameUseCase archiveGameUseCase;
     private final SearchGamesUseCase searchGamesUseCase;
+    private final ChangeGamePriceUseCase changeGamePriceUseCase;
 
     @PostMapping
     @PreAuthorize("hasRole('DEV')")
@@ -114,5 +114,18 @@ public class GameController {
         PageResult<ListGamesResponse> responses = searchGamesUseCase.execute(search, pagination);
 
         return ResponseEntity.ok(responses);
+    }
+
+    @PutMapping("/{gameId}/price")
+    @PreAuthorize("HasRole('DEV')")
+    public ResponseEntity<ChangeGamePriceResponse> changePrice(
+            @PathVariable(name = "gameId") UUID gameId,
+            @RequestBody @Valid ChangeGamePriceRequest request) {
+
+        ChangeGamePriceCommand command = mapper.toChangeGamePriceCommand(gameId, request);
+
+        ChangeGamePriceResponse response = changeGamePriceUseCase.execute(command);
+
+        return ResponseEntity.ok(response);
     }
 }

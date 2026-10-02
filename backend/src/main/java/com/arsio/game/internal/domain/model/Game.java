@@ -97,4 +97,8 @@ public class Game {
     public void archive() {
         this.status = GameStatus.ARCHIVED;
     }
+
+    public void changePrice(Money newPrice) {
+        this.basePrice = newPrice;
+    }
 }
