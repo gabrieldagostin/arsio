@@ -3,10 +3,7 @@ package com.arsio.game.internal.infra.Controller;
 import com.arsio.config.security.SecurityUtils;
 import com.arsio.game.internal.application.command.CreateGameCommand;
 import com.arsio.game.internal.application.command.UpdateGameCommand;
-import com.arsio.game.internal.application.usecase.CreateGameUseCase;
-import com.arsio.game.internal.application.usecase.GetGameUseCase;
-import com.arsio.game.internal.application.usecase.ListGamesUseCase;
-import com.arsio.game.internal.application.usecase.UpdateGameUseCase;
+import com.arsio.game.internal.application.usecase.*;
 import com.arsio.game.internal.infra.Controller.dto.request.CreateGameRequest;
 import com.arsio.game.internal.infra.Controller.dto.response.CreateGameResponse;
 import com.arsio.game.internal.infra.Controller.dto.response.GetGameResponse;
@@ -20,6 +17,7 @@ import com.arsio.shared.pagination.PaginationMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -40,6 +38,7 @@ public class GameController {
     private final GetGameUseCase getGameUseCase;
     private final ListGamesUseCase listGamesUseCase;
     private final UpdateGameUseCase updateGameUseCase;
+    private final SearchGamesUseCase searchGamesUseCase;
 
     @PostMapping
     @PreAuthorize("hasRole('DEV')")
@@ -84,9 +83,26 @@ public class GameController {
             @RequestBody @Valid UpdateGameRequest request) {
 
         UpdateGameCommand command = mapper.toUpdateGameCommand(gameId, request);
-        
+
         UpdateGameResponse response = updateGameUseCase.execute(command);
 
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/search")
+    @PreAuthorize("hasRole('User')")
+    public ResponseEntity<PageResult<ListGamesResponse>> search(
+            @RequestParam(required = false) String search,
+            @PageableDefault(
+                    size = 5,
+                    sort = "title",
+                    direction = Sort.Direction.ASC
+            ) Pageable pageable) {
+
+        Pagination pagination = paginationMapper.toPagination(pageable);
+
+        PageResult<ListGamesResponse> responses = searchGamesUseCase.execute(search, pagination);
+
+        return ResponseEntity.ok(responses);
     }
 }

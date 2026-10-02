@@ -16,7 +16,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
@@ -43,7 +42,34 @@ public class JpaGameRepositoryAdapter implements GameRepository {
 
         Pageable pageable = paginationMapper.toPageable(pagination);
 
-        Page<GameEntity> result = games.findAll(pageable);
+        Page<GameEntity> result = games.findAllByStatusPublished(pageable);
+
+        List<Game> gameList = result.getContent()
+                .stream()
+                .map(mapper::toDomain)
+                .toList();
+
+        return new PageResult<>(
+                gameList,
+                result.getNumber(),
+                result.getSize(),
+                result.getTotalElements(),
+                result.getTotalPages()
+        );
+    }
+
+    @Override
+    public PageResult<Game> findAll(String search, Pagination pagination) {
+
+        Pageable pageable = paginationMapper.toPageable(pagination);
+
+        Page<GameEntity> result;
+
+        if (search == null || search.isBlank()) {
+            result = games.findAllByStatusPublished(pageable);
+        } else {
+            result = games.findByTitleContainingIgnoreCaseAndStatusPublished(search.trim(), pageable);
+        }
 
         List<Game> gameList = result.getContent()
                 .stream()

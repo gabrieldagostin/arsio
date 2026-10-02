@@ -53,9 +53,9 @@ public class GenreController {
 
         Pagination pagination = paginationMapper.toPagination(pageable);
 
-        PageResult<GetGenreResponse> response = listGenresUseCase.execute(search, pagination);
+        PageResult<GetGenreResponse> responses = listGenresUseCase.execute(search, pagination);
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(responses);
     }
 
     @PutMapping("/{gameId}/genres")

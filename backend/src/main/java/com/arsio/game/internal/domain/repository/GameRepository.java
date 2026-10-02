@@ -14,4 +14,6 @@ public interface GameRepository {
     Optional<Game> findById(GameId gameId);
 
     PageResult<Game> findAll(Pagination pagination);
+
+    PageResult<Game> findAll(String search, Pagination pagination);
 }
