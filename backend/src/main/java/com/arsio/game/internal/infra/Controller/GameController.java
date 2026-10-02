@@ -38,6 +38,7 @@ public class GameController {
     private final GetGameUseCase getGameUseCase;
     private final ListGamesUseCase listGamesUseCase;
     private final UpdateGameUseCase updateGameUseCase;
+    private final ArchiveGameUseCase archiveGameUseCase;
     private final SearchGamesUseCase searchGamesUseCase;
 
     @PostMapping
@@ -76,7 +77,7 @@ public class GameController {
         return ResponseEntity.ok(responses);
     }
 
-    @PatchMapping("/gameId")
+    @PutMapping("/{gameId}")
     @PreAuthorize("HasRole('DEV')")
     public ResponseEntity<UpdateGameResponse> update(
             @PathVariable(name = "gameId") UUID gameId,
@@ -87,6 +88,15 @@ public class GameController {
         UpdateGameResponse response = updateGameUseCase.execute(command);
 
         return ResponseEntity.ok(response);
+    }
+
+    @PatchMapping("/{gameId}/archive")
+    @PreAuthorize("HasRole('ADMIN')")
+    public ResponseEntity<Void> archive(@PathVariable(name = "gameId") UUID gameId) {
+
+        archiveGameUseCase.execute(gameId);
+
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/search")

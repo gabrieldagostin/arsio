@@ -93,4 +93,8 @@ public class Game {
         this.description = description;
         this.releaseDate = releaseDate;
     }
+
+    public void archive() {
+        this.status = GameStatus.ARCHIVED;
+    }
 }
