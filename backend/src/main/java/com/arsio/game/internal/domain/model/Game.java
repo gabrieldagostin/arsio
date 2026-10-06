@@ -82,6 +82,10 @@ public class Game {
         return releaseDate;
     }
 
+    public boolean isFeatured() {
+        return featured;
+    }
+
     public void associateGenres(Set<GenreId> genreIds) {
         this.genres.clear();
         this.genres.addAll(genreIds);
@@ -112,5 +116,9 @@ public class Game {
             throw new GameNotPublishedException();
 
         this.featured = true;
+    }
+
+    public void unFeature() {
+        this.featured = false;
     }
 }
