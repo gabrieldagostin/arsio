@@ -1,7 +1,7 @@
 package com.arsio.user.internal.application.usecase;
 
 import com.arsio.user.api.exception.UserNotFoundException;
-import com.arsio.shared.storage.FileStorage;
+import com.arsio.user.internal.application.port.output.UserFileStorage;
 import com.arsio.user.internal.domain.model.Profile;
 import com.arsio.shared.pagination.PageResult;
 import com.arsio.shared.pagination.Pagination;
@@ -21,12 +21,12 @@ public class GetMyFriendshipsUseCase {
 
     private final FriendshipRepository friendships;
     private final ProfileRepository profiles;
-    private final FileStorage fileStorage;
+    private final UserFileStorage userFileStorage;
 
-    public GetMyFriendshipsUseCase(FriendshipRepository friendships, ProfileRepository profiles, FileStorage fileStorage) {
+    public GetMyFriendshipsUseCase(FriendshipRepository friendships, ProfileRepository profiles, UserFileStorage userFileStorage) {
         this.friendships = friendships;
         this.profiles = profiles;
-        this.fileStorage = fileStorage;
+        this.userFileStorage = userFileStorage;
     }
 
     public PageResult<GetMyFriendshipsResponse> execute(UUID id, Pagination pagination) {
@@ -42,7 +42,7 @@ public class GetMyFriendshipsUseCase {
                             .orElseThrow(UserNotFoundException::new);
 
                     String avatarUrl = friendProfile.getAvatarObjectKey() != null
-                            ? fileStorage.generatePresignedDownloadUrl(
+                            ? userFileStorage.generatePresignedDownloadUrl(
                             friendProfile.getAvatarObjectKey().value()
                     )
                             : null;

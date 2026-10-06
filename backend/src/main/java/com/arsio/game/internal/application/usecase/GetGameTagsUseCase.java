@@ -24,7 +24,7 @@ public class GetGameTagsUseCase {
 
         GameId gameId = new GameId(value);
 
-        return tags.findAllByGameId(gameId)
+        return tags.findAllTagsByGameId(gameId)
                 .stream()
                 .map(tag -> {
                     return new GetTagResponse(

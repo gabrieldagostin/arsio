@@ -2,10 +2,10 @@ package com.arsio.game.internal.infra.persistence.mapper;
 
 import com.arsio.config.mapper.CentralMapperConfig;
 import com.arsio.game.internal.domain.model.Game;
-import com.arsio.game.internal.domain.valueobject.Description;
-import com.arsio.game.internal.domain.valueobject.GameId;
-import com.arsio.game.internal.domain.valueobject.GameTitle;
+import com.arsio.game.internal.domain.valueobject.*;
 import com.arsio.game.internal.infra.persistence.entity.GameEntity;
+import com.arsio.game.internal.infra.persistence.entity.GenreEntity;
+import com.arsio.game.internal.infra.persistence.entity.TagEntity;
 import com.arsio.shared.money.Money;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -29,6 +29,36 @@ public interface GameEntityMapper {
         return new GameId(value);
     }
 
+    default GenreId genreEntityToGenreId(GenreEntity genreEntity) {
+        return new GenreId(genreEntity.getId());
+    }
+
+    default GenreEntity genreIdToGenreEntity(GenreId genreId) {
+        if (genreId == null) {
+            return null;
+        }
+
+        GenreEntity entity = new GenreEntity();
+        entity.setId(genreId.value());
+
+        return entity;
+    }
+
+    default TagEntity tagIdToTagEntity(TagId tagId) {
+        if (tagId == null) {
+            return null;
+        }
+
+        TagEntity entity = new TagEntity();
+        entity.setId(tagId.value());
+
+        return entity;
+    }
+
+    default TagId tagEntityToTagId(TagEntity tagEntity) {
+        return new TagId(tagEntity.getId());
+    }
+
     default String gameTitleToString(GameTitle gameTitle) {
         return gameTitle.value();
     }
@@ -37,9 +67,12 @@ public interface GameEntityMapper {
         return new GameTitle(value);
     }
 
-    default String descriptionToDescription(Description description) {
-        if (description == null) return null;
-        return description.value();
+    default String descriptionToString(Description description) {
+        return description == null ? null : description.value();
+    }
+
+    default Description stringToDescription(String value) {
+        return new Description(value);
     }
 
     default BigDecimal moneyToBigDecimal(Money money) {
@@ -47,10 +80,6 @@ public interface GameEntityMapper {
     }
 
     default Money bigDecimalToMoney(BigDecimal value) {
-
-        if (value == null) {
-            return null;
-        }
-        return new Money(value);
+        return value == null ? null : new Money(value);
     }
 }

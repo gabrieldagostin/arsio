@@ -4,6 +4,7 @@ import com.arsio.game.internal.infra.persistence.entity.TagEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
 import java.util.Set;
@@ -15,9 +16,15 @@ public interface SpringDataTagRepository extends JpaRepository<TagEntity, UUID> 
 
     Page<TagEntity> findByNameContainingIgnoreCaseAndActiveTrue(String search, Pageable pageable);
 
-    Set<TagEntity> findAllByIdAndActiveTrue(Set<UUID> tagIds);
+    Set<TagEntity> findAllByIdInAndActiveTrue(Set<UUID> tagIds);
 
     Optional<TagEntity> findByIdAndActiveTrue(UUID tagId);
 
-    Set<TagEntity> findAllByGameId(UUID gameId);
+    @Query("""
+        SELECT tag
+        FROM GameEntity game
+        JOIN game.tags tag
+        WHERE game.id = :gameId
+    """)
+    Set<TagEntity> findAllTagsByGameId(UUID gameId);
 }

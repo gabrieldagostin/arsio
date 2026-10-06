@@ -24,7 +24,7 @@ public class GetGameGenresUseCase {
 
         GameId gameId = new GameId(value);
 
-        return genres.findAllByGameId(gameId)
+        return genres.findAllGenresByGameId(gameId)
                 .stream()
                 .map(genre -> {
                     return new GetGenreResponse(

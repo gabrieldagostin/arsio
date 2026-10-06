@@ -6,6 +6,7 @@ import com.arsio.game.internal.domain.valueobject.*;
 import com.arsio.game.internal.infra.Controller.dto.request.CreateGameRequirementRequest;
 import org.mapstruct.Mapper;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Mapper(config = CentralMapperConfig.class)
@@ -29,7 +30,7 @@ public interface GameRequirementControllerMapper {
         return value != null ? new Ram(value) : null;
     }
 
-    default Storage toStorage(Double value) {
+    default Storage toStorage(BigDecimal value) {
         return value != null ? new Storage(value) : null;
     }
 

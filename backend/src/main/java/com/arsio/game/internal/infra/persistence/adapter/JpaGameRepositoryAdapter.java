@@ -1,6 +1,7 @@
 package com.arsio.game.internal.infra.persistence.adapter;
 
 import com.arsio.game.internal.domain.model.Game;
+import com.arsio.game.internal.domain.model.GameStatus;
 import com.arsio.game.internal.domain.repository.GameRepository;
 import com.arsio.game.internal.domain.valueobject.GameId;
 import com.arsio.game.internal.infra.persistence.entity.GameEntity;
@@ -42,7 +43,7 @@ public class JpaGameRepositoryAdapter implements GameRepository {
 
         Pageable pageable = paginationMapper.toPageable(pagination);
 
-        Page<GameEntity> result = games.findAllByStatusPublished(pageable);
+        Page<GameEntity> result = games.findAllByStatus(GameStatus.PUBLISHED, pageable);
 
         List<Game> gameList = result.getContent()
                 .stream()
@@ -66,9 +67,9 @@ public class JpaGameRepositoryAdapter implements GameRepository {
         Page<GameEntity> result;
 
         if (search == null || search.isBlank()) {
-            result = games.findAllByStatusPublished(pageable);
+            result = games.findAllByStatus(GameStatus.PUBLISHED, pageable);
         } else {
-            result = games.findByTitleContainingIgnoreCaseAndStatusPublished(search.trim(), pageable);
+            result = games.findByTitleContainingIgnoreCaseAndStatus(search.trim(), GameStatus.PUBLISHED, pageable);
         }
 
         List<Game> gameList = result.getContent()

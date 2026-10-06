@@ -4,6 +4,7 @@ import com.arsio.game.internal.domain.model.GameMedia;
 import com.arsio.game.internal.domain.repository.GameMediaRepository;
 import com.arsio.game.internal.domain.valueobject.GameId;
 import com.arsio.game.internal.domain.valueobject.GameMediaId;
+import com.arsio.game.internal.domain.valueobject.MediaRole;
 import com.arsio.game.internal.infra.persistence.entity.GameEntity;
 import com.arsio.game.internal.infra.persistence.entity.GameMediaEntity;
 import com.arsio.game.internal.infra.persistence.mapper.GameMediaEntityMapper;
@@ -58,7 +59,7 @@ public class JpaGameMediaRepositoryAdapter implements GameMediaRepository {
 
     @Override
     public Optional<GameMedia> findByGameIdAndRoleThumbnail(GameId gameId) {
-        return gameMediaRepository.findByGameIdAndRoleThumbnail(gameId.value())
+        return gameMediaRepository.findByGameIdAndRole(gameId.value(), MediaRole.THUMBNAIL)
                 .map(mapper::toDomain);
     }
 }

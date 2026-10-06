@@ -63,7 +63,7 @@ public class JpaGenreRepositoryAdapter implements GenreRepository {
                 .map(GenreId::value)
                 .collect(Collectors.toSet());
 
-        return genres.findAllByIdAndActiveTrue(ids)
+        return genres.findAllByIdInAndActiveTrue(ids)
                 .stream()
                 .map(mapper::toDomain)
                 .collect(Collectors.toSet());
@@ -81,8 +81,8 @@ public class JpaGenreRepositoryAdapter implements GenreRepository {
     }
 
     @Override
-    public Set<Genre> findAllByGameId(GameId gameId) {
-        return genres.findAllByGameId(gameId.value())
+    public Set<Genre> findAllGenresByGameId(GameId gameId) {
+        return genres.findAllGenresByGameId(gameId.value())
                 .stream()
                 .map(mapper::toDomain)
                 .collect(Collectors.toSet());

@@ -1,5 +1,6 @@
 package com.arsio.game.internal.infra.Controller.dto.response;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 public record GetGameRequirementResponse(
@@ -12,6 +13,6 @@ public record GetGameRequirementResponse(
         String gpuManufacturerName,
         String gpuModel,
         Integer ram,
-        Double storage,
+        BigDecimal storage,
         String storageUnit
 ) {}

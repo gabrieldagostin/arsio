@@ -1,13 +1,13 @@
 package com.arsio.user.internal.application.usecase;
 
 import com.arsio.shared.storage.ConfirmFileUploadCommand;
-import com.arsio.shared.storage.FileStorage;
+import com.arsio.user.internal.application.port.output.UserFileStorage;
 import com.arsio.user.internal.domain.exception.ProfileNotFoundException;
 import com.arsio.shared.storage.ObjectMetadata;
 import com.arsio.user.internal.domain.model.Profile;
 import com.arsio.user.internal.domain.repository.ProfileRepository;
 import com.arsio.user.internal.domain.valueobject.UserId;
-import com.arsio.user.internal.infra.controller.dto.response.GetAvatarResponse;
+import com.arsio.user.internal.infra.controller.dto.response.GetBannerResponse;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +16,9 @@ import java.util.UUID;
 
 @Service
 @Transactional
-public class ConfirmAvatarUploadUseCase {
+public class ConfirmUserBannerUploadUseCase {
 
-    private static final long MAX_AVATAR_SIZE = 5 * 1024 * 1024;
+    private static final long MAX_BANNER_SIZE = 10 * 1024 * 1024;
 
     private static final Set<String> ALLOWED_TYPES = Set.of(
             "image/png",
@@ -26,38 +26,38 @@ public class ConfirmAvatarUploadUseCase {
             "image/webp"
     );
 
-    private final FileStorage fileStorage;
+    private final UserFileStorage userFileStorage;
     private final ProfileRepository profiles;
 
-    public ConfirmAvatarUploadUseCase(FileStorage fileStorage, ProfileRepository profiles) {
-        this.fileStorage = fileStorage;
+    public ConfirmUserBannerUploadUseCase(UserFileStorage userFileStorage, ProfileRepository profiles) {
+        this.userFileStorage = userFileStorage;
         this.profiles = profiles;
     }
 
-    public GetAvatarResponse execute(UUID userId, ConfirmFileUploadCommand command) {
+    public GetBannerResponse execute(UUID userId, ConfirmFileUploadCommand command) {
 
-        ObjectMetadata metadata = fileStorage.getObjectMetadata(command.objectKey().value());
+        ObjectMetadata metadata = userFileStorage.getObjectMetadata(command.objectKey().value());
 
-        if (metadata.size() > MAX_AVATAR_SIZE) {
+        if (metadata.size() > MAX_BANNER_SIZE) {
             throw new IllegalArgumentException(
-                    "Avatar cannot exceed 5 MB"
+                    "Banner cannot exceed 10 MB"
             );
         }
 
         if (!ALLOWED_TYPES.contains(metadata.contentType())) {
             throw new IllegalArgumentException(
-                    "Unsupported avatar format"
+                    "Unsupported banner format"
             );
         }
 
         Profile profile = profiles.findByUserId(new UserId(userId))
                 .orElseThrow(ProfileNotFoundException::new);
 
-        profile.updateAvatarObjectKey(command.objectKey());
+        profile.updateBannerObjectKey(command.objectKey());
         profiles.save(profile);
 
-        String avatarUrl = fileStorage.generatePresignedDownloadUrl(profile.getAvatarObjectKey().value());
+        String avatarUrl = userFileStorage.generatePresignedDownloadUrl(profile.getBannerObjectKey().value());
 
-        return new GetAvatarResponse(avatarUrl);
+        return new GetBannerResponse(avatarUrl);
     }
 }

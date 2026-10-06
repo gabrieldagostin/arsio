@@ -19,5 +19,5 @@ public interface TagRepository {
 
     Optional<Tag> findById(TagId tagId);
 
-    Set<Tag> findAllByGameId(GameId gameId);
+    Set<Tag> findAllTagsByGameId(GameId gameId);
 }

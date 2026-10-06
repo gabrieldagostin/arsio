@@ -64,7 +64,7 @@ public class JpaTagRepositoryAdapter implements TagRepository {
                 .map(TagId::value)
                 .collect(Collectors.toSet());
 
-        return tags.findAllByIdAndActiveTrue(ids)
+        return tags.findAllByIdInAndActiveTrue(ids)
                 .stream()
                 .map(mapper::toDomain)
                 .collect(Collectors.toSet());
@@ -82,8 +82,8 @@ public class JpaTagRepositoryAdapter implements TagRepository {
     }
 
     @Override
-    public Set<Tag> findAllByGameId(GameId gameId) {
-        return tags.findAllByGameId(gameId.value())
+    public Set<Tag> findAllTagsByGameId(GameId gameId) {
+        return tags.findAllTagsByGameId(gameId.value())
                 .stream()
                 .map(mapper::toDomain)
                 .collect(Collectors.toSet());

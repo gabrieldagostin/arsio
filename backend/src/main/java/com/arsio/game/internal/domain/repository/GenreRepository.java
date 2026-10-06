@@ -19,5 +19,5 @@ public interface GenreRepository {
 
     Optional<Genre> findById(GenreId genreId);
 
-    Set<Genre> findAllByGameId(GameId gameId);
+    Set<Genre> findAllGenresByGameId(GameId gameId);
 }

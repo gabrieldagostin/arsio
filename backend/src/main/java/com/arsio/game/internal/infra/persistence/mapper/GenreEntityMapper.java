@@ -17,8 +17,16 @@ public interface GenreEntityMapper {
 
     GenreEntity toEntity(Genre genre);
 
-    default UUID gameIdToUuid(GenreId genreId) {
+    default UUID genreIdToUuid(GenreId genreId) {
         return genreId.value();
+    }
+
+    default GenreId uuidToGenreId(UUID value) {
+        return new GenreId(value);
+    }
+
+    default UUID gameIdToUuid(GameId gameId) {
+        return gameId.value();
     }
 
     default GameId uuidToGameId(UUID value) {

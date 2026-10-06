@@ -7,6 +7,7 @@ import com.arsio.game.internal.infra.persistence.entity.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Mapper(config =  CentralMapperConfig.class)
@@ -59,8 +60,12 @@ public interface GameRequirementEntityMapper {
         return new Ram(value);
     }
 
-    default Double storageToDouble(Storage storage) {
+    default BigDecimal storageToDouble(Storage storage) {
         return storage.value();
+    }
+
+    default Storage doubleToStorage(BigDecimal value) {
+        return new Storage(value);
     }
 
     default String storageUnitToString(StorageUnit storageUnit) {

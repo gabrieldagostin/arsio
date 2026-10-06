@@ -40,7 +40,7 @@ public class GetGameUseCase {
 
         GetGameMediaResponse gameMediaResponse = gameMediaService.getByGameId(gameId);
 
-        Set<GetGenreResponse> genreResponses = genres.findAllByGameId(gameId)
+        Set<GetGenreResponse> genreResponses = genres.findAllGenresByGameId(gameId)
                 .stream()
                 .map(genre -> {
                     return new GetGenreResponse(
@@ -50,7 +50,7 @@ public class GetGameUseCase {
                 })
                 .collect(Collectors.toSet());
 
-        Set<GetTagResponse> tagResponses = tags.findAllByGameId(gameId)
+        Set<GetTagResponse> tagResponses = tags.findAllTagsByGameId(gameId)
                 .stream()
                 .map(tag -> {
                     return new GetTagResponse(

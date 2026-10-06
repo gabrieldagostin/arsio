@@ -22,11 +22,11 @@ public class GameMediaController {
 
     private final GameMediaControllerMapper mapper;
     private final GameMediaUploadPreparationService gameMediaUploadPreparationService;
-    private final ConfirmThumbnailUploadUseCase confirmThumbnailUploadUseCase;
+    private final ConfirmGameThumbnailUploadUseCase confirmGameThumbnailUploadUseCase;
     private final DeleteThumbnailUseCase deleteThumbnailUseCase;
-    private final ConfirmBannerUploadUseCase confirmBannerUploadUseCase;
+    private final ConfirmGameBannerUploadUseCase confirmGameBannerUploadUseCase;
     private final DeleteBannerUseCase deleteBannerUseCase;
-    private final ConfirmScreenshotUploadUseCase confirmScreenshotUploadUseCase;
+    private final ConfirmGameScreenshotUploadUseCase confirmGameScreenshotUploadUseCase;
     private final DeleteScreenshotUseCase deleteScreenshotUseCase;
     private final AddGameTrailerUseCase addGameTrailerUseCase;
     private final DeleteTrailerUseCase deleteTrailerUseCase;
@@ -57,7 +57,7 @@ public class GameMediaController {
         ConfirmFileUploadCommand command = mapper.toConfirmFileUploadCommand(request);
 
         GetThumbnailResponse response =
-                confirmThumbnailUploadUseCase.execute(id, command);
+                confirmGameThumbnailUploadUseCase.execute(id, command);
 
         return ResponseEntity.ok(response);
     }
@@ -96,7 +96,7 @@ public class GameMediaController {
         ConfirmFileUploadCommand command = mapper.toConfirmFileUploadCommand(request);
 
         GetBannerResponse response =
-                confirmBannerUploadUseCase.execute(id, command);
+                confirmGameBannerUploadUseCase.execute(id, command);
 
         return ResponseEntity.ok(response);
     }
@@ -135,7 +135,7 @@ public class GameMediaController {
         ConfirmFileUploadCommand command = mapper.toConfirmFileUploadCommand(request);
 
         GetScreenshotResponse response =
-                confirmScreenshotUploadUseCase.execute(id, command);
+                confirmGameScreenshotUploadUseCase.execute(id, command);
 
         return ResponseEntity.ok(response);
     }

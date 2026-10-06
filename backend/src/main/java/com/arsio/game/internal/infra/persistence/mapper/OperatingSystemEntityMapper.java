@@ -18,11 +18,19 @@ public interface OperatingSystemEntityMapper {
     @Mapping(target = "createdAt", ignore = true)
     OperatingSystemEntity toEntity(OperatingSystem domain);
 
-    default RequirementId toRequirementId(UUID value) {
+    default UUID requirementIdToUuid(RequirementId requirementId) {
+        return requirementId.value();
+    }
+
+    default RequirementId uuidToRequirementId(UUID value) {
         return new RequirementId(value);
     }
 
-    default Model toModel(String value) {
+    default String modelToString(Model model) {
+        return model.value();
+    }
+
+    default Model stringToModel(String value) {
         return new Model(value);
     }
 }

@@ -1,7 +1,7 @@
 package com.arsio.user.internal.application.usecase;
 
 import com.arsio.user.api.exception.UserNotFoundException;
-import com.arsio.shared.storage.FileStorage;
+import com.arsio.user.internal.application.port.output.UserFileStorage;
 import com.arsio.user.internal.domain.model.Profile;
 import com.arsio.shared.pagination.PageResult;
 import com.arsio.shared.pagination.Pagination;
@@ -18,12 +18,12 @@ public class ListUsersUseCase {
 
     private final UserRepository users;
     private final ProfileRepository profiles;
-    private final FileStorage fileStorage;
+    private final UserFileStorage userFileStorage;
 
-    public ListUsersUseCase(UserRepository users, ProfileRepository profiles, FileStorage fileStorage) {
+    public ListUsersUseCase(UserRepository users, ProfileRepository profiles, UserFileStorage userFileStorage) {
         this.users = users;
         this.profiles = profiles;
-        this.fileStorage = fileStorage;
+        this.userFileStorage = userFileStorage;
     }
 
     public PageResult<ListUserResponse> execute(String search, Pagination pagination) {
@@ -37,7 +37,7 @@ public class ListUsersUseCase {
                             .orElseThrow(UserNotFoundException::new);
 
                     String avatarUrl = profile.getAvatarObjectKey() != null
-                            ? fileStorage.generatePresignedDownloadUrl(
+                            ? userFileStorage.generatePresignedDownloadUrl(
                                     profile.getAvatarObjectKey().value()
                     )
                             : null;

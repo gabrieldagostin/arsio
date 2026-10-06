@@ -30,8 +30,8 @@ public class ProfileController {
     private final GetUserProfileUseCase getUserProfileUseCase;
     private final UpdateProfileBioUseCase updateProfileBioUseCase;
     private final UserFileUploadPreparationService userFileUploadPreparationService;
-    private final ConfirmAvatarUploadUseCase confirmAvatarUploadUseCase;
-    private final ConfirmBannerUploadUseCase confirmBannerUploadUseCase;
+    private final ConfirmUserAvatarUploadUseCase confirmUserAvatarUploadUseCase;
+    private final ConfirmUserBannerUploadUseCase confirmUserBannerUploadUseCase;
     private final UpdateProfileCountryUseCase updateProfileCountryUseCase;
 
     @GetMapping("/me/avatar")
@@ -85,7 +85,7 @@ public class ProfileController {
         ConfirmFileUploadCommand command = mapper.toConfirmFileUploadCommand(request);
 
         GetAvatarResponse response =
-                confirmAvatarUploadUseCase.execute(SecurityUtils.getCurrentUserId(), command);
+                confirmUserAvatarUploadUseCase.execute(SecurityUtils.getCurrentUserId(), command);
 
         return ResponseEntity.ok(response);
     }
@@ -109,7 +109,7 @@ public class ProfileController {
         ConfirmFileUploadCommand command = mapper.toConfirmFileUploadCommand(request);
 
         GetBannerResponse response =
-                confirmBannerUploadUseCase.execute(SecurityUtils.getCurrentUserId(), command);
+                confirmUserBannerUploadUseCase.execute(SecurityUtils.getCurrentUserId(), command);
 
         return ResponseEntity.ok(response);
     }

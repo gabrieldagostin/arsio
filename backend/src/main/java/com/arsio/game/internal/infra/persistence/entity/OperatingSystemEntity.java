@@ -9,7 +9,7 @@ import lombok.*;
 import java.time.Instant;
 import java.util.UUID;
 
-@Table(name = "operating_system")
+@Table(name = "operating_systems")
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor

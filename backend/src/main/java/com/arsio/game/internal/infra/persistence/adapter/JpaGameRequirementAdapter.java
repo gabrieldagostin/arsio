@@ -3,6 +3,7 @@ package com.arsio.game.internal.infra.persistence.adapter;
 import com.arsio.game.internal.domain.model.GameRequirement;
 import com.arsio.game.internal.domain.repository.GameRequirementRepository;
 import com.arsio.game.internal.domain.valueobject.GameId;
+import com.arsio.game.internal.domain.valueobject.RequirementCategory;
 import com.arsio.game.internal.infra.Controller.dto.response.GetGameRequirementResponse;
 import com.arsio.game.internal.infra.persistence.entity.*;
 import com.arsio.game.internal.infra.persistence.mapper.GameRequirementEntityMapper;
@@ -68,7 +69,9 @@ public class JpaGameRequirementAdapter implements GameRequirementRepository {
     @Override
     public GetGameRequirementResponse findByGameIdAndCategoryMinimum(GameId gameId) {
 
-        GameRequirement gameRequirement = mapper.toDomain(gameRequirements.findByGameIdAndCategoryMinimum(gameId.value()));
+        GameRequirement gameRequirement = mapper.toDomain(
+                gameRequirements.findByGameIdAndCategory(gameId.value(), RequirementCategory.MINIMUM)
+        );
 
         OperatingSystemEntity operatingSystemEntity = entityManager.getReference(
                 OperatingSystemEntity.class,
@@ -103,7 +106,9 @@ public class JpaGameRequirementAdapter implements GameRequirementRepository {
     @Override
     public GetGameRequirementResponse findByGameIdAndCategoryRecommended(GameId gameId) {
 
-        GameRequirement gameRequirement = mapper.toDomain(gameRequirements.findByGameIdAndCategoryRecommended(gameId.value()));
+        GameRequirement gameRequirement = mapper.toDomain(
+                gameRequirements.findByGameIdAndCategory(gameId.value(), RequirementCategory.RECOMMENDED)
+        );
 
         OperatingSystemEntity operatingSystemEntity = entityManager.getReference(
                 OperatingSystemEntity.class,

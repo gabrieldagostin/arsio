@@ -1,5 +1,6 @@
 package com.arsio.game.internal.infra.persistence.repository;
 
+import com.arsio.game.internal.domain.valueobject.MediaRole;
 import com.arsio.game.internal.infra.persistence.entity.GameMediaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -11,5 +12,5 @@ public interface SpringDataGameMediaRepository extends JpaRepository<GameMediaEn
 
     Set<GameMediaEntity> findAllByGameId(UUID gameId);
 
-    Optional<GameMediaEntity> findByGameIdAndRoleThumbnail(UUID value);
+    Optional<GameMediaEntity> findByGameIdAndRole(UUID value, MediaRole role);
 }

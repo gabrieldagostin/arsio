@@ -1,11 +1,13 @@
 package com.arsio.game.internal.infra.persistence.entity;
 
 import com.arsio.game.internal.domain.valueobject.RequirementCategory;
+import com.arsio.game.internal.domain.valueobject.StorageUnit;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -47,12 +49,12 @@ public class GameRequirementEntity {
     private Integer ram;
 
     @Column
-    private Double storage;
+    private BigDecimal storage;
 
     @Enumerated(EnumType.STRING)
     @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     @Column
-    private String storageUnit;
+    private StorageUnit storageUnit;
 
     @Column(name = "created_at", nullable = false, updatable = false, insertable = false)
     private Instant createdAt;

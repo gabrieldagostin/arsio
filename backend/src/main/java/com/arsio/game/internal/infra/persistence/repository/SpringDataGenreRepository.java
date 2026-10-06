@@ -1,9 +1,11 @@
 package com.arsio.game.internal.infra.persistence.repository;
 
 import com.arsio.game.internal.infra.persistence.entity.GenreEntity;
+import io.lettuce.core.dynamic.annotation.Param;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
 import java.util.Set;
@@ -15,9 +17,15 @@ public interface SpringDataGenreRepository extends JpaRepository<GenreEntity, UU
 
     Page<GenreEntity> findByNameContainingIgnoreCaseAndActiveTrue(String search, Pageable pageable);
 
-    Set<GenreEntity> findAllByIdAndActiveTrue(Set<UUID> ids);
+    Set<GenreEntity> findAllByIdInAndActiveTrue(Set<UUID> ids);
 
     Optional<GenreEntity> findByIdAndActiveTrue(UUID genreId);
 
-    Set<GenreEntity> findAllByGameId(UUID gameId);
+    @Query("""
+        SELECT genre
+        FROM GameEntity game
+        JOIN game.genres genre
+        WHERE game.id = :gameId
+    """)
+    Set<GenreEntity> findAllGenresByGameId(@Param("gameId") UUID gameId);
 }
