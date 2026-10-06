@@ -40,6 +40,7 @@ public class GameController {
     private final SearchGamesUseCase searchGamesUseCase;
     private final ChangeGamePriceUseCase changeGamePriceUseCase;
     private final GetFeaturedGamesUseCase getFeaturedGamesUseCase;
+    private final GetNewReleasedGamesUseCase getNewReleasedGamesUseCase;
 
     @PostMapping
     @PreAuthorize("hasRole('DEV')")
@@ -122,11 +123,32 @@ public class GameController {
 
     @GetMapping("/featured")
     @PreAuthorize("HasRole('USER')")
-    public ResponseEntity<PageResult<ListGamesResponse>> featured(@PageableDefault(size = 20) Pageable pageable) {
+    public ResponseEntity<PageResult<ListGamesResponse>> featured(
+            @PageableDefault(
+                    size = 20,
+                    sort = "title",
+                    direction = Sort.Direction.ASC
+            ) Pageable pageable) {
 
         Pagination pagination = paginationMapper.toPagination(pageable);
 
         PageResult<ListGamesResponse> responses = getFeaturedGamesUseCase.execute(pagination);
+
+        return ResponseEntity.ok(responses);
+    }
+
+    @GetMapping("/new-releases")
+    @PreAuthorize("HasRole('USER')")
+    public ResponseEntity<PageResult<ListGamesResponse>> newReleases(
+            @PageableDefault(
+                    size = 20,
+                    sort = "title",
+                    direction = Sort.Direction.ASC
+            ) Pageable pageable) {
+
+        Pagination pagination = paginationMapper.toPagination(pageable);
+
+        PageResult<ListGamesResponse> responses = getNewReleasedGamesUseCase.execute(pagination);
 
         return ResponseEntity.ok(responses);
     }

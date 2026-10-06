@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -92,6 +93,32 @@ public class JpaGameRepositoryAdapter implements GameRepository {
         Pageable pageable = paginationMapper.toPageable(pagination);
 
         Page<GameEntity> result = games.findAllByFeaturedTrue(pageable);
+
+        List<Game> gameList = result.getContent()
+                .stream()
+                .map(mapper::toDomain)
+                .toList();
+
+        return new PageResult<>(
+                gameList,
+                result.getNumber(),
+                result.getSize(),
+                result.getTotalElements(),
+                result.getTotalPages()
+        );
+    }
+
+    @Override
+    public PageResult<Game> findRecentlyReleases(Pagination pagination, Instant oneWeekAgo, Instant now) {
+
+        Pageable pageable = paginationMapper.toPageable(pagination);
+
+        Page<GameEntity> result = games.findRecentlyReleased(
+                GameStatus.PUBLISHED,
+                oneWeekAgo,
+                now,
+                pageable
+        );
 
         List<Game> gameList = result.getContent()
                 .stream()

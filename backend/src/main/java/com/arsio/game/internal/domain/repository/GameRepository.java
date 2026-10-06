@@ -5,6 +5,7 @@ import com.arsio.game.internal.domain.valueobject.GameId;
 import com.arsio.shared.pagination.PageResult;
 import com.arsio.shared.pagination.Pagination;
 
+import java.time.Instant;
 import java.util.Optional;
 
 public interface GameRepository {
@@ -18,4 +19,6 @@ public interface GameRepository {
     PageResult<Game> findAll(String search, Pagination pagination);
 
     PageResult<Game> findAllByFeaturedTrue(Pagination pagination);
+
+    PageResult<Game> findRecentlyReleases(Pagination pagination, Instant oneWeekAgo, Instant now);
 }
