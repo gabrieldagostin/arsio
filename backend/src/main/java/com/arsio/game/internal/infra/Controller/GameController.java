@@ -37,9 +37,9 @@ public class GameController {
     private final GetGameUseCase getGameUseCase;
     private final ListGamesUseCase listGamesUseCase;
     private final UpdateGameUseCase updateGameUseCase;
-    private final ArchiveGameUseCase archiveGameUseCase;
     private final SearchGamesUseCase searchGamesUseCase;
     private final ChangeGamePriceUseCase changeGamePriceUseCase;
+    private final GetFeaturedGamesUseCase getFeaturedGamesUseCase;
 
     @PostMapping
     @PreAuthorize("hasRole('DEV')")
@@ -90,15 +90,6 @@ public class GameController {
         return ResponseEntity.ok(response);
     }
 
-    @PatchMapping("/{gameId}/archive")
-    @PreAuthorize("HasRole('ADMIN')")
-    public ResponseEntity<Void> archive(@PathVariable(name = "gameId") UUID gameId) {
-
-        archiveGameUseCase.execute(gameId);
-
-        return ResponseEntity.noContent().build();
-    }
-
     @GetMapping("/search")
     @PreAuthorize("hasRole('User')")
     public ResponseEntity<PageResult<ListGamesResponse>> search(
@@ -127,5 +118,16 @@ public class GameController {
         ChangeGamePriceResponse response = changeGamePriceUseCase.execute(command);
 
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/featured")
+    @PreAuthorize("HasRole('USER')")
+    public ResponseEntity<PageResult<ListGamesResponse>> featured(@PageableDefault(size = 20) Pageable pageable) {
+
+        Pagination pagination = paginationMapper.toPagination(pageable);
+
+        PageResult<ListGamesResponse> responses = getFeaturedGamesUseCase.execute(pagination);
+
+        return ResponseEntity.ok(responses);
     }
 }

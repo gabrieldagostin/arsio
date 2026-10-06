@@ -13,4 +13,6 @@ public interface SpringDataGameRepository extends JpaRepository<GameEntity, UUID
     Page<GameEntity> findAllByStatus(GameStatus status, Pageable pageable);
 
     Page<GameEntity> findByTitleContainingIgnoreCaseAndStatus(String search, GameStatus status, Pageable pageable);
+
+    Page<GameEntity> findAllByFeaturedTrue(Pageable pageable);
 }

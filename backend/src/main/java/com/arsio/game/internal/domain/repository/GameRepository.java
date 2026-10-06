@@ -16,4 +16,6 @@ public interface GameRepository {
     PageResult<Game> findAll(Pagination pagination);
 
     PageResult<Game> findAll(String search, Pagination pagination);
+
+    PageResult<Game> findAllByFeaturedTrue(Pagination pagination);
 }
