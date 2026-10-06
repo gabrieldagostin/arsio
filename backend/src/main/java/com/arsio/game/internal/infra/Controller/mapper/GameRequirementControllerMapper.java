@@ -1,9 +1,9 @@
 package com.arsio.game.internal.infra.Controller.mapper;
 
 import com.arsio.config.mapper.CentralMapperConfig;
-import com.arsio.game.internal.application.command.CreateGameRequirementCommand;
+import com.arsio.game.internal.application.command.*;
 import com.arsio.game.internal.domain.valueobject.*;
-import com.arsio.game.internal.infra.Controller.dto.request.CreateGameRequirementRequest;
+import com.arsio.game.internal.infra.Controller.dto.request.*;
 import org.mapstruct.Mapper;
 
 import java.math.BigDecimal;
@@ -13,6 +13,18 @@ import java.util.UUID;
 public interface GameRequirementControllerMapper {
 
     CreateGameRequirementCommand toCreateGameRequirementCommand(UUID gameId, CreateGameRequirementRequest request);
+
+    CreateGpuCommand toCreateGpuCommand(CreateGpuRequest request);
+
+    UpdateGpuCommand toUpdateGpuCommand(UUID gpuId, UpdateGpuRequest request);
+
+    CreateOperatingSystemCommand toCreateOperatingSystemCommand(CreateOperatingSystemRequest request);
+
+    UpdateOperatingSystemCommand toUpdateOperatingSystemCommand(UUID operatingSystemId, UpdateOperatingSystemRequest request);
+
+    CreateProcessorCommand toCreateProcessorCommand(CreateProcessorRequest request);
+
+    UpdateProcessorCommand toUpdateProcessorCommand(UUID processorId, UpdateProcessorRequest request);
 
     default GameId toGameId(UUID value) {
         return new GameId(value);
@@ -36,5 +48,13 @@ public interface GameRequirementControllerMapper {
 
     default StorageUnit toStorageUnit(String value) {
         return value != null ? StorageUnit.valueOf(value) : null;
+    }
+
+    default Manufacturer toManufacturer(String value) {
+        return new Manufacturer(value);
+    }
+
+    default Model toModel(String value) {
+        return new Model(value);
     }
 }

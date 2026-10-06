@@ -17,7 +17,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/game-media")
+@RequestMapping("/api/v1/game-media")
 public class GameMediaController {
 
     private final GameMediaControllerMapper mapper;
