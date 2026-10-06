@@ -1,5 +1,6 @@
 package com.arsio.game.internal.domain.model;
 
+import com.arsio.game.internal.domain.exception.GameNotPublishedException;
 import com.arsio.game.internal.domain.valueobject.*;
 import com.arsio.shared.money.Money;
 
@@ -18,8 +19,9 @@ public class Game {
     private Set<GenreId> genres;
     private Set<TagId> tags;
     private LocalDate releaseDate;
+    private boolean featured;
 
-    public Game(GameId id, UUID developerId, GameTitle title, Description description, Money basePrice, GameStatus status, LocalDate releaseDate) {
+    public Game(GameId id, UUID developerId, GameTitle title, Description description, Money basePrice, GameStatus status, LocalDate releaseDate, boolean featured) {
         this.id = id;
         this.developerId = developerId;
         this.title = title;
@@ -27,6 +29,7 @@ public class Game {
         this.basePrice = basePrice;
         this.status = status;
         this.releaseDate = releaseDate;
+        this.featured = featured;
     }
 
     public static Game create(UUID developerId, GameTitle title, Description description, Money basePrice, LocalDate releaseDate) {
@@ -38,7 +41,8 @@ public class Game {
                 description,
                 basePrice,
                 GameStatus.DRAFT,
-                releaseDate
+                releaseDate,
+                false
         );
     }
 
@@ -100,5 +104,13 @@ public class Game {
 
     public void changePrice(Money newPrice) {
         this.basePrice = newPrice;
+    }
+
+    public void feature() {
+
+        if (status != GameStatus.PUBLISHED)
+            throw new GameNotPublishedException();
+
+        this.featured = true;
     }
 }

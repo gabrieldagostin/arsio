@@ -52,6 +52,7 @@ public enum ErrorCode {
     GAME_INVALID_GENRE_NAME("Invalid genre name"),
     GAME_INVALID_TAG_NAME("Invalid tag name"),
     GAME_INVALID_STORAGE_UNIT("Invalid storage unit"),
+    GAME_NOT_PUBLISHED("Game not published"),
 
     DEVELOPER_NOT_FOUND("Developer not found"),
     DEVELOPER_INVALID_MP_ACCESS_TOKEN("Invalid MP access token"),

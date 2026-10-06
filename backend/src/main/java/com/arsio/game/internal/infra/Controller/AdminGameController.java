@@ -1,13 +1,11 @@
 package com.arsio.game.internal.infra.Controller;
 
 import com.arsio.game.internal.application.usecase.ArchiveGameUseCase;
+import com.arsio.game.internal.application.usecase.FeatureGameUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -17,12 +15,22 @@ import java.util.UUID;
 public class AdminGameController {
 
     private final ArchiveGameUseCase archiveGameUseCase;
+    private final FeatureGameUseCase featureGameUseCase;
 
     @PatchMapping("/{gameId}/archive")
     @PreAuthorize("HasRole('ADMIN')")
     public ResponseEntity<Void> archive(@PathVariable(name = "gameId") UUID gameId) {
 
         archiveGameUseCase.execute(gameId);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{gameId}/feature")
+    @PreAuthorize("HasRole('ADMIN')")
+    public ResponseEntity<Void> feature(@PathVariable(name = "gameId") UUID gameId) {
+
+        featureGameUseCase.execute(gameId);
 
         return ResponseEntity.noContent().build();
     }

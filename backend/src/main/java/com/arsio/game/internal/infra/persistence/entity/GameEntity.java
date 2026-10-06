@@ -62,6 +62,9 @@ public class GameEntity {
     @Column(name = "release_date", nullable = false)
     private LocalDate releaseDate;
 
+    @Column(nullable = false)
+    private boolean featured;
+
     @Column(name = "created_at", nullable = false, updatable = false, insertable = false)
     private  Instant createdAt;
 }
