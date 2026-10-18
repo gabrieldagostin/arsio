@@ -133,4 +133,25 @@ public class JpaGameRepositoryAdapter implements GameRepository {
                 result.getTotalPages()
         );
     }
+
+    @Override
+    public PageResult<Game> findDiscountedGames(Pagination pagination) {
+
+        Pageable pageable = paginationMapper.toPageable(pagination);
+
+        Page<GameEntity> result = games.findDiscountedGames(pageable);
+
+        List<Game> gameList = result.getContent()
+                .stream()
+                .map(mapper::toDomain)
+                .toList();
+
+        return new PageResult<>(
+                gameList,
+                result.getNumber(),
+                result.getSize(),
+                result.getTotalElements(),
+                result.getTotalPages()
+        );
+    }
 }

@@ -2,6 +2,7 @@ package com.arsio.game.internal.domain.repository;
 
 import com.arsio.game.internal.domain.model.Game;
 import com.arsio.game.internal.domain.valueobject.GameId;
+import com.arsio.game.internal.infra.Controller.dto.response.ListGamesResponse;
 import com.arsio.shared.pagination.PageResult;
 import com.arsio.shared.pagination.Pagination;
 
@@ -21,4 +22,6 @@ public interface GameRepository {
     PageResult<Game> findAllByFeaturedTrue(Pagination pagination);
 
     PageResult<Game> findRecentlyReleases(Pagination pagination, Instant oneWeekAgo, Instant now);
+
+    PageResult<Game> findDiscountedGames(Pagination pagination);
 }

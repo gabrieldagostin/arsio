@@ -32,4 +32,17 @@ public interface SpringDataGameRepository extends JpaRepository<GameEntity, UUID
             @Param("endDate") Instant endDate,
             Pageable pageable
     );
+
+    @Query("""
+        SELECT g
+        FROM GameEntity g
+        WHERE EXISTS (
+            SELECT 1
+            FROM DiscountEntity d
+            WHERE d.gameId = g.id
+            AND d.start_date <= CURRENT_TIMESTAMP
+            AND d.end_date >= CURRENT_TIMESTAMP
+        )
+    """)
+    Page<GameEntity> findDiscountedGames(Pageable pageable);
 }

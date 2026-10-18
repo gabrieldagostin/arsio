@@ -41,6 +41,7 @@ public class GameController {
     private final ChangeGamePriceUseCase changeGamePriceUseCase;
     private final GetFeaturedGamesUseCase getFeaturedGamesUseCase;
     private final GetNewReleasedGamesUseCase getNewReleasedGamesUseCase;
+    private final GetDiscountedGamesUseCase getDiscountedGamesUseCase;
 
     @PostMapping
     @PreAuthorize("hasRole('DEV')")
@@ -149,6 +150,22 @@ public class GameController {
         Pagination pagination = paginationMapper.toPagination(pageable);
 
         PageResult<ListGamesResponse> responses = getNewReleasedGamesUseCase.execute(pagination);
+
+        return ResponseEntity.ok(responses);
+    }
+
+    @GetMapping("/discounts")
+    @PreAuthorize("HasRole('USER')")
+    public ResponseEntity<PageResult<ListGamesResponse>> discounts(
+            @PageableDefault(
+                    size = 20,
+                    sort = "title",
+                    direction = Sort.Direction.ASC
+            ) Pageable pageable) {
+
+        Pagination pagination = paginationMapper.toPagination(pageable);
+
+        PageResult<ListGamesResponse> responses = getDiscountedGamesUseCase.execute(pagination);
 
         return ResponseEntity.ok(responses);
     }
