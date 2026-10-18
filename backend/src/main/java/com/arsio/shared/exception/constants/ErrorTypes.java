@@ -63,6 +63,9 @@ public final class ErrorTypes {
     public static final String DEVELOPER_NOT_FOUND = BASE + "developer-not-found";
     public static final String DEVELOPER_INVALID_MP_ACCESS_TOKEN =  BASE + "developer-invalid-MP-access-token";
 
+    public static final String ORDER_INVALID_GATEWAY_TRANSACTION_ID = BASE + "order-invalid-gateway-transaction-id";
+    public static final String ORDER_INVALID_STATUS = BASE + "order-invalid-status";
+
     public static final String NOTIFICATION_INVALID_MESSAGE = BASE + "invalid-message";
     public static final String NOTIFICATION_INVALID_TITLE = BASE + "invalid-title";
 

@@ -58,6 +58,9 @@ public enum ErrorCode {
     DEVELOPER_NOT_FOUND("Developer not found"),
     DEVELOPER_INVALID_MP_ACCESS_TOKEN("Invalid MP access token"),
 
+    ORDER_INVALID_GATEWAY_TRANSACTION_ID("Invalid transaction id"),
+    ORDER_INVALID_STATUS("Invalid status"),
+
     NOTIFICATION_INVALID_MESSAGE("Invalid message"),
     NOTIFICATION_INVALID_TITLE("Invalid title");
 
