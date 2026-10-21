@@ -2,6 +2,7 @@
         displayName = "Game Module",
         allowedDependencies = {
                 "developer::api",
+                "order::api",
                 "config",
                 "shared"
         }

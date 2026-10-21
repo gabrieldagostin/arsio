@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -42,6 +43,7 @@ public class GameController {
     private final GetFeaturedGamesUseCase getFeaturedGamesUseCase;
     private final GetNewReleasedGamesUseCase getNewReleasedGamesUseCase;
     private final GetDiscountedGamesUseCase getDiscountedGamesUseCase;
+    private final GetBestSellingGamesUseCase getBestSellingGamesUseCase;
 
     @PostMapping
     @PreAuthorize("hasRole('DEV')")
@@ -166,6 +168,18 @@ public class GameController {
         Pagination pagination = paginationMapper.toPagination(pageable);
 
         PageResult<ListGamesResponse> responses = getDiscountedGamesUseCase.execute(pagination);
+
+        return ResponseEntity.ok(responses);
+    }
+
+    @GetMapping("/best-sellers")
+    @PreAuthorize("HasRole('USER')")
+    public ResponseEntity<List<ListGamesResponse>> bestSellers(
+            @PageableDefault(size = 20) Pageable pageable) {
+
+        Pagination pagination = paginationMapper.toPagination(pageable);
+
+        List<ListGamesResponse> responses = getBestSellingGamesUseCase.execute(pagination);
 
         return ResponseEntity.ok(responses);
     }

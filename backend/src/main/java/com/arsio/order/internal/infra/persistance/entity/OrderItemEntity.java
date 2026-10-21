@@ -20,7 +20,7 @@ public class OrderItemEntity {
     private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id", nullable = false, unique = true)
+    @JoinColumn(name = "order_id", nullable = false)
     private OrderEntity order;
 
     @Column(name = "game_id", nullable = false, unique = true)

@@ -9,12 +9,14 @@ import com.arsio.user.internal.application.usecase.UpdateUserPasswordHashUseCase
 import com.arsio.user.internal.domain.repository.UserRepository;
 import com.arsio.user.internal.application.usecase.CreateUserUseCase;
 import com.arsio.user.internal.domain.model.User;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@Transactional
 public class UserFacadeImpl implements UserFacade {
 
     private final UserRepository users;

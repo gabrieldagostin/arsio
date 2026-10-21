@@ -6,7 +6,7 @@ CREATE TABLE orders (
 
     gateway_transaction_id VARCHAR(100),
 
-    total_price DECIMAL(10,2) NOT NULL ,
+    total_price DECIMAL(10,2) NOT NULL,
 
     status VARCHAR(30) NOT NULL DEFAULT 'PENDING',
 

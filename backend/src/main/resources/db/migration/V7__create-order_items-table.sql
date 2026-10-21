@@ -8,7 +8,7 @@ CREATE TABLE order_items (
 
     price_at_purchase DECIMAL(10,2) NOT NULL,
     
-    CONSTRAINT pk_order_itens
+    CONSTRAINT pk_order_items
         PRIMARY KEY (id),
 
     CONSTRAINT uk_order_items_order_id_game_id
