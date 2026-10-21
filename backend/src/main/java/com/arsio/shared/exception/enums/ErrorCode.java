@@ -62,7 +62,9 @@ public enum ErrorCode {
     ORDER_INVALID_STATUS("Invalid status"),
 
     NOTIFICATION_INVALID_MESSAGE("Invalid message"),
-    NOTIFICATION_INVALID_TITLE("Invalid title");
+    NOTIFICATION_INVALID_TITLE("Invalid title"),
+
+    REVIEW_INVALID_RATING("Invalid rating");
 
     private final String defaultMessage;
 
