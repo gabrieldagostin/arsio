@@ -44,6 +44,7 @@ public class GameController {
     private final GetNewReleasedGamesUseCase getNewReleasedGamesUseCase;
     private final GetDiscountedGamesUseCase getDiscountedGamesUseCase;
     private final GetBestSellingGamesUseCase getBestSellingGamesUseCase;
+    private final GetTopRatedGamesUseCase getTopRatedGamesUseCase;
 
     @PostMapping
     @PreAuthorize("hasRole('DEV')")
@@ -180,6 +181,18 @@ public class GameController {
         Pagination pagination = paginationMapper.toPagination(pageable);
 
         List<ListGamesResponse> responses = getBestSellingGamesUseCase.execute(pagination);
+
+        return ResponseEntity.ok(responses);
+    }
+
+    @GetMapping("top-rated")
+    @PreAuthorize("HasRole('USER')")
+    public ResponseEntity<List<ListGamesResponse>> topRated(
+            @PageableDefault(size = 20) Pageable pageable) {
+
+        Pagination pagination = paginationMapper.toPagination(pageable);
+
+        List<ListGamesResponse> responses = getTopRatedGamesUseCase.execute(pagination);
 
         return ResponseEntity.ok(responses);
     }
