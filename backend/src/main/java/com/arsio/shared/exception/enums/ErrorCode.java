@@ -54,6 +54,9 @@ public enum ErrorCode {
     GAME_INVALID_STORAGE_UNIT("Invalid storage unit"),
     GAME_NOT_PUBLISHED("Game not published"),
     GAME_INVALID_DISCOUNT_PERCENTAGE("Invalid discount percentage"),
+    GAME_INVALID_VERSION("Invalid version"),
+    GAME_INVALID_FILE_SIZE("Invalid file size"),
+    GAME_INVALID_BUILD_STATUS("Invalid build status"),
 
     DEVELOPER_NOT_FOUND("Developer not found"),
     DEVELOPER_INVALID_MP_ACCESS_TOKEN("Invalid MP access token"),

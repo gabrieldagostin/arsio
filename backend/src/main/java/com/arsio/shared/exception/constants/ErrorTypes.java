@@ -59,6 +59,9 @@ public final class ErrorTypes {
     public static final String GAME_INVALID_STORAGE_UNIT = BASE + "game-invalid-storage-unit";
     public static final String GAME_NOT_PUBLISHED = BASE + "game-not-published";
     public static final String GAME_INVALID_DISCOUNT_PERCENTAGE = BASE + "game-invalid-discount-percentage";
+    public static final String GAME_INVALID_VERSION =  BASE + "game-invalid-version";
+    public static final String GAME_INVALID_FILE_SIZE = BASE + "game-invalid-file-size";
+    public static final String GAME_INVALID_BUILD_STATUS = BASE + "game-invalid-build-status";
 
     public static final String DEVELOPER_NOT_FOUND = BASE + "developer-not-found";
     public static final String DEVELOPER_INVALID_MP_ACCESS_TOKEN =  BASE + "developer-invalid-MP-access-token";
