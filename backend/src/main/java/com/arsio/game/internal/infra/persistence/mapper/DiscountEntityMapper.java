@@ -10,6 +10,7 @@ import com.arsio.game.internal.infra.persistence.entity.GameEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Mapper(config = CentralMapperConfig.class)
@@ -39,11 +40,11 @@ public interface DiscountEntityMapper {
         return new GameId(value);
     }
 
-    default Double percentageToDouble(Percentage percentage) {
+    default BigDecimal percentageToBigDecimal(Percentage percentage) {
         return percentage.value();
     }
 
-    default Percentage doubleToPercentage(Double value) {
+    default Percentage bigDecimalToPercentage(BigDecimal value) {
         return new Percentage(value);
     }
 }

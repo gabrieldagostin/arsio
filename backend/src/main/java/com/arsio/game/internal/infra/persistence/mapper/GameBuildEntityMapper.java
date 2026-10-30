@@ -20,6 +20,7 @@ public interface GameBuildEntityMapper {
 
     @Mapping(target = "id", source = "gameBuild.id")
     @Mapping(target = "game", source = "gameEntity")
+    @Mapping(target = "status", source = "gameBuild.status")
     @Mapping(target = "publishedAt", ignore = true)
     GameBuildEntity toEntity(GameBuild gameBuild, GameEntity gameEntity);
 

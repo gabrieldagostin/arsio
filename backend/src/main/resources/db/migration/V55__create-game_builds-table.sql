@@ -6,7 +6,7 @@ CREATE TABLE game_builds(
 
     object_key VARCHAR(255) NOT NULL,
 
-    file_size INTEGER NOT NULL,
+    file_size BIGINT NOT NULL,
 
     status VARCHAR(30) NOT NULL,
 

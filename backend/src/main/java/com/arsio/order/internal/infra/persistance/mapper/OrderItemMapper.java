@@ -15,11 +15,13 @@ import java.util.UUID;
 public interface OrderItemMapper {
 
     @Mapping(target = "id", source = "orderItemEntity.id")
-    @Mapping(target = "orderId", source = "orderItemEntity.user.id")
+    @Mapping(target = "orderId", source = "orderItemEntity.order.id")
     OrderItem toDomain(OrderItemEntity orderItemEntity);
 
     @Mapping(target = "id", source = "orderItem.id")
-    @Mapping(target = "order", source = "orderItemEntity")
+    @Mapping(target = "order", source = "orderItemEntity.order")
+    @Mapping(target = "gameId", source = "orderItem.gameId")
+    @Mapping(target = "priceAtPurchase", source = "orderItem.priceAtPurchase")
     OrderItemEntity toEntity(OrderItem orderItem, OrderItemEntity orderItemEntity);
 
     default UUID orderIdToUuid(OrderId orderId) {

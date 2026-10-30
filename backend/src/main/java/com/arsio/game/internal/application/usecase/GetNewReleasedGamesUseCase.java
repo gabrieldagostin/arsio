@@ -14,6 +14,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
@@ -33,8 +34,8 @@ public class GetNewReleasedGamesUseCase {
 
     public PageResult<ListGamesResponse> execute(Pagination pagination) {
 
-        Instant now = Instant.now();
-        Instant oneWeekAgo = now.minus(7, ChronoUnit.DAYS);
+        LocalDate now = LocalDate.now();
+        LocalDate oneWeekAgo = now.minusDays(7);
 
         PageResult<Game> gameList = games.findRecentlyReleases(
                 pagination,

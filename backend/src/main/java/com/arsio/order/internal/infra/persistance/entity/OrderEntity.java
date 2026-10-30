@@ -29,14 +29,14 @@ public class OrderEntity {
     @Column(name = "gateway_transaction_id", nullable = false)
     private String gatewayTransactionId;
 
-    @Column(nullable = false)
-    private BigDecimal price;
+    @Column(name = "total_price", nullable = false)
+    private BigDecimal totalPrice;
 
     @Enumerated(EnumType.STRING)
     @JdbcTypeCode(SqlTypes.ENUM)
     @Column(nullable = false)
     private OrderStatus status;
 
-    @Column(name = "acquired_at", nullable = false)
-    private Instant acquiredAt;
+    @Column(name = "created_at", nullable = false)
+    private Instant createdAt;
 }

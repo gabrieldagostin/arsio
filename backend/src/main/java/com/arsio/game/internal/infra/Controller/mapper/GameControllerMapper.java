@@ -11,10 +11,7 @@ import com.arsio.game.internal.infra.Controller.dto.request.ChangeGamePriceReque
 import com.arsio.game.internal.infra.Controller.dto.request.CreateGameRequest;
 import com.arsio.game.internal.infra.Controller.dto.request.UpdateGameRequest;
 import com.arsio.shared.money.Money;
-import com.arsio.shared.storage.ConfirmFileUploadCommand;
-import com.arsio.shared.storage.ConfirmFileUploadRequest;
-import com.arsio.shared.storage.UploadFileUrlCommand;
-import com.arsio.shared.storage.UploadFileUrlRequest;
+import com.arsio.shared.storage.*;
 import org.mapstruct.Mapper;
 
 import java.math.BigDecimal;
@@ -47,5 +44,9 @@ public interface GameControllerMapper {
 
     default Money toMoney(BigDecimal value) {
         return new Money(value);
+    }
+
+    default ObjectKey toObjectKey(String value) {
+        return new ObjectKey(value);
     }
 }

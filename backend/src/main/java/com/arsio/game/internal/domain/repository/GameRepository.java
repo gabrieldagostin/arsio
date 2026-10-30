@@ -7,6 +7,7 @@ import com.arsio.shared.pagination.PageResult;
 import com.arsio.shared.pagination.Pagination;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Optional;
 
 public interface GameRepository {
@@ -21,7 +22,7 @@ public interface GameRepository {
 
     PageResult<Game> findAllByFeaturedTrue(Pagination pagination);
 
-    PageResult<Game> findRecentlyReleases(Pagination pagination, Instant oneWeekAgo, Instant now);
+    PageResult<Game> findRecentlyReleases(Pagination pagination, LocalDate oneWeekAgo, LocalDate now);
 
     PageResult<Game> findDiscountedGames(Pagination pagination);
 }

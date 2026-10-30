@@ -13,7 +13,7 @@ import java.util.UUID;
 public interface SpringDataReviewRepository extends JpaRepository<ReviewEntity, UUID> {
 
     @Query("""
-    SELECT new com.arsio.review.api.facade.TopRatedGameView(
+    SELECT new com.arsio.review.api.dto.TopRatedGameView(
         r.gameId,
         AVG(r.rating),
         COUNT(r.id)

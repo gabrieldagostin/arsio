@@ -30,7 +30,7 @@ public class GameBuildEntity {
     private String objectKey;
 
     @Column(name = "file_size", nullable = false)
-    private Integer fileSize;
+    private Long fileSize;
 
     @Enumerated(EnumType.STRING)
     @JdbcTypeCode(SqlTypes.ENUM)

@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.UUID;
 
 public interface SpringDataGameRepository extends JpaRepository<GameEntity, UUID> {
@@ -28,8 +29,8 @@ public interface SpringDataGameRepository extends JpaRepository<GameEntity, UUID
     """)
     Page<GameEntity> findRecentlyReleased(
             @Param("status") GameStatus status,
-            @Param("startDate") Instant startDate,
-            @Param("endDate") Instant endDate,
+            @Param("startDate") LocalDate startDate,
+            @Param("endDate") LocalDate endDate,
             Pageable pageable
     );
 
@@ -39,9 +40,9 @@ public interface SpringDataGameRepository extends JpaRepository<GameEntity, UUID
         WHERE EXISTS (
             SELECT 1
             FROM DiscountEntity d
-            WHERE d.gameId = g.id
-            AND d.start_date <= CURRENT_TIMESTAMP
-            AND d.end_date >= CURRENT_TIMESTAMP
+            WHERE d.game.id = g.id
+            AND d.startDate <= CURRENT_TIMESTAMP
+            AND d.endDate >= CURRENT_TIMESTAMP
         )
     """)
     Page<GameEntity> findDiscountedGames(Pageable pageable);
