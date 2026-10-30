@@ -13,6 +13,7 @@ import com.arsio.game.internal.infra.Controller.mapper.GameControllerMapper;
 import com.arsio.shared.pagination.PageResult;
 import com.arsio.shared.pagination.Pagination;
 import com.arsio.shared.pagination.PaginationMapper;
+import com.arsio.shared.storage.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -45,6 +46,8 @@ public class GameController {
     private final GetDiscountedGamesUseCase getDiscountedGamesUseCase;
     private final GetBestSellingGamesUseCase getBestSellingGamesUseCase;
     private final GetTopRatedGamesUseCase getTopRatedGamesUseCase;
+    private final GameBuildUploadPreparationUseCase gameBuildUploadPreparationUseCase;
+    private final ConfirmGameBuildUploadUseCase confirmGameBuildUploadUseCase;
 
     @PostMapping
     @PreAuthorize("hasRole('DEV')")
@@ -195,5 +198,32 @@ public class GameController {
         List<ListGamesResponse> responses = getTopRatedGamesUseCase.execute(pagination);
 
         return ResponseEntity.ok(responses);
+    }
+
+    @PostMapping("{gameId}/builds/upload-url")
+    @PreAuthorize("HasRole('DEV')")
+    public ResponseEntity<UploadFileUrlResponse> generateBuildUploadUrl(
+            @PathVariable(name = "gameId") UUID gameId,
+            @RequestBody @Valid UploadFileUrlRequest request) {
+
+        UploadFileUrlCommand command = mapper.toUploadFileUrlCommand(request);
+
+        UploadFileUrlResponse response = gameBuildUploadPreparationUseCase.execute(gameId, command);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/{gameId}/builds/confirm")
+    @PreAuthorize("HasRole('DEV')")
+    public ResponseEntity<GameBuildUploadCompletionResponse> confirmGameBuildUpload(
+            @PathVariable(name = "gameId") UUID gameId,
+            @RequestBody @Valid ConfirmFileUploadRequest request) {
+
+        ConfirmFileUploadCommand command = mapper.toConfirmFileUploadCommand(request);
+
+        GameBuildUploadCompletionResponse response =
+                confirmGameBuildUploadUseCase.execute(gameId, command);
+
+        return ResponseEntity.ok(response);
     }
 }

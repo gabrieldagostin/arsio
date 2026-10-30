@@ -26,9 +26,6 @@ public class GameBuildEntity {
     @JoinColumn(name = "game_id", nullable = false)
     private GameEntity game;
 
-    @Column(nullable = false)
-    private String version;
-
     @Column(name = "object_key", nullable = false)
     private String objectKey;
 

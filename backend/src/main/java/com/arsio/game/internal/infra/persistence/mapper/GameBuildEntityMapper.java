@@ -4,6 +4,7 @@ import com.arsio.config.mapper.CentralMapperConfig;
 import com.arsio.game.internal.domain.model.GameBuild;
 import com.arsio.game.internal.domain.valueobject.*;
 import com.arsio.game.internal.infra.persistence.entity.GameBuildEntity;
+import com.arsio.game.internal.infra.persistence.entity.GameEntity;
 import com.arsio.shared.storage.ObjectKey;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -18,9 +19,9 @@ public interface GameBuildEntityMapper {
     GameBuild toDomain(GameBuildEntity gameBuildEntity);
 
     @Mapping(target = "id", source = "gameBuild.id")
-    @Mapping(target = "game", source = "gameBuildEntity")
+    @Mapping(target = "game", source = "gameEntity")
     @Mapping(target = "publishedAt", ignore = true)
-    GameBuildEntity toEntity(GameBuild gameBuild, GameBuildEntity gameBuildEntity);
+    GameBuildEntity toEntity(GameBuild gameBuild, GameEntity gameEntity);
 
     default UUID gameBuildIdToUuid(GameBuildId gameBuildId) {
         return gameBuildId.value();
@@ -38,14 +39,6 @@ public interface GameBuildEntityMapper {
         return new GameId(value);
     }
 
-    default String gameVersionToString(GameVersion gameVersion) {
-        return gameVersion.value();
-    }
-
-    default GameVersion stringToGameVersion(String value) {
-        return new GameVersion(value);
-    }
-
     default String objectKeyToString(ObjectKey objectKey) {
         return objectKey.value();
     }
@@ -54,12 +47,12 @@ public interface GameBuildEntityMapper {
         return new ObjectKey(value);
     }
 
-    default Integer fileSizeToInteger(FileSize fileSize) {
+    default Long fileSizeToLong(FileSize fileSize) {
         return fileSize.value();
     }
 
-    default FileSize integerToFileSize(Integer integer) {
-        return new FileSize(integer);
+    default FileSize longToFileSize(Long value) {
+        return new FileSize(value);
     }
 
     default String buildStatusToString(BuildStatus buildStatus) {

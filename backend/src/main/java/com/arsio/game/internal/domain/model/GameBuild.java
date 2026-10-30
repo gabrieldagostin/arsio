@@ -7,18 +7,26 @@ public class GameBuild {
 
     private final GameBuildId id;
     private final GameId gameId;
-    private GameVersion version;
     private ObjectKey objectKey;
     private FileSize fileSize;
     private BuildStatus status;
 
-    public GameBuild(GameBuildId id, GameId gameId, GameVersion version, ObjectKey objectKey, FileSize fileSize, BuildStatus status) {
+    public GameBuild(GameBuildId id, GameId gameId, ObjectKey objectKey, FileSize fileSize, BuildStatus status) {
         this.id = id;
         this.gameId = gameId;
-        this.version = version;
         this.objectKey = objectKey;
         this.fileSize = fileSize;
         this.status = status;
+    }
+
+    public static GameBuild create(GameId gameId, ObjectKey objectKey, Long value, BuildStatus status) {
+        return new GameBuild(
+                GameBuildId.generate(),
+                gameId,
+                objectKey,
+                new FileSize(value),
+                status
+        );
     }
 
     public GameBuildId getId() {
@@ -27,10 +35,6 @@ public class GameBuild {
 
     public GameId getGameId() {
         return gameId;
-    }
-
-    public GameVersion getVersion() {
-        return version;
     }
 
     public ObjectKey getObjectKey() {
@@ -43,5 +47,9 @@ public class GameBuild {
 
     public BuildStatus getStatus() {
         return status;
+    }
+
+    public void updateObjectKey(ObjectKey objectKey) {
+        this.objectKey = objectKey;
     }
 }

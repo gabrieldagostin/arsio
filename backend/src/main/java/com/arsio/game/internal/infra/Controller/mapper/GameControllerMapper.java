@@ -11,6 +11,10 @@ import com.arsio.game.internal.infra.Controller.dto.request.ChangeGamePriceReque
 import com.arsio.game.internal.infra.Controller.dto.request.CreateGameRequest;
 import com.arsio.game.internal.infra.Controller.dto.request.UpdateGameRequest;
 import com.arsio.shared.money.Money;
+import com.arsio.shared.storage.ConfirmFileUploadCommand;
+import com.arsio.shared.storage.ConfirmFileUploadRequest;
+import com.arsio.shared.storage.UploadFileUrlCommand;
+import com.arsio.shared.storage.UploadFileUrlRequest;
 import org.mapstruct.Mapper;
 
 import java.math.BigDecimal;
@@ -24,6 +28,10 @@ public interface GameControllerMapper {
     UpdateGameCommand toUpdateGameCommand(UUID gameId, UpdateGameRequest request);
 
     ChangeGamePriceCommand toChangeGamePriceCommand(UUID gameId, ChangeGamePriceRequest request);
+
+    UploadFileUrlCommand toUploadFileUrlCommand(UploadFileUrlRequest request);
+
+    ConfirmFileUploadCommand toConfirmFileUploadCommand(ConfirmFileUploadRequest request);
 
     default GameId toGameId(UUID value) {
         return new GameId(value);

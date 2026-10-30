@@ -4,8 +4,6 @@ CREATE TABLE game_builds(
 
     game_id UUID NOT NULL,
 
-    version VARCHAR(20) NOT NULL,
-
     object_key VARCHAR(255) NOT NULL,
 
     file_size INTEGER NOT NULL,
