@@ -52,4 +52,8 @@ public class GameBuild {
     public void updateObjectKey(ObjectKey objectKey) {
         this.objectKey = objectKey;
     }
+
+    public void updateStatus(BuildStatus status) {
+        this.status = status;
+    }
 }

@@ -48,6 +48,7 @@ public class GameController {
     private final GetTopRatedGamesUseCase getTopRatedGamesUseCase;
     private final GameBuildUploadPreparationUseCase gameBuildUploadPreparationUseCase;
     private final ConfirmGameBuildUploadUseCase confirmGameBuildUploadUseCase;
+    private final PublishGameUseCase publishGameUseCase;
 
     @PostMapping
     @PreAuthorize("hasRole('DEV')")
@@ -225,5 +226,14 @@ public class GameController {
                 confirmGameBuildUploadUseCase.execute(gameId, command);
 
         return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/{gameId}/publish")
+    @PreAuthorize("HasRole('DEV')")
+    public ResponseEntity<Void> publishGameBuild(@PathVariable(name = "gameId") UUID gameId) {
+
+        publishGameUseCase.execute(gameId);
+
+        return ResponseEntity.ok().build();
     }
 }

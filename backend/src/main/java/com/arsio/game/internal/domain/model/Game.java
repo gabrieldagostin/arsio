@@ -121,4 +121,8 @@ public class Game {
     public void unFeature() {
         this.featured = false;
     }
+
+    public void updateStatus(GameStatus status) {
+        this.status = status;
+    }
 }

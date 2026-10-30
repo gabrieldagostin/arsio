@@ -32,7 +32,8 @@ CREATE TABLE games (
             status IN (
                 'PUBLISHED', 
                 'DRAFT', 
-                'ARCHIVED'
+                'ARCHIVED',
+                'PENDING'
             )
         ),
 

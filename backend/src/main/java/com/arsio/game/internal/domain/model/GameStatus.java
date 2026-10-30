@@ -6,7 +6,8 @@ public enum GameStatus {
 
     DRAFT(0, "Draft"),
     PUBLISHED(1, "Published"),
-    ARCHIVED(2, "Archived");
+    ARCHIVED(2, "Archived"),
+    PENDING(3,"Pending");
 
     private Integer cod;
     private String description;
