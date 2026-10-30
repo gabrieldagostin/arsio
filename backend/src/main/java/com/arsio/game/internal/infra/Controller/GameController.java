@@ -49,6 +49,7 @@ public class GameController {
     private final GameBuildUploadPreparationUseCase gameBuildUploadPreparationUseCase;
     private final ConfirmGameBuildUploadUseCase confirmGameBuildUploadUseCase;
     private final PublishGameUseCase publishGameUseCase;
+    private final UnpublishGameUseCase unpublishGameUseCase;
 
     @PostMapping
     @PreAuthorize("hasRole('DEV')")
@@ -230,9 +231,18 @@ public class GameController {
 
     @PutMapping("/{gameId}/publish")
     @PreAuthorize("HasRole('DEV')")
-    public ResponseEntity<Void> publishGameBuild(@PathVariable(name = "gameId") UUID gameId) {
+    public ResponseEntity<Void> publishGame(@PathVariable(name = "gameId") UUID gameId) {
 
         publishGameUseCase.execute(gameId);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/{gameId}/unpublish")
+    @PreAuthorize("HasRole('DEV')")
+    public ResponseEntity<Void> unpublishGame(@PathVariable(name = "gameId") UUID gameId) {
+
+        unpublishGameUseCase.execute(gameId);
 
         return ResponseEntity.ok().build();
     }
