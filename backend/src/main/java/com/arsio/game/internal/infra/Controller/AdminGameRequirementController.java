@@ -28,6 +28,7 @@ public class AdminGameRequirementController {
     private final DeleteGpuUseCase deleteGpuUseCase;
     private final CreateOperatingSystemUseCase createOperatingSystemUseCase;
     private final UpdateOperatingSystemUseCase updateOperatingSystemUseCase;
+    private final ActiveOperatingSystemUseCase activeOperatingSystemUseCase;
     private final DeleteOperatingSystemUseCase deleteOperatingSystemUseCase;
     private final CreateProcessorUseCase createProcessorUseCase;
     private final UpdateProcessorUseCase updateProcessorUseCase;
@@ -96,6 +97,16 @@ public class AdminGameRequirementController {
         UpdateOperatingSystemCommand command = mapper.toUpdateOperatingSystemCommand(operatingSystemId, request);
 
         GetOperatingSystemResponse response = updateOperatingSystemUseCase.execute(command);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PatchMapping("/{operatingSystemId}/operating-systems")
+    @PreAuthorize("HasRole('ADMIN')")
+    public ResponseEntity<GetOperatingSystemResponse> activeOperatingSystem(
+            @PathVariable(name = "operatingSystemId") UUID operatingSystemId) {
+
+        GetOperatingSystemResponse response = activeOperatingSystemUseCase.execute(operatingSystemId);
 
         return ResponseEntity.ok(response);
     }

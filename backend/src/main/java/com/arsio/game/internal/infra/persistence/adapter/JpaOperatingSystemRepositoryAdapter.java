@@ -60,7 +60,7 @@ public class JpaOperatingSystemRepositoryAdapter implements OperatingSystemRepos
 
     @Override
     public Optional<OperatingSystem> findById(RequirementId operatingSystemId) {
-        return operatingSystems.findByIdAndActiveTrue(operatingSystemId.value())
+        return operatingSystems.findById(operatingSystemId.value())
                 .map(mapper::toDomain);
     }
 }
