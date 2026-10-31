@@ -86,4 +86,13 @@ public class GameRequirement {
     public StorageUnit getStorageUnit() {
         return storageUnit;
     }
+
+    public void update(RequirementId operatingSystemId, RequirementId processorId, RequirementId gpuId, Ram ram, Storage storage, StorageUnit storageUnit) {
+        this.operatingSystemId = operatingSystemId;
+        this.processorId = processorId;
+        this.gpuId = gpuId;
+        this.ram = ram;
+        this.storage = storage;
+        this.storageUnit = storageUnit;
+    }
 }

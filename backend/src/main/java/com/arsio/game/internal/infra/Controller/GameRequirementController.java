@@ -1,8 +1,10 @@
 package com.arsio.game.internal.infra.Controller;
 
 import com.arsio.game.internal.application.command.CreateGameRequirementCommand;
+import com.arsio.game.internal.application.command.UpdateGameRequirementCommand;
 import com.arsio.game.internal.application.usecase.*;
 import com.arsio.game.internal.infra.Controller.dto.request.CreateGameRequirementRequest;
+import com.arsio.game.internal.infra.Controller.dto.request.UpdateGameRequirementRequest;
 import com.arsio.game.internal.infra.Controller.dto.response.*;
 import com.arsio.game.internal.infra.Controller.mapper.GameRequirementControllerMapper;
 import com.arsio.shared.pagination.PageResult;
@@ -29,6 +31,7 @@ public class GameRequirementController {
     private final PaginationMapper paginationMapper;
     private final CreateGameRequirementUseCase createGameRequirementUseCase;
     private final GetGameRequirementsUseCase getGameRequirementsUseCase;
+    private final UpdateGameRequirementsUseCase updateGameRequirementsUseCase;
     private final ListGpusUseCase listGpusUseCase;
     private final ListInactiveGpusUseCase listInactiveGpusUseCase;
     private final ListOperatingSystemsUseCase listOperatingSystemsUseCase;
@@ -36,7 +39,7 @@ public class GameRequirementController {
     private final ListProcessorsUseCase listProcessorsUseCase;
     private final ListInactiveProcessorsUseCase listInactiveProcessorsUseCase;
 
-    @PostMapping
+    @PostMapping("/{gameId}")
     @PreAuthorize("HasRole('DEV')")
     public ResponseEntity<GetGameRequirementResponse> create(
             @PathVariable(name = "gameId") UUID gameId,
@@ -54,6 +57,19 @@ public class GameRequirementController {
     public ResponseEntity<GetGameRequirementsResponse> get(@PathVariable(name = "gameId") UUID gameId) {
 
         GetGameRequirementsResponse response = getGameRequirementsUseCase.execute(gameId);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/{gameId}")
+    @PreAuthorize("HasRole('DEV')")
+    public ResponseEntity<GetGameRequirementResponse> update(
+            @PathVariable(name = "gameId") UUID gameId,
+            @RequestBody @Valid UpdateGameRequirementRequest request) {
+
+        UpdateGameRequirementCommand command = mapper.toUpdateGameRequirementCommand(gameId, request);
+
+        GetGameRequirementResponse response = updateGameRequirementsUseCase.execute(command);
 
         return ResponseEntity.ok(response);
     }

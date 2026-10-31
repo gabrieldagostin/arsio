@@ -44,6 +44,7 @@ public final class ErrorTypes {
     public static final String GAME_MEDIA_NOT_FOUND = BASE + "game-media-not-found";
     public static final String GAME_GENRE_NOT_FOUND = BASE + "game-genre-not-found";
     public static final String GAME_TAG_NOT_FOUND = BASE + "game-tag-not-found";
+    public static final String GAME_REQUIREMENT_NOT_FOUND = BASE + "game-requirement-not-found";
     public static final String GAME_PROCESSOR_NOT_FOUND = BASE + "game-processor-not-found";
     public static final String GAME_GPU_NOT_FOUND = BASE + "game-gpu-not-found";
     public static final String GAME_OPERATING_SYSTEM_NOT_FOUND = BASE + "game-operating-system-not-found";

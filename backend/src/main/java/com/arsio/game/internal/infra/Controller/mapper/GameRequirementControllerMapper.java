@@ -4,6 +4,7 @@ import com.arsio.config.mapper.CentralMapperConfig;
 import com.arsio.game.internal.application.command.*;
 import com.arsio.game.internal.domain.valueobject.*;
 import com.arsio.game.internal.infra.Controller.dto.request.*;
+import jakarta.validation.Valid;
 import org.mapstruct.Mapper;
 
 import java.math.BigDecimal;
@@ -25,6 +26,8 @@ public interface GameRequirementControllerMapper {
     CreateProcessorCommand toCreateProcessorCommand(CreateProcessorRequest request);
 
     UpdateProcessorCommand toUpdateProcessorCommand(UUID processorId, UpdateProcessorRequest request);
+
+    UpdateGameRequirementCommand toUpdateGameRequirementCommand(UUID gameId, UpdateGameRequirementRequest request);
 
     default GameId toGameId(UUID value) {
         return new GameId(value);

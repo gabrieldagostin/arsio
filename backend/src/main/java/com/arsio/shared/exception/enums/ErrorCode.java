@@ -39,6 +39,7 @@ public enum ErrorCode {
     GAME_MEDIA_NOT_FOUND("Media not found"),
     GAME_GENRE_NOT_FOUND("Game not found"),
     GAME_TAG_NOT_FOUND("Game tag not found"),
+    GAME_REQUIREMENT_NOT_FOUND("Game requirement not found"),
     GAME_PROCESSOR_NOT_FOUND("Game processor not found"),
     GAME_GPU_NOT_FOUND("Game gpu not found"),
     GAME_OPERATING_SYSTEM_NOT_FOUND("Game operating system not found"),

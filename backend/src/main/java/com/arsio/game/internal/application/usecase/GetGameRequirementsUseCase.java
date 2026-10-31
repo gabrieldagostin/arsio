@@ -1,8 +1,8 @@
 package com.arsio.game.internal.application.usecase;
 
-import com.arsio.game.internal.domain.model.GameRequirement;
 import com.arsio.game.internal.domain.repository.GameRequirementRepository;
 import com.arsio.game.internal.domain.valueobject.GameId;
+import com.arsio.game.internal.domain.valueobject.RequirementCategory;
 import com.arsio.game.internal.infra.Controller.dto.response.GetGameRequirementResponse;
 import com.arsio.game.internal.infra.Controller.dto.response.GetGameRequirementsResponse;
 import jakarta.transaction.Transactional;
@@ -24,9 +24,9 @@ public class GetGameRequirementsUseCase {
 
         GameId gameId = new GameId(value);
 
-        GetGameRequirementResponse minimumGameRequirement = gameRequirements.findByGameIdAndCategoryMinimum(gameId);
+        GetGameRequirementResponse minimumGameRequirement = gameRequirements.findByGameIdAndCategory(gameId, RequirementCategory.MINIMUM);
 
-        GetGameRequirementResponse recommendedGameRequirement = gameRequirements.findByGameIdAndCategoryRecommended(gameId);
+        GetGameRequirementResponse recommendedGameRequirement = gameRequirements.findByGameIdAndCategory(gameId, RequirementCategory.RECOMMENDED);
 
         return new GetGameRequirementsResponse(
                 minimumGameRequirement,

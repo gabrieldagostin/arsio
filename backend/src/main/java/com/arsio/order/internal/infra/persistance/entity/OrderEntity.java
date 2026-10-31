@@ -33,7 +33,7 @@ public class OrderEntity {
     private BigDecimal totalPrice;
 
     @Enumerated(EnumType.STRING)
-    @JdbcTypeCode(SqlTypes.ENUM)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     @Column(nullable = false)
     private OrderStatus status;
 

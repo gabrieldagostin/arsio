@@ -8,9 +8,6 @@ import java.util.UUID;
 
 public record CreateGameRequirementRequest(
 
-        @NotBlank(message = "{gameId.require}")
-        UUID gameId,
-
         @NotBlank(message = "{category.require}")
         String category,
 

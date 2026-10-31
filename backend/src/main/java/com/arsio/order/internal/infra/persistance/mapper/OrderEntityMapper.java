@@ -18,7 +18,7 @@ public interface OrderEntityMapper {
 
     Order toDomain(OrderEntity orderEntity);
 
-    @Mapping(target = "acquiredAt", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
     OrderEntity toEntity(Order order);
 
     default UUID orderIdToUuid(OrderId orderId) {
