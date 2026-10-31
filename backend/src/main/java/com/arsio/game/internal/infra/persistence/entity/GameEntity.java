@@ -39,7 +39,7 @@ public class GameEntity {
     private BigDecimal basePrice;
 
     @Enumerated(EnumType.STRING)
-    @JdbcTypeCode(SqlTypes.ENUM)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     @Column(nullable = false)
     private GameStatus status;
 

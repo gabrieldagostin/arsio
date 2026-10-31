@@ -5,6 +5,7 @@ import com.arsio.game.internal.domain.valueobject.*;
 import com.arsio.shared.money.Money;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -16,8 +17,8 @@ public class Game {
     private Description description;
     private Money basePrice;
     private GameStatus status;
-    private Set<GenreId> genres;
-    private Set<TagId> tags;
+    private Set<GenreId> genres = new HashSet<>();;
+    private Set<TagId> tags = new HashSet<>();;
     private LocalDate releaseDate;
     private boolean featured;
 
@@ -87,13 +88,23 @@ public class Game {
     }
 
     public void associateGenres(Set<GenreId> genreIds) {
-        this.genres.clear();
-        this.genres.addAll(genreIds);
+
+        if (this.genres != null) {
+            this.genres.clear();
+            if (genreIds != null && !genreIds.isEmpty()) {
+                this.genres.addAll(genreIds);
+            }
+        }
     }
 
     public void associateTags(Set<TagId> tagIds) {
-        this.tags.clear();
-        this.tags.addAll(tagIds);
+
+        if (this.genres != null) {
+            this.tags.clear();
+            if (tagIds != null && !tagIds.isEmpty()) {
+                this.tags.addAll(tagIds);
+            }
+        }
     }
 
     public void update(GameTitle title, Description description, LocalDate releaseDate) {

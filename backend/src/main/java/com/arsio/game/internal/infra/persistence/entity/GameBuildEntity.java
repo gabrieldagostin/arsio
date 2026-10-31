@@ -33,7 +33,7 @@ public class GameBuildEntity {
     private Long fileSize;
 
     @Enumerated(EnumType.STRING)
-    @JdbcTypeCode(SqlTypes.ENUM)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     @Column(nullable = false)
     private BuildStatus status;
 

@@ -46,12 +46,10 @@ public class AssociateGenresUseCase {
         games.save(game);
 
         return genreSet.stream()
-                .map(genre -> {
-                    return new GetGenreResponse(
-                            genre.getId().value(),
-                            genre.getName().value()
-                    );
-                })
+                .map(genre -> new GetGenreResponse(
+                        genre.getId().value(),
+                        genre.getName().value()
+                ))
                 .collect(Collectors.toSet());
     }
 }
