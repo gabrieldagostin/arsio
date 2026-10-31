@@ -103,7 +103,7 @@ public class JpaGenreRepositoryAdapter implements GenreRepository {
 
     @Override
     public Optional<Genre> findById(GenreId genreId) {
-        return genres.findByIdAndActiveTrue(genreId.value())
+        return genres.findById(genreId.value())
                 .map(mapper::toDomain);
     }
 

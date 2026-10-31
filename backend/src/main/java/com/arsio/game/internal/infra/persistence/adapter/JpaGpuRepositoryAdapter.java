@@ -59,7 +59,7 @@ public class JpaGpuRepositoryAdapter implements GpuRepository {
 
     @Override
     public Optional<Gpu> findById(RequirementId requirementId) {
-        return gpus.findByIdAndActiveTrue(requirementId.value())
+        return gpus.findById(requirementId.value())
                 .map(mapper::toDomain);
     }
 }

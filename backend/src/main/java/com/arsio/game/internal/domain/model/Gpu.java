@@ -51,4 +51,8 @@ public class Gpu {
     public void deactivate() {
         this.active = false;
     }
+
+    public void activate() {
+        this.active = true;
+    }
 }

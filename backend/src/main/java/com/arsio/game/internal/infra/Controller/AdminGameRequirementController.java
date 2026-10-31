@@ -24,6 +24,7 @@ public class AdminGameRequirementController {
     private final GameRequirementControllerMapper mapper;
     private final CreateGpuUseCase createGpuUseCase;
     private final UpdateGpuUseCase updateGpuUseCase;
+    private final ActivateGpuUseCase activateGpuUseCase;
     private final DeleteGpuUseCase deleteGpuUseCase;
     private final CreateOperatingSystemUseCase createOperatingSystemUseCase;
     private final UpdateOperatingSystemUseCase updateOperatingSystemUseCase;
@@ -53,6 +54,15 @@ public class AdminGameRequirementController {
         UpdateGpuCommand command = mapper.toUpdateGpuCommand(gpuId, request);
 
         GetGpuResponse response = updateGpuUseCase.execute(command);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PatchMapping("/{gpuId}/gpus")
+    @PreAuthorize("HasRole('ADMIN')")
+    public ResponseEntity<GetGpuResponse>  activeGpu(@PathVariable(name = "gpuId") UUID gpuId) {
+
+        GetGpuResponse response = activateGpuUseCase.execute(gpuId);
 
         return ResponseEntity.ok(response);
     }

@@ -104,7 +104,7 @@ public class JpaTagRepositoryAdapter implements TagRepository {
 
     @Override
     public Optional<Tag> findById(TagId tagId) {
-        return tags.findByIdAndActiveTrue(tagId.value())
+        return tags.findById(tagId.value())
                 .map(mapper::toDomain);
     }
 
