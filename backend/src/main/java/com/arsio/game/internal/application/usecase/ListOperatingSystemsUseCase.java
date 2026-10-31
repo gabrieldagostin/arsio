@@ -20,11 +20,9 @@ public class ListOperatingSystemsUseCase {
     public PageResult<GetOperatingSystemResponse> execute(String search, Pagination pagination) {
 
         return operatingSystems.findAll(search, pagination)
-                .map(operatingSystem -> {
-                    return new GetOperatingSystemResponse(
-                            operatingSystem.getId().value(),
-                            operatingSystem.getName().value()
-                    );
-                });
+                .map(operatingSystem -> new GetOperatingSystemResponse(
+                        operatingSystem.getId().value(),
+                        operatingSystem.getName().value()
+                ));
     }
 }

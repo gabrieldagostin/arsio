@@ -11,6 +11,8 @@ public interface OperatingSystemRepository {
 
     PageResult<OperatingSystem> findAll(String search, Pagination pagination);
 
+    PageResult<OperatingSystem> findAllByActiveFalse(String search, Pagination pagination);
+
     void save(OperatingSystem operatingSystem);
 
     Optional<OperatingSystem> findById(RequirementId operatingSystemId);

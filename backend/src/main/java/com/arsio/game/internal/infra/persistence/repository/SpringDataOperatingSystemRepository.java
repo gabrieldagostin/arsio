@@ -12,7 +12,11 @@ public interface SpringDataOperatingSystemRepository extends JpaRepository<Opera
 
     Page<OperatingSystemEntity> findAllByActiveTrue(Pageable pageable);
 
+    Page<OperatingSystemEntity> findAllByActiveFalse(Pageable pageable);
+
     Page<OperatingSystemEntity> findAllByNameContainingIgnoreCaseAndActiveTrue(String search, Pageable pageable);
+
+    Page<OperatingSystemEntity> findAllByNameContainingIgnoreCaseAndActiveFalse(String trim, Pageable pageable);
 
     Optional<OperatingSystemEntity> findByIdAndActiveTrue(UUID operatingSystemId);
 }

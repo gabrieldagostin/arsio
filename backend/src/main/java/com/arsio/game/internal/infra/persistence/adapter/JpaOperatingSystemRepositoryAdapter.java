@@ -54,6 +54,33 @@ public class JpaOperatingSystemRepositoryAdapter implements OperatingSystemRepos
     }
 
     @Override
+    public PageResult<OperatingSystem> findAllByActiveFalse(String search, Pagination pagination) {
+
+        Pageable pageable = paginationMapper.toPageable(pagination);
+
+        Page<OperatingSystemEntity> result;
+
+        if (search == null || search.isBlank()) {
+            result = operatingSystems.findAllByActiveFalse(pageable);
+        } else {
+            result = operatingSystems.findAllByNameContainingIgnoreCaseAndActiveFalse(search.trim(), pageable);
+        }
+
+        List<OperatingSystem> operatingSystemList = result.getContent()
+                .stream()
+                .map(mapper::toDomain)
+                .toList();
+
+        return new PageResult<>(
+                operatingSystemList,
+                result.getNumber(),
+                result.getSize(),
+                result.getTotalElements(),
+                result.getTotalPages()
+        );
+    }
+
+    @Override
     public void save(OperatingSystem operatingSystem) {
         operatingSystems.save(mapper.toEntity(operatingSystem));
     }

@@ -32,6 +32,7 @@ public class GameRequirementController {
     private final ListGpusUseCase listGpusUseCase;
     private final ListInactiveGpusUseCase listInactiveGpusUseCase;
     private final ListOperatingSystemsUseCase listOperatingSystemsUseCase;
+    private final ListInactiveOperatingSystemsUseCase listInactiveOperatingSystemsUseCase;
     private final ListProcessorsUseCase listProcessorsUseCase;
 
     @PostMapping
@@ -104,6 +105,24 @@ public class GameRequirementController {
 
         PageResult<GetOperatingSystemResponse> response =
                 listOperatingSystemsUseCase.execute(search, pagination);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/inactive/operating-systems")
+    @PreAuthorize("HasRole('DEV')")
+    public ResponseEntity<PageResult<GetOperatingSystemResponse>> findAllInactiveOperatingSystems(
+            @RequestParam(required = false) String search,
+            @PageableDefault(
+                    size = 10,
+                    sort = "name",
+                    direction = Sort.Direction.ASC
+            ) Pageable pageable) {
+
+        Pagination pagination = paginationMapper.toPagination(pageable);
+
+        PageResult<GetOperatingSystemResponse> response =
+                listInactiveOperatingSystemsUseCase.execute(search, pagination);
 
         return ResponseEntity.ok(response);
     }
