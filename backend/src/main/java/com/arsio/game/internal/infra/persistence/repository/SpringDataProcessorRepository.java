@@ -13,7 +13,11 @@ public interface SpringDataProcessorRepository extends JpaRepository<ProcessorEn
 
     Page<ProcessorEntity> findAllByActiveTrue(Pageable pageable);
 
+    Page<ProcessorEntity> findAllByActiveFalse(Pageable pageable);
+
     Page<ProcessorEntity> findByModelContainingIgnoreCaseAndActiveTrue(String search, Pageable pageable);
+
+    Page<ProcessorEntity> findByModelContainingIgnoreCaseAndActiveFalse(String search, Pageable pageable);
 
     Optional<ProcessorEntity> findByIdAndActiveTrue(UUID value);
 }

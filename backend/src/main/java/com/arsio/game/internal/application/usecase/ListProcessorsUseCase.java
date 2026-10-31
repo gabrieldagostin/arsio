@@ -20,12 +20,10 @@ public class ListProcessorsUseCase {
     public PageResult<GetProcessorResponse> execute(String search, Pagination pagination) {
 
         return processors.findAll(search, pagination)
-                .map(processor -> {
-                    return new GetProcessorResponse(
-                            processor.getId().value(),
-                            processor.getManufacturer().value(),
-                            processor.getModel().value()
-                    );
-                });
+                .map(processor -> new GetProcessorResponse(
+                        processor.getId().value(),
+                        processor.getManufacturer().value(),
+                        processor.getModel().value()
+                ));
     }
 }

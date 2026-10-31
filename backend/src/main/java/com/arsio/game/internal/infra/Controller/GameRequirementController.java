@@ -34,6 +34,7 @@ public class GameRequirementController {
     private final ListOperatingSystemsUseCase listOperatingSystemsUseCase;
     private final ListInactiveOperatingSystemsUseCase listInactiveOperatingSystemsUseCase;
     private final ListProcessorsUseCase listProcessorsUseCase;
+    private final ListInactiveProcessorsUseCase listInactiveProcessorsUseCase;
 
     @PostMapping
     @PreAuthorize("HasRole('DEV')")
@@ -140,6 +141,23 @@ public class GameRequirementController {
         Pagination pagination = paginationMapper.toPagination(pageable);
 
         PageResult<GetProcessorResponse> response = listProcessorsUseCase.execute(search, pagination);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/inactive/processors")
+    @PreAuthorize("HasRole('DEV')")
+    public ResponseEntity<PageResult<GetProcessorResponse>> findAllInactiveProcessors(
+            @RequestParam(required = false) String search,
+            @PageableDefault(
+                    size = 10,
+                    sort = "model",
+                    direction = Sort.Direction.ASC
+            ) Pageable pageable) {
+
+        Pagination pagination = paginationMapper.toPagination(pageable);
+
+        PageResult<GetProcessorResponse> response = listInactiveProcessorsUseCase.execute(search, pagination);
 
         return ResponseEntity.ok(response);
     }

@@ -53,6 +53,33 @@ public class JpaProcessorRepositoryAdapter implements ProcessorRepository {
     }
 
     @Override
+    public PageResult<Processor> findAllByActiveFalse(String search, Pagination pagination) {
+
+        Pageable pageable = paginationMapper.toPageable(pagination);
+
+        Page<ProcessorEntity> result;
+
+        if (search == null || search.isBlank()) {
+            result = processors.findAllByActiveFalse(pageable);
+        } else {
+            result = processors.findByModelContainingIgnoreCaseAndActiveFalse(search.trim(), pageable);
+        }
+
+        List<Processor> processorList = result.getContent()
+                .stream()
+                .map(mapper::toDomain)
+                .toList();
+
+        return new PageResult<>(
+                processorList,
+                result.getNumber(),
+                result.getSize(),
+                result.getTotalElements(),
+                result.getTotalPages()
+        );
+    }
+
+    @Override
     public void save(Processor processor) {
         processors.save(mapper.toEntity(processor));
     }

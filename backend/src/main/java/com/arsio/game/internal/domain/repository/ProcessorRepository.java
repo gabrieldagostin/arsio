@@ -11,6 +11,8 @@ public interface ProcessorRepository {
 
     PageResult<Processor> findAll(String search, Pagination pagination);
 
+    PageResult<Processor> findAllByActiveFalse(String search, Pagination pagination);
+
     void save(Processor processor);
 
     Optional<Processor> findById(RequirementId processorId);
