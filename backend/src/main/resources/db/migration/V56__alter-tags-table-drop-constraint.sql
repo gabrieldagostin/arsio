@@ -1,2 +1,2 @@
 ALTER TABLE tags
-DROP CONSTRAINT uk_tags_name;
+    DROP CONSTRAINT uk_tags_name;

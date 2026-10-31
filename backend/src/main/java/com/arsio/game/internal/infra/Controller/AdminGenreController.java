@@ -2,6 +2,7 @@ package com.arsio.game.internal.infra.Controller;
 
 import com.arsio.game.internal.application.command.CreateGenreCommand;
 import com.arsio.game.internal.application.command.UpdateGenreCommand;
+import com.arsio.game.internal.application.usecase.ActiveGenreUseCase;
 import com.arsio.game.internal.application.usecase.CreateGenreUseCase;
 import com.arsio.game.internal.application.usecase.DeleteGenreUseCase;
 import com.arsio.game.internal.application.usecase.UpdateGenreUseCase;
@@ -26,6 +27,7 @@ public class AdminGenreController {
     private final GenreControllerMapper mapper;
     private final CreateGenreUseCase createGenreUseCase;
     private final UpdateGenreUseCase updateGenreUseCase;
+    private final ActiveGenreUseCase activeGenreUseCase;
     private final DeleteGenreUseCase deleteGenreUseCase;
 
     @PostMapping
@@ -48,6 +50,15 @@ public class AdminGenreController {
         UpdateGenreCommand command = mapper.toUpdateGenreCommand(genreId, request);
 
         GetGenreResponse response = updateGenreUseCase.execute(command);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PatchMapping("/{genreId}")
+    @PreAuthorize("HasRole('ADMIN')")
+    public ResponseEntity<GetGenreResponse> active(@PathVariable(name = "genreId") UUID genreId) {
+
+        GetGenreResponse response = activeGenreUseCase.execute(genreId);
 
         return ResponseEntity.ok(response);
     }
