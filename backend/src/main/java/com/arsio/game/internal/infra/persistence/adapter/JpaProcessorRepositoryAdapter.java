@@ -59,7 +59,7 @@ public class JpaProcessorRepositoryAdapter implements ProcessorRepository {
 
     @Override
     public Optional<Processor> findById(RequirementId processorId) {
-        return processors.findByIdAndActiveTrue(processorId.value())
+        return processors.findById(processorId.value())
                 .map(mapper::toDomain);
     }
 }

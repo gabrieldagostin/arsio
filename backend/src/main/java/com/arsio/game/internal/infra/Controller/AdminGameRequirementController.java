@@ -32,6 +32,7 @@ public class AdminGameRequirementController {
     private final DeleteOperatingSystemUseCase deleteOperatingSystemUseCase;
     private final CreateProcessorUseCase createProcessorUseCase;
     private final UpdateProcessorUseCase updateProcessorUseCase;
+    private final ActiveProcessorUseCase activeProcessorUseCase;
     private final DeleteProcessorUseCase deleteProcessorUseCase;
 
     @PostMapping("/gpus")
@@ -144,9 +145,18 @@ public class AdminGameRequirementController {
         return ResponseEntity.ok(response);
     }
 
+    @PatchMapping("/{processorId}/processors")
+    @PreAuthorize("HasRole('ADMIN')")
+    public ResponseEntity<GetProcessorResponse> activateProcessor(@PathVariable(name = "processorId") UUID processorId) {
+
+        GetProcessorResponse response = activeProcessorUseCase.execute(processorId);
+
+        return ResponseEntity.ok(response);
+    }
+
     @DeleteMapping("/{processorId}/processors")
     @PreAuthorize("HasRole('ADMIN')")
-    private ResponseEntity<Void> deleteProcessor(@PathVariable(name = "processorId") UUID processorId) {
+    public ResponseEntity<Void> deleteProcessor(@PathVariable(name = "processorId") UUID processorId) {
 
         deleteProcessorUseCase.execute(processorId);
 
