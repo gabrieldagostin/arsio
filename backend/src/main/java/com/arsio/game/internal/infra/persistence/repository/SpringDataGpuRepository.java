@@ -13,7 +13,11 @@ public interface SpringDataGpuRepository extends JpaRepository<GpuEntity, UUID> 
 
     Page<GpuEntity> findAllByActiveTrue(Pageable pageable);
 
+    Page<GpuEntity> findAllByActiveFalse(Pageable pageable);
+
     Page<GpuEntity> findByModelContainingIgnoreCaseAndActiveTrue(String search, Pageable pageable);
+
+    Page<GpuEntity> findByModelContainingIgnoreCaseAndActiveFalse(String search, Pageable pageable);
 
     Optional<GpuEntity> findByIdAndActiveTrue(UUID gpuId);
 }

@@ -11,6 +11,8 @@ public interface GpuRepository {
 
     PageResult<Gpu> findAll(String search, Pagination pagination);
 
+    PageResult<Gpu> findAllByActiveFalse(String search, Pagination pagination);
+
     void save(Gpu gpu);
 
     Optional<Gpu> findById(RequirementId requirementId);

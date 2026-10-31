@@ -30,6 +30,7 @@ public class GameRequirementController {
     private final CreateGameRequirementUseCase createGameRequirementUseCase;
     private final GetGameRequirementsUseCase getGameRequirementsUseCase;
     private final ListGpusUseCase listGpusUseCase;
+    private final ListInactiveGpusUseCase listInactiveGpusUseCase;
     private final ListOperatingSystemsUseCase listOperatingSystemsUseCase;
     private final ListProcessorsUseCase listProcessorsUseCase;
 
@@ -68,6 +69,23 @@ public class GameRequirementController {
         Pagination pagination = paginationMapper.toPagination(pageable);
 
         PageResult<GetGpuResponse> response = listGpusUseCase.execute(search, pagination);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/inactive/gpus")
+    @PreAuthorize("HasRole('DEV')")
+    public ResponseEntity<PageResult<GetGpuResponse>> findAllInactiveGpus(
+            @RequestParam(required = false) String search,
+            @PageableDefault(
+                    size = 10,
+                    sort = "model",
+                    direction = Sort.Direction.ASC
+            ) Pageable pageable) {
+
+        Pagination pagination = paginationMapper.toPagination(pageable);
+
+        PageResult<GetGpuResponse> response = listInactiveGpusUseCase.execute(search, pagination);
 
         return ResponseEntity.ok(response);
     }

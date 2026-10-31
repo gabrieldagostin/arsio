@@ -20,12 +20,10 @@ public class ListGpusUseCase {
     public PageResult<GetGpuResponse> execute(String search, Pagination pagination) {
 
         return gpus.findAll(search, pagination)
-                .map(gpu -> {
-                    return new GetGpuResponse(
-                            gpu.getId().value(),
-                            gpu.getManufacturer().value(),
-                            gpu.getModel().value()
-                    );
-                });
+                .map(gpu -> new GetGpuResponse(
+                        gpu.getId().value(),
+                        gpu.getManufacturer().value(),
+                        gpu.getModel().value()
+                ));
     }
 }

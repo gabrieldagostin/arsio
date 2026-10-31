@@ -53,6 +53,33 @@ public class JpaGpuRepositoryAdapter implements GpuRepository {
     }
 
     @Override
+    public PageResult<Gpu> findAllByActiveFalse(String search, Pagination pagination) {
+
+        Pageable pageable = paginationMapper.toPageable(pagination);
+
+        Page<GpuEntity> result;
+
+        if (search == null || search.isBlank()) {
+            result = gpus.findAllByActiveFalse(pageable);
+        } else {
+            result = gpus.findByModelContainingIgnoreCaseAndActiveFalse(search.trim(), pageable);
+        }
+
+        List<Gpu> gpuList = result.getContent()
+                .stream()
+                .map(mapper::toDomain)
+                .toList();
+
+        return new PageResult<>(
+                gpuList,
+                result.getNumber(),
+                result.getSize(),
+                result.getTotalElements(),
+                result.getTotalPages()
+        );
+    }
+
+    @Override
     public void save(Gpu gpu) {
         gpus.save(mapper.toEntity(gpu));
     }
