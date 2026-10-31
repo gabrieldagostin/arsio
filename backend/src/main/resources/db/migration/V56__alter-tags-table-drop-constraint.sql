@@ -1,0 +1,2 @@
+ALTER TABLE tags
+DROP CONSTRAINT uk_tags_name;

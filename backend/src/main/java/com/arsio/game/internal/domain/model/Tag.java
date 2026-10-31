@@ -31,7 +31,7 @@ public class Tag {
         return name;
     }
 
-    public boolean idActive() {
+    public boolean isActive() {
         return active;
     }
 
@@ -41,5 +41,9 @@ public class Tag {
 
     public void deactivate() {
         this.active = false;
+    }
+
+    public void activate() {
+        this.active = true;
     }
 }

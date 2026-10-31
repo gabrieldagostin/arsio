@@ -2,6 +2,7 @@ package com.arsio.game.internal.infra.Controller;
 
 import com.arsio.game.internal.application.command.CreateTagCommand;
 import com.arsio.game.internal.application.command.UpdateTagCommand;
+import com.arsio.game.internal.application.usecase.ActivateTagUseCase;
 import com.arsio.game.internal.application.usecase.CreateTagUseCase;
 import com.arsio.game.internal.application.usecase.DeleteTagUseCase;
 import com.arsio.game.internal.application.usecase.UpdateTagUseCase;
@@ -26,6 +27,7 @@ public class AdminTagController {
     private final TagControllerMapper mapper;
     private final CreateTagUseCase createTagUseCase;
     private final UpdateTagUseCase updateTagUseCase;
+    private final ActivateTagUseCase activateTagUseCase;
     private final DeleteTagUseCase deleteTagUseCase;
 
     @PostMapping
@@ -48,6 +50,15 @@ public class AdminTagController {
         UpdateTagCommand command = mapper.toUpdateTagCommand(tagId, request);
 
         GetTagResponse response = updateTagUseCase.execute(command);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PatchMapping("/{tagId}")
+    @PreAuthorize("HasRole('ADMIN')")
+    public ResponseEntity<GetTagResponse> activate(@PathVariable(name = "tagId") UUID tagId) {
+
+        GetTagResponse response = activateTagUseCase.execute(tagId);
 
         return ResponseEntity.ok(response);
     }
