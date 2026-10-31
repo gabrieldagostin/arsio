@@ -51,7 +51,7 @@ public class TagController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping
+    @GetMapping("/deactivated")
     @PreAuthorize("HasRole('DEV')")
     public ResponseEntity<PageResult<GetTagResponse>> findAllInactive(
             @RequestParam(required = false) String search,

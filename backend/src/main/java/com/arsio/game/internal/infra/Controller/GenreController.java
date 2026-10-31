@@ -29,6 +29,7 @@ public class GenreController {
     private final GenreControllerMapper mapper;
     private final PaginationMapper paginationMapper;
     private final ListGenresUseCase listGenresUseCase;
+    private final ListInactiveGenresUseCase listInactiveGenresUseCase;
     private final AssociateGenresUseCase associateGenresUseCase;
     private final DeleteGenreFromGameUseCase deleteGenreFromGameUseCase;
     private final GetGameGenresUseCase getGameGenresUseCase;
@@ -46,6 +47,23 @@ public class GenreController {
         Pagination pagination = paginationMapper.toPagination(pageable);
 
         PageResult<GetGenreResponse> responses = listGenresUseCase.execute(search, pagination);
+
+        return ResponseEntity.ok(responses);
+    }
+
+    @GetMapping("/deactivated")
+    @PreAuthorize("HasRole('DEV')")
+    public ResponseEntity<PageResult<GetGenreResponse>> findAllInactive(
+            @RequestParam(required = false) String search,
+            @PageableDefault(
+                    size = 20,
+                    sort = "name",
+                    direction = Sort.Direction.ASC
+            ) Pageable pageable) {
+
+        Pagination pagination = paginationMapper.toPagination(pageable);
+
+        PageResult<GetGenreResponse> responses = listInactiveGenresUseCase.execute(search, pagination);
 
         return ResponseEntity.ok(responses);
     }

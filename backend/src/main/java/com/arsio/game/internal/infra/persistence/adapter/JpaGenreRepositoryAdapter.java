@@ -57,6 +57,33 @@ public class JpaGenreRepositoryAdapter implements GenreRepository {
     }
 
     @Override
+    public PageResult<Genre> findAllByActiveFalse(String search, Pagination pagination) {
+
+        Pageable pageable = paginationMapper.toPageable(pagination);
+
+        Page<GenreEntity> result;
+
+        if (search == null || search.isBlank()) {
+            result = genres.findAllByActiveFalse(pageable);
+        } else {
+            result = genres.findByNameContainingIgnoreCaseAndActiveFalse(search.trim(), pageable);
+        }
+
+        List<Genre> genreList = result.getContent()
+                .stream()
+                .map(mapper::toDomain)
+                .toList();
+
+        return new PageResult<>(
+                genreList,
+                result.getNumber(),
+                result.getSize(),
+                result.getTotalElements(),
+                result.getTotalPages()
+        );
+    }
+
+    @Override
     public Set<Genre> findAllById(Set<GenreId> genreIds) {
 
         Set<UUID> ids = genreIds.stream()

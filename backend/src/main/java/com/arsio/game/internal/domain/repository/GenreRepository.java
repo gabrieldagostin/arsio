@@ -13,6 +13,8 @@ public interface GenreRepository {
 
     PageResult<Genre> findAll(String search, Pagination pagination);
 
+    PageResult<Genre> findAllByActiveFalse(String search, Pagination pagination);
+
     Set<Genre> findAllById(Set<GenreId> genreIds);
 
     void save(Genre genre);

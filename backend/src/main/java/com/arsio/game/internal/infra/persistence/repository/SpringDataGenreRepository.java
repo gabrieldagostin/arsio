@@ -15,7 +15,11 @@ public interface SpringDataGenreRepository extends JpaRepository<GenreEntity, UU
 
     Page<GenreEntity> findAllByActiveTrue(Pageable pageable);
 
+    Page<GenreEntity> findAllByActiveFalse(Pageable pageable);
+
     Page<GenreEntity> findByNameContainingIgnoreCaseAndActiveTrue(String search, Pageable pageable);
+
+    Page<GenreEntity> findByNameContainingIgnoreCaseAndActiveFalse(String search, Pageable pageable);
 
     Set<GenreEntity> findAllByIdInAndActiveTrue(Set<UUID> ids);
 
