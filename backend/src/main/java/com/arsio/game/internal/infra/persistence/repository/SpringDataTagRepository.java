@@ -14,7 +14,11 @@ public interface SpringDataTagRepository extends JpaRepository<TagEntity, UUID> 
 
     Page<TagEntity> findAllByActiveTrue(Pageable pageable);
 
+    Page<TagEntity> findAllByActiveFalse(Pageable pageable);
+
     Page<TagEntity> findByNameContainingIgnoreCaseAndActiveTrue(String search, Pageable pageable);
+
+    Page<TagEntity> findByNameContainingIgnoreCaseAndActiveFalse(String trim, Pageable pageable);
 
     Set<TagEntity> findAllByIdInAndActiveTrue(Set<UUID> tagIds);
 

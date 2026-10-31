@@ -29,6 +29,7 @@ public class TagController {
     private final TagControllerMapper mapper;
     private final PaginationMapper paginationMapper;
     private final ListTagsUseCase listTagsUseCase;
+    private final ListInactiveTagsUseCase listInactiveTagsUseCase;
     private final AssociateTagsUseCase associateTagsUseCase;
     private final DeleteTagFromGameUseCase deleteTagFromGameUseCase;
     private final GetGameTagsUseCase getGameTagsUseCase;
@@ -46,6 +47,23 @@ public class TagController {
         Pagination pagination = paginationMapper.toPagination(pageable);
 
         PageResult<GetTagResponse> response = listTagsUseCase.execute(search, pagination);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping
+    @PreAuthorize("HasRole('DEV')")
+    public ResponseEntity<PageResult<GetTagResponse>> findAllInactive(
+            @RequestParam(required = false) String search,
+            @PageableDefault(
+                    size = 20,
+                    sort = "name",
+                    direction = Sort.Direction.ASC
+            ) Pageable pageable) {
+
+        Pagination pagination = paginationMapper.toPagination(pageable);
+
+        PageResult<GetTagResponse> response = listInactiveTagsUseCase.execute(search, pagination);
 
         return ResponseEntity.ok(response);
     }

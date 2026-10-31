@@ -20,11 +20,9 @@ public class ListTagsUseCase {
     public PageResult<GetTagResponse> execute(String search, Pagination pagination) {
 
         return tags.findAll(search, pagination)
-                .map(tag ->  {
-                    return new GetTagResponse(
-                            tag.getId().value(),
-                            tag.getName().value()
-                    );
-                });
+                .map(tag -> new GetTagResponse(
+                        tag.getId().value(),
+                        tag.getName().value()
+                ));
     }
 }

@@ -57,6 +57,33 @@ public class JpaTagRepositoryAdapter implements TagRepository {
     }
 
     @Override
+    public PageResult<Tag> findAllByActiveFalse(String search, Pagination pagination) {
+
+        Pageable pageable = paginationMapper.toPageable(pagination);
+
+        Page<TagEntity> result;
+
+        if (search == null || search.isBlank()) {
+            result = tags.findAllByActiveFalse(pageable);
+        } else {
+            result = tags.findByNameContainingIgnoreCaseAndActiveFalse(search.trim(), pageable);
+        }
+
+        List<Tag> tagList = result.getContent()
+                .stream()
+                .map(mapper::toDomain)
+                .toList();
+
+        return new PageResult<>(
+                tagList,
+                result.getNumber(),
+                result.getSize(),
+                result.getTotalElements(),
+                result.getTotalPages()
+        );
+    }
+
+    @Override
     public Set<Tag> findAllByIds(Set<TagId> tagIds) {
 
         Set<UUID> ids = tagIds
