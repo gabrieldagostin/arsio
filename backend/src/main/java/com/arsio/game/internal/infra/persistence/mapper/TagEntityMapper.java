@@ -13,10 +13,8 @@ import java.util.UUID;
 @Mapper(config = CentralMapperConfig.class)
 public interface TagEntityMapper {
 
-    @Mapping(target = "active", ignore = true)
     Tag toDomain(TagEntity entity);
 
-    @Mapping(target = "active", ignore = true)
     TagEntity toEntity(Tag domain);
 
     default UUID tagIdToUuid(TagId tagId) {
