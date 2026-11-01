@@ -1,5 +1,6 @@
 package com.arsio.user.api.facade;
 
+import com.arsio.user.api.dto.GetDeveloperProfileView;
 import com.arsio.user.api.dto.UserAuthenticationData;
 import com.arsio.user.api.dto.UserCreatedResponse;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,4 +17,6 @@ public interface UserFacade {
     Optional<UserAuthenticationData> findUserAuthenticationDataById(UUID id);
 
     Optional<UserAuthenticationData> findUserAuthenticationDataByUsername(String username);
+
+    Optional<GetDeveloperProfileView> findById(UUID developerId);
 }

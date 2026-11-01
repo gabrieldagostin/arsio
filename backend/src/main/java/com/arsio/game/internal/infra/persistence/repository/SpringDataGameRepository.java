@@ -1,5 +1,6 @@
 package com.arsio.game.internal.infra.persistence.repository;
 
+import com.arsio.game.internal.domain.model.Game;
 import com.arsio.game.internal.domain.model.GameStatus;
 import com.arsio.game.internal.infra.persistence.entity.GameEntity;
 import io.lettuce.core.dynamic.annotation.Param;
@@ -10,6 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 public interface SpringDataGameRepository extends JpaRepository<GameEntity, UUID> {
@@ -46,4 +48,6 @@ public interface SpringDataGameRepository extends JpaRepository<GameEntity, UUID
         )
     """)
     Page<GameEntity> findDiscountedGames(Pageable pageable);
+
+    List<GameEntity> findAllByDeveloperId(UUID developerId);
 }

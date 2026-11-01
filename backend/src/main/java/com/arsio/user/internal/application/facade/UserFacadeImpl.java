@@ -1,10 +1,8 @@
 package com.arsio.user.internal.application.facade;
 
-import com.arsio.user.api.dto.UserAuthenticationData;
-import com.arsio.user.api.dto.CreateUserCommand;
-import com.arsio.user.api.dto.UpdateUserPasswordHashCommand;
-import com.arsio.user.api.dto.UserCreatedResponse;
+import com.arsio.user.api.dto.*;
 import com.arsio.user.api.facade.UserFacade;
+import com.arsio.user.internal.application.usecase.GetDeveloperProfileUseCase;
 import com.arsio.user.internal.application.usecase.UpdateUserPasswordHashUseCase;
 import com.arsio.user.internal.domain.repository.UserRepository;
 import com.arsio.user.internal.application.usecase.CreateUserUseCase;
@@ -22,11 +20,13 @@ public class UserFacadeImpl implements UserFacade {
     private final UserRepository users;
     private final CreateUserUseCase createUserUseCase;
     private final UpdateUserPasswordHashUseCase updateUserPasswordService;
+    private final GetDeveloperProfileUseCase getDeveloperProfileUseCase;
 
-    public UserFacadeImpl(UserRepository users, CreateUserUseCase createUserUseCase, UpdateUserPasswordHashUseCase updateUserPasswordService) {
+    public UserFacadeImpl(UserRepository users, CreateUserUseCase createUserUseCase, UpdateUserPasswordHashUseCase updateUserPasswordService, GetDeveloperProfileUseCase getDeveloperProfileUseCase) {
         this.users = users;
         this.createUserUseCase = createUserUseCase;
         this.updateUserPasswordService = updateUserPasswordService;
+        this.getDeveloperProfileUseCase = getDeveloperProfileUseCase;
     }
 
     @Override
@@ -53,6 +53,11 @@ public class UserFacadeImpl implements UserFacade {
     @Override
     public Optional<UserAuthenticationData> findUserAuthenticationDataByUsername(String username) {
         return users.findUserAuthenticationDataByUsername(username);
+    }
+
+    @Override
+    public Optional<GetDeveloperProfileView> findById(UUID developerId) {
+        return getDeveloperProfileUseCase.execute(developerId);
     }
 
     @Override

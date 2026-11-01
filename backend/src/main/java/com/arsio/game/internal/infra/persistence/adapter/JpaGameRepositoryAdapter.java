@@ -19,6 +19,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 @RequiredArgsConstructor
@@ -154,5 +155,13 @@ public class JpaGameRepositoryAdapter implements GameRepository {
                 result.getTotalElements(),
                 result.getTotalPages()
         );
+    }
+
+    @Override
+    public List<Game> findAllByDeveloperId(UUID developerId) {
+        return games.findAllByDeveloperId(developerId)
+                .stream()
+                .map(mapper::toDomain)
+                .toList();
     }
 }
