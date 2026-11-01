@@ -11,7 +11,11 @@ import java.util.List;
 @Component
 public class ReviewFacadeImpl implements ReviewFacade {
 
-    private GetGameRatingUseCase getGameRatingUseCase;
+    private final GetGameRatingUseCase getGameRatingUseCase;
+
+    public ReviewFacadeImpl(GetGameRatingUseCase getGameRatingUseCase) {
+        this.getGameRatingUseCase = getGameRatingUseCase;
+    }
 
     @Override
     public List<TopRatedGameView> findTopRatedGames(Pagination pagination) {

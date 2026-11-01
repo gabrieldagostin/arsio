@@ -13,14 +13,14 @@ import java.util.UUID;
 public interface SpringDataReviewRepository extends JpaRepository<ReviewEntity, UUID> {
 
     @Query("""
-    SELECT new com.arsio.review.api.dto.TopRatedGameView(
-        r.gameId,
-        AVG(r.rating),
-        COUNT(r.id)
-    )
-    FROM ReviewEntity r
-    GROUP BY r.gameId
-    ORDER BY AVG(r.rating) DESC, COUNT(r.id) DESC
+        SELECT new com.arsio.review.api.dto.TopRatedGameView(
+            r.gameId,
+            AVG(r.rating) AS avgRating,
+            COUNT(r) AS totalReviews
+        )
+        FROM ReviewEntity r
+        GROUP BY r.gameId, r.id
+        ORDER BY avgRating DESC, totalReviews DESC
     """)
     List<TopRatedGameView> findTopRatedGames(Pageable pageable);
 }

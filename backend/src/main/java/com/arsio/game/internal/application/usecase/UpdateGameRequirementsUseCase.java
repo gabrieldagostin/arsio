@@ -32,6 +32,8 @@ public class UpdateGameRequirementsUseCase {
                 command.storageUnit()
         );
 
+        gameRequirements.save(gameRequirement);
+
         return gameRequirements.findByGameIdAndCategory(command.gameId(), command.category());
     }
 }

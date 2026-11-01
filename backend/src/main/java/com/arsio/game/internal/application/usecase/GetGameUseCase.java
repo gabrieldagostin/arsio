@@ -5,6 +5,7 @@ import com.arsio.game.internal.application.service.GameMediaService;
 import com.arsio.game.internal.domain.model.Game;
 import com.arsio.game.internal.domain.repository.*;
 import com.arsio.game.internal.domain.valueobject.GameId;
+import com.arsio.game.internal.domain.valueobject.RequirementCategory;
 import com.arsio.game.internal.infra.Controller.dto.response.*;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -42,26 +43,22 @@ public class GetGameUseCase {
 
         Set<GetGenreResponse> genreResponses = genres.findAllGenresByGameId(gameId)
                 .stream()
-                .map(genre -> {
-                    return new GetGenreResponse(
-                            genre.getId().value(),
-                            genre.getName().value()
-                    );
-                })
+                .map(genre -> new GetGenreResponse(
+                        genre.getId().value(),
+                        genre.getName().value()
+                ))
                 .collect(Collectors.toSet());
 
         Set<GetTagResponse> tagResponses = tags.findAllTagsByGameId(gameId)
                 .stream()
-                .map(tag -> {
-                    return new GetTagResponse(
-                            tag.getId().value(),
-                            tag.getName().value()
-                    );
-                })
+                .map(tag -> new GetTagResponse(
+                        tag.getId().value(),
+                        tag.getName().value()
+                ))
                 .collect(Collectors.toSet());
 
-        GetGameRequirementResponse minimumGameRequirement = gameRequirements.findByGameIdAndCategoryMinimum(gameId);
-        GetGameRequirementResponse recommendedGameRequirement = gameRequirements.findByGameIdAndCategoryRecommended(gameId);
+        GetGameRequirementResponse minimumGameRequirement = gameRequirements.findByGameIdAndCategory(gameId, RequirementCategory.MINIMUM);
+        GetGameRequirementResponse recommendedGameRequirement = gameRequirements.findByGameIdAndCategory(gameId, RequirementCategory.RECOMMENDED);
 
         GetGameRequirementsResponse gameRequirementsResponse = new GetGameRequirementsResponse(
                 minimumGameRequirement,

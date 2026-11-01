@@ -32,142 +32,142 @@ public class GameMediaController {
     private final DeleteTrailerUseCase deleteTrailerUseCase;
     private final GetGameMediaUseCase getGameMediaUseCase;
 
-    @PostMapping("/{id}/thumbnails/upload-url")
+    @PostMapping("/{gameId}/thumbnails/upload-url")
     @PreAuthorize("HasRole('DEV')")
     public ResponseEntity<UploadFileUrlResponse> generateThumbnailUploadUrl(
-            @PathVariable(name = "id") UUID id,
+            @PathVariable(name = "gameId") UUID gameId,
             @RequestBody @Valid UploadFileUrlRequest request
     ) {
 
         UploadFileUrlCommand command = mapper.toUploadFileUrlCommand(request);
 
         UploadFileUrlResponse response =
-                gameMediaUploadPreparationService.execute(id, command);
+                gameMediaUploadPreparationService.execute(gameId, command);
 
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/{id}/thumbnails/confirm")
+    @PostMapping("/{gameId}/thumbnails/confirm")
     @PreAuthorize("HasRole('DEV')")
     public ResponseEntity<GetThumbnailResponse> confirmThumbnailUpload(
-            @PathVariable(name = "id") UUID id,
+            @PathVariable(name = "gameId") UUID gameId,
             @RequestBody @Valid ConfirmFileUploadRequest request
     ) {
 
         ConfirmFileUploadCommand command = mapper.toConfirmFileUploadCommand(request);
 
         GetThumbnailResponse response =
-                confirmGameThumbnailUploadUseCase.execute(id, command);
+                confirmGameThumbnailUploadUseCase.execute(gameId, command);
 
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/thumbnails/{id}")
+    @DeleteMapping("/thumbnails/{gameId}")
     @PreAuthorize("HasRole('DEV')")
-    public ResponseEntity<Void> deleteThumbnail(@PathVariable(name = "id") UUID id) {
+    public ResponseEntity<Void> deleteThumbnail(@PathVariable(name = "gameId") UUID gameId) {
 
-        deleteThumbnailUseCase.execute(id);
+        deleteThumbnailUseCase.execute(gameId);
 
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/{id}/banners/upload-url")
+    @PostMapping("/{gameId}/banners/upload-url")
     @PreAuthorize("HasRole('DEV')")
     public ResponseEntity<UploadFileUrlResponse> generateBannerUploadUrl(
-            @PathVariable(name = "id") UUID id,
+            @PathVariable(name = "gameId") UUID gameId,
             @RequestBody @Valid UploadFileUrlRequest request
     ) {
 
         UploadFileUrlCommand command = mapper.toUploadFileUrlCommand(request);
 
         UploadFileUrlResponse response =
-                gameMediaUploadPreparationService.execute(id, command);
+                gameMediaUploadPreparationService.execute(gameId, command);
 
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/{id}/banners/confirm")
+    @PostMapping("/{gameId}/banners/confirm")
     @PreAuthorize("HasRole('DEV')")
     public ResponseEntity<GetBannerResponse> confirmBannerUpload(
-            @PathVariable(name = "id") UUID id,
+            @PathVariable(name = "gameId") UUID gameId,
             @RequestBody @Valid ConfirmFileUploadRequest request
     ) {
 
         ConfirmFileUploadCommand command = mapper.toConfirmFileUploadCommand(request);
 
         GetBannerResponse response =
-                confirmGameBannerUploadUseCase.execute(id, command);
+                confirmGameBannerUploadUseCase.execute(gameId, command);
 
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/banners/{id}")
+    @DeleteMapping("/banners/{gameId}")
     @PreAuthorize("HasRole('DEV')")
-    public ResponseEntity<Void> deleteBanner(@PathVariable(name = "id") UUID id) {
+    public ResponseEntity<Void> deleteBanner(@PathVariable(name = "gameId") UUID gameId) {
 
-        deleteBannerUseCase.execute(id);
+        deleteBannerUseCase.execute(gameId);
 
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/{id}/screenshots/upload-url")
+    @PostMapping("/{gameId}/screenshots/upload-url")
     @PreAuthorize("HasRole('DEV')")
     public ResponseEntity<UploadFileUrlResponse> generateScreenshotUploadUrl(
-            @PathVariable(name = "id") UUID id,
+            @PathVariable(name = "gameId") UUID gameId,
             @RequestBody @Valid UploadFileUrlRequest request
     ) {
 
         UploadFileUrlCommand command = mapper.toUploadFileUrlCommand(request);
 
         UploadFileUrlResponse response =
-                gameMediaUploadPreparationService.execute(id, command);
+                gameMediaUploadPreparationService.execute(gameId, command);
 
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/{id}/screenshots/confirm")
+    @PostMapping("/{gameId}/screenshots/confirm")
     @PreAuthorize("HasRole('DEV')")
     public ResponseEntity<GetScreenshotResponse> confirmScreenshotUpload(
-            @PathVariable(name = "id") UUID id,
+            @PathVariable(name = "gameId") UUID gameId,
             @RequestBody @Valid ConfirmFileUploadRequest request
     ) {
 
         ConfirmFileUploadCommand command = mapper.toConfirmFileUploadCommand(request);
 
         GetScreenshotResponse response =
-                confirmGameScreenshotUploadUseCase.execute(id, command);
+                confirmGameScreenshotUploadUseCase.execute(gameId, command);
 
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/screenshots/{id}")
+    @DeleteMapping("/screenshots/{gameId}")
     @PreAuthorize("HasRole('DEV')")
-    public ResponseEntity<Void> deleteScreenshot(@PathVariable(name = "id") UUID id) {
+    public ResponseEntity<Void> deleteScreenshot(@PathVariable(name = "gameId") UUID gameId) {
 
-        deleteScreenshotUseCase.execute(id);
+        deleteScreenshotUseCase.execute(gameId);
 
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/{id}/trailers")
+    @PostMapping("/{gameId}/trailers")
     @PreAuthorize("HasRole('DEV')")
     public ResponseEntity<GetTrailerResponse> addTrailer(
-            @PathVariable(name = "id") UUID id,
+            @PathVariable(name = "gameId") UUID gameId,
             @RequestBody @Valid AddGameTrailerRequest request
     ) {
 
-        AddGameTrailerCommand command = mapper.toAddGameTrailerCommand(id, request);
+        AddGameTrailerCommand command = mapper.toAddGameTrailerCommand(gameId, request);
 
         GetTrailerResponse response = addGameTrailerUseCase.execute(command);
 
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/trailers/{id}")
+    @DeleteMapping("/trailers/{gameId}")
     @PreAuthorize("HasRole('DEV')")
-    public ResponseEntity<Void> deleteTrailer(@PathVariable(name = "id") UUID id) {
+    public ResponseEntity<Void> deleteTrailer(@PathVariable(name = "gameId") UUID gameId) {
 
-        deleteTrailerUseCase.execute(id);
+        deleteTrailerUseCase.execute(gameId);
 
         return ResponseEntity.noContent().build();
     }

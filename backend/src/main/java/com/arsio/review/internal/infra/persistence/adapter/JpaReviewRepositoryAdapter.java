@@ -7,6 +7,7 @@ import com.arsio.review.internal.infra.persistence.repository.SpringDataReviewRe
 import com.arsio.shared.pagination.Pagination;
 import com.arsio.shared.pagination.PaginationMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 

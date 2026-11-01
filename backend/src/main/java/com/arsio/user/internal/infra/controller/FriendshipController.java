@@ -63,11 +63,11 @@ public class FriendshipController {
         return ResponseEntity.ok(responses);
     }
 
-    @PostMapping("/requests/{id}")
+    @PostMapping("/requests/{friendId}")
     @PreAuthorize("HasRole('USER')")
-    public ResponseEntity<Void> sendFriendRequest(@PathVariable("id") UUID id) {
+    public ResponseEntity<Void> sendFriendRequest(@PathVariable("friendId") UUID friendId) {
 
-        sendFriendRequestUseCase.execute(SecurityUtils.getCurrentUserId(), id);
+        sendFriendRequestUseCase.execute(SecurityUtils.getCurrentUserId(), friendId);
 
         return ResponseEntity.noContent().build();
     }

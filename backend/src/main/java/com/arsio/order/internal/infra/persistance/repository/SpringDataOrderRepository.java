@@ -16,13 +16,13 @@ public interface SpringDataOrderRepository extends JpaRepository<OrderEntity, UU
     @Query("""
         SELECT new com.arsio.order.api.dto.GameSalesView(
             oi.gameId,
-            COUNT(oi.id)
+            COUNT(oi) AS total
         )
         FROM OrderItemEntity oi
         JOIN oi.order o
         WHERE o.status = :status
         GROUP BY oi.gameId
-        ORDER BY COUNT(oi.id) DESC
+        ORDER BY total DESC
     """)
     List<GameSalesView> findBestSellingGames(
             @Param("status") OrderStatus status,

@@ -46,11 +46,11 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{userId}")
     @PreAuthorize("HasRole('USER')")
-    public ResponseEntity<GetUserResponse> getById(@PathVariable("id") UUID id) {
+    public ResponseEntity<GetUserResponse> getById(@PathVariable("userId") UUID userId) {
 
-        GetUserResponse response = getUserByIdUseCase.execute(id);
+        GetUserResponse response = getUserByIdUseCase.execute(userId);
 
         return ResponseEntity.ok(response);
     }

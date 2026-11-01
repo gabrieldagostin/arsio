@@ -12,7 +12,7 @@ import java.util.List;
 @Transactional
 public class GetGameRatingUseCase {
 
-    private ReviewRepository reviews;
+    private final ReviewRepository reviews;
 
     public GetGameRatingUseCase(ReviewRepository reviews) {
         this.reviews = reviews;

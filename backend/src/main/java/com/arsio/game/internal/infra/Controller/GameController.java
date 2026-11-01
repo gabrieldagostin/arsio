@@ -204,13 +204,9 @@ public class GameController {
 
     @PostMapping("{gameId}/builds/upload-url")
     @PreAuthorize("HasRole('DEV')")
-    public ResponseEntity<UploadFileUrlResponse> generateBuildUploadUrl(
-            @PathVariable(name = "gameId") UUID gameId,
-            @RequestBody @Valid UploadFileUrlRequest request) {
+    public ResponseEntity<UploadFileUrlResponse> generateBuildUploadUrl(@PathVariable(name = "gameId") UUID gameId) {
 
-        UploadFileUrlCommand command = mapper.toUploadFileUrlCommand(request);
-
-        UploadFileUrlResponse response = gameBuildUploadPreparationUseCase.execute(gameId, command);
+        UploadFileUrlResponse response = gameBuildUploadPreparationUseCase.execute(gameId);
 
         return ResponseEntity.ok(response);
     }

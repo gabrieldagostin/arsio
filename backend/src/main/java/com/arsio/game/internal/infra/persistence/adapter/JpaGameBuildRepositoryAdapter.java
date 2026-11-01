@@ -23,7 +23,7 @@ public class JpaGameBuildRepositoryAdapter implements GameBuildRepository {
 
     @Override
     public Optional<GameBuild> findByGameId(GameId gameId) {
-        return gameBuilds.findByGameId(gameId)
+        return gameBuilds.findByGameId(gameId.value())
                 .map(mapper::toDomain);
     }
 
@@ -32,7 +32,7 @@ public class JpaGameBuildRepositoryAdapter implements GameBuildRepository {
 
         GameEntity gameEntity = entityManager.getReference(
                 GameEntity.class,
-                gameBuild.getGameId()
+                gameBuild.getGameId().value()
         );
 
         GameBuildEntity gameBuildEntity = mapper.toEntity(gameBuild, gameEntity);

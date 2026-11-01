@@ -19,7 +19,7 @@ public class GameBuildUploadPreparationUseCase {
         this.fileStorage = fileStorage;
     }
 
-    public UploadFileUrlResponse execute(UUID value, UploadFileUrlCommand command) {
+    public UploadFileUrlResponse execute(UUID value) {
 
         GameId gameId = new GameId(value);
 

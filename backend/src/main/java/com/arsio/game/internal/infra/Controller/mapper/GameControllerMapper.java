@@ -26,8 +26,6 @@ public interface GameControllerMapper {
 
     ChangeGamePriceCommand toChangeGamePriceCommand(UUID gameId, ChangeGamePriceRequest request);
 
-    UploadFileUrlCommand toUploadFileUrlCommand(UploadFileUrlRequest request);
-
     ConfirmFileUploadCommand toConfirmFileUploadCommand(ConfirmFileUploadRequest request);
 
     default GameId toGameId(UUID value) {
