@@ -4,6 +4,6 @@ import java.util.List;
 
 public record GetDeveloperPageResponse(
         GetDeveloperProfileResponse developerProfile,
-        List<GetDeveloperGamesResponse> games
+        List<GetDeveloperGameResponse> games
 ) {
 }

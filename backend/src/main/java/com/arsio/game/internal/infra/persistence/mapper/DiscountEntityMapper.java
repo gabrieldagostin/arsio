@@ -22,7 +22,7 @@ public interface DiscountEntityMapper {
 
     @Mapping(target = "id", source = "discountEntity.id")
     @Mapping(target = "game", source = "gameEntity")
-    DiscountEntity toEntity(DiscountEntity discountEntity, GameEntity gameEntity);
+    DiscountEntity toEntity(Discount discount, GameEntity gameEntity);
 
     default UUID discountIdToUuid(DiscountId discountId) {
         return discountId.value();

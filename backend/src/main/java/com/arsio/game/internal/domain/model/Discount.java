@@ -4,6 +4,7 @@ import com.arsio.game.internal.domain.valueobject.DiscountId;
 import com.arsio.game.internal.domain.valueobject.GameId;
 import com.arsio.game.internal.domain.valueobject.Percentage;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class Discount {
@@ -20,6 +21,16 @@ public class Discount {
         this.percentage = percentage;
         this.startDate = startDate;
         this.endDate = endDate;
+    }
+
+    public static Discount create(GameId gameId, BigDecimal percentage, LocalDate startDate, LocalDate endDate) {
+        return new Discount(
+                DiscountId.generate(),
+                gameId,
+                new Percentage(percentage),
+                startDate,
+                endDate
+        );
     }
 
     public DiscountId getId() {

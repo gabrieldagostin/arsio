@@ -2,7 +2,7 @@ package com.arsio.developer.internal.application.usecase;
 
 import com.arsio.developer.api.exception.DeveloperNotFoundException;
 import com.arsio.developer.internal.domain.valueobject.DeveloperId;
-import com.arsio.developer.internal.infra.controller.dto.response.GetDeveloperGamesResponse;
+import com.arsio.developer.internal.infra.controller.dto.response.GetDeveloperGameResponse;
 import com.arsio.developer.internal.infra.controller.dto.response.GetDeveloperPageResponse;
 import com.arsio.developer.internal.infra.controller.dto.response.GetDeveloperProfileResponse;
 import com.arsio.game.api.facade.GameFacade;
@@ -39,9 +39,9 @@ public class GetDeveloperPageUseCase {
                 ))
                 .orElseThrow(DeveloperNotFoundException::new);
 
-        List<GetDeveloperGamesResponse> developerGames = gameFacade.findByDeveloperId(developerId.value())
+        List<GetDeveloperGameResponse> developerGames = gameFacade.findByDeveloperId(developerId.value())
                 .stream()
-                .map(game -> new GetDeveloperGamesResponse(
+                .map(game -> new GetDeveloperGameResponse(
                         game.gameId(),
                         game.title(),
                         game.basePrice(),

@@ -3,10 +3,11 @@ package com.arsio.developer.internal.infra.controller.dto.response;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-public record GetDeveloperGamesResponse(
+public record GetDiscountedGameResponse(
         UUID gameId,
         String title,
-        BigDecimal basePrice,
+        BigDecimal discountedPrice,
+        BigDecimal discountedAmount,
         String thumbnailUrl
 ) {
 }

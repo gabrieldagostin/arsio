@@ -9,7 +9,7 @@ public record DiscountId(UUID value) {
         Objects.requireNonNull(value, "DiscountId cannot be null.");
     }
 
-    public DiscountId generate() {
+    public static DiscountId generate() {
         return new DiscountId(UUID.randomUUID());
     }
 }
