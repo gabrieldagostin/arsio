@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -50,4 +51,16 @@ public interface SpringDataGameRepository extends JpaRepository<GameEntity, UUID
     Page<GameEntity> findDiscountedGames(Pageable pageable);
 
     List<GameEntity> findAllByDeveloperId(UUID developerId);
+
+    @Query("""
+        SELECT g
+            FROM GameEntity g
+            WHERE g.developerId = :developerId
+                AND g.id IN (
+                SELECT d.gameId
+                FROM DiscountEntity d
+                WHERE CURRENT_DATE BETWEEN d.startDate AND d.endDate
+            )
+    """)
+    List<GameEntity> findAllDiscountedByDeveloperId(@Param("developerId") UUID developerId);
 }

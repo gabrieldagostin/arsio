@@ -2,6 +2,7 @@ package com.arsio.developer.internal.infra.controller;
 
 import com.arsio.developer.internal.application.command.ApplyGameDiscountCommand;
 import com.arsio.developer.internal.application.usecase.ApplyGameDiscountUseCase;
+import com.arsio.developer.internal.application.usecase.GetDeveloperDiscountedGamesUseCase;
 import com.arsio.developer.internal.application.usecase.GetDeveloperGamesUseCase;
 import com.arsio.developer.internal.application.usecase.GetDeveloperPageUseCase;
 import com.arsio.developer.internal.infra.controller.dto.request.ApplyGameDiscountRequest;
@@ -27,6 +28,7 @@ public class DeveloperController {
     private final GetDeveloperPageUseCase getDeveloperPageUseCase;
     private final GetDeveloperGamesUseCase getDeveloperGamesUseCase;
     private final ApplyGameDiscountUseCase applyGameDiscountUseCase;
+    private final GetDeveloperDiscountedGamesUseCase getDeveloperDiscountedGamesUseCase;
 
     @GetMapping("/{developerId}")
     @PreAuthorize("HasRole('User')")
@@ -59,5 +61,15 @@ public class DeveloperController {
         GetDiscountedGameResponse response = applyGameDiscountUseCase.execute(command);
 
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{developerId/discounts}")
+    @PreAuthorize("HasRole('DEV')")
+    public ResponseEntity<List<GetDiscountedGameResponse>> getDiscountedGames(
+            @PathVariable(name = "developerId") UUID developerId) {
+
+        List<GetDiscountedGameResponse> responses = getDeveloperDiscountedGamesUseCase.execute(developerId);
+
+        return ResponseEntity.ok(responses);
     }
 }

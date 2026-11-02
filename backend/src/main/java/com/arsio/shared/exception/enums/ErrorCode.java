@@ -43,6 +43,7 @@ public enum ErrorCode {
     GAME_PROCESSOR_NOT_FOUND("Game processor not found"),
     GAME_GPU_NOT_FOUND("Game gpu not found"),
     GAME_OPERATING_SYSTEM_NOT_FOUND("Game operating system not found"),
+    GAME_DISCOUNT_NOT_FOUND("Game discount not found"),
     GAME_INVALID_TITLE("Invalid title"),
     GAME_INVALID_DESCRIPTION("Invalid description"),
     GAME_INVALID_STATUS("Invalid status"),

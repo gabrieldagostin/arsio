@@ -164,4 +164,12 @@ public class JpaGameRepositoryAdapter implements GameRepository {
                 .map(mapper::toDomain)
                 .toList();
     }
+
+    @Override
+    public List<Game> findAllDiscountedByDeveloperId(UUID developerId) {
+        return games.findAllDiscountedByDeveloperId(developerId)
+                .stream()
+                .map(mapper::toDomain)
+                .toList();
+    }
 }

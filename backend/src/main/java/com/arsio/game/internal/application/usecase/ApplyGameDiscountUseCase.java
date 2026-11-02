@@ -56,7 +56,7 @@ public class ApplyGameDiscountUseCase {
 
         String thumbnailUrl = gameMediaStorage.generatePresignedDownloadUrl(gameMedia.getObjectKey().value());
 
-        BigDecimal decimalPercentage = percentage.divide(BigDecimal.valueOf(100));
+        BigDecimal decimalPercentage = discount.getPercentage().value().divide(BigDecimal.valueOf(100));
         Money discountAmount = game.getBasePrice().multiply(decimalPercentage);
         Money discountedPrice = game.getBasePrice().subtract(discountAmount);
 

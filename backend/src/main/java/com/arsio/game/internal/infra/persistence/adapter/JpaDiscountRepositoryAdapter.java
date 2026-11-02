@@ -2,12 +2,15 @@ package com.arsio.game.internal.infra.persistence.adapter;
 
 import com.arsio.game.internal.domain.model.Discount;
 import com.arsio.game.internal.domain.repository.DiscountRepository;
+import com.arsio.game.internal.domain.valueobject.GameId;
 import com.arsio.game.internal.infra.persistence.entity.GameEntity;
 import com.arsio.game.internal.infra.persistence.mapper.DiscountEntityMapper;
 import com.arsio.game.internal.infra.persistence.repository.SpringDataDiscountRepository;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -26,5 +29,11 @@ public class JpaDiscountRepositoryAdapter implements DiscountRepository {
         );
 
         discounts.save(mapper.toEntity(discount, gameEntity));
+    }
+
+    @Override
+    public Optional<Discount> findByGameId(GameId gameId) {
+        return discounts.findByGameId(gameId.value())
+                .map(mapper::toDomain);
     }
 }

@@ -4,6 +4,7 @@ import com.arsio.game.api.dto.GetDeveloperGamesView;
 import com.arsio.game.api.dto.GetDiscountedGameView;
 import com.arsio.game.api.facade.GameFacade;
 import com.arsio.game.internal.application.usecase.ApplyGameDiscountUseCase;
+import com.arsio.game.internal.application.usecase.GetDeveloperDiscountedGameUseCase;
 import com.arsio.game.internal.application.usecase.GetDeveloperGamesUseCase;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -20,10 +21,12 @@ public class GameFacadeImpl implements GameFacade {
 
     private final GetDeveloperGamesUseCase getDeveloperGamesUseCase;
     private final ApplyGameDiscountUseCase applyGameDiscountUseCase;
+    private final GetDeveloperDiscountedGameUseCase getDeveloperDiscountedGameUseCase;
 
-    public GameFacadeImpl(GetDeveloperGamesUseCase getDeveloperGamesUseCase, ApplyGameDiscountUseCase applyGameDiscountUseCase) {
+    public GameFacadeImpl(GetDeveloperGamesUseCase getDeveloperGamesUseCase, ApplyGameDiscountUseCase applyGameDiscountUseCase, GetDeveloperDiscountedGameUseCase getDeveloperDiscountedGameUseCase) {
         this.getDeveloperGamesUseCase = getDeveloperGamesUseCase;
         this.applyGameDiscountUseCase = applyGameDiscountUseCase;
+        this.getDeveloperDiscountedGameUseCase = getDeveloperDiscountedGameUseCase;
     }
 
     @Override
@@ -39,5 +42,10 @@ public class GameFacadeImpl implements GameFacade {
                 startDate,
                 endDate
         ));
+    }
+
+    @Override
+    public List<GetDiscountedGameView> findDiscountedByDeveloperId(UUID developerId) {
+        return getDeveloperDiscountedGameUseCase.execute(developerId);
     }
 }

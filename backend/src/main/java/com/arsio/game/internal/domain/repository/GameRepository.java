@@ -29,4 +29,6 @@ public interface GameRepository {
     PageResult<Game> findDiscountedGames(Pagination pagination);
 
     List<Game> findAllByDeveloperId(UUID developerId);
+
+    List<Game> findAllDiscountedByDeveloperId(UUID developerId);
 }

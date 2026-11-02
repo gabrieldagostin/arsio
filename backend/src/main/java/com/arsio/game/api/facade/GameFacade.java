@@ -14,4 +14,6 @@ public interface GameFacade {
     List<GetDeveloperGamesView> findByDeveloperId(UUID developerId);
 
     Optional<GetDiscountedGameView> applyGameDiscount(UUID gameId, BigDecimal percentage, LocalDate startDate, LocalDate endDate);
+
+    List<GetDiscountedGameView> findDiscountedByDeveloperId(UUID developerId);
 }
