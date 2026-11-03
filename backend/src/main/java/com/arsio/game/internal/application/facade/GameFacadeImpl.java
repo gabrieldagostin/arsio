@@ -2,10 +2,12 @@ package com.arsio.game.internal.application.facade;
 
 import com.arsio.game.api.dto.GetDeveloperGamesView;
 import com.arsio.game.api.dto.GetDiscountedGameView;
+import com.arsio.game.api.dto.UpdateGameDiscountView;
 import com.arsio.game.api.facade.GameFacade;
 import com.arsio.game.internal.application.usecase.ApplyGameDiscountUseCase;
 import com.arsio.game.internal.application.usecase.GetDeveloperDiscountedGameUseCase;
 import com.arsio.game.internal.application.usecase.GetDeveloperGamesUseCase;
+import com.arsio.game.internal.application.usecase.UpdateGameDiscountUseCase;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -22,11 +24,13 @@ public class GameFacadeImpl implements GameFacade {
     private final GetDeveloperGamesUseCase getDeveloperGamesUseCase;
     private final ApplyGameDiscountUseCase applyGameDiscountUseCase;
     private final GetDeveloperDiscountedGameUseCase getDeveloperDiscountedGameUseCase;
+    private final UpdateGameDiscountUseCase updateGameDiscountUseCase;
 
-    public GameFacadeImpl(GetDeveloperGamesUseCase getDeveloperGamesUseCase, ApplyGameDiscountUseCase applyGameDiscountUseCase, GetDeveloperDiscountedGameUseCase getDeveloperDiscountedGameUseCase) {
+    public GameFacadeImpl(GetDeveloperGamesUseCase getDeveloperGamesUseCase, ApplyGameDiscountUseCase applyGameDiscountUseCase, GetDeveloperDiscountedGameUseCase getDeveloperDiscountedGameUseCase, UpdateGameDiscountUseCase updateGameDiscountUseCase) {
         this.getDeveloperGamesUseCase = getDeveloperGamesUseCase;
         this.applyGameDiscountUseCase = applyGameDiscountUseCase;
         this.getDeveloperDiscountedGameUseCase = getDeveloperDiscountedGameUseCase;
+        this.updateGameDiscountUseCase = updateGameDiscountUseCase;
     }
 
     @Override
@@ -47,5 +51,15 @@ public class GameFacadeImpl implements GameFacade {
     @Override
     public List<GetDiscountedGameView> findDiscountedByDeveloperId(UUID developerId) {
         return getDeveloperDiscountedGameUseCase.execute(developerId);
+    }
+
+    @Override
+    public Optional<UpdateGameDiscountView> updateGameDiscount(UUID gameId, BigDecimal percentage, LocalDate startDate, LocalDate endDate) {
+        return Optional.ofNullable(updateGameDiscountUseCase.execute(
+                gameId,
+                percentage,
+                startDate,
+                endDate
+        ));
     }
 }

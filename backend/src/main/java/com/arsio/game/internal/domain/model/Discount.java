@@ -52,4 +52,10 @@ public class Discount {
     public LocalDate getEndDate() {
         return endDate;
     }
+
+    public void update(BigDecimal percentage, LocalDate startDate, LocalDate endDate) {
+        this.percentage = new Percentage(percentage);
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
 }

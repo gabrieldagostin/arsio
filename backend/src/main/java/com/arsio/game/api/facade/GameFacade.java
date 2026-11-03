@@ -2,6 +2,7 @@ package com.arsio.game.api.facade;
 
 import com.arsio.game.api.dto.GetDeveloperGamesView;
 import com.arsio.game.api.dto.GetDiscountedGameView;
+import com.arsio.game.api.dto.UpdateGameDiscountView;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -16,4 +17,6 @@ public interface GameFacade {
     Optional<GetDiscountedGameView> applyGameDiscount(UUID gameId, BigDecimal percentage, LocalDate startDate, LocalDate endDate);
 
     List<GetDiscountedGameView> findDiscountedByDeveloperId(UUID developerId);
+
+    Optional<UpdateGameDiscountView> updateGameDiscount(UUID uuid, BigDecimal percentage, LocalDate localDate, LocalDate localDate1);
 }
