@@ -1,0 +1,2 @@
+ALTER TABLE discounts
+    ADD COLUMN active BOOLEAN DEFAULT TRUE;

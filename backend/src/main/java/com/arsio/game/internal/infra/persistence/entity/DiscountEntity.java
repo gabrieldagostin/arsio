@@ -32,4 +32,7 @@ public class DiscountEntity {
 
     @Column(name = "end_date", nullable = false)
     private LocalDate endDate;
+
+    @Column(columnDefinition = "BOOLEAN DEFAULT TRUE", nullable = false)
+    private boolean active;
 }

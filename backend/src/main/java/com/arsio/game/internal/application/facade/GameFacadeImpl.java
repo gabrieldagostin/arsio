@@ -4,10 +4,7 @@ import com.arsio.game.api.dto.GetDeveloperGamesView;
 import com.arsio.game.api.dto.GetDiscountedGameView;
 import com.arsio.game.api.dto.UpdateGameDiscountView;
 import com.arsio.game.api.facade.GameFacade;
-import com.arsio.game.internal.application.usecase.ApplyGameDiscountUseCase;
-import com.arsio.game.internal.application.usecase.GetDeveloperDiscountedGameUseCase;
-import com.arsio.game.internal.application.usecase.GetDeveloperGamesUseCase;
-import com.arsio.game.internal.application.usecase.UpdateGameDiscountUseCase;
+import com.arsio.game.internal.application.usecase.*;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -25,12 +22,14 @@ public class GameFacadeImpl implements GameFacade {
     private final ApplyGameDiscountUseCase applyGameDiscountUseCase;
     private final GetDeveloperDiscountedGameUseCase getDeveloperDiscountedGameUseCase;
     private final UpdateGameDiscountUseCase updateGameDiscountUseCase;
+    private final DeleteGameDiscountUseCase deleteGameDiscountUseCase;
 
-    public GameFacadeImpl(GetDeveloperGamesUseCase getDeveloperGamesUseCase, ApplyGameDiscountUseCase applyGameDiscountUseCase, GetDeveloperDiscountedGameUseCase getDeveloperDiscountedGameUseCase, UpdateGameDiscountUseCase updateGameDiscountUseCase) {
+    public GameFacadeImpl(GetDeveloperGamesUseCase getDeveloperGamesUseCase, ApplyGameDiscountUseCase applyGameDiscountUseCase, GetDeveloperDiscountedGameUseCase getDeveloperDiscountedGameUseCase, UpdateGameDiscountUseCase updateGameDiscountUseCase, DeleteGameDiscountUseCase deleteGameDiscountUseCase) {
         this.getDeveloperGamesUseCase = getDeveloperGamesUseCase;
         this.applyGameDiscountUseCase = applyGameDiscountUseCase;
         this.getDeveloperDiscountedGameUseCase = getDeveloperDiscountedGameUseCase;
         this.updateGameDiscountUseCase = updateGameDiscountUseCase;
+        this.deleteGameDiscountUseCase = deleteGameDiscountUseCase;
     }
 
     @Override
@@ -61,5 +60,10 @@ public class GameFacadeImpl implements GameFacade {
                 startDate,
                 endDate
         ));
+    }
+
+    @Override
+    public void deleteDiscount(UUID gameId) {
+        deleteGameDiscountUseCase.execute(gameId);
     }
 }

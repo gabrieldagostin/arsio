@@ -14,6 +14,7 @@ public class Discount {
     private Percentage percentage;
     private LocalDate startDate;
     private LocalDate endDate;
+    private boolean active;
 
     public Discount(DiscountId id, GameId gameId, Percentage percentage, LocalDate startDate, LocalDate endDate) {
         this.id = id;
@@ -53,9 +54,17 @@ public class Discount {
         return endDate;
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
     public void update(BigDecimal percentage, LocalDate startDate, LocalDate endDate) {
         this.percentage = new Percentage(percentage);
         this.startDate = startDate;
         this.endDate = endDate;
+    }
+
+    public void deactivate() {
+        this.active = false;
     }
 }

@@ -10,7 +10,6 @@ import com.arsio.developer.internal.infra.controller.dto.response.GetDeveloperPa
 import com.arsio.developer.internal.infra.controller.dto.response.GetDiscountedGameResponse;
 import com.arsio.developer.internal.infra.controller.dto.response.UpdateGameDiscountResponse;
 import com.arsio.developer.internal.infra.controller.mapper.DeveloperControllerMapper;
-import com.arsio.game.internal.domain.model.Discount;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -32,6 +31,7 @@ public class DeveloperController {
     private final ApplyGameDiscountUseCase applyGameDiscountUseCase;
     private final GetDeveloperDiscountedGamesUseCase getDeveloperDiscountedGamesUseCase;
     private final UpdateGameDiscountUseCase updateGameDiscountUseCase;
+    private final DeleteGameDiscountUseCase deleteGameDiscountUseCase;
 
     @GetMapping("/{developerId}")
     @PreAuthorize("HasRole('User')")
@@ -66,7 +66,7 @@ public class DeveloperController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @GetMapping("/{developerId}/discounts}")
+    @GetMapping("/{developerId}/discounts")
     @PreAuthorize("HasRole('DEV')")
     public ResponseEntity<List<GetDiscountedGameResponse>> getDiscountedGames(
             @PathVariable(name = "developerId") UUID developerId) {
@@ -78,7 +78,7 @@ public class DeveloperController {
 
     @PutMapping("/discounts/{gameId}")
     @PreAuthorize("HasRole('DEV')")
-public ResponseEntity<UpdateGameDiscountResponse> updateDiscount(
+    public ResponseEntity<UpdateGameDiscountResponse> updateDiscount(
         @PathVariable(name = "gameId") UUID gameId,
         @RequestBody @Valid UpdateGameDiscountRequest request) {
 
@@ -87,5 +87,14 @@ public ResponseEntity<UpdateGameDiscountResponse> updateDiscount(
         UpdateGameDiscountResponse response = updateGameDiscountUseCase.execute(command);
 
         return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/discounts/{gameId}")
+    @PreAuthorize("HasRole('DEV')")
+    public ResponseEntity<Void> deleteDiscount(@PathVariable(name = "gameId") UUID gameId) {
+
+        deleteGameDiscountUseCase.execute(gameId);
+
+        return ResponseEntity.noContent().build();
     }
 }
