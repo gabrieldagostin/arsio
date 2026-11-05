@@ -57,7 +57,7 @@ public interface SpringDataGameRepository extends JpaRepository<GameEntity, UUID
             FROM GameEntity g
             WHERE g.developerId = :developerId
                 AND g.id IN (
-                SELECT d.gameId
+                SELECT d.game.id
                 FROM DiscountEntity d
                 WHERE CURRENT_DATE BETWEEN d.startDate AND d.endDate
             )

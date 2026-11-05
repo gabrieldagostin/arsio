@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
-@Service
+@Service("gameGetDeveloperGamesUseCase")
 @Transactional
 public class GetDeveloperGamesUseCase {
 

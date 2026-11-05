@@ -25,7 +25,7 @@ public class JpaDiscountRepositoryAdapter implements DiscountRepository {
 
         GameEntity gameEntity = entityManager.getReference(
                 GameEntity.class,
-                discount.getGameId()
+                discount.getGameId().value()
         );
 
         discounts.save(mapper.toEntity(discount, gameEntity));
@@ -33,7 +33,7 @@ public class JpaDiscountRepositoryAdapter implements DiscountRepository {
 
     @Override
     public Optional<Discount> findByGameId(GameId gameId) {
-        return discounts.findByGameId(gameId.value())
+        return discounts.findActiveByGameId(gameId.value())
                 .map(mapper::toDomain);
     }
 }

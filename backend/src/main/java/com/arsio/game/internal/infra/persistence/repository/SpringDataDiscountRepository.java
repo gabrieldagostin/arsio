@@ -13,8 +13,9 @@ public interface SpringDataDiscountRepository extends JpaRepository<DiscountEnti
     @Query("""
         SELECT d
         FROM DiscountEntity d
-        WHERE d.gameId = :gameId
+        WHERE d.game.id = :gameId
+            AND d.active = TRUE
             AND CURRENT_DATE BETWEEN d.startDate AND d.endDate
     """)
-    Optional<DiscountEntity> findByGameId(@Param("gameId") UUID gameId);
+    Optional<DiscountEntity> findActiveByGameId(@Param("gameId") UUID gameId);
 }

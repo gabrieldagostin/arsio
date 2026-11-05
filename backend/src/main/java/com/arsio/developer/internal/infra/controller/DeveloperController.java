@@ -28,10 +28,10 @@ public class DeveloperController {
     private final DeveloperControllerMapper mapper;
     private final GetDeveloperPageUseCase getDeveloperPageUseCase;
     private final GetDeveloperGamesUseCase getDeveloperGamesUseCase;
-    private final ApplyGameDiscountUseCase applyGameDiscountUseCase;
+    private final ApplyDeveloperDiscountUseCase applyDeveloperDiscountUseCase;
     private final GetDeveloperDiscountedGamesUseCase getDeveloperDiscountedGamesUseCase;
-    private final UpdateGameDiscountUseCase updateGameDiscountUseCase;
-    private final DeleteGameDiscountUseCase deleteGameDiscountUseCase;
+    private final UpdateDeveloperDiscountUseCase updateDeveloperDiscountUseCase;
+    private final DeleteDeveloperDiscountUseCase deleteDeveloperDiscountUseCase;
 
     @GetMapping("/{developerId}")
     @PreAuthorize("HasRole('User')")
@@ -61,7 +61,7 @@ public class DeveloperController {
 
         ApplyGameDiscountCommand command = mapper.toApplyGameDiscountCommand(gameId, request);
 
-        GetDiscountedGameResponse response = applyGameDiscountUseCase.execute(command);
+        GetDiscountedGameResponse response = applyDeveloperDiscountUseCase.execute(command);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -84,7 +84,7 @@ public class DeveloperController {
 
         UpdateGameDiscountCommand command = mapper.toUpdateGameDiscountCommand(gameId, request);
 
-        UpdateGameDiscountResponse response = updateGameDiscountUseCase.execute(command);
+        UpdateGameDiscountResponse response = updateDeveloperDiscountUseCase.execute(command);
 
         return ResponseEntity.ok(response);
     }
@@ -93,7 +93,7 @@ public class DeveloperController {
     @PreAuthorize("HasRole('DEV')")
     public ResponseEntity<Void> deleteDiscount(@PathVariable(name = "gameId") UUID gameId) {
 
-        deleteGameDiscountUseCase.execute(gameId);
+        deleteDeveloperDiscountUseCase.execute(gameId);
 
         return ResponseEntity.noContent().build();
     }

@@ -9,11 +9,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Transactional
-public class UpdateGameDiscountUseCase {
+public class UpdateDeveloperDiscountUseCase {
 
     private final GameFacade gameFacade;
 
-    public UpdateGameDiscountUseCase(GameFacade gameFacade) {
+    public UpdateDeveloperDiscountUseCase(GameFacade gameFacade) {
         this.gameFacade = gameFacade;
     }
 

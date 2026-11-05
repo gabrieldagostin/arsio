@@ -26,12 +26,9 @@ public class GetUserProfileUseCase {
     public GetProfileResponse execute(UUID value) {
 
         UserId userId = new UserId(value);
+
         Profile profile = profiles.findByUserId(userId)
                 .orElseThrow(ProfileNotFoundException::new);
-
-        String country = profile.getCountry() != null
-                ? profile.getCountry().getFlag() + " " + profile.getCountry().getName()
-                : null;
 
         String avatarUrl = profile.getAvatarObjectKey() != null
                 ? userFileStorage.generatePresignedDownloadUrl(
@@ -45,9 +42,17 @@ public class GetUserProfileUseCase {
         )
                 : null;
 
+        String bio = profile.getBio() != null
+                ? profile.getBio().value() :
+                null;
+
+        String country = profile.getCountry() != null
+                ? profile.getCountry().getFlag() + " " + profile.getCountry().getName()
+                : null;
+
         return new GetProfileResponse(
                 profile.getDisplayName().value(),
-                profile.getBio().value(),
+                bio,
                 avatarUrl,
                 bannerUrl,
                 country

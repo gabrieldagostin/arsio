@@ -8,11 +8,11 @@ import java.util.UUID;
 
 @Service
 @Transactional
-public class DeleteGameDiscountUseCase {
+public class DeleteDeveloperDiscountUseCase {
 
     private final GameFacade gameFacade;
 
-    public DeleteGameDiscountUseCase(GameFacade gameFacade) {
+    public DeleteDeveloperDiscountUseCase(GameFacade gameFacade) {
         this.gameFacade = gameFacade;
     }
 

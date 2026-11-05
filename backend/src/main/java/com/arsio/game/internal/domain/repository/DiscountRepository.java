@@ -9,5 +9,5 @@ public interface DiscountRepository {
 
     void save(Discount discount);
 
-    Optional<Discount> findByGameId(GameId id);
+    Optional<Discount> findByGameId(GameId gameId);
 }

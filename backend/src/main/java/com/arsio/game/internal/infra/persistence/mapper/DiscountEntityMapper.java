@@ -20,7 +20,7 @@ public interface DiscountEntityMapper {
     @Mapping(target = "gameId", source = "discountEntity.game.id")
     Discount toDomain(DiscountEntity discountEntity);
 
-    @Mapping(target = "id", source = "discountEntity.id")
+    @Mapping(target = "id", source = "discount.id")
     @Mapping(target = "game", source = "gameEntity")
     DiscountEntity toEntity(Discount discount, GameEntity gameEntity);
 

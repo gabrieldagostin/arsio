@@ -39,16 +39,24 @@ public class GetDeveloperProfileUseCase {
 
         String bannerUrl = profile.getBannerObjectKey() != null
                 ? userFileStorage.generatePresignedDownloadUrl(
-                        profile.getBannerObjectKey().value()
+                profile.getBannerObjectKey().value()
         )
+                : null;
+
+        String bio = profile.getBio() != null
+                ? profile.getBio().value() :
+                null;
+
+        String country = profile.getCountry() != null
+                ? profile.getCountry().getFlag() + " " + profile.getCountry().getName()
                 : null;
 
         return Optional.of(new GetDeveloperProfileView(
                 profile.getDisplayName().value(),
-                profile.getBio().value(),
+                bio,
                 avatarUrl,
                 bannerUrl,
-                profile.getCountry().getFlag() + profile.getCountry().getCode()
+                country
         ));
     }
 }
