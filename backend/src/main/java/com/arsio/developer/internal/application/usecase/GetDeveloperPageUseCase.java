@@ -2,6 +2,7 @@ package com.arsio.developer.internal.application.usecase;
 
 import com.arsio.developer.api.exception.DeveloperNotFoundException;
 import com.arsio.developer.internal.domain.valueobject.DeveloperId;
+import com.arsio.developer.internal.infra.controller.dto.response.DiscountInfo;
 import com.arsio.developer.internal.infra.controller.dto.response.GetDeveloperGameResponse;
 import com.arsio.developer.internal.infra.controller.dto.response.GetDeveloperPageResponse;
 import com.arsio.developer.internal.infra.controller.dto.response.GetDeveloperProfileResponse;
@@ -41,12 +42,25 @@ public class GetDeveloperPageUseCase {
 
         List<GetDeveloperGameResponse> developerGames = gameFacade.findByDeveloperId(developerId.value())
                 .stream()
-                .map(game -> new GetDeveloperGameResponse(
-                        game.gameId(),
-                        game.title(),
-                        game.basePrice(),
-                        game.thumbnailUrl()
-                ))
+                .map(game -> {
+                    DiscountInfo discountInfo = (game.discountedAmount() != null)
+                            ? new DiscountInfo(
+                            game.discountedPercentage(),
+                            game.discountedAmount(),
+                            game.startDate(),
+                            game.endDate()
+                    )
+                            : null;
+
+                    return new GetDeveloperGameResponse(
+                            game.gameId(),
+                            game.title(),
+                            game.price(),
+                            game.basePrice(),
+                            game.thumbnailUrl(),
+                            discountInfo
+                    );
+                })
                 .toList();
 
         return new GetDeveloperPageResponse(

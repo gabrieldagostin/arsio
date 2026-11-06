@@ -6,8 +6,9 @@ import java.util.UUID;
 public record GetDiscountedGameResponse(
         UUID gameId,
         String title,
-        BigDecimal discountedPrice,
-        BigDecimal discountedAmount,
-        String thumbnailUrl
+        BigDecimal price,
+        BigDecimal basePrice,
+        String thumbnailUrl,
+        DiscountInfo discountInfo
 ) {
 }

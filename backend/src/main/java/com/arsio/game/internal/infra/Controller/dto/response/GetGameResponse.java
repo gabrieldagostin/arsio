@@ -11,6 +11,8 @@ public record GetGameResponse(
         String title,
         String description,
         BigDecimal price,
+        BigDecimal basePrice,
+        DiscountInfo discountInfo,
         String status,
         LocalDate releaseDate,
         GetGameMediaResponse gameMedia,

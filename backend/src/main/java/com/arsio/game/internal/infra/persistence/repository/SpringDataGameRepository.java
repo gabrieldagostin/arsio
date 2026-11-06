@@ -74,5 +74,5 @@ public interface SpringDataGameRepository extends JpaRepository<GameEntity, UUID
                     AND d.active = TRUE
             )
     """)
-    List<GameEntity> findAllScheduleDiscounted(@Param("developerId") UUID developerId);
+    List<GameEntity> findAllScheduledDiscounted(@Param("developerId") UUID developerId);
 }

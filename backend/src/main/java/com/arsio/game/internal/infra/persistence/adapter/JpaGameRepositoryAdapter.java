@@ -173,8 +173,8 @@ public class JpaGameRepositoryAdapter implements GameRepository {
     }
 
     @Override
-    public List<Game> findAllScheduleDiscounted(UUID developerId) {
-        return games.findAllScheduleDiscounted(developerId)
+    public List<Game> findAllScheduledDiscounted(UUID developerId) {
+        return games.findAllScheduledDiscounted(developerId)
                 .stream()
                 .map(mapper::toDomain)
                 .toList();

@@ -6,7 +6,9 @@ import java.util.UUID;
 public record ListGamesResponse(
         UUID id,
         String title,
+        BigDecimal price,
         BigDecimal basePrice,
-        String thumbnailUrl
+        String thumbnailUrl,
+        DiscountInfo discountInfo
 ) {
 }

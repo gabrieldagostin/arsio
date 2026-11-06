@@ -2,10 +2,8 @@ package com.arsio.game.internal.application.usecase;
 
 import com.arsio.game.api.dto.GetDiscountedGameView;
 import com.arsio.game.api.exception.DiscountNotFoundException;
-import com.arsio.game.api.exception.GameMediaNotFoundException;
 import com.arsio.game.internal.application.port.output.GameMediaStorage;
 import com.arsio.game.internal.domain.model.Discount;
-import com.arsio.game.internal.domain.model.GameMedia;
 import com.arsio.game.internal.domain.repository.DiscountRepository;
 import com.arsio.game.internal.domain.repository.GameMediaRepository;
 import com.arsio.game.internal.domain.repository.GameRepository;
@@ -13,20 +11,19 @@ import com.arsio.shared.money.Money;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
-@Service("gameGetScheduleDiscountedGamesUseCase")
+@Service("gameGetScheduledDiscountedGamesUseCase")
 @Transactional
-public class GetScheduleDiscountedGamesUseCase {
+public class GetScheduledDiscountedGamesUseCase {
 
     private final DiscountRepository discounts;
     private final GameRepository games;
     private final GameMediaRepository gameMediaRepository;
     private final GameMediaStorage gameMediaStorage;
 
-    public GetScheduleDiscountedGamesUseCase(DiscountRepository discounts, GameRepository games, GameMediaRepository gameMediaRepository, GameMediaStorage gameMediaStorage) {
+    public GetScheduledDiscountedGamesUseCase(DiscountRepository discounts, GameRepository games, GameMediaRepository gameMediaRepository, GameMediaStorage gameMediaStorage) {
         this.discounts = discounts;
         this.games = games;
         this.gameMediaRepository = gameMediaRepository;
@@ -34,28 +31,29 @@ public class GetScheduleDiscountedGamesUseCase {
     }
 
     public List<GetDiscountedGameView> execute(UUID developerId) {
-        return games.findAllScheduleDiscounted(developerId)
+        return games.findAllScheduledDiscounted(developerId)
                 .stream()
                 .map(game -> {
-
-                    GameMedia gameMedia = gameMediaRepository.findByGameIdAndRoleThumbnail(game.getId())
-                            .orElseThrow(GameMediaNotFoundException::new);
-
-                    String thumbnailUrl = gameMediaStorage.generatePresignedDownloadUrl(gameMedia.getObjectKey().value());
+                    String thumbnailUrl = gameMediaRepository.findByGameIdAndRoleThumbnail(game.getId())
+                            .map(media -> gameMediaStorage.generatePresignedDownloadUrl(media.getObjectKey().value()))
+                            .orElse(null);
 
                     Discount discount = discounts.findScheduledByGameId(game.getId())
                             .orElseThrow(DiscountNotFoundException::new);
 
-                    BigDecimal decimalPercentage = discount.getPercentage().value().divide(BigDecimal.valueOf(100));
-                    Money discountAmount = game.getBasePrice().multiply(decimalPercentage);
-                    Money discountedPrice = game.getBasePrice().subtract(discountAmount);
+                    Money discountAmount = discount.calculateAmount(game.getBasePrice());
+                    Money price = discount.applyTo(game.getBasePrice());
 
                     return new GetDiscountedGameView(
                             game.getId().value(),
                             game.getTitle().value(),
-                            discountedPrice.amount(),
+                            price.amount(),
+                            game.getBasePrice().amount(),
+                            thumbnailUrl,
+                            discount.getPercentage().value(),
                             discountAmount.amount(),
-                            thumbnailUrl
+                            discount.getStartDate(),
+                            discount.getEndDate()
                     );
                 })
                 .toList();

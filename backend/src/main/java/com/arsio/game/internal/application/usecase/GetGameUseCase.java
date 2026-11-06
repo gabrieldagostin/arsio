@@ -7,6 +7,7 @@ import com.arsio.game.internal.domain.repository.*;
 import com.arsio.game.internal.domain.valueobject.GameId;
 import com.arsio.game.internal.domain.valueobject.RequirementCategory;
 import com.arsio.game.internal.infra.Controller.dto.response.*;
+import com.arsio.shared.money.Money;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -19,13 +20,15 @@ import java.util.stream.Collectors;
 public class GetGameUseCase {
 
     private final GameRepository games;
+    private final DiscountRepository discounts;
     private final GameMediaService gameMediaService;
     private final GenreRepository genres;
     private final TagRepository tags;
     private final GameRequirementRepository gameRequirements;
 
-    public GetGameUseCase(GameRepository games, GameMediaService gameMediaService, GenreRepository genres, TagRepository tags, GameRequirementRepository gameRequirements) {
+    public GetGameUseCase(GameRepository games, DiscountRepository discounts, GameMediaService gameMediaService, GenreRepository genres, TagRepository tags, GameRequirementRepository gameRequirements) {
         this.games = games;
+        this.discounts = discounts;
         this.gameMediaService = gameMediaService;
         this.genres = genres;
         this.tags = tags;
@@ -38,6 +41,19 @@ public class GetGameUseCase {
 
         Game game = games.findById(gameId)
                 .orElseThrow(GameNotFoundException::new);
+
+        DiscountInfo discountInfo = discounts.findByGameId(game.getId())
+                .map(discount -> new DiscountInfo(
+                        discount.getPercentage().value(),
+                        discount.calculateAmount(game.getBasePrice()).amount(),
+                        discount.getStartDate(),
+                        discount.getEndDate()
+                ))
+                .orElse(null);
+
+        Money price = discounts.findByGameId(game.getId())
+                .map(discount -> discount.applyTo(game.getBasePrice()))
+                .orElse(game.getBasePrice());
 
         GetGameMediaResponse gameMediaResponse = gameMediaService.getByGameId(gameId);
 
@@ -70,7 +86,9 @@ public class GetGameUseCase {
                 game.getDeveloperId(),
                 game.getTitle().value(),
                 game.getDescription().value(),
+                price.amount(),
                 game.getBasePrice().amount(),
+                discountInfo,
                 game.getStatus().name(),
                 game.getReleaseDate(),
                 gameMediaResponse,

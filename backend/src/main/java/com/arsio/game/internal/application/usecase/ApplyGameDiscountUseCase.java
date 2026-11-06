@@ -1,12 +1,10 @@
 package com.arsio.game.internal.application.usecase;
 
 import com.arsio.game.api.dto.GetDiscountedGameView;
-import com.arsio.game.api.exception.GameMediaNotFoundException;
 import com.arsio.game.api.exception.GameNotFoundException;
 import com.arsio.game.internal.application.port.output.GameMediaStorage;
 import com.arsio.game.internal.domain.model.Discount;
 import com.arsio.game.internal.domain.model.Game;
-import com.arsio.game.internal.domain.model.GameMedia;
 import com.arsio.game.internal.domain.repository.DiscountRepository;
 import com.arsio.game.internal.domain.repository.GameMediaRepository;
 import com.arsio.game.internal.domain.repository.GameRepository;
@@ -51,21 +49,23 @@ public class ApplyGameDiscountUseCase {
 
         discounts.save(discount);
 
-        GameMedia gameMedia = gameMediaRepository.findByGameIdAndRoleThumbnail(gameId)
-                .orElseThrow(GameMediaNotFoundException::new);
+        String thumbnailUrl = gameMediaRepository.findByGameIdAndRoleThumbnail(gameId)
+                .map(media -> gameMediaStorage.generatePresignedDownloadUrl(media.getObjectKey().value()))
+                .orElse(null);
 
-        String thumbnailUrl = gameMediaStorage.generatePresignedDownloadUrl(gameMedia.getObjectKey().value());
-
-        BigDecimal decimalPercentage = discount.getPercentage().value().divide(BigDecimal.valueOf(100));
-        Money discountAmount = game.getBasePrice().multiply(decimalPercentage);
-        Money discountedPrice = game.getBasePrice().subtract(discountAmount);
+        Money discountedAmount = discount.calculateAmount(game.getBasePrice());
+        Money price = discount.applyTo(game.getBasePrice());
 
         return new GetDiscountedGameView(
                 game.getId().value(),
                 game.getTitle().value(),
-                discountedPrice.amount(),
+                price.amount(),
+                game.getBasePrice().amount(),
+                thumbnailUrl,
                 discount.getPercentage().value(),
-                thumbnailUrl
+                discountedAmount.amount(),
+                discount.getStartDate(),
+                discount.getEndDate()
         );
     }
 }

@@ -1,13 +1,18 @@
 package com.arsio.game.api.dto;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.UUID;
 
 public record GetDiscountedGameView(
         UUID gameId,
         String title,
-        BigDecimal discountedPrice,
+        BigDecimal price,
+        BigDecimal basePrice,
+        String thumbnailUrl,
+        BigDecimal discountedPercentage,
         BigDecimal discountedAmount,
-        String thumbnailUrl
+        LocalDate startDate,
+        LocalDate endDate
 ) {
 }

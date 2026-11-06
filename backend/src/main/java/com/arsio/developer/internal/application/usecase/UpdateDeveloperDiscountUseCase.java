@@ -1,6 +1,7 @@
 package com.arsio.developer.internal.application.usecase;
 
 import com.arsio.developer.internal.application.command.UpdateGameDiscountCommand;
+import com.arsio.developer.internal.infra.controller.dto.response.DiscountInfo;
 import com.arsio.developer.internal.infra.controller.dto.response.UpdateGameDiscountResponse;
 import com.arsio.game.api.exception.DiscountNotFoundException;
 import com.arsio.game.api.facade.GameFacade;
@@ -25,12 +26,21 @@ public class UpdateDeveloperDiscountUseCase {
                 command.startDate(),
                 command.endDate()
         )
-                .map(discountedGame -> new UpdateGameDiscountResponse(
-                        discountedGame.discountedPrice(),
-                        discountedGame.discountedAmount(),
-                        discountedGame.startDate(),
-                        discountedGame.endDate()
-                ))
+                .map(discountedGame -> {
+                    DiscountInfo discountInfo = (discountedGame.discountedAmount() != null)
+                            ? new DiscountInfo(
+                                    discountedGame.discountedPercentage(),
+                            discountedGame.discountedAmount(),
+                            discountedGame.startDate(),
+                            discountedGame.endDate()
+                    )
+                            : null;
+                    return new UpdateGameDiscountResponse(
+                            discountedGame.price(),
+                            discountedGame.basePrice(),
+                            discountInfo
+                    );
+                })
                 .orElseThrow(DiscountNotFoundException::new);
     }
 }

@@ -1,6 +1,7 @@
 package com.arsio.developer.internal.application.usecase;
 
 import com.arsio.developer.internal.domain.valueobject.DeveloperId;
+import com.arsio.developer.internal.infra.controller.dto.response.DiscountInfo;
 import com.arsio.developer.internal.infra.controller.dto.response.GetDeveloperGameResponse;
 import com.arsio.game.api.facade.GameFacade;
 import jakarta.transaction.Transactional;
@@ -23,16 +24,27 @@ public class GetDeveloperGamesUseCase {
 
         DeveloperId developerId = new DeveloperId(value);
 
-        List<GetDeveloperGameResponse> developerGames = gameFacade.findByDeveloperId(developerId.value())
+        return gameFacade.findByDeveloperId(developerId.value())
                 .stream()
-                .map(game -> new GetDeveloperGameResponse(
-                        game.gameId(),
-                        game.title(),
-                        game.basePrice(),
-                        game.thumbnailUrl()
-                ))
-                .toList();
+                .map(game -> {
+                    DiscountInfo discountInfo = (game.discountedAmount() != null)
+                            ? new DiscountInfo(
+                            game.discountedPercentage(),
+                            game.discountedAmount(),
+                            game.startDate(),
+                            game.endDate()
+                    )
+                            : null;
 
-        return developerGames;
+                    return new GetDeveloperGameResponse(
+                            game.gameId(),
+                            game.title(),
+                            game.price(),
+                            game.basePrice(),
+                            game.thumbnailUrl(),
+                            discountInfo
+                    );
+                })
+                .toList();
     }
 }

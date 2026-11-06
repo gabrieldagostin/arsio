@@ -4,7 +4,9 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public record UpdateGameDiscountView(
-        BigDecimal discountedPrice,
+        BigDecimal price,
+        BigDecimal basePrice,
+        BigDecimal discountedPercentage,
         BigDecimal discountedAmount,
         LocalDate startDate,
         LocalDate endDate

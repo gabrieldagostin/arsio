@@ -20,8 +20,8 @@ import java.util.UUID;
 @Transactional
 public class UpdateGameDiscountUseCase {
 
-    private GameRepository games;
-    private DiscountRepository discounts;
+    private final GameRepository games;
+    private final DiscountRepository discounts;
 
     public UpdateGameDiscountUseCase(GameRepository games, DiscountRepository discounts) {
         this.games = games;
@@ -46,13 +46,14 @@ public class UpdateGameDiscountUseCase {
         Game game = games.findById(gameId)
                 .orElseThrow(GameNotFoundException::new);
 
-        BigDecimal decimalPercentage = discount.getPercentage().value().divide(BigDecimal.valueOf(100));
-        Money discountAmount = game.getBasePrice().multiply(decimalPercentage);
-        Money discountedPrice = game.getBasePrice().subtract(discountAmount);
+        Money discountAmount = discount.calculateAmount(game.getBasePrice());
+        Money price = discount.applyTo(game.getBasePrice());
 
         return new UpdateGameDiscountView(
-                discountedPrice.amount(),
+                price.amount(),
+                game.getBasePrice().amount(),
                 discount.getPercentage().value(),
+                discountAmount.amount(),
                 discount.getStartDate(),
                 discount.getEndDate()
         );
