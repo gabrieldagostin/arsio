@@ -4,6 +4,7 @@ import com.arsio.review.api.dto.TopRatedGameView;
 import com.arsio.review.internal.domain.model.Review;
 import com.arsio.review.internal.domain.repository.ReviewRepository;
 import com.arsio.review.internal.domain.valueobject.ReviewId;
+import com.arsio.review.internal.infra.controller.dto.response.VoteSummary;
 import com.arsio.review.internal.infra.persistence.mapper.ReviewEntityMapper;
 import com.arsio.review.internal.infra.persistence.repository.SpringDataReviewRepository;
 import com.arsio.shared.pagination.Pagination;
@@ -50,5 +51,10 @@ public class JpaReviewRepositoryAdapter implements ReviewRepository {
     public Optional<Review> findById(ReviewId reviewId) {
         return reviews.findByIdAndActiveTrue(reviewId.value())
                 .map(mapper::toDomain);
+    }
+
+    @Override
+    public VoteSummary findVoteSummary(ReviewId reviewId) {
+        return reviews.findVoteSummary(reviewId.value());
     }
 }

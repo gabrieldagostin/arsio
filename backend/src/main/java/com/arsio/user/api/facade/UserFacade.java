@@ -1,9 +1,9 @@
 package com.arsio.user.api.facade;
 
 import com.arsio.user.api.dto.GetDeveloperProfileView;
+import com.arsio.user.api.dto.GetUserSummaryView;
 import com.arsio.user.api.dto.UserAuthenticationData;
 import com.arsio.user.api.dto.UserCreatedResponse;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -19,4 +19,6 @@ public interface UserFacade {
     Optional<UserAuthenticationData> findUserAuthenticationDataByUsername(String username);
 
     Optional<GetDeveloperProfileView> findById(UUID developerId);
+
+    Optional<GetUserSummaryView> findAuthorInfo(UUID userId);
 }

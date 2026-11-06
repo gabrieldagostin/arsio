@@ -1,10 +1,12 @@
 package com.arsio.review.internal.infra.persistence.repository;
 
 import com.arsio.review.api.dto.TopRatedGameView;
+import com.arsio.review.internal.infra.controller.dto.response.VoteSummary;
 import com.arsio.review.internal.infra.persistence.entity.ReviewEntity;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,4 +37,14 @@ public interface SpringDataReviewRepository extends JpaRepository<ReviewEntity, 
     List<ReviewEntity> findAllByGameIdOrderByLikesCountDesc(UUID gameId);
 
     Optional<ReviewEntity> findByIdAndActiveTrue(UUID reviewId);
+
+    @Query("""
+        SELECT new com.arsio.review.internal.domain.dto.VoteSummary(
+            COUNT(CASE WHEN v.voteType = 'LIKE' THEN 1 END),
+            COUNT(CASE WHEN v.voteType = 'DISLIKE' THEN 1 END)
+        )
+        FROM ReviewVoteEntity v
+        WHERE v.reviewId = :reviewId
+    """)
+    VoteSummary findVoteSummary(@Param("reviewId") UUID reviewId);
 }

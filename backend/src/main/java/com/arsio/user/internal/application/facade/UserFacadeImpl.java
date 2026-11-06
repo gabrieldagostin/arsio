@@ -3,6 +3,7 @@ package com.arsio.user.internal.application.facade;
 import com.arsio.user.api.dto.*;
 import com.arsio.user.api.facade.UserFacade;
 import com.arsio.user.internal.application.usecase.GetDeveloperProfileUseCase;
+import com.arsio.user.internal.application.service.GetUserSummaryService;
 import com.arsio.user.internal.application.usecase.UpdateUserPasswordHashUseCase;
 import com.arsio.user.internal.domain.repository.UserRepository;
 import com.arsio.user.internal.application.usecase.CreateUserUseCase;
@@ -21,12 +22,14 @@ public class UserFacadeImpl implements UserFacade {
     private final CreateUserUseCase createUserUseCase;
     private final UpdateUserPasswordHashUseCase updateUserPasswordService;
     private final GetDeveloperProfileUseCase getDeveloperProfileUseCase;
+    private final GetUserSummaryService getUserSummaryService;
 
-    public UserFacadeImpl(UserRepository users, CreateUserUseCase createUserUseCase, UpdateUserPasswordHashUseCase updateUserPasswordService, GetDeveloperProfileUseCase getDeveloperProfileUseCase) {
+    public UserFacadeImpl(UserRepository users, CreateUserUseCase createUserUseCase, UpdateUserPasswordHashUseCase updateUserPasswordService, GetDeveloperProfileUseCase getDeveloperProfileUseCase, GetUserSummaryService getUserSummaryService) {
         this.users = users;
         this.createUserUseCase = createUserUseCase;
         this.updateUserPasswordService = updateUserPasswordService;
         this.getDeveloperProfileUseCase = getDeveloperProfileUseCase;
+        this.getUserSummaryService = getUserSummaryService;
     }
 
     @Override
@@ -58,6 +61,11 @@ public class UserFacadeImpl implements UserFacade {
     @Override
     public Optional<GetDeveloperProfileView> findById(UUID developerId) {
         return getDeveloperProfileUseCase.execute(developerId);
+    }
+
+    @Override
+    public Optional<GetUserSummaryView> findAuthorInfo(UUID userId) {
+        return getUserSummaryService.execute(userId);
     }
 
     @Override

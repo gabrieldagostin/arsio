@@ -44,6 +44,7 @@ public class ReviewController {
     }
 
     @GetMapping("/game/{gameId}")
+    @PreAuthorize("HasRole('USER')")
     public ResponseEntity<List<ReviewResponse>> getReviews(@PathVariable(name = "gameId") UUID gameId) {
 
         List<ReviewResponse> responses = listReviewsUseCase.execute(gameId);
@@ -52,6 +53,7 @@ public class ReviewController {
     }
 
     @GetMapping("/{reviewId}")
+    @PreAuthorize("HasRole('USER')")
     public ResponseEntity<ReviewResponse> getReview(@PathVariable(name = "reviewId") UUID reviewId) {
 
         ReviewResponse response = getReviewUseCase.execute(reviewId);
@@ -60,6 +62,7 @@ public class ReviewController {
     }
 
     @PutMapping("/{reviewId}")
+    @PreAuthorize("HasRole('USER')")
     public ResponseEntity<ReviewResponse> updateReview(
             @PathVariable(name = "reviewId") UUID reviewId,
             @RequestBody @Valid UpdateReviewRequest request) {

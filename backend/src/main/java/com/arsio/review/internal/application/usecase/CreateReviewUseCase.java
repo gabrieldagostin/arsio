@@ -4,6 +4,8 @@ import com.arsio.review.internal.application.command.CreateReviewCommand;
 import com.arsio.review.internal.domain.model.Review;
 import com.arsio.review.internal.domain.repository.ReviewRepository;
 import com.arsio.review.internal.infra.controller.dto.response.ReviewResponse;
+import com.arsio.user.api.facade.UserFacade;
+import com.arsio.review.internal.infra.controller.dto.response.AuthorSummary;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +14,11 @@ import org.springframework.stereotype.Service;
 public class CreateReviewUseCase {
 
     private final ReviewRepository reviews;
+    private final UserFacade userFacade;
 
-    public CreateReviewUseCase(ReviewRepository reviews) {
+    public CreateReviewUseCase(ReviewRepository reviews, UserFacade userFacade) {
         this.reviews = reviews;
+        this.userFacade = userFacade;
     }
 
     public ReviewResponse execute(CreateReviewCommand command) {
@@ -28,10 +32,20 @@ public class CreateReviewUseCase {
 
         reviews.save(review);
 
+        AuthorSummary authorSummary = userFacade.findAuthorInfo(review.getUserId())
+                .map(summary -> new AuthorSummary(
+                        summary.id(),
+                        summary.username(),
+                        summary.avatarUrl()
+                ))
+                .orElse(null);
+
         return new ReviewResponse(
                 review.getId().value(),
                 review.getRating().value(),
-                review.getComment().value()
+                review.getComment().value(),
+                null,
+                authorSummary
         );
     }
 }

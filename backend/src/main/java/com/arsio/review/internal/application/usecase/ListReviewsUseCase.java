@@ -2,7 +2,10 @@ package com.arsio.review.internal.application.usecase;
 
 import com.arsio.review.internal.domain.model.Review;
 import com.arsio.review.internal.domain.repository.ReviewRepository;
+import com.arsio.review.internal.infra.controller.dto.response.AuthorSummary;
 import com.arsio.review.internal.infra.controller.dto.response.ReviewResponse;
+import com.arsio.review.internal.infra.controller.dto.response.VoteSummary;
+import com.arsio.user.api.facade.UserFacade;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +17,11 @@ import java.util.UUID;
 public class ListReviewsUseCase {
 
     private final ReviewRepository reviews;
+    private final UserFacade userFacade;
 
-    public ListReviewsUseCase(ReviewRepository reviews) {
+    public ListReviewsUseCase(ReviewRepository reviews, UserFacade userFacade) {
         this.reviews = reviews;
+        this.userFacade = userFacade;
     }
 
     public List<ReviewResponse> execute(UUID gameId) {
@@ -24,11 +29,26 @@ public class ListReviewsUseCase {
         List<Review> reviewList = reviews.findAllByGameId(gameId);
 
         return reviewList.stream()
-                .map(review -> new ReviewResponse(
-                        review.getId().value(),
-                        review.getRating().value(),
-                        review.getComment().value()
-                ))
+                .map(review -> {
+
+                    VoteSummary voteSummary = reviews.findVoteSummary(review.getId());
+
+                    AuthorSummary authorSummary = userFacade.findAuthorInfo(review.getUserId())
+                            .map(summary -> new AuthorSummary(
+                                    summary.id(),
+                                    summary.username(),
+                                    summary.avatarUrl()
+                            ))
+                            .orElse(null);
+
+                    return new ReviewResponse(
+                            review.getId().value(),
+                            review.getRating().value(),
+                            review.getComment().value(),
+                            voteSummary,
+                            authorSummary
+                    );
+                })
                 .toList();
     }
 }
