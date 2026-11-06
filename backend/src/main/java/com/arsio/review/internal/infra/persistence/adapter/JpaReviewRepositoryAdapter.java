@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.UUID;
 
 @Repository
 @RequiredArgsConstructor
@@ -33,5 +34,13 @@ public class JpaReviewRepositoryAdapter implements ReviewRepository {
     @Override
     public void save(Review review) {
         reviews.save(mapper.toEntity(review));
+    }
+
+    @Override
+    public List<Review> findAllByGameId(UUID gameId) {
+        return reviews.findAllByGameIdOrderByLikesCountDesc(gameId)
+                .stream()
+                .map(mapper::toDomain)
+                .toList();
     }
 }
