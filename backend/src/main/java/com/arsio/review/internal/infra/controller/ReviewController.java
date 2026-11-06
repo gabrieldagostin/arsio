@@ -25,6 +25,7 @@ public class ReviewController {
     private final CreateReviewUseCase createReviewUseCase;
     private final ListReviewsUseCase listReviewsUseCase;
     private final GetReviewUseCase getReviewUseCase;
+    private final GetUserReviewUseCase getUserReviewUseCase;
     private final UpdateReviewUseCase updateReviewUseCase;
     private final DeleteReviewUseCase deleteReviewUseCase;
     private final LikeReviewUseCase likeReviewUseCase;
@@ -61,6 +62,17 @@ public class ReviewController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("game/me/{gameId}")
+    @PreAuthorize("HasRole('USER')")
+    public ResponseEntity<ReviewResponse> getUserReview(@PathVariable(name = "gameId") UUID gameId) {
+
+        GetUserReviewCommand command = mapper.toGetUserReviewCommand(gameId, SecurityUtils.getCurrentUserId());
+
+        ReviewResponse response = getUserReviewUseCase.execute(command);
+
+        return ResponseEntity.ok(response);
+    }
+
     @PutMapping("/{reviewId}")
     @PreAuthorize("HasRole('USER')")
     public ResponseEntity<ReviewResponse> updateReview(
@@ -91,7 +103,7 @@ public class ReviewController {
 
         likeReviewUseCase.execute(command);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/{reviewId}/dislike")
@@ -102,6 +114,6 @@ public class ReviewController {
 
         dislikeReviewUseCase.execute(command);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }

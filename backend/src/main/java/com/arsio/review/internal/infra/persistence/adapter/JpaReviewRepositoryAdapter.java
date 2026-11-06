@@ -4,13 +4,12 @@ import com.arsio.review.api.dto.TopRatedGameView;
 import com.arsio.review.internal.domain.model.Review;
 import com.arsio.review.internal.domain.repository.ReviewRepository;
 import com.arsio.review.internal.domain.valueobject.ReviewId;
-import com.arsio.review.internal.infra.controller.dto.response.VoteSummary;
+import com.arsio.review.internal.domain.dto.VoteSummary;
 import com.arsio.review.internal.infra.persistence.mapper.ReviewEntityMapper;
 import com.arsio.review.internal.infra.persistence.repository.SpringDataReviewRepository;
 import com.arsio.shared.pagination.Pagination;
 import com.arsio.shared.pagination.PaginationMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
@@ -56,5 +55,11 @@ public class JpaReviewRepositoryAdapter implements ReviewRepository {
     @Override
     public VoteSummary findVoteSummary(ReviewId reviewId) {
         return reviews.findVoteSummary(reviewId.value());
+    }
+
+    @Override
+    public Optional<Review> findByUserIdAndGameId(UUID userId, UUID gameId) {
+        return reviews.findByUserIdAndGameIdAndActiveTrue(userId, gameId)
+                .map(mapper::toDomain);
     }
 }

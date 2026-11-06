@@ -1,7 +1,7 @@
 package com.arsio.review.internal.infra.persistence.repository;
 
 import com.arsio.review.api.dto.TopRatedGameView;
-import com.arsio.review.internal.infra.controller.dto.response.VoteSummary;
+import com.arsio.review.internal.domain.dto.VoteSummary;
 import com.arsio.review.internal.infra.persistence.entity.ReviewEntity;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -47,4 +47,6 @@ public interface SpringDataReviewRepository extends JpaRepository<ReviewEntity, 
         WHERE v.reviewId = :reviewId
     """)
     VoteSummary findVoteSummary(@Param("reviewId") UUID reviewId);
+
+    Optional<ReviewEntity> findByUserIdAndGameIdAndActiveTrue(UUID userId, UUID gameId);
 }

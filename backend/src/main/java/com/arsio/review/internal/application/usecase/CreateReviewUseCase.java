@@ -5,7 +5,7 @@ import com.arsio.review.internal.domain.model.Review;
 import com.arsio.review.internal.domain.repository.ReviewRepository;
 import com.arsio.review.internal.infra.controller.dto.response.ReviewResponse;
 import com.arsio.user.api.facade.UserFacade;
-import com.arsio.review.internal.infra.controller.dto.response.AuthorSummary;
+import com.arsio.review.internal.domain.dto.AuthorSummary;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 

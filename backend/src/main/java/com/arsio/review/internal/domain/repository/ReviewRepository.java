@@ -3,7 +3,7 @@ package com.arsio.review.internal.domain.repository;
 import com.arsio.review.api.dto.TopRatedGameView;
 import com.arsio.review.internal.domain.model.Review;
 import com.arsio.review.internal.domain.valueobject.ReviewId;
-import com.arsio.review.internal.infra.controller.dto.response.VoteSummary;
+import com.arsio.review.internal.domain.dto.VoteSummary;
 import com.arsio.shared.pagination.Pagination;
 
 import java.util.List;
@@ -21,4 +21,6 @@ public interface ReviewRepository {
     Optional<Review> findById(ReviewId reviewId);
 
     VoteSummary findVoteSummary(ReviewId reviewId);
+
+    Optional<Review> findByUserIdAndGameId(UUID userId, UUID gameId);
 }

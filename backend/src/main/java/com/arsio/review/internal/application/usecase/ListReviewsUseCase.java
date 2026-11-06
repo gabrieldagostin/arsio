@@ -2,9 +2,9 @@ package com.arsio.review.internal.application.usecase;
 
 import com.arsio.review.internal.domain.model.Review;
 import com.arsio.review.internal.domain.repository.ReviewRepository;
-import com.arsio.review.internal.infra.controller.dto.response.AuthorSummary;
+import com.arsio.review.internal.domain.dto.AuthorSummary;
 import com.arsio.review.internal.infra.controller.dto.response.ReviewResponse;
-import com.arsio.review.internal.infra.controller.dto.response.VoteSummary;
+import com.arsio.review.internal.domain.dto.VoteSummary;
 import com.arsio.user.api.facade.UserFacade;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;

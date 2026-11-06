@@ -1,4 +1,4 @@
-package com.arsio.review.internal.infra.controller.dto.response;
+package com.arsio.review.internal.domain.dto;
 
 import java.util.UUID;
 
