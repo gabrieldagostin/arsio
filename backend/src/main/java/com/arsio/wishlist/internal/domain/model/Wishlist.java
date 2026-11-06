@@ -34,4 +34,8 @@ public class Wishlist {
             this.gameIds.add(gameId);
         }
     }
+
+    public void removeGame(UUID gameId) {
+        this.gameIds.remove(gameId);
+    }
 }
