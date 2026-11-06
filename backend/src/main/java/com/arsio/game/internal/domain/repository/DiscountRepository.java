@@ -10,4 +10,6 @@ public interface DiscountRepository {
     void save(Discount discount);
 
     Optional<Discount> findByGameId(GameId gameId);
+
+    Optional<Discount> findScheduledByGameId(GameId gameId);
 }

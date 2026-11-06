@@ -21,13 +21,15 @@ public class GameFacadeImpl implements GameFacade {
     private final GetDeveloperGamesUseCase getDeveloperGamesUseCase;
     private final ApplyGameDiscountUseCase applyGameDiscountUseCase;
     private final GetDeveloperDiscountedGameUseCase getDeveloperDiscountedGameUseCase;
+    private final GetScheduleDiscountedGamesUseCase getScheduleDiscountedGameUseCase;
     private final UpdateGameDiscountUseCase updateGameDiscountUseCase;
     private final DeleteGameDiscountUseCase deleteGameDiscountUseCase;
 
-    public GameFacadeImpl(GetDeveloperGamesUseCase getDeveloperGamesUseCase, ApplyGameDiscountUseCase applyGameDiscountUseCase, GetDeveloperDiscountedGameUseCase getDeveloperDiscountedGameUseCase, UpdateGameDiscountUseCase updateGameDiscountUseCase, DeleteGameDiscountUseCase deleteGameDiscountUseCase) {
+    public GameFacadeImpl(GetDeveloperGamesUseCase getDeveloperGamesUseCase, ApplyGameDiscountUseCase applyGameDiscountUseCase, GetDeveloperDiscountedGameUseCase getDeveloperDiscountedGameUseCase, GetScheduleDiscountedGamesUseCase getScheduleDiscountedGameUseCase, UpdateGameDiscountUseCase updateGameDiscountUseCase, DeleteGameDiscountUseCase deleteGameDiscountUseCase) {
         this.getDeveloperGamesUseCase = getDeveloperGamesUseCase;
         this.applyGameDiscountUseCase = applyGameDiscountUseCase;
         this.getDeveloperDiscountedGameUseCase = getDeveloperDiscountedGameUseCase;
+        this.getScheduleDiscountedGameUseCase = getScheduleDiscountedGameUseCase;
         this.updateGameDiscountUseCase = updateGameDiscountUseCase;
         this.deleteGameDiscountUseCase = deleteGameDiscountUseCase;
     }
@@ -50,6 +52,11 @@ public class GameFacadeImpl implements GameFacade {
     @Override
     public List<GetDiscountedGameView> findDiscountedByDeveloperId(UUID developerId) {
         return getDeveloperDiscountedGameUseCase.execute(developerId);
+    }
+
+    @Override
+    public List<GetDiscountedGameView> findScheduleDiscounts(UUID developerId) {
+        return getScheduleDiscountedGameUseCase.execute(developerId);
     }
 
     @Override

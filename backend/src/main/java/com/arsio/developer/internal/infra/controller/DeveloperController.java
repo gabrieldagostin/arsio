@@ -30,6 +30,7 @@ public class DeveloperController {
     private final GetDeveloperGamesUseCase getDeveloperGamesUseCase;
     private final ApplyDeveloperDiscountUseCase applyDeveloperDiscountUseCase;
     private final GetDeveloperDiscountedGamesUseCase getDeveloperDiscountedGamesUseCase;
+    private final GetScheduledDiscountedGamesUseCase getScheduledDiscountedGamesUseCase;
     private final UpdateDeveloperDiscountUseCase updateDeveloperDiscountUseCase;
     private final DeleteDeveloperDiscountUseCase deleteDeveloperDiscountUseCase;
 
@@ -72,6 +73,16 @@ public class DeveloperController {
             @PathVariable(name = "developerId") UUID developerId) {
 
         List<GetDiscountedGameResponse> responses = getDeveloperDiscountedGamesUseCase.execute(developerId);
+
+        return ResponseEntity.ok(responses);
+    }
+
+    @GetMapping("/{developerId}/programmed/discounts")
+    @PreAuthorize("HasRole('DEV')")
+    public ResponseEntity<List<GetDiscountedGameResponse>> getScheduledDiscountedGames(
+            @PathVariable(name = "developerId") UUID developerId) {
+
+        List<GetDiscountedGameResponse> responses = getScheduledDiscountedGamesUseCase.execute(developerId);
 
         return ResponseEntity.ok(responses);
     }

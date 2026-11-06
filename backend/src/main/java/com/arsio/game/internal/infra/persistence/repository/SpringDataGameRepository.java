@@ -1,6 +1,5 @@
 package com.arsio.game.internal.infra.persistence.repository;
 
-import com.arsio.game.internal.domain.model.Game;
 import com.arsio.game.internal.domain.model.GameStatus;
 import com.arsio.game.internal.infra.persistence.entity.GameEntity;
 import io.lettuce.core.dynamic.annotation.Param;
@@ -9,9 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import java.time.Instant;
 import java.time.LocalDate;
-import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -44,8 +41,9 @@ public interface SpringDataGameRepository extends JpaRepository<GameEntity, UUID
             SELECT 1
             FROM DiscountEntity d
             WHERE d.game.id = g.id
-            AND d.startDate <= CURRENT_TIMESTAMP
-            AND d.endDate >= CURRENT_TIMESTAMP
+                AND d.startDate <= CURRENT_TIMESTAMP
+                AND d.endDate >= CURRENT_TIMESTAMP
+                AND d.active = TRUE
         )
     """)
     Page<GameEntity> findDiscountedGames(Pageable pageable);
@@ -60,7 +58,21 @@ public interface SpringDataGameRepository extends JpaRepository<GameEntity, UUID
                 SELECT d.game.id
                 FROM DiscountEntity d
                 WHERE CURRENT_DATE BETWEEN d.startDate AND d.endDate
+                    AND d.active = TRUE
             )
     """)
     List<GameEntity> findAllDiscountedByDeveloperId(@Param("developerId") UUID developerId);
+
+    @Query("""
+        SELECT g
+            FROM GameEntity g
+            WHERE g.developerId = :developerId
+                AND g.id IN (
+                SELECT d.game.id
+                FROM DiscountEntity d
+                WHERE d.startDate > CURRENT_DATE
+                    AND d.active = TRUE
+            )
+    """)
+    List<GameEntity> findAllScheduleDiscounted(@Param("developerId") UUID developerId);
 }

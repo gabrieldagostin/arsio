@@ -2,11 +2,9 @@ package com.arsio.game.internal.domain.repository;
 
 import com.arsio.game.internal.domain.model.Game;
 import com.arsio.game.internal.domain.valueobject.GameId;
-import com.arsio.game.internal.infra.Controller.dto.response.ListGamesResponse;
 import com.arsio.shared.pagination.PageResult;
 import com.arsio.shared.pagination.Pagination;
 
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -31,4 +29,6 @@ public interface GameRepository {
     List<Game> findAllByDeveloperId(UUID developerId);
 
     List<Game> findAllDiscountedByDeveloperId(UUID developerId);
+
+    List<Game> findAllScheduleDiscounted(UUID developerId);
 }

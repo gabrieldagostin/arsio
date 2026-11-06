@@ -36,4 +36,10 @@ public class JpaDiscountRepositoryAdapter implements DiscountRepository {
         return discounts.findActiveByGameId(gameId.value())
                 .map(mapper::toDomain);
     }
+
+    @Override
+    public Optional<Discount> findScheduledByGameId(GameId gameId) {
+        return discounts.findScheduledByGameId(gameId.value())
+                .map(mapper::toDomain);
+    }
 }
