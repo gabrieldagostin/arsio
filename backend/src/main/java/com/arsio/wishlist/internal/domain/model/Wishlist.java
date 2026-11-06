@@ -27,4 +27,11 @@ public class Wishlist {
     public List<UUID> getGameIds() {
         return Collections.unmodifiableList(gameIds);
     }
+
+    public void addGame(UUID gameId) {
+        Objects.requireNonNull(gameId, "gameId cannot be null.");
+        if (!gameIds.contains(gameId)) {
+            this.gameIds.add(gameId);
+        }
+    }
 }
