@@ -78,4 +78,6 @@ public final class ErrorTypes {
     public static final String REVIEW_INVALID_RATING = BASE + "review-invalid-rating";
     public static final String REVIEW_INVALID_COMMENT_LENGTH = BASE + "review-invalid-comment-length";
     public static final String REVIEW_INVALID_VOTE_TYPE = BASE + "review-invalid-vote-type";
+
+    public static final String WISHLIST_NOT_FOUND = BASE + "wishlist-not-found";
 }
