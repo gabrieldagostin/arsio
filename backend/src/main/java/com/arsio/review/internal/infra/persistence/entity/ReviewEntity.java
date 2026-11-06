@@ -34,6 +34,9 @@ public class ReviewEntity {
     @Column
     private String comment;
 
+    @Column(nullable = false)
+    private boolean active;
+
     @Column(name = "created_at", nullable = false, updatable = false, insertable = false)
     private Instant createdAt;
 }

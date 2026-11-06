@@ -13,13 +13,26 @@ public class Review {
     private final UUID gameId;
     private Rating rating;
     private Comment comment;
+    private boolean active;
 
-    public Review(ReviewId id, UUID userId, UUID gameId, Rating rating, Comment comment) {
+    public Review(ReviewId id, UUID userId, UUID gameId, Rating rating, Comment comment, boolean active) {
         this.id = id;
         this.userId = userId;
         this.gameId = gameId;
         this.rating = rating;
         this.comment = comment;
+        this.active = active;
+    }
+
+    public static Review create(UUID userId, UUID gameId, Rating rating, Comment comment) {
+        return new Review(
+                ReviewId.generate(),
+                userId,
+                gameId,
+                rating,
+                comment,
+                true
+        );
     }
 
     public ReviewId getId() {

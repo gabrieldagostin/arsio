@@ -1,6 +1,7 @@
 package com.arsio.review.internal.infra.persistence.adapter;
 
 import com.arsio.review.api.dto.TopRatedGameView;
+import com.arsio.review.internal.domain.model.Review;
 import com.arsio.review.internal.domain.repository.ReviewRepository;
 import com.arsio.review.internal.infra.persistence.mapper.ReviewEntityMapper;
 import com.arsio.review.internal.infra.persistence.repository.SpringDataReviewRepository;
@@ -27,5 +28,10 @@ public class JpaReviewRepositoryAdapter implements ReviewRepository {
         Pageable pageable = paginationMapper.toPageable(pagination);
 
         return reviews.findTopRatedGames(pageable);
+    }
+
+    @Override
+    public void save(Review review) {
+        reviews.save(mapper.toEntity(review));
     }
 }
