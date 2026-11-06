@@ -1,12 +1,10 @@
 package com.arsio.review.internal.infra.controller;
 
 import com.arsio.config.security.SecurityUtils;
-import com.arsio.review.internal.application.command.CreateReviewCommand;
-import com.arsio.review.internal.application.command.DislikeReviewCommand;
-import com.arsio.review.internal.application.command.DislikeReviewUseCase;
-import com.arsio.review.internal.application.command.LikeReviewCommand;
+import com.arsio.review.internal.application.command.*;
 import com.arsio.review.internal.application.usecase.*;
 import com.arsio.review.internal.infra.controller.dto.request.CreateReviewRequest;
+import com.arsio.review.internal.infra.controller.dto.request.UpdateReviewRequest;
 import com.arsio.review.internal.infra.controller.dto.response.ReviewResponse;
 import com.arsio.review.internal.infra.controller.mapper.ReviewControllerMapper;
 import jakarta.validation.Valid;
@@ -27,6 +25,7 @@ public class ReviewController {
     private final CreateReviewUseCase createReviewUseCase;
     private final ListReviewsUseCase listReviewsUseCase;
     private final GetReviewUseCase getReviewUseCase;
+    private final UpdateReviewUseCase updateReviewUseCase;
     private final DeleteReviewUseCase deleteReviewUseCase;
     private final LikeReviewUseCase likeReviewUseCase;
     private final DislikeReviewUseCase dislikeReviewUseCase;
@@ -56,6 +55,18 @@ public class ReviewController {
     public ResponseEntity<ReviewResponse> getReview(@PathVariable(name = "reviewId") UUID reviewId) {
 
         ReviewResponse response = getReviewUseCase.execute(reviewId);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/{reviewId}")
+    public ResponseEntity<ReviewResponse> updateReview(
+            @PathVariable(name = "reviewId") UUID reviewId,
+            @RequestBody @Valid UpdateReviewRequest request) {
+
+        UpdateReviewCommand command = mapper.toUpdateReviewCommand(reviewId, request);
+
+        ReviewResponse response = updateReviewUseCase.execute(command);
 
         return ResponseEntity.ok(response);
     }

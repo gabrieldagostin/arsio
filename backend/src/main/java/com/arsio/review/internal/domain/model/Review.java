@@ -62,4 +62,9 @@ public class Review {
     public void deactivate() {
         this.active = false;
     }
+
+    public void update(Rating rating, Comment comment) {
+        this.rating = rating;
+        this.comment = comment;
+    }
 }

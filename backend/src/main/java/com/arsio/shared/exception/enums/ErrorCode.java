@@ -71,6 +71,7 @@ public enum ErrorCode {
 
     REVIEW_NOT_FOUND("Review not found"),
     REVIEW_INVALID_RATING("Invalid rating"),
+    REVIEW_INVALID_COMMENT_LENGTH("Invalid comment length"),
     REVIEW_INVALID_VOTE_TYPE("Invalid vote type");
 
     private final String defaultMessage;
