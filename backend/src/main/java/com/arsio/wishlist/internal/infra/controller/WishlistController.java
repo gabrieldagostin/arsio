@@ -3,6 +3,7 @@ package com.arsio.wishlist.internal.infra.controller;
 import com.arsio.config.security.SecurityUtils;
 import com.arsio.wishlist.internal.application.usecase.AddToWishlistUseCase;
 import com.arsio.wishlist.internal.application.usecase.DeleteWishlistGameUseCase;
+import com.arsio.wishlist.internal.application.usecase.DeleteWishlistUseCase;
 import com.arsio.wishlist.internal.application.usecase.GetWishlistUseCase;
 import com.arsio.wishlist.internal.infra.controller.dto.response.GetWishlistResponse;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ public class WishlistController {
     private final AddToWishlistUseCase addToWishlistUseCase;
     private final GetWishlistUseCase getWishlistUseCase;
     private final DeleteWishlistGameUseCase deleteWishlistGameUseCase;
+    private final DeleteWishlistUseCase deleteWishlistUseCase;
 
     @PostMapping("/games/{gameId}")
     @PreAuthorize("HasRole('USER')")
@@ -45,6 +47,15 @@ public class WishlistController {
     public ResponseEntity<Void> deleteGameFromWishlist(@PathVariable("gameId") UUID gameId) {
 
         deleteWishlistGameUseCase.execute(SecurityUtils.getCurrentUserId(), gameId);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping
+    @PreAuthorize("HasRole('USER'")
+    public ResponseEntity<Void> deleteWishlist() {
+
+        deleteWishlistUseCase.execute(SecurityUtils.getCurrentUserId());
 
         return ResponseEntity.noContent().build();
     }

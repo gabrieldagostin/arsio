@@ -38,4 +38,8 @@ public class Wishlist {
     public void removeGame(UUID gameId) {
         this.gameIds.remove(gameId);
     }
+
+    public void removeAll() {
+        this.gameIds.clear();
+    }
 }
