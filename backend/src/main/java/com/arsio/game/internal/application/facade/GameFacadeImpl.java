@@ -79,7 +79,7 @@ public class GameFacadeImpl implements GameFacade {
     }
 
     @Override
-    public List<GameSummary> getGamesByIds(List<UUID> gameIds) {
+    public List<GameSummary> findGamesByIds(List<UUID> gameIds) {
         return getGameSummaryService.execute(gameIds);
     }
 }

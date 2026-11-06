@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public interface WishlistRepository {
 
-    Optional<Wishlist> getByUserId(UUID userId);
+    Optional<Wishlist> findByUserId(UUID userId);
 
     void save(Wishlist wishlist);
 }

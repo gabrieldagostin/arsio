@@ -1,4 +1,4 @@
-package com.arsio.user.internal.application.event;
+package com.arsio.user.api.event;
 
 import java.util.UUID;
 

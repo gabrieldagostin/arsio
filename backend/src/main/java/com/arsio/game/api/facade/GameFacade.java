@@ -25,5 +25,5 @@ public interface GameFacade {
 
     void deleteDiscount(UUID gameId);
 
-    List<GameSummary> getGamesByIds(List<UUID> gameIds);
+    List<GameSummary> findGamesByIds(List<UUID> gameIds);
 }

@@ -20,7 +20,7 @@ public class DeleteWishlistGameUseCase {
 
     public void execute(UUID userId, UUID gameId) {
 
-        Wishlist wishlist = wishlists.getByUserId(userId)
+        Wishlist wishlist = wishlists.findByUserId(userId)
                 .orElseThrow(WishlistNotFoundException::new);
 
         wishlist.removeGame(gameId);

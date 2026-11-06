@@ -16,6 +16,14 @@ public class Wishlist {
         this.gameIds = gameIds;
     }
 
+    public static Wishlist createForUser(UUID userId) {
+        return new Wishlist(
+                new WishlistId(WishlistId.generate().value()),
+                userId,
+                new ArrayList<>()
+        );
+    }
+
     public WishlistId getId() {
         return id;
     }

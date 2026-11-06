@@ -1,7 +1,7 @@
 package com.arsio.user.internal.application.usecase;
 
 import com.arsio.user.api.dto.CreateUserCommand;
-import com.arsio.user.internal.application.event.CreatedUserEvent;
+import com.arsio.user.api.event.CreatedUserEvent;
 import com.arsio.user.internal.domain.exception.EmailAlreadyExistsException;
 import com.arsio.user.internal.domain.exception.UsernameUnavailableException;
 import com.arsio.user.internal.domain.model.Profile;

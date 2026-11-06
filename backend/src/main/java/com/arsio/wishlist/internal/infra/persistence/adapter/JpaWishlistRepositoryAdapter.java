@@ -18,7 +18,7 @@ public class JpaWishlistRepositoryAdapter implements WishlistRepository {
     private final SpringDataWishlistRepository wishlists;
 
     @Override
-    public Optional<Wishlist> getByUserId(UUID userId) {
+    public Optional<Wishlist> findByUserId(UUID userId) {
         return wishlists.findByUserId(userId)
                 .map(mapper::toDomain);
     }

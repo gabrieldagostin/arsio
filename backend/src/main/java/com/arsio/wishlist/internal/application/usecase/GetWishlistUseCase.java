@@ -27,7 +27,7 @@ public class GetWishlistUseCase {
 
     public List<GetWishlistResponse> execute(UUID userId) {
 
-        Wishlist wishlist = wishlists.getByUserId(userId)
+        Wishlist wishlist = wishlists.findByUserId(userId)
                 .orElseThrow(WishlistNotFoundException::new);
 
         List<UUID> gameIds = wishlist.getGameIds();
@@ -36,7 +36,7 @@ public class GetWishlistUseCase {
             return List.of();
         }
 
-        Map<UUID, GameSummary> gamesMap = gameFacade.getGamesByIds(gameIds)
+        Map<UUID, GameSummary> gamesMap = gameFacade.findGamesByIds(gameIds)
                 .stream()
                 .collect(Collectors.toMap(GameSummary::id, Function.identity()));
 
