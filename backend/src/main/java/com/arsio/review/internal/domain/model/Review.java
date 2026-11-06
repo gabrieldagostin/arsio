@@ -54,4 +54,12 @@ public class Review {
     public Comment getComment() {
         return comment;
     }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void deactivate() {
+        this.active = false;
+    }
 }

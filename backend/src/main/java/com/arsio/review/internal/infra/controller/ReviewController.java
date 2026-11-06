@@ -3,6 +3,7 @@ package com.arsio.review.internal.infra.controller;
 import com.arsio.config.security.SecurityUtils;
 import com.arsio.review.internal.application.command.CreateReviewCommand;
 import com.arsio.review.internal.application.usecase.CreateReviewUseCase;
+import com.arsio.review.internal.application.usecase.DeleteReviewUseCase;
 import com.arsio.review.internal.application.usecase.GetReviewUseCase;
 import com.arsio.review.internal.application.usecase.ListReviewsUseCase;
 import com.arsio.review.internal.infra.controller.dto.request.CreateReviewRequest;
@@ -26,6 +27,7 @@ public class ReviewController {
     private final CreateReviewUseCase createReviewUseCase;
     private final ListReviewsUseCase listReviewsUseCase;
     private final GetReviewUseCase getReviewUseCase;
+    private final DeleteReviewUseCase deleteReviewUseCase;
 
     @PostMapping("/{gameId}/vote")
     @PreAuthorize("HasRole('USER')")
@@ -54,5 +56,14 @@ public class ReviewController {
         ReviewResponse response = getReviewUseCase.execute(reviewId);
 
         return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{reviewId}")
+    @PreAuthorize("HasRole('USER')")
+    public ResponseEntity<Void> deleteReview(@PathVariable(name = "reviewId") UUID reviewId) {
+
+        deleteReviewUseCase.execute(reviewId);
+
+        return ResponseEntity.noContent().build();
     }
 }
