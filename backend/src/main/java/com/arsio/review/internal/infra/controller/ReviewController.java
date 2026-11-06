@@ -2,6 +2,8 @@ package com.arsio.review.internal.infra.controller;
 
 import com.arsio.config.security.SecurityUtils;
 import com.arsio.review.internal.application.command.CreateReviewCommand;
+import com.arsio.review.internal.application.command.DislikeReviewCommand;
+import com.arsio.review.internal.application.command.DislikeReviewUseCase;
 import com.arsio.review.internal.application.command.LikeReviewCommand;
 import com.arsio.review.internal.application.usecase.*;
 import com.arsio.review.internal.infra.controller.dto.request.CreateReviewRequest;
@@ -27,6 +29,7 @@ public class ReviewController {
     private final GetReviewUseCase getReviewUseCase;
     private final DeleteReviewUseCase deleteReviewUseCase;
     private final LikeReviewUseCase likeReviewUseCase;
+    private final DislikeReviewUseCase dislikeReviewUseCase;
 
     @PostMapping("/{gameId}/vote")
     @PreAuthorize("HasRole('USER')")
@@ -75,5 +78,16 @@ public class ReviewController {
         likeReviewUseCase.execute(command);
 
         return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/{reviewId}")
+    @PreAuthorize("HasRole('USER')")
+    public ResponseEntity<Void> dislikeReview(@PathVariable(name = "reviewId") UUID reviewId) {
+
+        DislikeReviewCommand command = mapper.toDislikeReviewCommand(reviewId, SecurityUtils.getCurrentUserId());
+
+        dislikeReviewUseCase.execute(command);
+
+        return ResponseEntity.noContent().build();
     }
 }

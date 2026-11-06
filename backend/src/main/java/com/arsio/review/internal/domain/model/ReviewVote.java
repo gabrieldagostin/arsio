@@ -47,4 +47,8 @@ public class ReviewVote {
     public void like() {
         this.voteType = VoteType.LIKE;
     }
+
+    public void dislike() {
+        this.voteType = VoteType.DISLIKE;
+    }
 }
