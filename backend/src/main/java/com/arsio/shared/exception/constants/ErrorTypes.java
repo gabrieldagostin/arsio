@@ -74,5 +74,6 @@ public final class ErrorTypes {
     public static final String NOTIFICATION_INVALID_MESSAGE = BASE + "invalid-message";
     public static final String NOTIFICATION_INVALID_TITLE = BASE + "invalid-title";
 
+    public static final String REVIEW_NOT_FOUND = BASE + "review-not-found";
     public static final String REVIEW_INVALID_RATING = BASE + "review-invalid-rating";
 }

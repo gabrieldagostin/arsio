@@ -69,6 +69,7 @@ public enum ErrorCode {
     NOTIFICATION_INVALID_MESSAGE("Invalid message"),
     NOTIFICATION_INVALID_TITLE("Invalid title"),
 
+    REVIEW_NOT_FOUND("Review not found"),
     REVIEW_INVALID_RATING("Invalid rating");
 
     private final String defaultMessage;
