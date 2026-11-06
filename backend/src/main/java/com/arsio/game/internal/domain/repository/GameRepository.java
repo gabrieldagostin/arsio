@@ -31,4 +31,6 @@ public interface GameRepository {
     List<Game> findAllDiscountedByDeveloperId(UUID developerId);
 
     List<Game> findAllScheduledDiscounted(UUID developerId);
+
+    List<Game> findAllById(List<GameId> gameIds);
 }

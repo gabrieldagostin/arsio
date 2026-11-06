@@ -179,4 +179,20 @@ public class JpaGameRepositoryAdapter implements GameRepository {
                 .map(mapper::toDomain)
                 .toList();
     }
+
+    @Override
+    public List<Game> findAllById(List<GameId> gameIds) {
+
+        if (gameIds == null || gameIds.isEmpty()) {
+            return List.of();
+        }
+
+        List<UUID> rawIds = gameIds.stream()
+                .map(GameId::value)
+                .toList();
+
+        return games.findAllById(rawIds).stream()
+                .map(mapper::toDomain)
+                .toList();
+    }
 }

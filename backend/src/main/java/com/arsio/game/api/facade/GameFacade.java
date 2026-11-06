@@ -1,5 +1,6 @@
 package com.arsio.game.api.facade;
 
+import com.arsio.game.api.dto.GameSummary;
 import com.arsio.game.api.dto.GetDeveloperGamesView;
 import com.arsio.game.api.dto.GetDiscountedGameView;
 import com.arsio.game.api.dto.UpdateGameDiscountView;
@@ -24,4 +25,5 @@ public interface GameFacade {
 
     void deleteDiscount(UUID gameId);
 
+    List<GameSummary> getGamesByIds(List<UUID> gameIds);
 }

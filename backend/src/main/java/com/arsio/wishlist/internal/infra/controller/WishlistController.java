@@ -2,14 +2,14 @@ package com.arsio.wishlist.internal.infra.controller;
 
 import com.arsio.config.security.SecurityUtils;
 import com.arsio.wishlist.internal.application.usecase.AddToWishlistUseCase;
+import com.arsio.wishlist.internal.application.usecase.GetWishlistUseCase;
+import com.arsio.wishlist.internal.infra.controller.dto.response.GetWishlistResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -18,6 +18,7 @@ import java.util.UUID;
 public class WishlistController {
 
     private final AddToWishlistUseCase addToWishlistUseCase;
+    private final GetWishlistUseCase getWishlistUseCase;
 
     @PostMapping("/games/{gameId}")
     @PreAuthorize("HasRole('USER')")
@@ -26,5 +27,14 @@ public class WishlistController {
         addToWishlistUseCase.execute(SecurityUtils.getCurrentUserId(), gameId);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping
+    @PreAuthorize("HasRole('USER')")
+    public ResponseEntity<List<GetWishlistResponse>> getWishlist() {
+
+        List<GetWishlistResponse> responses = getWishlistUseCase.execute(SecurityUtils.getCurrentUserId());
+
+        return ResponseEntity.ok(responses);
     }
 }
