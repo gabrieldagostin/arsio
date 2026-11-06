@@ -18,7 +18,7 @@ public class DislikeReviewUseCase {
 
     public void execute(DislikeReviewCommand command) {
 
-        ReviewVote reviewVote = reviewVotes.findById(command.reviewId())
+        ReviewVote reviewVote = reviewVotes.findByReviewIdAndUserId(command.reviewId(), command.userId())
                 .orElse(
                         ReviewVote.create(
                                 command.reviewId(),

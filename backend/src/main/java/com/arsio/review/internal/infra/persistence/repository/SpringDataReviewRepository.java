@@ -24,6 +24,14 @@ public interface SpringDataReviewRepository extends JpaRepository<ReviewEntity, 
     """)
     List<TopRatedGameView> findTopRatedGames(Pageable pageable);
 
+    @Query("""
+        SELECT r
+        FROM ReviewEntity r
+        LEFT JOIN ReviewVoteEntity v ON v.reviewId = r.id AND v.voteType = 'LIKE'
+        WHERE r.gameId = :gameId AND r.active = true
+        GROUP BY r.id
+        ORDER BY COUNT(v) DESC
+    """)
     List<ReviewEntity> findAllByGameIdOrderByLikesCountDesc(UUID gameId);
 
     Optional<ReviewEntity> findByIdAndActiveTrue(UUID reviewId);

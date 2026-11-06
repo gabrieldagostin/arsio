@@ -80,7 +80,7 @@ public class ReviewController {
         return ResponseEntity.ok().build();
     }
 
-    @PatchMapping("/{reviewId}")
+    @PatchMapping("/{reviewId}/dislike")
     @PreAuthorize("HasRole('USER')")
     public ResponseEntity<Void> dislikeReview(@PathVariable(name = "reviewId") UUID reviewId) {
 
@@ -88,6 +88,6 @@ public class ReviewController {
 
         dislikeReviewUseCase.execute(command);
 
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
 }

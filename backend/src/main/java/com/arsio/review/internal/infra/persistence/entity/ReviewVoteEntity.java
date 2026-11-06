@@ -30,7 +30,7 @@ public class ReviewVoteEntity {
 
     @Enumerated(EnumType.STRING)
     @JdbcTypeCode(SqlTypes.NAMED_ENUM)
-    @Column(nullable = false)
+    @Column(name = "vote_type", nullable = false)
     private VoteType voteType;
 
     @Column(name = "created_at", nullable = false, updatable = false, insertable = false)

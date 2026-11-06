@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 @RequiredArgsConstructor
@@ -26,5 +27,11 @@ public class JpaReviewVoteRepositoryAdapter implements ReviewVoteRepository {
     @Override
     public void save(ReviewVote reviewVote) {
         reviewVotes.save(mapper.toEntity(reviewVote));
+    }
+
+    @Override
+    public Optional<ReviewVote> findByReviewIdAndUserId(ReviewId reviewId, UUID userId) {
+        return reviewVotes.findByReviewIdAndUserId(reviewId.value(), userId)
+                .map(mapper::toDomain);
     }
 }
