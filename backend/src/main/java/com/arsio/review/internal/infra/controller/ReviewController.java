@@ -2,10 +2,8 @@ package com.arsio.review.internal.infra.controller;
 
 import com.arsio.config.security.SecurityUtils;
 import com.arsio.review.internal.application.command.CreateReviewCommand;
-import com.arsio.review.internal.application.usecase.CreateReviewUseCase;
-import com.arsio.review.internal.application.usecase.DeleteReviewUseCase;
-import com.arsio.review.internal.application.usecase.GetReviewUseCase;
-import com.arsio.review.internal.application.usecase.ListReviewsUseCase;
+import com.arsio.review.internal.application.command.LikeReviewCommand;
+import com.arsio.review.internal.application.usecase.*;
 import com.arsio.review.internal.infra.controller.dto.request.CreateReviewRequest;
 import com.arsio.review.internal.infra.controller.dto.response.ReviewResponse;
 import com.arsio.review.internal.infra.controller.mapper.ReviewControllerMapper;
@@ -28,6 +26,7 @@ public class ReviewController {
     private final ListReviewsUseCase listReviewsUseCase;
     private final GetReviewUseCase getReviewUseCase;
     private final DeleteReviewUseCase deleteReviewUseCase;
+    private final LikeReviewUseCase likeReviewUseCase;
 
     @PostMapping("/{gameId}/vote")
     @PreAuthorize("HasRole('USER')")
@@ -65,5 +64,16 @@ public class ReviewController {
         deleteReviewUseCase.execute(reviewId);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{reviewId}/like")
+    @PreAuthorize("HasRole('USER')")
+    public ResponseEntity<Void> likeReview(@PathVariable(name = "reviewId") UUID reviewId) {
+
+        LikeReviewCommand command = mapper.toLikeReviewCommand(reviewId, SecurityUtils.getCurrentUserId());
+
+        likeReviewUseCase.execute(command);
+
+        return ResponseEntity.ok().build();
     }
 }
