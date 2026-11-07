@@ -51,7 +51,7 @@ public class Cart {
                 .anyMatch(item -> item.getGameId().equals(gameId));
 
         if (!alreadyExists) {
-            this.items.add(CartItem.create(gameId, cartId));
+            this.items.add(CartItem.create(gameId));
         }
     }
 
@@ -59,9 +59,7 @@ public class Cart {
         this.items.removeIf(item -> item.getGameId().equals(gameId));
     }
 
-    public void removeAll() {
-        if (this.items != null) {
-            this.items.clear();
-        }
+    public void abandonCart() {
+        this.status = CartStatus.ABANDONED;
     }
 }

@@ -13,7 +13,7 @@ CREATE TABLE carts (
 
     CONSTRAINT ck_cart_status
         CHECK (
-            type IN (
+            status IN (
                      'ABANDONED',
                      'ACTIVE'
                 )

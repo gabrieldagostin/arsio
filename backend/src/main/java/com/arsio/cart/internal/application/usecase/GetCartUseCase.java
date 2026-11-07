@@ -5,6 +5,7 @@ import com.arsio.cart.internal.domain.model.Cart;
 import com.arsio.cart.internal.domain.model.CartItem;
 import com.arsio.cart.internal.domain.repository.CartRepository;
 import com.arsio.cart.internal.domain.valueobject.CartId;
+import com.arsio.cart.internal.domain.valueobject.CartStatus;
 import com.arsio.cart.internal.infra.controller.dto.response.CartResponse;
 import com.arsio.game.api.dto.GameSummary;
 import com.arsio.game.api.facade.GameFacade;
@@ -29,7 +30,7 @@ public class GetCartUseCase {
 
     public List<CartResponse> execute(UUID userId) {
 
-        Cart cart = carts.findByUserId(userId)
+        Cart cart = carts.findByUserIdAndStatus(userId, CartStatus.ACTIVE)
                 .orElse(null);
 
         if (cart == null || cart.getItems().isEmpty()) {
@@ -37,8 +38,7 @@ public class GetCartUseCase {
         }
 
         Set<UUID> itemIds = cart.getItems().stream()
-                .map(CartItem::getCartId)
-                .map(CartId::value)
+                .map(CartItem::getGameId)
                 .collect(Collectors.toSet());
 
         Map<UUID, GameSummary> gamesMap = gameFacade.findGamesByIds(itemIds)

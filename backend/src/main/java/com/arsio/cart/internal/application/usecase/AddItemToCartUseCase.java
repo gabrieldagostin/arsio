@@ -20,7 +20,7 @@ public class AddItemToCartUseCase {
 
     public void execute(AddItemToCartCommand command) {
 
-        Cart cart = carts.findByUserId(command.userId())
+        Cart cart = carts.findByUserIdAndStatus(command.userId(), CartStatus.ACTIVE)
                 .orElseGet(() -> carts.save(Cart.create(
                         command.userId(),
                         CartStatus.ACTIVE

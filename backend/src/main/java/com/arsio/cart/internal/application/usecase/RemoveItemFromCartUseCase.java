@@ -4,6 +4,7 @@ import com.arsio.cart.api.exception.CartNotFoundException;
 import com.arsio.cart.internal.application.command.RemoveItemFromCartCommand;
 import com.arsio.cart.internal.domain.model.Cart;
 import com.arsio.cart.internal.domain.repository.CartRepository;
+import com.arsio.cart.internal.domain.valueobject.CartStatus;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,7 @@ public class RemoveItemFromCartUseCase {
 
     public void execute(RemoveItemFromCartCommand command) {
 
-        Cart cart = carts.findByUserId(command.userId())
+        Cart cart = carts.findByUserIdAndStatus(command.userId(), CartStatus.ACTIVE)
                 .orElseThrow(CartNotFoundException::new);
 
         cart.removeItem(command.gameId());

@@ -13,7 +13,7 @@ CREATE TABLE cart_items (
 
     CONSTRAINT fk_cart_items_cart_id_cart
         FOREIGN KEY (cart_id)
-            REFERENCES cart(id),
+            REFERENCES carts(id),
 
     CONSTRAINT fk_cart_items_game_id
         FOREIGN KEY (game_id)

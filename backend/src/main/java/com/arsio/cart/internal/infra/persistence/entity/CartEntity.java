@@ -3,6 +3,7 @@ package com.arsio.cart.internal.infra.persistence.entity;
 import com.arsio.cart.internal.domain.valueobject.CartStatus;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
@@ -32,10 +33,14 @@ public class CartEntity {
     @Column(nullable = false)
     private CartStatus status;
 
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "cart_id")
-    private Set<CartItemEntity> cartItems = new HashSet<>();
+    @ElementCollection
+    @CollectionTable(
+            name = "cart_items",
+            joinColumns = @JoinColumn(name = "cart_id")
+    )
+    private Set<CartItemEmbeddable> items = new HashSet<>();
 
+    @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false, insertable = false)
     private Instant createdAt;
 }

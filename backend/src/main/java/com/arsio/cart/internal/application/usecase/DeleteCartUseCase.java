@@ -3,6 +3,7 @@ package com.arsio.cart.internal.application.usecase;
 import com.arsio.cart.api.exception.CartNotFoundException;
 import com.arsio.cart.internal.domain.model.Cart;
 import com.arsio.cart.internal.domain.repository.CartRepository;
+import com.arsio.cart.internal.domain.valueobject.CartStatus;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +21,10 @@ public class DeleteCartUseCase {
 
     public void execute(UUID userId) {
 
-        Cart cart = carts.findByUserId(userId)
+        Cart cart = carts.findByUserIdAndStatus(userId, CartStatus.ACTIVE)
                 .orElseThrow(CartNotFoundException::new);
 
-        cart.removeAll();
+        cart.abandonCart();
 
         carts.save(cart);
     }
