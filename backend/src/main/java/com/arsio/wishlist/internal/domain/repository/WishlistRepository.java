@@ -9,5 +9,5 @@ public interface WishlistRepository {
 
     Optional<Wishlist> findByUserId(UUID userId);
 
-    void save(Wishlist wishlist);
+    Wishlist save(Wishlist wishlist);
 }

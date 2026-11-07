@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -79,7 +80,7 @@ public class GameFacadeImpl implements GameFacade {
     }
 
     @Override
-    public List<GameSummary> findGamesByIds(List<UUID> gameIds) {
+    public List<GameSummary> findGamesByIds(Set<UUID> gameIds) {
         return getGameSummaryService.execute(gameIds);
     }
 }

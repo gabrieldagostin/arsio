@@ -5,11 +5,9 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
-@Table(name = "wishlist")
+@Table(name = "wishlists")
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,19 +20,18 @@ public class WishlistEntity {
     @Column(nullable = false, unique = true)
     private UUID id;
 
-    @Column(name = "user_id", nullable = false)
+    @Column(name = "user_id", nullable = false, unique = true)
     private UUID userId;
 
     @ElementCollection
     @CollectionTable(
-            name = "wishlists",
+            name = "wishlist_games",
             joinColumns = @JoinColumn(name = "wishlist_id")
     )
-    @OrderColumn
-    @Column(name = "game_id")
-    private List<UUID> gameIds = new ArrayList<>();
+    private Set<WishlistGameEmbeddable> games = new HashSet<>();
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false, insertable = false)
     private Instant createdAt;
 }
+

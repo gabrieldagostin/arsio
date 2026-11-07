@@ -8,19 +8,19 @@ public class Wishlist {
 
     private final WishlistId id;
     private final UUID userId;
-    private final List<UUID> gameIds;
+    private Set<WishlistGame> games = new HashSet<>();
 
-    public Wishlist(WishlistId id, UUID userId, List<UUID> gameIds) {
+    public Wishlist(WishlistId id, UUID userId, Set<WishlistGame> games) {
         this.id = id;
         this.userId = userId;
-        this.gameIds = gameIds;
+        this.games = games;
     }
 
     public static Wishlist createForUser(UUID userId) {
         return new Wishlist(
-                new WishlistId(WishlistId.generate().value()),
+                WishlistId.generate(),
                 userId,
-                new ArrayList<>()
+                new HashSet<>()
         );
     }
 
@@ -32,22 +32,26 @@ public class Wishlist {
         return userId;
     }
 
-    public List<UUID> getGameIds() {
-        return Collections.unmodifiableList(gameIds);
+    public Set<WishlistGame> getGames() {
+        return games;
     }
 
     public void addGame(UUID gameId) {
-        Objects.requireNonNull(gameId, "gameId cannot be null.");
-        if (!gameIds.contains(gameId)) {
-            this.gameIds.add(gameId);
+        boolean alreadyExists = this.games.stream()
+                .anyMatch(item -> item.getGameId().equals(gameId));
+
+        if (!alreadyExists) {
+            this.games.add(WishlistGame.create(gameId));
         }
     }
 
     public void removeGame(UUID gameId) {
-        this.gameIds.remove(gameId);
+        this.games.removeIf(item -> item.getGameId().equals(gameId));
     }
 
     public void removeAll() {
-        this.gameIds.clear();
+        if (!this.games.isEmpty()) {
+            this.games.clear();
+        }
     }
 }

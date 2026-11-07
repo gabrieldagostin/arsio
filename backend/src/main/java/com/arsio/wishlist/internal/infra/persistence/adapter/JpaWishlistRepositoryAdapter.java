@@ -24,7 +24,8 @@ public class JpaWishlistRepositoryAdapter implements WishlistRepository {
     }
 
     @Override
-    public void save(Wishlist wishlist) {
+    public Wishlist save(Wishlist wishlist) {
         wishlists.save(mapper.toEntity(wishlist));
+        return wishlist;
     }
 }

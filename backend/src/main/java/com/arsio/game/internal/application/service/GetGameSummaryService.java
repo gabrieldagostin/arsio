@@ -9,6 +9,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -25,7 +26,7 @@ public class GetGameSummaryService {
         this.gameMediaStorage = gameMediaStorage;
     }
 
-    public List<GameSummary> execute(List<UUID> ids) {
+    public List<GameSummary> execute(Set<UUID> ids) {
 
         List<GameId> gameIds = ids
                 .stream()

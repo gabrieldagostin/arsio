@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 public interface GameFacade {
@@ -25,5 +26,5 @@ public interface GameFacade {
 
     void deleteDiscount(UUID gameId);
 
-    List<GameSummary> findGamesByIds(List<UUID> gameIds);
+    List<GameSummary> findGamesByIds(Set<UUID> gameIds);
 }
