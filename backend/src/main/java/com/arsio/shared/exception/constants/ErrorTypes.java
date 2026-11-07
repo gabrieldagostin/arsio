@@ -83,4 +83,6 @@ public final class ErrorTypes {
 
     public static final String CART_NOT_FOUND = BASE + "cart-not-found";
     public static final String CART_INVALID_STATUS = BASE + "cart-invalid-status";
+
+    public static final String CHAT_INVALID_CONTENT = BASE + "chat-invalid-content";
 }
