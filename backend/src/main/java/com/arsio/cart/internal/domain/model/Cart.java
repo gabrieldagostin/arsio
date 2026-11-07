@@ -58,4 +58,10 @@ public class Cart {
     public void removeItem(UUID gameId) {
         this.items.removeIf(item -> item.getGameId().equals(gameId));
     }
+
+    public void removeAll() {
+        if (this.items != null) {
+            this.items.clear();
+        }
+    }
 }

@@ -3,6 +3,7 @@ package com.arsio.cart.internal.infra.controller;
 import com.arsio.cart.internal.application.command.AddItemToCartCommand;
 import com.arsio.cart.internal.application.command.RemoveItemFromCartCommand;
 import com.arsio.cart.internal.application.usecase.AddItemToCartUseCase;
+import com.arsio.cart.internal.application.usecase.DeleteCartUseCase;
 import com.arsio.cart.internal.application.usecase.GetCartUseCase;
 import com.arsio.cart.internal.application.usecase.RemoveItemFromCartUseCase;
 import com.arsio.cart.internal.infra.controller.dto.request.AddItemToCartRequest;
@@ -27,6 +28,7 @@ public class CartController {
     private final GetCartUseCase getCartUseCase;
     private final AddItemToCartUseCase addItemToCartUseCase;
     private final RemoveItemFromCartUseCase removeItemFromCartUseCase;
+    private final DeleteCartUseCase deleteCartUseCase;
 
     @GetMapping
     @PreAuthorize("HasRole('USER')")
@@ -56,6 +58,15 @@ public class CartController {
         RemoveItemFromCartCommand command = mapper.toRemoveItemFromCartCommand(SecurityUtils.getCurrentUserId(), gameId);
 
         removeItemFromCartUseCase.execute(command);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping
+    @PreAuthorize("HasRoel('USER')")
+    public ResponseEntity<Void> deleteCart() {
+
+        deleteCartUseCase.execute(SecurityUtils.getCurrentUserId());
 
         return ResponseEntity.noContent().build();
     }
