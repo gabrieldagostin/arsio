@@ -1,5 +1,6 @@
 package com.arsio.game.internal.application.usecase;
 
+import com.arsio.game.internal.infra.Controller.dto.response.DiscountInfo;
 import com.arsio.game.api.exception.GameNotFoundException;
 import com.arsio.game.internal.application.service.GameMediaService;
 import com.arsio.game.internal.domain.model.Game;
