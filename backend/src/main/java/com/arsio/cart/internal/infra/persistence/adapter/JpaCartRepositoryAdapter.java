@@ -22,4 +22,10 @@ public class JpaCartRepositoryAdapter implements CartRepository {
         return carts.findByUserId(userId)
                 .map(mapper::toDomain);
     }
+
+    @Override
+    public Cart save(Cart cart) {
+        carts.save(mapper.toEntity(cart));
+        return cart;
+    }
 }

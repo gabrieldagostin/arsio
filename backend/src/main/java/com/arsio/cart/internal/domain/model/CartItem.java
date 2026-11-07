@@ -16,6 +16,14 @@ public class CartItem {
         this.gameId = gameId;
     }
 
+    public static CartItem create(UUID gameId, CartId cartId) {
+        return new CartItem(
+                CartId.generate(),
+                cartId,
+                gameId
+        );
+    }
+
     public CartId getId() {
         return id;
     }

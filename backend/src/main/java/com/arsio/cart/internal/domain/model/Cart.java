@@ -21,6 +21,15 @@ public class Cart {
         this.items = items != null ? new HashSet<>(items) : new HashSet<>();
     }
 
+    public static Cart create(UUID userId, CartStatus status) {
+        return new Cart(
+                CartId.generate(),
+                userId,
+                status,
+                new HashSet<>()
+        );
+    }
+
     public CartId getId() {
         return id;
     }
@@ -35,5 +44,14 @@ public class Cart {
 
     public Set<CartItem> getItems() {
         return items;
+    }
+
+    public void addGame(UUID gameId, CartId cartId) {
+        boolean alreadyExists = this.items.stream()
+                .anyMatch(item -> item.getGameId().equals(gameId));
+
+        if (!alreadyExists) {
+            this.items.add(CartItem.create(gameId, cartId));
+        }
     }
 }
