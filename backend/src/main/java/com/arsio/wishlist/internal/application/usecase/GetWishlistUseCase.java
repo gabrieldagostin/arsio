@@ -3,6 +3,7 @@ package com.arsio.wishlist.internal.application.usecase;
 import com.arsio.game.api.dto.GameSummary;
 import com.arsio.game.api.facade.GameFacade;
 import com.arsio.wishlist.api.exception.WishlistNotFoundException;
+import com.arsio.wishlist.internal.domain.dto.DiscountInfo;
 import com.arsio.wishlist.internal.domain.model.Wishlist;
 import com.arsio.wishlist.internal.domain.model.WishlistGame;
 import com.arsio.wishlist.internal.domain.repository.WishlistRepository;
@@ -51,7 +52,14 @@ public class GetWishlistUseCase {
                         game.id(),
                         game.title(),
                         game.price(),
-                        game.thumbnailUrl()
+                        game.basePrice(),
+                        game.thumbnailUrl(),
+                        new DiscountInfo(
+                                game.discountedPercentage(),
+                                game.discountedAmount(),
+                                game.startDate(),
+                                game.endDate()
+                        )
                 ))
                 .toList();
     }
