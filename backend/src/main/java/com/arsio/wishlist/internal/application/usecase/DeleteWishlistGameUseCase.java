@@ -1,12 +1,11 @@
 package com.arsio.wishlist.internal.application.usecase;
 
 import com.arsio.wishlist.api.exception.WishlistNotFoundException;
+import com.arsio.wishlist.internal.application.command.DeleteWishlistGameCommand;
 import com.arsio.wishlist.internal.domain.model.Wishlist;
 import com.arsio.wishlist.internal.domain.repository.WishlistRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-
-import java.util.UUID;
 
 @Service
 @Transactional
@@ -18,12 +17,12 @@ public class DeleteWishlistGameUseCase {
         this.wishlists = wishlists;
     }
 
-    public void execute(UUID userId, UUID gameId) {
+    public void execute(DeleteWishlistGameCommand command) {
 
-        Wishlist wishlist = wishlists.findByUserId(userId)
+        Wishlist wishlist = wishlists.findByUserId(command.userId())
                 .orElseThrow(WishlistNotFoundException::new);
 
-        wishlist.removeGame(gameId);
+        wishlist.removeGame(command.gameId());
 
         wishlists.save(wishlist);
     }

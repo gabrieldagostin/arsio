@@ -80,4 +80,6 @@ public final class ErrorTypes {
     public static final String REVIEW_INVALID_VOTE_TYPE = BASE + "review-invalid-vote-type";
 
     public static final String WISHLIST_NOT_FOUND = BASE + "wishlist-not-found";
+
+    public static final String CART_INVALID_STATUS = BASE + "cart-invalid-status";
 }

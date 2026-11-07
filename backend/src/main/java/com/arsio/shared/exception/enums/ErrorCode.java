@@ -74,7 +74,9 @@ public enum ErrorCode {
     REVIEW_INVALID_COMMENT_LENGTH("Invalid comment length"),
     REVIEW_INVALID_VOTE_TYPE("Invalid vote type"),
 
-    WISHLIST_NOT_FOUND("Wishlist not found");
+    WISHLIST_NOT_FOUND("Wishlist not found"),
+
+    CART_INVALID_STATUS("Invalid status");
 
     private final String defaultMessage;
 

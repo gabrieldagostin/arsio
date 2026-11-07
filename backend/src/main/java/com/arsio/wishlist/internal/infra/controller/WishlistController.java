@@ -1,11 +1,14 @@
 package com.arsio.wishlist.internal.infra.controller;
 
 import com.arsio.config.security.SecurityUtils;
+import com.arsio.wishlist.internal.application.command.AddToWishlistCommand;
+import com.arsio.wishlist.internal.application.command.DeleteWishlistGameCommand;
 import com.arsio.wishlist.internal.application.usecase.AddToWishlistUseCase;
 import com.arsio.wishlist.internal.application.usecase.DeleteWishlistGameUseCase;
 import com.arsio.wishlist.internal.application.usecase.DeleteWishlistUseCase;
 import com.arsio.wishlist.internal.application.usecase.GetWishlistUseCase;
 import com.arsio.wishlist.internal.infra.controller.dto.response.GetWishlistResponse;
+import com.arsio.wishlist.internal.infra.controller.mapper.WishlistControllerMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,6 +22,7 @@ import java.util.UUID;
 @RequestMapping("/api/v1/wishlists")
 public class WishlistController {
 
+    private final WishlistControllerMapper mapper;
     private final AddToWishlistUseCase addToWishlistUseCase;
     private final GetWishlistUseCase getWishlistUseCase;
     private final DeleteWishlistGameUseCase deleteWishlistGameUseCase;
@@ -28,7 +32,9 @@ public class WishlistController {
     @PreAuthorize("HasRole('USER')")
     public ResponseEntity<Void> addToWishlist(@PathVariable("gameId") UUID gameId) {
 
-        addToWishlistUseCase.execute(SecurityUtils.getCurrentUserId(), gameId);
+        AddToWishlistCommand command = mapper.toAddToWishlistCommand(SecurityUtils.getCurrentUserId(), gameId);
+
+        addToWishlistUseCase.execute(command);
 
         return ResponseEntity.noContent().build();
     }
@@ -46,7 +52,9 @@ public class WishlistController {
     @PreAuthorize("HasRole('USER')")
     public ResponseEntity<Void> deleteGameFromWishlist(@PathVariable("gameId") UUID gameId) {
 
-        deleteWishlistGameUseCase.execute(SecurityUtils.getCurrentUserId(), gameId);
+        DeleteWishlistGameCommand command = mapper.toDeleteWishlistGameCommand(SecurityUtils.getCurrentUserId(), gameId);
+
+        deleteWishlistGameUseCase.execute(command);
 
         return ResponseEntity.noContent().build();
     }

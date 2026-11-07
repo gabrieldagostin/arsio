@@ -1,12 +1,10 @@
 package com.arsio.wishlist.internal.application.usecase;
 
+import com.arsio.wishlist.internal.application.command.AddToWishlistCommand;
 import com.arsio.wishlist.internal.domain.model.Wishlist;
-import com.arsio.wishlist.internal.domain.model.WishlistGame;
 import com.arsio.wishlist.internal.domain.repository.WishlistRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-
-import java.util.UUID;
 
 @Service
 @Transactional
@@ -18,12 +16,12 @@ public class AddToWishlistUseCase {
         this.wishlists = wishlists;
     }
 
-    public void execute(UUID userId, UUID gameId) {
+    public void execute(AddToWishlistCommand command) {
 
-        Wishlist wishlist = wishlists.findByUserId(userId)
-                .orElseGet(() -> wishlists.save(Wishlist.createForUser(userId)));
+        Wishlist wishlist = wishlists.findByUserId(command.userId())
+                .orElseGet(() -> wishlists.save(Wishlist.createForUser(command.userId())));
 
-        wishlist.addGame(gameId);
+        wishlist.addGame(command.gameId());
 
         wishlists.save(wishlist);
     }

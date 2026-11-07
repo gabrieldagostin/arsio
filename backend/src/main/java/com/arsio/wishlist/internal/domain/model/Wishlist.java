@@ -8,12 +8,12 @@ public class Wishlist {
 
     private final WishlistId id;
     private final UUID userId;
-    private Set<WishlistGame> games = new HashSet<>();
+    private Set<WishlistGame> games;
 
     public Wishlist(WishlistId id, UUID userId, Set<WishlistGame> games) {
         this.id = id;
         this.userId = userId;
-        this.games = games;
+        this.games = games != null ? new HashSet<>(games) : new HashSet<>();
     }
 
     public static Wishlist createForUser(UUID userId) {
