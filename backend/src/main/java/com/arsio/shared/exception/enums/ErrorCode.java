@@ -76,6 +76,7 @@ public enum ErrorCode {
 
     WISHLIST_NOT_FOUND("Wishlist not found"),
 
+    CART_NOT_FOUND("Cart not found"),
     CART_INVALID_STATUS("Invalid status");
 
     private final String defaultMessage;

@@ -54,4 +54,8 @@ public class Cart {
             this.items.add(CartItem.create(gameId, cartId));
         }
     }
+
+    public void removeItem(UUID gameId) {
+        this.items.removeIf(item -> item.getGameId().equals(gameId));
+    }
 }
